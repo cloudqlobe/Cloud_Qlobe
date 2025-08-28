@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { DollarSign } from "lucide-react";
 import { LuTarget } from "react-icons/lu";
 import { SiLightning } from "react-icons/si";
@@ -19,6 +19,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Layout from "../layout/page";
+import AuthContext from "../../context/AuthContext";
 
 // Pie Chart Data
 const pieData = [
@@ -98,6 +99,17 @@ const growthStats = {
 
 
 const MemberDashboard = () => {
+    const { memberDetails } = useContext(AuthContext);
+      if (!memberDetails || !memberDetails.id) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-gray-500 text-lg">You are not authorized to view this page.</p>
+        </div>
+      </Layout>
+    );
+  }
+  
   return (
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-6">

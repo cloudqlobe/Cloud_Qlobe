@@ -34,24 +34,26 @@ const VerifyTokenPage = () => {
     setLoading(true);
     setError("");
 
-try {
-  const tempAuthToken = sessionStorage.getItem("tempAuthToken");
-  await axiosInstance.post(
-    "/api/verify-token",
-    { token, tempAuthToken },
-    { withCredentials: true }
-  );
+    try {
+      const tempAuthToken = sessionStorage.getItem("tempAuthToken");
+     const res = await axiosInstance.post(
+        "/api/verify-token",
+        { token, tempAuthToken },
+        { withCredentials: true }
+      );
+      console.log(res.data);
+      
+      sessionStorage.setItem("authToken", JSON.stringify(res.data.authToken))
+      sessionStorage.removeItem("tempAuthToken");
 
-  sessionStorage.removeItem("tempAuthToken");
-
-  navigate("/dashboard");
-} catch (err) {
-  console.error("Verification error:", err);
-  setError(
-    err.response?.data?.error || 
-    "Verification failed. Please check the token and try again."
-  );
-}
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Verification error:", err);
+      setError(
+        err.response?.data?.error ||
+        "Verification failed. Please check the token and try again."
+      );
+    }
 
   };
 

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 export const CustomerRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth('user');
+  const { isAuthenticated, isLoading } = useAuth('customer');
 
   if (isLoading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;

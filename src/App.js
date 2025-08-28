@@ -17,6 +17,21 @@ import Dashboard from "./customer/Pages/CustomerDashboard/page.jsx";
 import MemberDashboard from "./member/Dashboard/page.jsx";
 
 import { AdminRoute, CustomerRoute, MemberRoute, SuperAdminRoute } from "./auth/ProtectedRoute.jsx";
+
+//customer
+import Signup from "./customer/Pages/auth/signup/page.jsx";
+import LoginPage from "./customer/Pages/auth/login/page.jsx";
+import VerifyTokenPage from "./customer/Pages/auth/Token/page.jsx";
+import ResetPasswordPage from "./customer/Pages/auth/login/ResetPasswordPage.jsx";
+import ForgotPasswordPage from "./customer/Pages/auth/login/ForgotPasswordPage.jsx";
+
+import PaymentsPage from "./customer/Pages/CustomerDashboard/payment/page.jsx";
+import ProfilePage from "./customer/Pages/CustomerDashboard/profile/page.jsx";
+import Support from "./customer/Pages/CustomerDashboard/support/page.jsx";
+import AddTroubleTicket from "./customer/Pages/CustomerDashboard/support/Addfollowup/page.jsx";
+import MyRatesPage from "./customer/Pages/CustomerDashboard/myRate/page.jsx";
+import SettingsPage from "./customer/Pages/CustomerDashboard/settings/page.jsx";
+
 // Member
 import AdminMemberSignInPage from "./member/auth/AdminMemberLogin/page.jsx";
 import MemberTokenVerification from "./member/auth/AdminMemberLogin/token.jsx";
@@ -29,12 +44,6 @@ import AddCustomerPage from "./member/Leads/NewLeads/AddLead/page.jsx";
 import FollowUpDetails from "./member/Leads/Followups/[id]/page.jsx";
 import LeadEmail from "./member/Leads/Emails/page.jsx";
 import FollowUp from "./member/Leads/Followups/page.jsx";
-//customer
-import Signup from "./customer/Pages/auth/signup/page.jsx";
-import LoginPage from "./customer/Pages/auth/login/page.jsx";
-import VerifyTokenPage from "./customer/Pages/auth/Token/page.jsx";
-import ResetPasswordPage from "./customer/Pages/auth/login/ResetPasswordPage.jsx";
-import ForgotPasswordPage from "./customer/Pages/auth/login/ForgotPasswordPage.jsx";
 //sale
 import CustomersPage from "./member/Sales/Leads/page.jsx";
 import SaleLeadDetails from "./member/Sales/Leads/[customerId]/page.jsx";
@@ -96,6 +105,16 @@ import SuperAdminResetPasswordPage from "./superAdmin/auth/restpassword/RestPass
 import AdminSigninPage from "./admin/auth/login/login.jsx";
 import AdminTokenVerification from "./admin/auth/login/token.jsx";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
+import StaffManagement from "./admin/settings/ManageStaff/page.jsx";
+import CustomersManagementPage from "./admin/settings/Customer/page.jsx";
+//admin account
+import AdminCCRate from "./admin/account/Rates/CCRates/page.jsx";
+import AdminCLIRate from "./admin/account/Rates/CLIRates/page.jsx";
+import AdminSpecialRatePage from "./admin/account/Rates/SpecialRates/page.jsx";
+import AdminOfferRatePage from "./admin/account/Rates/OfferRate/page.jsx";
+import AdminTargetedRatePage from "./admin/account/Rates/TargetedRates/page.jsx";
+
+
 
 function App() {
   return (
@@ -121,13 +140,19 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <CustomerRoute>
-              <Dashboard />
-            </CustomerRoute>
-          }
+        <Route path="/*" element={
+          <CustomerRoute>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/payment" element={<PaymentsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/my-rates" element={<MyRatesPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/add-ticket" element={<AddTroubleTicket />} />
+            </Routes>
+          </CustomerRoute>
+        }
         />
 
 
@@ -150,15 +175,21 @@ function App() {
         <Route path="/admin/signin" element={<AdminSigninPage />} />
         <Route path="/admin/verify-token" element={<AdminTokenVerification />} />
 
-        <Route
-          path="/admin/*"
-          element={
-            <AdminRoute>
-              <Routes>
-                <Route path="/dashboard" element={<AdminDashboard />} />
-              </Routes>
-            </AdminRoute>
-          }
+        <Route path="/admin/*" element={
+          <AdminRoute>
+            <Routes>
+              <Route path="/dashboard" element={<AdminDashboard />} />
+              <Route path="/staff-management" element={<StaffManagement />} />
+              <Route path="/customer-management" element={<CustomersManagementPage />} />
+              <Route path="/cc/rates" element={<AdminCCRate />} />
+              <Route path="/cli/rates" element={<AdminCLIRate />} />
+              <Route path="/special/rates" element={<AdminSpecialRatePage />} />
+              <Route path="/offer/rates" element={<AdminOfferRatePage />} />
+              <Route path="/targeted/rates" element={<AdminTargetedRatePage />} />
+
+            </Routes>
+          </AdminRoute>
+        }
         />
 
         {/* Member Section */}
@@ -263,7 +294,7 @@ function App() {
       </Routes>
 
       <Specialrate />
-      <Socialmediaicons />
+      {/* <Socialmediaicons /> */}
     </Router >
   );
 }

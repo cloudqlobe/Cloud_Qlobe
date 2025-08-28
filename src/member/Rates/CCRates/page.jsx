@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../layout/page";
-import AuthContext from "../../../context/AuthContext";
 import axiosInstance from "../../../utils/axiosinstance";
 
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
@@ -145,7 +144,6 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
 };
 
 const RatesPage = () => {
-  const { memberDetails } = useContext(AuthContext);
   const [rateData, setRateData] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("country");
@@ -264,17 +262,6 @@ const RatesPage = () => {
               <option value='inactive'>Inactive</option>
             </select>
           </span>
-          {["superAdmin", "account"].includes(memberDetails.role) && (
-            <button
-              className='bg-green-500 text-white px-4 py-2'
-              onClick={() => {
-                setIsUpdateMode(false);
-                setCurrentRate(null);
-                setModalOpen(true);
-              }}>
-              Add Rate
-            </button>
-          )}
         </div>
 
         <table className='min-w-full bg-white shadow-lg mt-4' >
@@ -286,9 +273,6 @@ const RatesPage = () => {
               <th className='py-2 px-4'>Rate</th>
               <th className='py-2 px-4'>Status</th>
               <th className='py-2 px-4'>Profile</th>
-              {["superAdmin", "account"].includes(memberDetails.role) && (
-                <th className='py-2 px-4'>Actions</th>
-              )}
             </tr>
           </thead>
           <tbody>
@@ -321,21 +305,6 @@ const RatesPage = () => {
                   <td className='py-2 px-4'>{rate.rate}</td>
                   <td className='py-2 px-4'>{rate.status}</td>
                   <td className='py-2 px-4'>{rate.profile}</td>
-
-                  {["superAdmin", "account"].includes(memberDetails.role) && (
-                    <td className='py-2 px-4'>
-                      <button
-                        onClick={() => handleUpdateClick(rate)}
-                        className='text-blue-500 hover:text-blue-700'>
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDeleteClick(rate._id)}
-                        className='text-red-500 hover:text-red-700 ml-2'>
-                        Delete
-                      </button>
-                    </td>
-                  )}
                 </tr>
               ))}
           </tbody>

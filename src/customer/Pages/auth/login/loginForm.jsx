@@ -6,8 +6,8 @@ import axiosInstance from "../../../../utils/axiosinstance";
 const Loginpagemain = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: "shanu",
+    password: "Aa123456@",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

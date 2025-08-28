@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../layout/page';
 import { ToastContainer, toast } from 'react-toastify';
-import AuthContext from '../../../context/AuthContext';
 import axiosInstance from '../../../utils/axiosinstance';
 
 const SpecialRatePage = () => {
-    const { memberDetails } = useContext(AuthContext)
     const [specialRates, setSpecialRates] = useState([]);
 
     useEffect(() => {
@@ -57,9 +55,6 @@ const SpecialRatePage = () => {
                                 <th className="p-2">Rate</th>
                                 <th className="p-2">Status</th>
                                 <th className="p-2">Profile</th>
-                                {['superAdmin', "account"].includes(memberDetails.role) && (
-                                    <th className="p-2">Action</th>
-                                )}
                             </tr>
                         </thead>
                         <tbody>
@@ -78,16 +73,6 @@ const SpecialRatePage = () => {
                                         </span>
                                     </td>
                                     <td className="p-2">{rate.profile}</td>
-                                    {['superAdmin', "account"].includes(memberDetails.role) && (
-                                        <td className="p-2 flex space-x-2">
-                                            <button
-                                                onClick={() => removeSpecialRate(rate)}
-                                                className="px-4 py-2 bg-red-500 text-white rounded"
-                                            >
-                                                Remove
-                                            </button>
-                                        </td>
-                                    )}
                                 </tr>
                             ))}
                         </tbody>

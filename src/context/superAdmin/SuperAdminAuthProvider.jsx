@@ -1,22 +1,31 @@
 import { useState } from "react";
 import SuperAdminAuthContext from "./SuperAdminAuthContext";
+import { jwtDecode } from "jwt-decode";
 
 const SuperAdminAuthProvider = ({ children }) => {
   const [superAdminDetails, setSuperAdminDetails] = useState(() => {
-    const saved = sessionStorage.getItem("SuperAdminAuthToken");
-    return saved
-      ? JSON.parse(saved)
-      : {
-          role: "",
-          name: "",
-          email: "",
-          id: "",
-        };
+    const savedToken = sessionStorage.getItem("SuperAdminAuthToken");
+
+    if (savedToken) {
+      try {
+        return jwtDecode(savedToken); // ✅ Decode JWT token
+      } catch (error) {
+        console.error("Invalid token:", error);
+        return { role: "", name: "", email: "", id: "" };
+      }
+    }
+
+    return { role: "", name: "", email: "", id: "" };
   });
 
-  const updateSuperAdminDetails = (data) => {
-    setSuperAdminDetails(data);
-    sessionStorage.setItem("SuperAdminAuthToken", JSON.stringify(data));
+  const updateSuperAdminDetails = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      setSuperAdminDetails(decoded);
+      sessionStorage.setItem("SuperAdminAuthToken", token); // ✅ Store raw token
+    } catch (error) {
+      console.error("Invalid token:", error);
+    }
   };
 
   const clearSuperAdminDetails = () => {
@@ -26,7 +35,11 @@ const SuperAdminAuthProvider = ({ children }) => {
 
   return (
     <SuperAdminAuthContext.Provider
-      value={{ superAdminDetails, updateSuperAdminDetails, clearSuperAdminDetails }}
+      value={{
+        superAdminDetails,
+        updateSuperAdminDetails,
+        clearSuperAdminDetails,
+      }}
     >
       {children}
     </SuperAdminAuthContext.Provider>

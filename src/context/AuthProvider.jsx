@@ -1,23 +1,28 @@
 import { useState } from "react";
-import AuthContext from "./AuthContext"; // ✅ fixed import
+import AuthContext from "./AuthContext";
+import { jwtDecode } from "jwt-decode";
 
 const AuthProvider = ({ children }) => {
   const [memberDetails, setMemberDetails] = useState(() => {
-    const saved = sessionStorage.getItem("MemberAuthToken");
-    return saved
-      ? JSON.parse(saved)
-      : {
-          role: "",
-          name: "",
-          email: "",
-          id: "",
-        };
+    const savedToken = sessionStorage.getItem("MemberAuthToken");
+    if (savedToken) {
+      try {
+        return jwtDecode(savedToken); // ✅ decode JWT to get user info
+      } catch {
+        return { role: "", name: "", email: "", id: "" };
+      }
+    }
+    return { role: "", name: "", email: "", id: "" };
   });
-console.log(memberDetails);
 
-  const updateMemberDetails = (data) => {
-    setMemberDetails(data);
-    sessionStorage.setItem("MemberAuthToken", JSON.stringify(data));
+  const updateMemberDetails = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      setMemberDetails(decoded);
+      sessionStorage.setItem("MemberAuthToken", token); // ✅ store raw token
+    } catch {
+      console.error("Invalid token");
+    }
   };
 
   const clearMemberDetails = () => {

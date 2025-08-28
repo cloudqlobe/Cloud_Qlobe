@@ -1,20 +1,48 @@
 // utils/axiosInstance.js
 import axios from 'axios';
 
-// Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_PUBLIC_SERVER_URL || 'http://localhost:5000/' 
+  baseURL: process.env.REACT_APP_PUBLIC_SERVER_URL || 'https://api.cloudqlobe.com/',
+  withCredentials: true, // If using cookies for authentication
 });
 
-// Add a request interceptor
+// ✅ Response Interceptor
+axiosInstance.interceptors.response.use(
+  (response) => {
+    const token = response.headers['x-auth-token'];
+    const tokenName = response.headers['x-auth-token-name'];
+console.log("axios",tokenName);
+
+    if (token && tokenName) {
+      sessionStorage.setItem(tokenName, token); // ✅ Store token using dynamic name
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// ✅ Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Retrieve the JWT token from local storage or cookies
-    const token = localStorage.getItem('token'); // Adjust based on how you're storing the token
+    // Determine which token to attach
+    const superAdminToken = sessionStorage.getItem('SuperAdminAuthToken');
+    const adminToken = sessionStorage.getItem('AdminAuthToken');
+    const memberToken = sessionStorage.getItem('MemberAuthToken');
+    const customerToken = sessionStorage.getItem('authToken');
 
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`; // Attach the token to the request headers
+    // ✅ Attach token based on priority (or customize per API)
+    if (superAdminToken) {
+      config.headers['Authorization'] = `Bearer ${superAdminToken}`;
+    } else if (adminToken) {
+      config.headers['Authorization'] = `Bearer ${adminToken}`;
+    } else if (memberToken) {
+      config.headers['Authorization'] = `Bearer ${memberToken}`;
+    } else if (customerToken) {
+      config.headers['Authorization'] = `Bearer ${customerToken}`;
     }
+
     return config;
   },
   (error) => {

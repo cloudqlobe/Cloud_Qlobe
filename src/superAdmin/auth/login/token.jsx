@@ -10,7 +10,7 @@ const SuperAdminTokenVerification = () => {
 const { updateSuperAdminDetails } = useContext(SuperAdminAuthContext);
 
   const handleVerify = async () => {
-    const id = sessionStorage.getItem("pendingAdminId");
+    const id = sessionStorage.getItem("pendingSuperAdminId");
     if (!id) {
       toast.error("No admin session found. Please login again.");
       navigate("/superadmin/signin");
@@ -29,7 +29,7 @@ const { updateSuperAdminDetails } = useContext(SuperAdminAuthContext);
       updateSuperAdminDetails(adminData);
 
       toast.success("Token verified. Welcome!");
-      navigate("/admin/dashboard");
+      navigate("/superadmin/dashboard");
     } catch (err) {
       const status = err?.response?.status;
 console.log(status);
@@ -44,8 +44,8 @@ console.log(err);
         toast.error("Something went wrong. Please try again later.");
       }
 
-      sessionStorage.removeItem("pendingAdminId");
-      navigate("/admin/signin");
+      sessionStorage.removeItem("pendingSuperAdminId");
+      navigate("/superadmin/signin");
     }
   };
 

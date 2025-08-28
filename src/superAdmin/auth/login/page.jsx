@@ -11,8 +11,8 @@ const SuperAdminLoginForm = () => {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: "muhammedshanu12345678910@gmail.com",
+    password: "Aa123456@",
     selectDepartment: "superAdmin",
   });
 
@@ -37,7 +37,7 @@ const SuperAdminLoginForm = () => {
       });
 
       const adminData = response.data.adminId;
-      sessionStorage.setItem("pendingAdminId", adminData);
+      sessionStorage.setItem("pendingSuperAdminId", adminData);
       toast.success("Token sent to your email. Please verify.");
       navigate("/superadmin/verify-token");
 

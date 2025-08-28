@@ -10,9 +10,9 @@ const AdminSigninPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    selectDepartment: "",
+    username: "ashanu2004@gmail.com",
+    password: "123456@",
+    selectDepartment: "account",
   });
 
   const handleChange = (e) => {
@@ -38,8 +38,8 @@ const AdminSigninPage = () => {
         { withCredentials: true }
       );
       sessionStorage.setItem(
-        "AdminAuthToken",
-        JSON.stringify(response.data.adminData)
+        "pendingAdminId",
+        JSON.stringify(response.data.adminId)
       );
       setFormData({
         username: "",
@@ -47,7 +47,7 @@ const AdminSigninPage = () => {
         selectDepartment: "",
       });
 
-      navigate("/admin/dashboard");
+      navigate("/admin/verify-token");
       toast.success("Successfully logged in!");
     } catch (error) {
       if (error.response) {

@@ -40,11 +40,7 @@ const OverdraftRequestPage = () => {
         const response = await axiosInstance.get(`api/member/getAllOverdraft`);
         if (response.data.success) {
           let overdraft = response.data.overdraft;
-  
-          if (memberDetails.role === 'accountMember') {
-            overdraft = overdraft.filter(item => item.serviceEngineer === "NOC CloudQlobe");
-          }
-  
+
           setOverdraftRequests(overdraft);
           setFilteredRequests(overdraft);
         }

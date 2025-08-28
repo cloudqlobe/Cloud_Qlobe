@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Layout from '../../layout/page';
-import axiosInstance from '../../utils/axiosinstance';
+import axiosInstance from '../../../utils/axiosinstance';
+import Topbar from '../../navbar/AdminNavbar';
 
-const CustomersPage = () => {
+const CustomersManagementPage = ({ customersData = [] }) => {
   const navigate = useNavigate();
-  const [customers, setCustomers] = useState([]);
+  const [customers, setCustomers] = useState(customersData);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('companyName');
   const [search, setSearch] = useState('');
@@ -68,7 +68,7 @@ console.log(accountManagers);
     setAddedByFilter('');
   };
 
-  const handleAddLead = () => navigate('/admin/Addlead');
+  const handleAddLead = () => navigate('/member/Addlead');
 
   const handleLeadStatusFilter = (status) => {
     setLeadStatusFilter(status);
@@ -209,8 +209,8 @@ console.log(transferData);
     });
 
   return (
-    <Layout>
-      <div className="text-gray-800 min-h-screen" style={{ width: "96vw",marginLeft:"23px"}}>
+      <div className="text-gray-800 min-h-screen">
+              <Topbar />
         <h1 className="text-3xl font-bold mb-4 text-black">Customer Management</h1>
         <p className="text-gray-600 mb-6">Manage customers and leads here.</p>
 
@@ -225,7 +225,7 @@ console.log(transferData);
             />
           </div>
           <button
-            onClick={handleAddLead}
+            // onClick={handleAddLead}
             className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors whitespace-nowrap"
           >
             Add New Lead
@@ -451,8 +451,7 @@ console.log(transferData);
           </div>
         )}
       </div>
-    </Layout>
   );
 };
 
-export default CustomersPage;
+export default CustomersManagementPage;

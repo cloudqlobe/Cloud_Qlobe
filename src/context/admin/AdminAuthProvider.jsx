@@ -1,22 +1,31 @@
 import { useState } from "react";
 import AdminAuthContext from "./AdminAuthContext";
+import { jwtDecode } from "jwt-decode";
 
 const AdminAuthProvider = ({ children }) => {
   const [adminDetails, setAdminDetails] = useState(() => {
-    const saved = sessionStorage.getItem("AdminAuthToken");
-    return saved
-      ? JSON.parse(saved)
-      : {
-          role: "",
-          name: "",
-          email: "",
-          id: "",
-        };
+    const savedToken = sessionStorage.getItem("AdminAuthToken");
+
+    if (savedToken) {
+      try {
+        return jwtDecode(savedToken); // ✅ Decode the token to get details
+      } catch (error) {
+        console.error("Invalid token", error);
+        return { role: "", name: "", email: "", id: "" };
+      }
+    }
+
+    return { role: "", name: "", email: "", id: "" };
   });
 
-  const updateAdminDetails = (data) => {
-    setAdminDetails(data);
-    sessionStorage.setItem("AdminAuthToken", JSON.stringify(data));
+  const updateAdminDetails = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      setAdminDetails(decoded);
+      sessionStorage.setItem("AdminAuthToken", token); // ✅ Store raw token
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
   };
 
   const clearAdminDetails = () => {
@@ -25,9 +34,7 @@ const AdminAuthProvider = ({ children }) => {
   };
 
   return (
-    <AdminAuthContext.Provider
-      value={{ adminDetails, updateAdminDetails, clearAdminDetails }}
-    >
+    <AdminAuthContext.Provider value={{ adminDetails, updateAdminDetails, clearAdminDetails }}>
       {children}
     </AdminAuthContext.Provider>
   );

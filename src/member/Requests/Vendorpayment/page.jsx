@@ -25,9 +25,6 @@ const VendorRequestPage = () => {
 
           setVendorRequests(RequestData);
           setFilteredRequests(RequestData);
-        } else if (memberDetails.role === 'account' || memberDetails.role === "superAdmin") {
-          setVendorRequests(response.data.vendor)
-          setFilteredRequests(response.data.vendor);
         }
       } else {
         console.error('Failed to fetch data:', response.data.message);

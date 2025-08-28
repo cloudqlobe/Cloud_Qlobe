@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../layout/page';
 import { LuRadar } from "react-icons/lu";
-import AuthContext from '../../../context/AuthContext';
 import axiosInstance from '../../../utils/axiosinstance';
 
 const iconStyle = () => ({
@@ -12,7 +11,6 @@ const iconStyle = () => ({
 });
 
 const OfferRatePage = () => {
-    const { memberDetails } = useContext(AuthContext);
     const [showCLI, setShowCLI] = useState(true);
     const [ccRates, setCcRates] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -305,52 +303,6 @@ const OfferRatePage = () => {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "25px", alignItems: "center", marginTop: "10px" }}>
-                    {/* Action Buttons and Search Bar */}
-                    {showCLI && (
-                        <div className="mt-4 ml-4 flex flex-col space-y-4">
-                            {['superAdmin'].includes(memberDetails.role) && (
-                                <div className="flex space-x-4">
-                                    <button
-                                        onClick={() => setShowModal(true)}
-                                        style={{ width: "133px", alignItems: "center" }}
-                                        className="px-4 py-2 bg-blue-500 text-white"
-                                    >
-                                        Add
-                                    </button>
-                                    <button
-                                        style={{ width: "133px" }}
-                                        onClick={() => {
-                                            setEditMode(!editMode);
-                                            setDeleteMode(false);
-                                            setSelectedRow(null);
-                                        }}
-                                        className={`px-4 py-2 ${editMode ? 'bg-orange-600' : 'bg-orange-500'} text-white`}
-                                    >
-                                        {editMode ? 'Cancel Edit' : 'Edit'}
-                                    </button>
-                                    <button
-                                        style={{ width: "133px" }}
-                                        onClick={() => {
-                                            setDeleteMode(!deleteMode);
-                                            setEditMode(false);
-                                            setSelectedToDelete([]);
-                                        }}
-                                        className={`px-4 py-2 ${deleteMode ? 'bg-red-600' : 'bg-red-500'} text-white`}
-                                    >
-                                        {deleteMode ? 'Cancel Delete' : 'Delete'}
-                                    </button>
-                                    <button
-                                        style={{ width: "133px" }}
-                                        onClick={handleApplyChanges}
-                                        className="px-4 py-2 bg-green-500 text-white"
-                                        disabled={(!editMode || selectedRow === null) && (!deleteMode || selectedToDelete?.length === 0)}
-                                    >
-                                        Apply
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    )}
                     {/* Tab Buttons */}
                     <div className="mt-4 flex space-x-4 ml-4">
 

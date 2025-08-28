@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../../layout/page';
-import { FaFilter, FaTimes, FaPlus, FaDollarSign } from 'react-icons/fa';
+import { FaFilter, FaTimes} from 'react-icons/fa';
 import { LuBadgeDollarSign } from "react-icons/lu";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,10 +14,8 @@ const PrivateRateRequestPage = () => {
   const [privateRatesData, setPrivateRatesData] = useState([]);
   const [privateCliRatesData, setPrivateCliRatesData] = useState([]);
   const [showViewModal, setShowViewModal] = useState(false);
-  const [activeViewTab, setActiveViewTab] = useState('cc');
   const [filterStatus, setFilterStatus] = useState('All');
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [showAddRequestModal, setShowAddRequestModal] = useState(false);
 
   useEffect(() => {
     const fetchRatesAndTests = async () => {
