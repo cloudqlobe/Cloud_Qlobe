@@ -9,6 +9,7 @@ import Homeservices from "./Components/Homeservices";
 import Register from "../../Components/Register";
 import Navbar from "../../Components/Navbar";
 import HomeAchievement from "../../Components/Homeacheivemnet";
+import Chatbot from "../../chatbot/page";
 
 const Homepages = () => {
   return (
@@ -21,6 +22,7 @@ const Homepages = () => {
       <Homeanimation />
       <Homecontent2 />
       <HomeAchievement />
+      <Chatbot/>
       <Register />
       <Footer />
     </div>
