@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
     const savedToken = sessionStorage.getItem("MemberAuthToken");
     if (savedToken) {
       try {
-        return jwtDecode(savedToken); // ✅ decode JWT to get user info
+        return jwtDecode(savedToken); // decode JWT on refresh
       } catch {
         return { role: "", name: "", email: "", id: "" };
       }

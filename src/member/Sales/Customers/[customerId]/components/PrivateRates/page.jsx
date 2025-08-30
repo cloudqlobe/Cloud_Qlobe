@@ -12,7 +12,7 @@ const PrivateRatePage = ({ customerId }) => {
     const [customerData, setCustomerData] = useState(null);
     const [showCheckboxes, setShowCheckboxes] = useState(false); // Controls whether checkboxes are visible
     const [selectedRates, setSelectedRates] = useState([]);
-    const [currentRateType, setCurrentRateType] = useState('CCRate');
+    const [currentRateType, setCurrentRateType] = useState('CCPrivateRate');
     const [ccRatesData, setCCRatesData] = useState([]);
     const [cliRatesData, setCLIRatesData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -142,7 +142,7 @@ const PrivateRatePage = ({ customerId }) => {
         }
     };
 
-    const filteredData = (currentRateType === 'CCRate' ? ccRatesData : cliRatesData)?.filter(item => {
+    const filteredData = (currentRateType === 'CCPrivateRate' ? ccRatesData : cliRatesData)?.filter(item => {
         if (statusFilter === 'all') {
             return item.country?.toLowerCase().includes(search.toLowerCase());
         }
@@ -197,26 +197,26 @@ const PrivateRatePage = ({ customerId }) => {
 
             <div className="mt-4">
                 <button
-                    className={`px-4 py-2 rounded-lg mr-4 ${currentRateType === 'CCRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                    onClick={() => setCurrentRateType('CCRate')}
+                    className={`px-4 py-2 rounded-lg mr-4 ${currentRateType === 'CCPrivateRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => setCurrentRateType('CCPrivateRate')}
                 >
-                    CCRate
+                    CCPrivateRate
                 </button>
                 <button
-                    className={`px-4 py-2 rounded-lg ${currentRateType === 'CLIRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                    onClick={() => setCurrentRateType('CLIRate')}
+                    className={`px-4 py-2 rounded-lg ${currentRateType === 'CLIPrivateRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => setCurrentRateType('CLIPrivateRate')}
                 >
-                    CLIRate
+                    CLIPrivateRate
                 </button>
             </div>
             {
-                currentRateType === "CLIRate" ? (
+                currentRateType === "CLIPrivateRate" ? (
                     <button
                         className='mt-4 bg-green-500 text-white px-4 py-2 rounded-lg'
                         onClick={() => {
                             setCLIModalOpen(true);
                         }}>
-                        Add CLIRate
+                        Add CLIPrivateRate
                     </button>
                 ) : (
                     <button
@@ -224,7 +224,7 @@ const PrivateRatePage = ({ customerId }) => {
                         onClick={() => {
                             setModalOpen(true);
                         }}>
-                        Add CCRate
+                        Add CCPrivateRate
                     </button>
                 )
             }
@@ -241,13 +241,13 @@ const PrivateRatePage = ({ customerId }) => {
                             <th className="px-4 py-2">Country Code</th>
                             <th className="px-4 py-2">Prefix</th>
                             <th className="px-4 py-2">Country Name</th>
-                            {currentRateType === "CCRate" && <th className="px-4 py-2">Profile</th>}
+                            {currentRateType === "CCPrivateRate" && <th className="px-4 py-2">Profile</th>}
                             <th className="px-4 py-2">Rate</th>
                             <th className="px-4 py-2">Quality Description</th>
-                            {currentRateType === "CLIRate" && <th className="px-4 py-2">asr</th>}
-                            {currentRateType === "CLIRate" && <th className="px-4 py-2">billingCycle</th>}
-                            {currentRateType === "CLIRate" && <th className="px-4 py-2">rtp</th>}
-                            {currentRateType === "CLIRate" && <th className="px-4 py-2">acd</th>}
+                            {currentRateType === "CLIPrivateRate" && <th className="px-4 py-2">asr</th>}
+                            {currentRateType === "CLIPrivateRate" && <th className="px-4 py-2">billingCycle</th>}
+                            {currentRateType === "CLIPrivateRate" && <th className="px-4 py-2">rtp</th>}
+                            {currentRateType === "CLIPrivateRate" && <th className="px-4 py-2">acd</th>}
                             <th className="px-4 py-2">Status</th>
                         </tr>
                     </thead>
@@ -310,7 +310,5 @@ const PrivateRatePage = ({ customerId }) => {
         </div>
     );
 };
-
-//  <CliRateModal/>
 
 export default PrivateRatePage;

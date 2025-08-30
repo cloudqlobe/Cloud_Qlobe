@@ -11,8 +11,8 @@ const SuperAdminLoginForm = () => {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: "muhammedshanu12345678910@gmail.com",
-    password: "Aa123456@",
+    username: "",
+    password: "",
     selectDepartment: "superAdmin",
   });
 

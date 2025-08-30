@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL:'https://api.cloudqlobe.com/',
+  baseURL:'https://api.cloudqlobe.com/' || 'http://localhost:5000',
   withCredentials: true, // If using cookies for authentication
 });
 
@@ -11,7 +11,6 @@ axiosInstance.interceptors.response.use(
   (response) => {
     const token = response.headers['x-auth-token'];
     const tokenName = response.headers['x-auth-token-name'];
-console.log("axios",tokenName);
 
     if (token && tokenName) {
       sessionStorage.setItem(tokenName, token); // ✅ Store token using dynamic name

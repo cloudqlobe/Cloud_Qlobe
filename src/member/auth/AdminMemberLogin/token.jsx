@@ -12,59 +12,54 @@ const MemberTokenVerification = () => {
   const { updateMemberDetails } = useContext(AuthContext);
 console.log(department);
 
-  const handleVerify = async () => {
-    if (token.length !== 6) {
-      toast.error("Please enter a 6-digit token");
-      return;
+const handleVerify = async () => {
+  if (token.length !== 6) {
+    toast.error("Please enter a 6-digit token");
+    return;
+  }
+
+  const memberId = sessionStorage.getItem("pendingMemberId");
+  if (!memberId && !department) {
+    toast.error("Session expired. Please login again.");
+    navigate("/member/signin");
+    return;
+  }
+
+  try {
+    const res = await axiosInstance.post(
+      "/api/member/verify-token",
+      { token, memberId, department },
+      { withCredentials: true }
+    );
+
+    const { memberData } = res.data; // ✅ This is the JWT token from backend
+    console.log("Received JWT:", memberData);
+
+    // ✅ Store raw token
+    sessionStorage.setItem("MemberAuthToken", memberData);
+    sessionStorage.removeItem("pendingMemberId");
+
+    // ✅ Decode & update context
+    updateMemberDetails(memberData);
+
+    toast.success("Token verified. Welcome!");
+    navigate("/member/dashboard");
+  } catch (err) {
+    console.log(err);
+
+    const status = err?.response?.status;
+    if (status === 410) {
+      toast.error("Token expired. Please login again.");
+    } else if (status === 401) {
+      toast.error("Invalid token. Please try again.");
+    } else {
+      toast.error("Something went wrong. Please try again later.");
     }
+    sessionStorage.removeItem("pendingMemberId");
+    navigate("/member/signin");
+  }
+};
 
-    const memberId = sessionStorage.getItem("pendingMemberId");
-    if (!memberId && !department) {
-      toast.error("Session expired. Please login again.");
-      navigate("/member/signin");
-      return;
-    }
-
-    try {
-      const res = await axiosInstance.post(
-        "/api/member/verify-token",
-        { token, memberId, department },
-        { withCredentials: true }
-      );
-
-      const { memberData } = res.data;
-      console.log(memberData);
-
-      // Store member data in session
-      sessionStorage.setItem("MemberAuthToken", JSON.stringify(memberData));
-      sessionStorage.removeItem("pendingMemberId");
-
-      // Update auth context
-      updateMemberDetails({
-        role: memberData.role,
-        name: memberData.name,
-        email: memberData.username,
-        id: memberData.id,
-      });
-
-      toast.success("Token verified. Welcome!");
-      navigate("/member/dashboard");
-
-    } catch (err) {
-      console.log(err);
-
-      const status = err?.response?.status;
-      if (status === 410) {
-        toast.error("Token expired. Please login again.");
-      } else if (status === 401) {
-        toast.error("Invalid token. Please try again.");
-      } else {
-        toast.error("Something went wrong. Please try again later.");
-      }
-      sessionStorage.removeItem("pendingMemberId");
-      navigate("/member/signin");
-    }
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

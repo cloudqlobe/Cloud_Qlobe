@@ -133,6 +133,25 @@ const MyRatesPage = () => {
   };
 
   const handleRequestTest = async () => {
+
+    if (selectedRates === 'CCPrivateRate' || 'CLIPrivateRate') {
+      try {
+        const requestPromises = axiosInstance.post(`api/member/test_privateRate`, {
+          rateId: selectedRates,
+          customerId: customerData.id,
+          companyId: customerData.customerId,
+          account_manager: "Account Manager",
+          service_category: `${currentRateType} Routes`,
+        });
+        await requestPromises;
+        toast.success('Tests Requested Successfully');
+        setShowCheckboxes(false)
+        setSelectedRates([])
+      } catch (error) {
+        console.error('Error requesting tests:', error);
+      }
+    }
+
     if (selectedRates.length === 0) {
       toast.error('Please select at least one rate');
       return;
@@ -191,9 +210,6 @@ const MyRatesPage = () => {
       return item?.country?.toLowerCase().includes(search.toLowerCase()) && hasMatchingTest;
     });
 
-  // Check if current rate type is a private rate
-  const isPrivateRate = currentRateType.includes('Private');
-
   return (
     <div className="p-6 text-gray-800">
       <Navbar />
@@ -228,7 +244,7 @@ const MyRatesPage = () => {
           <option value="Failed">Test Failed</option>
         </select>
 
-        {!showCheckboxes && !isPrivateRate && (
+        {!showCheckboxes && (
           <button
             className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 mt-2 sm:mt-0"
             onClick={() => setShowCheckboxes(true)}
@@ -276,7 +292,7 @@ const MyRatesPage = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-800 text-white text-left">
-                {showCheckboxes && !isPrivateRate && <th className="px-4 py-2">Select</th>}
+                {showCheckboxes && <th className="px-4 py-2">Select</th>}
                 <th className="px-4 py-2">Country Code</th>
                 <th className="px-4 py-2">Country Name</th>
                 {(currentRateType === "CCRate" || currentRateType === "CCPrivateRate") && <th className="px-4 py-2">Profile</th>}
@@ -293,7 +309,7 @@ const MyRatesPage = () => {
               {filteredData.length > 0 ? (
                 filteredData.map((rate, index) => (
                   <tr key={index} className="border-t hover:bg-gray-50">
-                    {showCheckboxes && !isPrivateRate && (
+                    {showCheckboxes && (
                       <td className="px-4 py-2">
                         <input
                           type="checkbox"
@@ -332,7 +348,7 @@ const MyRatesPage = () => {
         </div>
       )}
 
-      {showCheckboxes && !isPrivateRate && (
+      {showCheckboxes && (
         <div className="mt-6 flex justify-end space-x-4">
           <button
             className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"

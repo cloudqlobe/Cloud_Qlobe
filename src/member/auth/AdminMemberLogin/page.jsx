@@ -8,8 +8,8 @@ const AdminMemberSignInPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    username: "shanu@gmail.com",
-    password: "123456@",
+    username: "",
+    password: "",
     selectDepartment: "leadmember",
   });
 

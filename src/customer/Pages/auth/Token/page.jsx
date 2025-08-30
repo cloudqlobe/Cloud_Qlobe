@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../utils/axiosinstance";
+import CustomerAuthContext from "../../../../context/customer/CustomerAuthContext";
 
 const VerifyTokenPage = () => {
   const navigate = useNavigate();
+  const { updateCustomerDetails } = useContext(CustomerAuthContext)
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -36,16 +38,16 @@ const VerifyTokenPage = () => {
 
     try {
       const tempAuthToken = sessionStorage.getItem("tempAuthToken");
-     const res = await axiosInstance.post(
+      const res = await axiosInstance.post(
         "/api/verify-token",
         { token, tempAuthToken },
         { withCredentials: true }
       );
       console.log(res.data);
-      
+
       sessionStorage.setItem("authToken", JSON.stringify(res.data.authToken))
       sessionStorage.removeItem("tempAuthToken");
-
+      updateCustomerDetails(res.data.authToken);
       navigate("/dashboard");
     } catch (err) {
       console.error("Verification error:", err);

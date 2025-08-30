@@ -5,7 +5,7 @@ import axiosInstance from "../../../../utils/axiosinstance";
 import CustomerAuthContext from "../../../../context/customer/CustomerAuthContext";
 
 const Ratepages = () => {
-    const { customerDetails } = useContext(CustomerAuthContext);
+  const { customerDetails } = useContext(CustomerAuthContext);
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("cc");
@@ -16,7 +16,7 @@ const Ratepages = () => {
   const [selectedRates, setSelectedRates] = useState({});
   const [showSelectedOnly, setShowSelectedOnly] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
-console.log("selectedSection",selectedSection);
+  console.log("selectedSection", selectedSection);
 
   const [rates, setRates] = useState([]);
   const [clirates, setCliRates] = useState([]);
@@ -110,9 +110,9 @@ console.log("selectedSection",selectedSection);
     if (!selectedSection) {
       setSelectedSection(activeTab);
     }
-    
+
     const currentSectionRates = selectedRates[selectedSection] || [];
-    
+
     if (currentSectionRates.includes(rateId)) {
       setSelectedRates({
         ...selectedRates,
@@ -130,9 +130,9 @@ console.log("selectedSection",selectedSection);
     if (!selectedSection) {
       setSelectedSection(activeTab);
     }
-    
+
     const currentSectionRates = selectedRates[selectedSection] || [];
-    
+
     if (currentSectionRates.length === paginatedRates.length) {
       setSelectedRates({
         ...selectedRates,
@@ -148,21 +148,21 @@ console.log("selectedSection",selectedSection);
 
   const handleSubmitRates = async () => {
     // Check authentication before submitting
-      const authToken = sessionStorage.getItem("authToken");
-      if (!authToken) {
-        setError("Please login to view rates");
-        setLoading(false);
-        return;
-      }
+    const authToken = sessionStorage.getItem("authToken");
+    if (!authToken) {
+      setError("Please login to view rates");
+      setLoading(false);
+      return;
+    }
 
     if (!selectedSection || !customerDetails.id) {
       alert("User information not available. Please try logging in again.");
       return;
     }
-    
+
     try {
       const selectedRateIds = selectedRates[selectedSection] || [];
-      
+
       if (selectedRateIds.length === 0) {
         alert("Please select at least one rate to submit");
         return;
@@ -176,9 +176,9 @@ console.log("selectedSection",selectedSection);
           addedTime: Date.now().toString(),
         });
       }
-      
+
       alert("Rate(s) added Successfully");
-      
+
       // Reset selection
       setSelectedRates({
         ...selectedRates,
@@ -187,10 +187,10 @@ console.log("selectedSection",selectedSection);
       setSelectionMode(false);
       setShowSelectedOnly(false);
       setSelectedSection(null);
-      
+
     } catch (error) {
       console.error("Error adding selected rates to My Rates:", error);
-      
+
       if (error.response?.status === 401) {
         alert("Your session has expired. Please login again.");
         localStorage.removeItem("authtoken");
@@ -238,9 +238,8 @@ console.log("selectedSection",selectedSection);
       {Array.from({ length: totalPages }, (_, i) => (
         <button
           key={i + 1}
-          className={`px-3 py-1 mx-1 rounded ${
-            currentPage === i + 1 ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-          }`}
+          className={`px-3 py-1 mx-1 rounded ${currentPage === i + 1 ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
+            }`}
           onClick={() => setCurrentPage(i + 1)}
         >
           {i + 1}
@@ -311,11 +310,10 @@ console.log("selectedSection",selectedSection);
                   <td className="px-4 py-2">{rate.acd}</td>
                   <td className="px-4 py-2">{rate.rtp}</td>
                   <td
-                    className={`px-4 py-2 ${
-                      rate.status?.toLowerCase() === "active"
+                    className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
                         ? "text-green-600 font-semibold"
                         : "text-red-600 font-semibold"
-                    }`}
+                      }`}
                   >
                     {rate.status}
                   </td>
@@ -374,11 +372,10 @@ console.log("selectedSection",selectedSection);
                   <td className="px-4 py-2">{rate.profile || "-"}</td>
                   <td className="px-4 py-2">{rate.rate}</td>
                   <td
-                    className={`px-4 py-2 ${
-                      rate.status?.toLowerCase() === "active"
+                    className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
                         ? "text-green-600 font-semibold"
                         : "text-red-600 font-semibold"
-                    }`}
+                      }`}
                   >
                     {rate.status}
                   </td>
@@ -450,25 +447,22 @@ console.log("selectedSection",selectedSection);
       <div className="mb-6 flex items-center justify-between">
         <div className="flex space-x-4">
           <button
-            className={`px-4 py-2 rounded ${
-              activeTab === "cc" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "cc" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("cc")}
           >
             CC Routes
           </button>
           <button
-            className={`px-4 py-2 rounded ${
-              activeTab === "cli" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "cli" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("cli")}
           >
             CLI Routes
           </button>
           <button
-            className={`px-4 py-2 rounded ${
-              activeTab === "special" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-            }`}
+            className={`px-4 py-2 rounded ${activeTab === "special" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("special")}
           >
             Special Rates
