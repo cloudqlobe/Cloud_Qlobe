@@ -20,8 +20,6 @@ const Topbar = () => {
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
 
-  console.log(adminDetails.role);
-
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -36,7 +34,6 @@ const Topbar = () => {
   }, []);
 
   const navItems = getNavItems(adminDetails?.role);
-  console.log(navItems);
 
   const handleSearch = () => {
     if (!searchQuery.trim()) {
@@ -96,8 +93,6 @@ const Topbar = () => {
     return item.roles.includes("all") || item.roles.includes(adminDetails?.role);
   });
 
-  console.log(filteredItems);
-
   const SearchResultsDropdown = () => {
     if (!showSearchResults) return null;
 
@@ -131,6 +126,163 @@ const Topbar = () => {
               )}
             </a>
           ))
+        )}
+      </div>
+    );
+  };
+
+  const DesktopNavItem = ({ item }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [subMenuOpenIndex, setSubMenuOpenIndex] = useState(null);
+    const dropdownRef = useRef(null);
+
+    const toggleSubMenu = (index) => {
+      setSubMenuOpenIndex(subMenuOpenIndex === index ? null : index);
+    };
+
+    const subItemCount = item.subItems ? item.subItems.length : 0;
+    const shouldReduceHeight = subItemCount <= 6;
+
+    // Handle click outside
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setIsOpen(false);
+        }
+      };
+
+      if (isOpen) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [isOpen]);
+
+    if (item.href) {
+      return (
+        <div key={item.id}>
+          <a 
+            href={item.href} 
+            className="flex items-center text-gray-600 hover:text-indigo-600 text-base focus:outline-none"
+          >
+            {item.icon}
+            {item.label}
+          </a>
+        </div>
+      );
+    }
+
+    return (
+      <div key={item.id} className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center text-gray-600 hover:text-indigo-600 text-base focus:outline-none"
+        >
+          {item.icon}
+          {item.label}
+        </button>
+
+        {isOpen && item.subItems && (
+          <div
+            className="absolute left-0 mt-2 bg-white border border-gray-200 shadow-lg rounded-lg z-10 w-[600px] p-4"
+            style={{
+              width: "100vw",
+              position: "fixed",
+              marginTop: "28px",
+              background: "#efefef",
+              minHeight: shouldReduceHeight ? "auto" : "39vh",
+              left: 0
+            }}
+          >
+            <div style={{ 
+              display: "flex", 
+              width: "100%", 
+              height: "100%", 
+              justifyContent: "space-evenly" 
+            }}>
+              <div style={{
+                background: "white",
+                borderRadius: "3%",
+                display: "flex",
+                flexDirection: "column",
+                width: "25%",
+                paddingLeft: "40px",
+                textAlign: "justify",
+                justifyContent: "center",
+                border: "none",
+                height: "auto"
+              }}>
+                <h5 style={{ fontWeight: "bold", marginBottom: '8px' }}>{item.label}</h5>
+                <p style={{ fontSize: "0.9rem" }}>Description about {item.label} section</p>
+              </div>
+
+              <div 
+                className="grid grid-cols-3"
+                style={{
+                  gap: "35px",
+                  width: "72%",
+                  background: "white",
+                  padding: "15px",
+                  borderRadius: "10px",
+                  height: "100%",
+                }}
+              >
+                {item.subItems.map((subItem, index) => (
+                  <div key={index}>
+                    {subItem.href ? (
+                      <a
+                        href={subItem.href}
+                        className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                      >
+                        <div className="font-medium text-gray-800" style={{ fontSize: "0.9rem" }}>
+                          {subItem.label}
+                        </div>
+                        {subItem.description && (
+                          <div className="text-sm text-gray-500 mt-1">{subItem.description}</div>
+                        )}
+                      </a>
+                    ) : subItem.subMenu ? (
+                      <div className="relative p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{height:"45px"}}>
+                        <div 
+                          onClick={() => toggleSubMenu(index)} 
+                          className="flex justify-between items-center p-1"
+                        >
+                          <div className="font-medium text-gray-800" style={{ fontSize: "0.9rem" }}>
+                            {subItem.label}
+                          </div>
+                          <ChevronRightIcon className="w-4 h-4 text-gray-400" />
+                        </div>
+                        {subItem.description && (
+                          <div className="text-sm text-gray-500 mt-1">{subItem.description}</div>
+                        )}
+                        {subMenuOpenIndex === index && (
+                          <div 
+                            className="absolute left-0 top-full bg-white border border-gray-200 shadow-lg rounded-lg w-full p-3 z-20"
+                            style={{ marginTop: "5px" }}
+                          >
+                            {subItem.items.map((menuItem, menuIndex) => (
+                              <a
+                                key={menuIndex}
+                                href={menuItem.href}
+                                className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                              >
+                                <div className="font-medium text-gray-800">{menuItem.label}</div>
+                                {menuItem.description && (
+                                  <div className="text-sm text-gray-500 mt-1">{menuItem.description}</div>
+                                )}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     );
@@ -200,66 +352,12 @@ const Topbar = () => {
 
   return (
     <header className="w-full p-4 bg-white shadow-xl border-b-4 border-gray-300 flex items-center justify-between">
-        
       {/* Desktop Navbar */}
-{/* Desktop Navbar */}
-<nav className="hidden md:flex space-x-6 ml-6">
-  {filteredItems.map((item) => (
-    <div key={item.id} className="relative group">
-      {item.href ? (
-        <a
-          href={item.href}
-          className="flex items-center text-gray-700 hover:text-indigo-600"
-        >
-          {item.icon && <span className="mr-2">{item.icon}</span>}
-          {item.label}
-        </a>
-      ) : (
-        <div className="flex items-center text-gray-700 cursor-pointer group-hover:text-indigo-600">
-          {item.icon && <span className="mr-2">{item.icon}</span>}
-          {item.label}
-        </div>
-      )}
-
-      {/* Dropdown for subItems */}
-      {item.subItems && (
-        <div className="absolute left-0 hidden group-hover:block bg-white border mt-2 rounded shadow-lg z-50 min-w-[200px]">
-          {item.subItems.map((sub, idx) =>
-            sub.subMenu ? (
-              <div key={idx} className="relative group/sub">
-                <div className="flex justify-between items-center px-4 py-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                  {sub.label}
-                  <ChevronRightIcon className="w-4 h-4 text-gray-500" />
-                </div>
-
-                {/* Nested submenu */}
-                <div className="absolute top-0 left-full hidden group-hover/sub:block bg-white border rounded shadow-lg z-50 min-w-[200px]">
-                  {sub.items.map((menuItem, menuIdx) => (
-                    <a
-                      key={menuIdx}
-                      href={menuItem.href}
-                      className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
-                    >
-                      {menuItem.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <a
-                key={idx}
-                href={sub.href}
-                className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
-              >
-                {sub.label}
-              </a>
-            )
-          )}
-        </div>
-      )}
-    </div>
-  ))}
-</nav>
+      <nav className="hidden md:flex space-x-6 ml-6">
+        {filteredItems.map((item) => (
+          <DesktopNavItem key={item.id} item={item} />
+        ))}
+      </nav>
 
       {/* Mobile Menu Button */}
       <button
@@ -268,6 +366,15 @@ const Topbar = () => {
       >
         <Bars3Icon className="w-8 h-8" />
       </button>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg md:hidden z-50">
+          <div className="py-2">
+            {filteredItems.map((item) => renderMobileItem(item))}
+          </div>
+        </div>
+      )}
 
       {/* Search Bar */}
       <div
@@ -304,7 +411,6 @@ const Topbar = () => {
       <div className="relative">
         <AdminDropDown />
       </div>
-
     </header>
   );
 };

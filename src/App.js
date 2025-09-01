@@ -113,6 +113,12 @@ import AdminCLIRate from "./admin/account/Rates/CLIRates/page.jsx";
 import AdminSpecialRatePage from "./admin/account/Rates/SpecialRates/page.jsx";
 import AdminOfferRatePage from "./admin/account/Rates/OfferRate/page.jsx";
 import AdminTargetedRatePage from "./admin/account/Rates/TargetedRates/page.jsx";
+import AdminVendorForm from "./admin/account/Recharge/VendorForm/page.jsx";
+import AdminRechargeForm from "./admin/account/Recharge/RechargeForm/page.jsx";
+import AdminRechargerequestPage from "./admin/account/Requests/RechargeRequests/page.jsx";
+import AdminVendorRequestPage from "./admin/account/Requests/Vendorpayment/page.jsx";
+import AdminPrivateRateRequestPage from "./admin/account/Requests/PrivaterateRequest/page.jsx";
+import AdminOverdraftRequestPage from "./admin/account/Requests/OverdraftRequests/page.jsx";
 
 
 
@@ -186,7 +192,12 @@ function App() {
               <Route path="/special/rates" element={<AdminSpecialRatePage />} />
               <Route path="/offer/rates" element={<AdminOfferRatePage />} />
               <Route path="/targeted/rates" element={<AdminTargetedRatePage />} />
-
+              <Route path="/recharge/form" element={<AdminRechargeForm />} />
+              <Route path="/vendor/form" element={<AdminVendorForm />} />
+              <Route path="/recharge/requests" element={<AdminRechargerequestPage />} />
+              <Route path="/vendor/requests" element={<AdminVendorRequestPage />} />
+              <Route path="/overdraft_requests" element={<AdminOverdraftRequestPage />} />
+              <Route path="/privaterate_requests" element={<AdminPrivateRateRequestPage />} />
             </Routes>
           </AdminRoute>
         }

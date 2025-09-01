@@ -84,28 +84,25 @@ export const getNavItems = (adminRole) => [
       },
       {
         label: "Recharge", subMenu: true, items: [
-          { label: makeLabel(FaWallet, "teal", "Recharge Form"), href: "/admin/recharge" },
-          { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Form"), href: "/admin/vendor_form" }
+          { label: makeLabel(FaWallet, "teal", "Recharge Form"), href: "/admin/recharge/form" },
+          { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Form"), href: "/admin/vendor/form" }
         ]
       },
       ...(["account","sale"].includes(adminRole) ? [
         {
           label: "Requests", subMenu: true, items: [
-            { label: makeLabel(FaWallet, "teal", "Recharge Requests"), href: "/admin/recharge_requests" },
-            { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Requests"), href: "/admin/vendorpayment" },
+            { label: makeLabel(FaWallet, "teal", "Recharge Requests"), href: "/admin/recharge/requests" },
+            { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Requests"), href: "/admin/vendor/requests" },
             ...(["account"].includes(adminRole) ? [
 
               { label: makeLabel(FaMoneyBillWave, "primary", "Over Draft Requests"), href: "/admin/overdraft_requests" },
               { label: makeLabel(FaStar, "accent", "Private Rate Requests"), href: "/admin/privaterate_requests" },
-              { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/account/report" },
-              { label: makeLabel(FaEnvelope, "purple", "Email"), href: "/admin/account/email" },
-              { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/admin/account/myticket" }
             ] : [])
           ]
         },
-        { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/account/followup" },
-        { label: makeLabel(FaComments, "dark", "Messages"), href: "/admin/account/messages" },
-        { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/account/assistance" }
+        // { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/account/followup" },
+        // { label: makeLabel(FaComments, "dark", "Messages"), href: "/admin/account/messages" },
+        // { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/account/assistance" }
       ] : [])
     ]
   },
