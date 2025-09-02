@@ -230,10 +230,10 @@ const SettingsPage = ({ admins = [] }) => {
                   >
                     <option value="all">All Roles</option>
                     <option value="account">Accounts</option>
-                    <option value="support">Support</option>
-                    <option value="carrier">Carrier</option>
+                    {/* <option value="support">Support</option> */}
+                    {/* <option value="carrier">Carrier</option> */}
                     <option value="sale">Sales</option>
-                    <option value="lead">Leads</option>
+                    {/* <option value="lead">Leads</option> */}
                   </select>
                 </div>
 

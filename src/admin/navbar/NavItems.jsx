@@ -1,8 +1,7 @@
 import {
   FaChartLine, FaUsers, FaBell, FaEnvelope, FaFileAlt, FaComments, FaHandsHelping,
   FaTruck, FaShippingFast, FaMoneyBillWave, FaCreditCard, FaStar, FaBullseye, FaPercentage,
-  FaWallet, FaFileInvoiceDollar, FaTools, FaTicketAlt, FaFlask, FaTasks, FaHeadset,
-  FaPhoneAlt, FaHashtag, FaUserCog, FaUsersCog, FaExchangeAlt
+  FaWallet, FaFileInvoiceDollar, FaUsersCog
 } from "react-icons/fa";
 import { SiWebmoney } from "react-icons/si";
 import { HomeIcon } from "@heroicons/react/24/solid";
@@ -29,45 +28,45 @@ export const getNavItems = (adminRole) => [
 
   { id: "dashboard", icon: <HomeIcon className="h-8 w-8 text-orange-400" />, href: "/admin/dashboard", roles: ["all"], mobileOnly: true },
   // Leads
-  // {
-  //   id: "leads", label: "Leads", roles: ["carrier", "lead", "sale"],
-  //   subItems: [
-  //     { label: makeLabel(SiWebmoney, "primary", "New Leads"), href: "/admin/newLeads" },
-  //     { label: makeLabel(FaBell, "accent", "Follow Up"), href: "/admin/notification" },
-  //     { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/leads/email" },
-  //     { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/leads/report" },
-  //     { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/leads/messages" },
-  //     { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/leads/assistance" }
-  //   ]
-  // },
+  {
+    id: "leads", label: "Leads", roles: ["carrier", "lead", "sale"],
+    subItems: [
+      { label: makeLabel(SiWebmoney, "primary", "New Leads"), href: "/admin/newLeads" },
+      { label: makeLabel(FaBell, "accent", "Follow Up"), href: "/admin/notification" },
+      { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/leads/email" },
+      { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/leads/report" },
+      { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/leads/messages" },
+      { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/leads/assistance" }
+    ]
+  },
 
   // Sales
-  // {
-  //   id: "sales", label: "Sales", roles: ["sale"],
-  //   subItems: [
-  //     { label: makeLabel(FaChartLine, "primary", "Leads"), href: "/admin/sale/leads" },
-  //     { label: makeLabel(FaUsers, "secondary", "Customers"), href: "/admin/sale/customer" },
-  //     { label: makeLabel(FaBell, "accent", "Followups"), href: "/admin/sale/followups" },
-  //     { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/sale/email" },
-  //     { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/sale/report" },
-  //     { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/sale/messages" },
-  //     { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/sale/assistance" }
-  //   ]
-  // },
+  {
+    id: "sales", label: "Sales", roles: ["sale"],
+    subItems: [
+      { label: makeLabel(FaChartLine, "primary", "Leads"), href: "/admin/sale/leads" },
+      { label: makeLabel(FaUsers, "secondary", "Customers"), href: "/admin/sale/customer" },
+      { label: makeLabel(FaBell, "accent", "Followups"), href: "/admin/sale/followups" },
+      { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/sale/email" },
+      { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/sale/report" },
+      { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/sale/messages" },
+      { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/sale/assistance" }
+    ]
+  },
 
   // Carriers
-  // {
-  //   id: "carriers", label: "Carriers", roles: ["sale", "carrier"],
-  //   subItems: [
-  //     { label: makeLabel(FaTruck, "primary", "Leads"), href: "/admin/carrier/leads" },
-  //     { label: makeLabel(FaShippingFast, "secondary", "Carriers"), href: "/admin/carrier/carrier" },
-  //     { label: makeLabel(FaBell, "accent", "Followups"), href: "/admin/carrier/followup" },
-  //     { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/carrier/email" },
-  //     { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/carrier/report" },
-  //     { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/carrier/messages" },
-  //     { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/carrier/assistance" }
-  //   ]
-  // },
+  {
+    id: "carriers", label: "Carriers", roles: ["sale", "carrier"],
+    subItems: [
+      { label: makeLabel(FaTruck, "primary", "Leads"), href: "/admin/carrier/leads" },
+      { label: makeLabel(FaShippingFast, "secondary", "Carriers"), href: "/admin/carrier/carrier" },
+      { label: makeLabel(FaBell, "accent", "Followups"), href: "/admin/carrier/followup" },
+      { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/carrier/email" },
+      { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/carrier/report" },
+      { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/carrier/messages" },
+      { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/carrier/assistance" }
+    ]
+  },
 
   // Accounts
   {

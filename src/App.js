@@ -119,6 +119,42 @@ import AdminRechargerequestPage from "./admin/account/Requests/RechargeRequests/
 import AdminVendorRequestPage from "./admin/account/Requests/Vendorpayment/page.jsx";
 import AdminPrivateRateRequestPage from "./admin/account/Requests/PrivaterateRequest/page.jsx";
 import AdminOverdraftRequestPage from "./admin/account/Requests/OverdraftRequests/page.jsx";
+//admin lead
+import AdminLeadInternalAssistance from "./admin/Leads/InternalAssistance/page.jsx";
+import AdminLeadsMessage from "./admin/Leads/messages/page.jsx";
+import AdminLeadReport from "./admin/Leads/Reports/page.jsx";
+import AdminLeadEmail from "./admin/Leads/Emails/page.jsx";
+import AdminLeadFollowUp from "./admin/Leads/Followups/page.jsx";
+import AdminNewLeads from "./admin/Leads/NewLeads/page.jsx";
+import AdminAddNewLead from "./admin/Leads/NewLeads/AddLead/page.jsx";
+import AdminLeadDetails from "./admin/Leads/NewLeads/[customerId]/page.jsx";
+//sale
+import AdminSalesReportPage from "./admin/Sales/Reports/page.jsx";
+import AdminSaleMessage from "./admin/Sales/Messages/page.jsx";
+import AdminSaleInternalAssistance from "./admin/Sales/internalAssistance/page.jsx";
+import AdminSaleEmail from "./admin/Sales/Emails/page.jsx";
+import AdminFollowUpDetails from "./admin/Sales/Followups/[id]/page.jsx";
+import AdminSaleFollowUp from "./admin/Sales/Followups/page.jsx";
+import AdminAddSaleCustomerPage from "./admin/Sales/Leads/AddLead/page.jsx";
+import AdminCustomersPage from "./admin/Sales/Leads/page.jsx";
+import AdminCreateSaleTroubleTicket from "./admin/Sales/Leads/[customerId]/components/CreateTicket/page.jsx";
+import AdminSaleLeadDetails from "./admin/Sales/Leads/[customerId]/page.jsx";
+import AdminSaleCustomersPage from "./admin/Sales/Customers/page.jsx";
+import AdminAddCustomerPage from "./admin/Sales/Customers/AddLead/page.jsx";
+import AdminSaleCustomerLeadDetails from "./admin/Sales/Customers/[customerId]/page.jsx";
+//carriers
+import AdminCarrierReport from "./admin/Carriers/Reports/page.jsx";
+import AdminCarrierEmail from "./admin/Carriers/Email/page.jsx";
+import AdminCarrierInternalAssistance from "./admin/Carriers/InternalAssistance/page.jsx";
+import AdminCarriersMessage from "./admin/Carriers/Messages/page.jsx";
+import AdminCarrierFollowUp from "./admin/Carriers/Followups/page.jsx";
+import AdminAddCarrierPage from "./admin/Carriers/Leads/AddLead/page.jsx";
+import AdminCarrierPage from "./admin/Carriers/Leads/page.jsx";
+import AdminCarrierDetails from "./admin/Carriers/Leads/[customerId]/page.jsx";
+import AdminCreateCarrierTroubleTicket from "./admin/Carriers/Leads/[customerId]/components/CreateTicket/page.jsx";
+import AdminAddCarrierCustomerPage from "./admin/Carriers/Carriers/AddLead/page.jsx";
+import AdminCarrierCustomersPage from "./admin/Carriers/Carriers/page.jsx";
+import AdminCarriersCustomerLeadDetails from "./admin/Carriers/Carriers/[customerId]/page.jsx";
 
 
 
@@ -187,6 +223,7 @@ function App() {
               <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/staff-management" element={<StaffManagement />} />
               <Route path="/customer-management" element={<CustomersManagementPage />} />
+              {/* account */}
               <Route path="/cc/rates" element={<AdminCCRate />} />
               <Route path="/cli/rates" element={<AdminCLIRate />} />
               <Route path="/special/rates" element={<AdminSpecialRatePage />} />
@@ -198,6 +235,44 @@ function App() {
               <Route path="/vendor/requests" element={<AdminVendorRequestPage />} />
               <Route path="/overdraft_requests" element={<AdminOverdraftRequestPage />} />
               <Route path="/privaterate_requests" element={<AdminPrivateRateRequestPage />} />
+              {/* lead */}
+              <Route path="/newLeads" element={<AdminNewLeads />} />
+              <Route path="/Addlead" element={<AdminAddNewLead />} />
+              <Route path="/NewLeads/:customerId" element={<AdminLeadDetails />} />
+              <Route path="/notification" element={<AdminLeadFollowUp />} />
+              <Route path="/leads/email" element={<AdminLeadEmail />} />
+              <Route path="/leads/assistance" element={<AdminLeadInternalAssistance />} />
+              <Route path="/leads/messages" element={<AdminLeadsMessage />} />
+              <Route path="/leads/report" element={<AdminLeadReport />} />
+
+              {/* sale */}
+              <Route path="/sale/leads" element={<AdminCustomersPage />} />
+              <Route path="/sale/addlead" element={<AdminAddSaleCustomerPage />} />
+              <Route path="/SaleLead/:customerId" element={<AdminSaleLeadDetails />} />
+              <Route path="/sale/ticket" element={<AdminCreateSaleTroubleTicket />} />
+              <Route path="/sale/customer" element={<AdminSaleCustomersPage />} />
+              <Route path="/sale/customer/addlead" element={<AdminAddCustomerPage />} />
+              <Route path="/SaleLead/customer/:customerId" element={<AdminSaleCustomerLeadDetails />} />
+              <Route path="/sale/followups" element={<AdminSaleFollowUp />} />
+              <Route path="/detailfollowup" element={<AdminFollowUpDetails />} />
+              <Route path="/sale/email" element={<AdminSaleEmail />} />
+              <Route path="/sale/assistance" element={<AdminSaleInternalAssistance />} />
+              <Route path="/sale/messages" element={<AdminSaleMessage />} />
+              <Route path="/sale/report" element={<AdminSalesReportPage />} />
+              {/* Carrier */}
+              <Route path="/carrier/leads" element={<AdminCarrierPage />} />
+              <Route path="/carrier/addlead" element={<AdminAddCarrierPage />} />
+              <Route path="/carrier/lead-details/:customerId" element={<AdminCarrierDetails />} />
+              <Route path="/carrrier/ticket" element={<AdminCreateCarrierTroubleTicket />} />
+              <Route path="/carrier/carrier" element={<AdminCarrierCustomersPage />} />
+              <Route path="/carrier/customer/addlead" element={<AdminAddCarrierCustomerPage />} />
+              <Route path="/carrier/carrier/:customerId" element={<AdminCarriersCustomerLeadDetails />} />
+              <Route path="/carrier/followup" element={<AdminCarrierFollowUp />} />
+              <Route path="/carrier/messages" element={<AdminCarriersMessage />} />
+              <Route path="/carrier/assistance" element={<AdminCarrierInternalAssistance />} />
+              <Route path="/carrier/email" element={<AdminCarrierEmail />} />
+              <Route path="/carrier/report" element={<AdminCarrierReport />} />
+
             </Routes>
           </AdminRoute>
         }
