@@ -228,7 +228,22 @@ const Ratepages = () => {
     return selectedRates[selectedSection]?.length || 0;
   };
 
-  const renderPagination = () => (
+const renderPagination = () => {
+  const visiblePages = 7;
+  let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
+  let endPage = startPage + visiblePages - 1;
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(endPage - visiblePages + 1, 1);
+  }
+
+  const pages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
+  return (
     <div className="flex justify-center mt-4">
       <button
         className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
@@ -236,16 +251,21 @@ const Ratepages = () => {
       >
         <ChevronLeft size={16} />
       </button>
-      {Array.from({ length: totalPages }, (_, i) => (
+
+      {pages.map((page) => (
         <button
-          key={i + 1}
-          className={`px-3 py-1 mx-1 rounded ${currentPage === i + 1 ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-            }`}
-          onClick={() => setCurrentPage(i + 1)}
+          key={page}
+          className={`px-3 py-1 mx-1 rounded ${
+            currentPage === page
+              ? "bg-[#0a2463] text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+          onClick={() => setCurrentPage(page)}
         >
-          {i + 1}
+          {page}
         </button>
       ))}
+
       <button
         className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
@@ -254,6 +274,8 @@ const Ratepages = () => {
       </button>
     </div>
   );
+};
+
 
   const renderTable = () => {
     if (activeTab === "cli") {
