@@ -71,7 +71,7 @@ const ResetPasswordPage = () => {
         newPassword: password
       });
       setSuccess(true);
-      setTimeout(() => navigate('/login'), 3000);
+      setTimeout(() => navigate('/customer/login'), 3000);
     } catch (err) {
       console.error('Error resetting password:', err);
       setError(err.response?.data?.error || 'Failed to reset password. Please try again.');
@@ -96,7 +96,7 @@ const ResetPasswordPage = () => {
             <h2 className="text-3xl font-extrabold text-gray-900">Invalid Token</h2>
             <p className="mt-2 text-sm text-gray-600">{error}</p>
             <button
-              onClick={() => navigate('/forgot-password')}
+              onClick={() => navigate('/customer/forgot-password')}
               className="mt-4 text-sm text-yellow-600 hover:text-yellow-500"
             >
               Request new reset link

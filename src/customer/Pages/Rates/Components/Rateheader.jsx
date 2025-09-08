@@ -105,6 +105,7 @@ const Ratepages = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  console.log(paginatedRates);
 
   const handleRateSelection = (rateId) => {
     if (!selectedSection) {
@@ -195,7 +196,7 @@ const Ratepages = () => {
         alert("Your session has expired. Please login again.");
         localStorage.removeItem("authtoken");
         localStorage.removeItem("userData");
-        navigate("/login");
+        navigate("/customer/login");
       } else {
         alert("Error submitting rates. Please try again.");
       }
@@ -261,7 +262,7 @@ const Ratepages = () => {
           <thead className="bg-blue-800 text-white">
             <tr>
               {selectionMode && (
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left font-normal">
                   <input
                     type="checkbox"
                     checked={getSelectedCount() === paginatedRates.length && paginatedRates.length > 0}
@@ -270,17 +271,18 @@ const Ratepages = () => {
                   />
                 </th>
               )}
-              <th className="px-4 py-3 text-left">Country Code</th>
-              <th className="px-4 py-3 text-left">Country Name</th>
-              <th className="px-4 py-3 text-left">Quality</th>
-              <th className="px-4 py-3 text-left">Rate</th>
-              <th className="px-4 py-3 text-left">Billing Cycle</th>
-              <th className="px-4 py-3 text-left">ASR</th>
-              <th className="px-4 py-3 text-left">ACD</th>
-              <th className="px-4 py-3 text-left">RTP</th>
-              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-left font-normal">Country Code</th>
+              <th className="px-4 py-3 text-left font-normal">Country Name</th>
+              <th className="px-4 py-3 text-left font-normal">Quality</th>
+              <th className="px-4 py-3 text-left font-normal">Rate</th>
+              <th className="px-4 py-3 text-left font-normal">Billing Cycle</th>
+              <th className="px-4 py-3 text-left font-normal">ASR</th>
+              <th className="px-4 py-3 text-left font-normal">ACD</th>
+              <th className="px-4 py-3 text-left font-normal">RTP</th>
+              <th className="px-4 py-3 text-left font-normal">Status</th>
             </tr>
           </thead>
+
           <tbody>
             {paginatedRates.length === 0 ? (
               <tr>
@@ -289,8 +291,10 @@ const Ratepages = () => {
                 </td>
               </tr>
             ) : (
-              paginatedRates.map((rate) => (
-                <tr key={rate._id} className="border-b">
+              paginatedRates.map((rate, index) => (
+                <tr
+                  key={rate._id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
                   {selectionMode && (
                     <td className="px-4 py-2">
                       <input
@@ -311,8 +315,8 @@ const Ratepages = () => {
                   <td className="px-4 py-2">{rate.rtp}</td>
                   <td
                     className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 font-semibold"
+                      ? "text-green-600 font-semibold"
+                      : "text-red-600 font-semibold"
                       }`}
                   >
                     {rate.status}
@@ -321,6 +325,7 @@ const Ratepages = () => {
               ))
             )}
           </tbody>
+
         </table>
       );
     } else {
@@ -329,7 +334,7 @@ const Ratepages = () => {
           <thead className="bg-blue-800 text-white">
             <tr>
               {selectionMode && (
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left font-normal">
                   <input
                     type="checkbox"
                     checked={getSelectedCount() === paginatedRates.length && paginatedRates.length > 0}
@@ -338,14 +343,16 @@ const Ratepages = () => {
                   />
                 </th>
               )}
-              <th className="px-4 py-3 text-left">Country Code</th>
-              <th className="px-4 py-3 text-left">Country Name</th>
-              <th className="px-4 py-3 text-left">Quality</th>
-              <th className="px-4 py-3 text-left">Profile</th>
-              <th className="px-4 py-3 text-left">Rate</th>
-              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-left font-normal">Country Code</th>
+              <th className="px-4 py-3 text-left font-normal">Country Name</th>
+              <th className="px-4 py-3 text-left font-normal">Quality Description</th>
+              <th className="px-4 py-3 text-center font-normal">Profile</th>
+              <th className="px-4 py-3 text-center font-normal">Billing Cycle</th>
+              <th className="px-4 py-3 text-center font-normal">Rate</th>
+              <th className="px-4 py-3 text-left font-normal">Status</th>
             </tr>
           </thead>
+
           <tbody>
             {paginatedRates.length === 0 ? (
               <tr>
@@ -354,9 +361,11 @@ const Ratepages = () => {
                 </td>
               </tr>
             ) : (
-              paginatedRates.map((rate) => (
-                <tr key={rate._id} className="border-b">
-                  {selectionMode && (
+              paginatedRates.map((rate, index) => (
+                <tr
+                  key={rate._id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                {selectionMode && (
                     <td className="px-4 py-2">
                       <input
                         type="checkbox"
@@ -366,15 +375,16 @@ const Ratepages = () => {
                       />
                     </td>
                   )}
-                  <td className="px-4 py-2">{rate.countryCode}</td>
-                  <td className="px-4 py-2">{rate.country}</td>
+                  <td className="px-4 py-2 text-left">{rate.countryCode}</td>
+                  <td className="px-4 py-2 text-left">{rate.country}</td>
                   <td className="px-4 py-2">{rate.qualityDescription}</td>
-                  <td className="px-4 py-2">{rate.profile || "-"}</td>
-                  <td className="px-4 py-2">{rate.rate}</td>
+                  <td className="px-4 py-2 text-center">{rate.profile || "-"}</td>
+                  <td className="px-4 py-2 text-center">{rate.billingCycle}</td>
+                  <td className="px-4 py-2 text-center">{rate.rate}</td>
                   <td
                     className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 font-semibold"
+                      ? "text-green-600 font-semibold"
+                      : "text-red-600 font-semibold"
                       }`}
                   >
                     {rate.status}
@@ -404,7 +414,7 @@ const Ratepages = () => {
                 const authToken = sessionStorage.getItem("authToken");
                 if (!authToken) {
                   alert("Please login to select rates");
-                  navigate("/login");
+                  navigate("/customer/login");
                   return;
                 }
                 setSelectionMode(true);

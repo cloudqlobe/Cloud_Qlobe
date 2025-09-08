@@ -17,6 +17,7 @@ const AccountFollowUp = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  console.log(followUpData);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +25,7 @@ const AccountFollowUp = () => {
         const followUpsResponse = await axiosInstance.get(`api/member/getCustomerFollowupsByMemberId/${memberDetails.id}`);
         setFollowUpData(followUpsResponse.data.followups);
 
-        const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.customerId))];
+        const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.userId))];
         const validIds = customerIds.filter(id => id && id.trim() !== "");
 
         const customers = {};
@@ -76,15 +77,15 @@ const AccountFollowUp = () => {
         </thead>
         <tbody>
           {filteredFollowUps.map((followUp) => {
-            const customer = customerData[followUp.customerId] || {};
+            const customer = customerData[followUp.userId] || {};
             return (
               <tr
                 key={followUp.followupId}
                 className="hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleRowClick(followUp.followupId)}
               >
-                <td className="border px-4 py-2">{customer.customerId || "N/A"}</td>
-                <td className="border px-4 py-2">{customer.companyName || "N/A"}</td>
+                <td className="border px-4 py-2">{followUp.customerId || "N/A"}</td>
+                <td className="border px-4 py-2">{followUp.companyName || "N/A"}</td>
                 <td className="border px-4 py-2 capitalize">{followUp.followupMethod}</td>
                 <td className="border px-4 py-2">{followUp.followupStatus}</td>
               </tr>

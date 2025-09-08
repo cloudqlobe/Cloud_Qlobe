@@ -24,7 +24,7 @@ const SupportFollowUp = () => {
         const followUpsResponse = await axiosInstance.get(`api/member/getCustomerFollowupsByMemberId/${memberDetails.id}`);
         setFollowUpData(followUpsResponse.data.followups);
 
-        const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.customerId))];
+        const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.userId))];
         const validIds = customerIds.filter(id => id && id.trim() !== "");
 
         const customers = {};
@@ -78,7 +78,7 @@ const SupportFollowUp = () => {
           {filteredFollowUps.map((followUp) => {
             return (
               <tr
-                key={followUp.followupId}
+                key={followUp.userId}
                 className="hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleRowClick(followUp.followupId)}
               >

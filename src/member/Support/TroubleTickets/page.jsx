@@ -131,7 +131,7 @@ const TroubleTicket = () => {
                 <th className="border px-5 py-3 text-left">Support Engineer</th>
                 <th className="border px-5 py-3 text-left">Status</th>
                 <th className="border px-5 py-3 text-left">Priority</th>
-                {["superAdmin", "support", "supportMember"].includes(memberDetails.role) && (
+                {["supportmember"].includes(memberDetails.role) && (
                   <th className="border px-5 py-3 text-left">Actions</th>
                 )}
               </tr>
@@ -159,7 +159,7 @@ const TroubleTicket = () => {
                       <td className="border px-6 py-3">{ticket.supportEngineer || 'N/A'}</td>
                       <td className="border px-6 py-3">{ticket.status || 'N/A'}</td>
                       <td className="border px-6 py-3">{ticket.ticketPriority || 'N/A'}</td>
-                      {["superAdmin", "support", "supportMember"].includes(memberDetails.role) && (
+                      {["supportmember"].includes(memberDetails.role) && (
                         <td className="border px-6 py-3 space-x-2">
                           <button
                             className="bg-green-500 text-white px-3 py-1 rounded-lg shadow hover:bg-green-600 disabled:bg-gray-400"

@@ -42,7 +42,7 @@ const Navbar = () => {
     try {
       await axiosInstance.post('api/logout', {}, { withCredentials: true });
       sessionStorage.removeItem('authToken');
-      navigate('/login')
+      navigate('/customer/login')
     } catch (error) {
       console.log(error);
     }
@@ -219,7 +219,7 @@ const Navbar = () => {
           {sessionStorage.getItem("authToken") ? (
             <>
               <Link
-                to="/dashboard"
+                to="/customer/dashboard"
                 className="w-[120px] text-center px-4 py-2 bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition rounded"
               >
                 Dashboard
@@ -236,13 +236,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                to="/register"
+                to="/customer/register"
                 className="w-[120px] text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600 transition rounded"
               >
                 Register
               </Link>
               <Link
-                to="/login"
+                to="/customer/login"
                 className="w-[120px] text-center px-4 py-2 bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition rounded"
               >
                 Login

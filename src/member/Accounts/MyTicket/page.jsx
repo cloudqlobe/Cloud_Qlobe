@@ -5,12 +5,12 @@ import { FcElectroDevices } from "react-icons/fc";
 import { SiTask } from "react-icons/si";
 import { HiChartSquareBar } from "react-icons/hi";
 import { ImBooks, ImPodcast } from "react-icons/im";
-import adminContext from "../../../../../../context/page";
-import axiosInstance from "../../utils/axiosinstance";
 import { PickupTable, RequestsTable, ViewTable } from "./table";
+import axiosInstance from "../../../utils/axiosinstance";
+import AuthContext from "../../../context/AuthContext";
 
-const RequestsPage = () => {
-  const { adminDetails } = useContext(adminContext);
+const AccountsMyTicket = () => {
+  const { memberDetails } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const [recharge, setRecharge] = useState([]);
   const [vendor, setVendor] = useState([]);
@@ -18,6 +18,7 @@ const RequestsPage = () => {
   const [privateRate, setPrivateRate] = useState([]);
   const [ratesData, setRatesData] = useState([]);
   const [cliRatesData, setCliRatesData] = useState([]);
+console.log(overdraft);
 
   const [activeCategory, setActiveCategory] = useState("All");
   // const [searchTerm, setSearchTerm] = useState("");
@@ -36,10 +37,10 @@ const RequestsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!adminDetails?.id) return;
+      if (!memberDetails?.id) return;
 
       try {
-        const memberDataResponse = await axiosInstance.get(`api/member/account/${adminDetails.id}`);
+        const memberDataResponse = await axiosInstance.get(`api/member/account/${memberDetails.id}`);
         const vendorDataResponse = await axiosInstance.get(`api/member/getAllVendor`);
         const rechargeRequestResponse = await axiosInstance.get(`api/member/getAllTransactions`);
         const privateRateResponse = await axiosInstance.get(`api/member/test_privateRate`);
@@ -101,7 +102,7 @@ const RequestsPage = () => {
     };
 
     fetchData();
-  }, [adminDetails?.id]);
+  }, [memberDetails?.id]);
 
   const handlePickupClick = (test) => {
     if (test.category === "Recharge Request") {
@@ -168,7 +169,7 @@ const RequestsPage = () => {
       const rateIds = selectedTest.rateId?.map((rate) => rate);
 
       const filteredRates =
-        selectedTest.service_category === "CCRate Routes"
+        selectedTest.service_category === "CCPrivateRate Routes"
           ? ratesData.filter((rate) => rateIds.includes(rate._id))
           : cliRatesData.filter((rate) => rateIds.includes(rate._id));
 
@@ -234,11 +235,6 @@ const RequestsPage = () => {
       );
     }
     
-    // if (searchTerm) {
-    //   filteredData = filteredData.filter(request => 
-    //     JSON.stringify(request).toLowerCase().includes(searchTerm.toLowerCase())
-    //   );
-    // }
     
     return filteredData;
   };
@@ -387,4 +383,4 @@ const RequestsPage = () => {
   );
 };
 
-export default RequestsPage;
+export default AccountsMyTicket;

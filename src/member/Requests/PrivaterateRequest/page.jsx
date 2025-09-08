@@ -65,9 +65,9 @@ const PrivateRateRequestPage = () => {
 
       let filteredRates = [];
 
-      if (selectedTest.service_category === "CCRate Routes") {
+      if (selectedTest.service_category === "CCPrivateRate Routes") {
         filteredRates = privateRatesData.filter((rate) => rateIds.includes(rate._id));
-      } else if (selectedTest.service_category === "CLIRate Routes") {
+      } else if (selectedTest.service_category === "CLIPrivateRate Routes") {
         filteredRates = privateCliRatesData.filter((rate) => rateIds.includes(rate._id));
       }
 
@@ -75,6 +75,7 @@ const PrivateRateRequestPage = () => {
       setShowViewModal(true);
     }
   };
+
 
 
   const handlePickupClick = async (privateRateId) => {
@@ -183,7 +184,7 @@ const PrivateRateRequestPage = () => {
               <h3 className="text-lg font-semibold mb-4">Rates Details</h3>
               <div className="flex mb-4">
                 {
-                  selectedRequest.service_category === "CCRate Routes" ? (
+                  selectedRequest.service_category === "CCPrivateRate Routes" ? (
                     <button
                       className={`px-4 py-2 rounded-md bg-blue-400 text-white`}
                     >
@@ -199,7 +200,7 @@ const PrivateRateRequestPage = () => {
                 }
               </div>
 
-              {selectedRequest.service_category === 'CCRate Routes' && selectedRequest && selectedRequest?.filteredRates.length > 0 && (
+              {selectedRequest.service_category === 'CCPrivateRate Routes' && selectedRequest && selectedRequest?.filteredRates.length > 0 && (
                 <table className="w-full border-collapse mb-6">
                   <thead className="bg-yellow-500 text-white">
                   <tr>
@@ -226,7 +227,7 @@ const PrivateRateRequestPage = () => {
                 </table>
               )}
 
-              {selectedRequest.service_category === 'CLIRate Routes' && selectedRequest && selectedRequest?.filteredRates.length > 0 && (
+              {selectedRequest.service_category === 'CLIPrivateRate Routes' && selectedRequest && selectedRequest?.filteredRates.length > 0 && (
                 <table className="w-full border-collapse">
                   <thead className="bg-yellow-500 text-white">
                   <tr>

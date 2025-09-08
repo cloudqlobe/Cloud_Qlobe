@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegEye, FaCheckCircle } from "react-icons/fa"; 
 import DashboardLayout from "../../layout/page"; 
 
-const TaskPage = () => {
+const SupportTaskPage = () => {
   const [tasks, setTasks] = useState([]);
   const [activeTab, setActiveTab] = useState("total");
   const [filterStatus, setFilterStatus] = useState("");
@@ -154,4 +154,4 @@ const TaskPage = () => {
   );
 };
 
-export default TaskPage;
+export default SupportTaskPage;

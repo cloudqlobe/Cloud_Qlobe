@@ -105,7 +105,7 @@ const ForgotPasswordPage = () => {
 
         <div className="text-center mt-4">
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/customer/login')}
             className="text-sm text-yellow-600 hover:text-yellow-500"
           >
             Back to Login

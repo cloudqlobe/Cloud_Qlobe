@@ -28,7 +28,7 @@ const Loginpagemain = () => {
     try {
       const response = await axiosInstance.post("/api/login", formData);
       sessionStorage.setItem("tempAuthToken",response?.data.tempAuthToken)
-      navigate('/verify-token')
+      navigate('/customer/verify-token')
     } catch (err) {
       console.error("Login error:", err);
       setError(
@@ -130,7 +130,7 @@ const Loginpagemain = () => {
                 />
               </div>
               <div className="text-right">
-                <a href="/forgot-password" className="text-sm text-yellow-500 hover:underline">
+                <a href="/customer/forgot-password" className="text-sm text-yellow-500 hover:underline">
                   Forgot password?
                 </a>
               </div>

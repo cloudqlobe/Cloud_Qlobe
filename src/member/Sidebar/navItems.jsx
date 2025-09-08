@@ -72,7 +72,7 @@ export const getNavItems = (memberRole) => [
     ]
   },
   {
-    id: "accounts", label: "Accounts", roles: ["accountMember", "salemember", "carrierMember"],
+    id: "accounts", label: "Accounts", roles: ["accountmember", "salemember", "carrierMember"],
     subItems: [
       {
         label: "Rates", subMenu: true,
@@ -91,19 +91,19 @@ export const getNavItems = (memberRole) => [
           { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Form"), href: "/member/vendor_form" }
         ]
       },
-      ...(["accountMember", "salemember"].includes(memberRole) ? [
+      ...(["accountmember", "salemember"].includes(memberRole) ? [
         {
           label: "Requests", subMenu: true,
           items: [
             { label: makeLabel(FaWallet, "teal", "Recharge Requests"), href: "/member/recharge_requests" },
             { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Requests"), href: "/member/vendorpayment" },
-            ...(["accountMember"].includes(memberRole) ? [
+            ...(["accountmember"].includes(memberRole) ? [
               { label: makeLabel(FaMoneyBillWave, "primary", "Over Draft Requests"), href: "/member/overdraft_requests" },
               { label: makeLabel(FaStar, "accent", "Private Rate Requests"), href: "/member/privaterate_requests" }
             ] : [])
           ]
         },
-        ...(["account"].includes(memberRole) ? [
+        ...(["accountmember"].includes(memberRole) ? [
           { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/member/account/report" },
           { label: makeLabel(FaEnvelope, "purple", "Email"), href: "/member/account/email" },
           { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/member/account/myticket" }
@@ -115,12 +115,12 @@ export const getNavItems = (memberRole) => [
     ]
   },
   {
-    id: "support", label: "Support", roles: ["supportMember", "salemember"],
+    id: "support", label: "Support", roles: ["supportmember", "salemember"],
     subItems: [
       { label: makeLabel(FaTools, "primary", "Trouble Tickets"), href: "/member/support/troubleTickets" },
       { label: makeLabel(FaFlask, "secondary", "Testing"), href: "/member/support/testing" },
       { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/member/support/followups" },
-      ...(["supportMember"].includes(memberRole) ? [
+      ...(["supportmember"].includes(memberRole) ? [
         { label: makeLabel(FaTasks, "purple", "Tasks"), href: "/member/support/task" },
         { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/member/support/myTickets" },
         { label: makeLabel(FaEnvelope, "indigo", "Email"), href: "/member/support/email" }

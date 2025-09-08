@@ -196,7 +196,7 @@ const customer_id = customerDetails?.id; // For ticket filtering
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-xl flex items-center space-x-2 shadow-sm hover:bg-emerald-700 transition-all"
-              onClick={() => navigate("/add-ticket")}
+              onClick={() => navigate("/customer/add-ticket")}
             >
               <Plus className="w-5 h-5" />
               <span className="font-bold">Create Ticket</span>

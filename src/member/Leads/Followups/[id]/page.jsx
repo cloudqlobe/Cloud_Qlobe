@@ -18,6 +18,7 @@ const FollowUpDetails = () => {
   const [error, setError] = useState(null);
   const { followupId } = useParams()
   const id = followupId; // Replace with dynamic ID handling if needed
+console.log(id);
 
   useEffect(() => {
     const fetchFollowUp = async () => {
@@ -39,7 +40,7 @@ const FollowUpDetails = () => {
         setStatus(followUpData.followupStatus);
         setNextFollowUpType(followUpData.followupMethod)
         setNextFollowUpDate(followUpData.nextFollowupTime || followUpData.followupDate)
-        const customerResponse = await axiosInstance.get(`api/customer/${followUpData.customerId}`);
+        const customerResponse = await axiosInstance.get(`api/customer/${followUpData.userId}`);
         setCustomer(customerResponse.data.customer);
       } catch (err) {
         setError(err.message);

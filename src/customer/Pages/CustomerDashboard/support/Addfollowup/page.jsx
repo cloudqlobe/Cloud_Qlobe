@@ -56,7 +56,7 @@ const AddTroubleTicket = () => {
       const response = await axiosInstance.post("api/troubleticket", ticketDetails);
       if (response.status === 201) {
         alert("Trouble Ticket added successfully!");
-        navigate('/support')
+        navigate('/customer/support')
       } else {
         alert("Error adding Trouble Ticket.");
       }

@@ -13,6 +13,7 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
     rate: "",
     category: "",
     testStatus: "as",
+    billingCycle: "",
     specialRate: false,
     addToTicker: false,
   }
@@ -83,7 +84,16 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
             <option value='Outbound'>Outbound</option>
             <option value='IVR'>IVR</option>
           </select>
-
+          <input
+            type='text'
+            placeholder='Billing Cycle'
+            value={newLead.billingCycle}
+            onChange={(e) =>
+              setNewLead({ ...newLead, billingCycle: e.target.value })
+            }
+            className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'
+            required
+          />
           <input
             type='number'
             placeholder='Enter Rate'
@@ -215,7 +225,7 @@ const AdminCCRate = () => {
   return (
     <Layout>
       <div className='container mx-auto px-4 py-4'>
-        <h1 style={{marginBottom: "15px" }} className='text-2xl font-semibold'>Rates Management</h1>
+        <h1 style={{ marginBottom: "15px" }} className='text-2xl font-semibold'>Rates Management</h1>
         {successMessage && (
           <p className='text-green-600 mt-4'>{successMessage}</p>
         )}
@@ -228,7 +238,7 @@ const AdminCCRate = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className='border border-gray-300 px-4 py-2'
-            style={{marginRight: "15px", width: "300px" }}
+            style={{ marginRight: "15px", width: "300px" }}
           />
           <span>
             <select
@@ -286,6 +296,7 @@ const AdminCCRate = () => {
               <th className='py-2 px-4'>Rate</th>
               <th className='py-2 px-4'>Status</th>
               <th className='py-2 px-4'>Profile</th>
+              <th className='py-2 px-4'>Billing Cycle</th>
               {["superAdmin", "account"].includes(adminDetails.role) && (
                 <th className='py-2 px-4'>Actions</th>
               )}
@@ -312,15 +323,16 @@ const AdminCCRate = () => {
                 return 0;
               })
               .map((rate, index) => (
-                <tr
-                  key={rate._id}
-                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                  <tr
+                    key={rate._id}
+                    className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
                   <td className='py-2 px-4'>{rate.countryCode}</td>
                   <td className='py-2 px-4'>{rate.country}</td>
                   <td className='py-2 px-4'>{rate.qualityDescription}</td>
                   <td className='py-2 px-4'>{rate.rate}</td>
                   <td className='py-2 px-4'>{rate.status}</td>
                   <td className='py-2 px-4'>{rate.profile}</td>
+                  <td className='py-2 px-4'>{rate.billingCycle}</td>
 
                   {["superAdmin", "account"].includes(adminDetails.role) && (
                     <td className='py-2 px-4'>

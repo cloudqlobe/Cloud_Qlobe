@@ -17,6 +17,7 @@ const AddFollowUpInAccounts = () => {
   const [followUpDetails, setFollowUpDetails] = useState({
     customerId: "",
     companyName: "",
+    userId:'',
     followupDescription: "",
     followupMethod: "call",
     followupStatus: "Pending",
@@ -57,9 +58,10 @@ const AddFollowUpInAccounts = () => {
     setCompanyInput(company.customerId);
     setFollowUpDetails(prev => ({
       ...prev,
-      companyName: company.customerId,
-      customerId: company.id,
-      memberId: memberDetails.id
+      companyName: company.companyName,
+      customerId: company.customerId,
+      memberId: memberDetails.id,
+      userId:company.id
     }));
     setShowDropdown(false);
   };

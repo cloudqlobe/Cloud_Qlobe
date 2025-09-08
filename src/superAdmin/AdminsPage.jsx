@@ -230,10 +230,10 @@ const SettingsPage = ({ admins = [] }) => {
                   >
                     <option value="all">All Roles</option>
                     <option value="account">Accounts</option>
-                    {/* <option value="support">Support</option> */}
-                    {/* <option value="carrier">Carrier</option> */}
+                    <option value="support">Support</option>
+                    <option value="carrier">Carrier</option>
                     <option value="sale">Sales</option>
-                    {/* <option value="lead">Leads</option> */}
+                    <option value="lead">Leads</option>
                   </select>
                 </div>
 
@@ -374,7 +374,7 @@ const SettingsPage = ({ admins = [] }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Role
+                  Rol
                 </label>
                 <select
                   value={newUser.role}
@@ -383,9 +383,9 @@ const SettingsPage = ({ admins = [] }) => {
                 >
                   <option value="account">Accounts</option>
                   <option value="support">Support</option>
-                  <option value="carrier">Carrier</option>
+                  {/* <option value="carrier">Carrier</option> */}
                   <option value="sale">Sales</option>
-                  <option value="lead">Leads</option>
+                  {/* <option value="lead">Leads</option> */}
                 </select>
               </div>
             </div>

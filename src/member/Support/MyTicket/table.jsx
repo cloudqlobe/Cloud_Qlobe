@@ -101,9 +101,6 @@ const RequestsTable = ({ activeCategory, filteredRequests, openModal, handlePick
   );
 };
 
-export default RequestsTable;
-
-
 const VeiwPage = ({ isModalOpen, selectedRate, closeModal }) => {
   return (
     <>

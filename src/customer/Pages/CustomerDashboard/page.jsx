@@ -37,14 +37,14 @@ const Dashboard = () => {
     // ✅ Handle menu item clicks
     const handleUserMenuClick = async (label) => {
         if (label === "My Account") {
-            navigate("/profile"); // ✅ Navigate to My Account page
+            navigate("/customer/profile"); // ✅ Navigate to My Account page
         } else if (label === "Settings") {
-            navigate("/settings"); // ✅ Navigate to Settings page
+            navigate("/customer/settings"); // ✅ Navigate to Settings page
         } else if (label === "Logout") {
             try {
                 await axiosInstance.post('/api/logout', {}, { withCredentials: true }); // ✅ API logout
                 sessionStorage.removeItem('authToken'); // ✅ Remove token
-                navigate('/login'); // ✅ Redirect to login
+                navigate('/customer/login'); // ✅ Redirect to login
             } catch (error) {
                 console.error("Logout error:", error);
                 // Optionally show a toast or alert here
@@ -69,7 +69,7 @@ const Dashboard = () => {
             bgGradient: "from-emerald-50 to-green-50",
             description: "Manage billing & payments",
             delay: 0.4,
-            path: "/payment" // ✅ route
+            path: "/customer/payment" // ✅ route
         },
         {
             label: "My Rates",
@@ -78,7 +78,7 @@ const Dashboard = () => {
             bgGradient: "from-blue-50 to-cyan-50",
             description: "View & upgrade plans",
             delay: 0.5,
-            path: "/my-rates"
+            path: "/customer/my-rates"
         },
         {
             label: "24/7 Support",
@@ -87,7 +87,7 @@ const Dashboard = () => {
             bgGradient: "from-purple-50 to-indigo-50",
             description: "Get instant help",
             delay: 0.6,
-            path: "/support"
+            path: "/customer/support"
         },
         {
             label: "Profile Settings",
@@ -96,7 +96,7 @@ const Dashboard = () => {
             bgGradient: "from-orange-50 to-amber-50",
             description: "Account preferences",
             delay: 0.7,
-            path: "/profile"
+            path: "/customer/profile"
         },
     ];
 

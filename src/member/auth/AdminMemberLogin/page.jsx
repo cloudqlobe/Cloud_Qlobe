@@ -125,8 +125,8 @@ navigate("/member/verify-token", {
               <option value="supportmember">Support Member</option>
               <option value="accountmember">Accounts Member</option>
               <option value="salemember">Sales Member</option>
-              <option value="carriermember">Carriers Member</option>
-              <option value="leadmember">Leads Member</option>
+              {/* <option value="carriermember">Carriers Member</option> */}
+              {/* <option value="leadmember">Leads Member</option> */}
             </select>
           </div>
 

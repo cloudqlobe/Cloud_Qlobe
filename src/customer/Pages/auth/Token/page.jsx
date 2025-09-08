@@ -16,7 +16,7 @@ const VerifyTokenPage = () => {
   useEffect(() => {
     const tempAuthToken = sessionStorage.getItem("tempAuthToken");
     if (!tempAuthToken) {
-      navigate("/login");
+      navigate("/customer/login");
     }
   }, [navigate]);
 
@@ -48,7 +48,7 @@ const VerifyTokenPage = () => {
       sessionStorage.setItem("authToken", JSON.stringify(res.data.authToken))
       sessionStorage.removeItem("tempAuthToken");
       updateCustomerDetails(res.data.authToken);
-      navigate("/dashboard");
+      navigate("/customer/dashboard");
     } catch (err) {
       console.error("Verification error:", err);
       setError(

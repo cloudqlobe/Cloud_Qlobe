@@ -1,8 +1,9 @@
 import {
   FaChartLine, FaUsers, FaBell, FaEnvelope, FaFileAlt, FaComments, FaHandsHelping,
-  FaTruck, FaShippingFast, FaMoneyBillWave, FaCreditCard, FaStar, FaBullseye, FaPercentage,
-  FaWallet, FaFileInvoiceDollar, FaUsersCog
-} from "react-icons/fa";
+  FaTruck, FaShippingFast, FaMoneyBillWave, FaCreditCard, FaStar, FaBullseye,
+  FaPercentage, FaWallet, FaFileInvoiceDollar, FaTools, FaTicketAlt, FaFlask,
+  FaTasks, FaHeadset, FaPhoneAlt, FaHashtag, FaUserCog, FaUsersCog, FaExchangeAlt
+} from 'react-icons/fa';
 import { SiWebmoney } from "react-icons/si";
 import { HomeIcon } from "@heroicons/react/24/solid";
 
@@ -87,7 +88,7 @@ export const getNavItems = (adminRole) => [
           { label: makeLabel(FaFileInvoiceDollar, "cyan", "Payment Form"), href: "/admin/vendor/form" }
         ]
       },
-      ...(["account","sale"].includes(adminRole) ? [
+      ...(["account", "sale"].includes(adminRole) ? [
         {
           label: "Requests", subMenu: true, items: [
             { label: makeLabel(FaWallet, "teal", "Recharge Requests"), href: "/admin/recharge/requests" },
@@ -99,7 +100,10 @@ export const getNavItems = (adminRole) => [
             ] : [])
           ]
         },
-        // { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/account/followup" },
+        // { label: makeLabel(FaFileAlt, "indigo", "Reports"), href: "/admin/account/report" },
+        // { label: makeLabel(FaEnvelope, "purple", "Email"), href: "/admin/account/email" },
+        // { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/admin/account/myticket" },
+        { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/account/followup" },
         // { label: makeLabel(FaComments, "dark", "Messages"), href: "/admin/account/messages" },
         // { label: makeLabel(FaHandsHelping, "danger", "Internal Assistance"), href: "/admin/account/assistance" }
       ] : [])
@@ -107,35 +111,35 @@ export const getNavItems = (adminRole) => [
   },
 
   // Support
-  // {
-  //   id: "support", label: "Support", roles: ["support", "sale"],
-  //   subItems: [
-  //     { label: makeLabel(FaTools, "primary", "Trouble Tickets"), href: "/admin/support/troubleTickets" },
-  //     { label: makeLabel(FaFlask, "secondary", "Testing"), href: "/admin/support/testing" },
-  //     { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/support/followups" },
-  //     ...(["support"].includes(adminRole) ? [
-  //       { label: makeLabel(FaTasks, "purple", "Tasks"), href: "/admin/support/task" },
-  //       { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/admin/support/myTickets" },
-  //       { label: makeLabel(FaEnvelope, "indigo", "Email"), href: "/admin/support/email" }
-  //     ] : []),
-  //     { label: makeLabel(FaComments, "dark", "Messages"), href: "/admin/support/messages" },
-  //     { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/admin/support/internalassistence" }
-  //   ]
-  // },
+  {
+    id: "support", label: "Support", roles: ["support", "sale"],
+    subItems: [
+      { label: makeLabel(FaTools, "primary", "Trouble Tickets"), href: "/admin/support/troubleTickets" },
+      { label: makeLabel(FaFlask, "secondary", "Testing"), href: "/admin/support/testing" },
+      { label: makeLabel(FaBell, "accent", "Follow-Ups"), href: "/admin/support/followups" },
+      ...(["support"].includes(adminRole) ? [
+        { label: makeLabel(FaTasks, "purple", "Tasks"), href: "/admin/support/task" },
+        // { label: makeLabel(FaTicketAlt, "pink", "My Tickets"), href: "/admin/support/myTickets" },
+        { label: makeLabel(FaEnvelope, "indigo", "Email"), href: "/admin/support/email" }
+      ] : []),
+      { label: makeLabel(FaComments, "dark", "Messages"), href: "/admin/support/messages" },
+      { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/admin/support/internalassistence" }
+    ]
+  },
 
   // Communications
-  // {
-  //   id: "communications", label: "Communications", roles: ["lead"],
-  //   subItems: [
-  //     { label: makeLabel(FaPhoneAlt, "primary", "Enquires"), href: "/admin/communication/enquiry" },
-  //     { label: makeLabel(FaHashtag, "secondary", "DID Numbers"), href: "/admin/communication/didEnquiry" },
-  //     { label: makeLabel(FaTicketAlt, "accent", "My Tickets"), href: "/admin/communication/myTickets" },
-  //     { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/communication/email" },
-  //     { label: makeLabel(FaComments, "indigo", "Chat Panel"), href: "/admin/communication/chatpanel" },
-  //     { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/communication/messages" },
-  //     { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/admin/communication/assistance" }
-  //   ]
-  // },
+  {
+    id: "communications", label: "Communications", roles: ["lead"],
+    subItems: [
+      { label: makeLabel(FaPhoneAlt, "primary", "Enquires"), href: "/admin/communication/enquiry" },
+      { label: makeLabel(FaHashtag, "secondary", "DID Numbers"), href: "/admin/communication/didEnquiry" },
+      { label: makeLabel(FaTicketAlt, "accent", "My Tickets"), href: "/admin/communication/myTickets" },
+      { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/admin/communication/email" },
+      { label: makeLabel(FaComments, "indigo", "Chat Panel"), href: "/admin/communication/chatpanel" },
+      { label: makeLabel(FaComments, "pink", "Messages"), href: "/admin/communication/messages" },
+      { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/admin/communication/assistance" }
+    ]
+  },
 
   // Settings
   {

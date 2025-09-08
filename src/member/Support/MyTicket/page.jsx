@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../layout/page";
 import { AiOutlineFolderOpen, AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlineReportProblem, MdOutlineTaskAlt } from "react-icons/md";
 import { BsGraphUp, BsTools } from "react-icons/bs";
 import { RiTaskFill } from "react-icons/ri";
-import axiosInstance from "../../utils/axiosinstance";
-import adminContext from "../../../../../../context/page";
 import { PickupTable, RequestsTable, TroubleTicketView, VeiwPage } from "./table";
+import AuthContext from "../../../context/AuthContext";
+import axiosInstance from "../../../utils/axiosinstance";
 
-const RequestsPage = () => {
-  const { adminDetails } = useContext(adminContext);
+const SupportMyticket = () => {
+  const { memberDetails } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [filters, setFilters] = useState({
@@ -33,10 +32,10 @@ const RequestsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!adminDetails?.id) return;
+      if (!memberDetails?.id) return;
 
       try {
-        const memberDataResponse = await axiosInstance.get(`api/member/support/${adminDetails.id}`);
+        const memberDataResponse = await axiosInstance.get(`api/member/support/${memberDetails.id}`);
         const testDataResponse = await axiosInstance.get(`api/member/tests`);
         const ratesResponse = await axiosInstance.get("api/admin/ccrates");
         const cliRatesResponse = await axiosInstance.get(`api/admin/clirates`);
@@ -86,7 +85,7 @@ const RequestsPage = () => {
     };
 
     fetchData();
-  }, [adminDetails?.id]);
+  }, [memberDetails?.id]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -190,6 +189,8 @@ const RequestsPage = () => {
     } else if (test.category === 'Trouble Tickets') {
       setNewStatus(test.status);
     }
+    console.log(test);
+    
     setSelectedTest(test);
     setShowPickupModal(true);
   };
@@ -199,6 +200,8 @@ const RequestsPage = () => {
   };
 
   const handleUpdateStatus = async () => {
+    console.log(selectedTest.category);
+    
     try {
       if (selectedTest.category === 'Testing Requests') {
         await axiosInstance.put(`api/member/teststatus/${selectedTest?.id}`, { newStatus });
@@ -374,4 +377,4 @@ const RequestsPage = () => {
   );
 };
 
-export default RequestsPage;
+export default SupportMyticket;

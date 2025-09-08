@@ -114,7 +114,7 @@ const ModernRegisterFlow = () => {
 
             await submitRegistration(formData);
             setSubmitSuccess(true);
-            Navigate('/login')
+            Navigate('/customer/login')
         } catch (error) {
             console.log("error", error);
 

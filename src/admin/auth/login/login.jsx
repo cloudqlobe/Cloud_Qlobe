@@ -135,8 +135,8 @@ const AdminSigninPage = () => {
               <option value="support">Support Engineer</option>
               <option value="account">Accounts Manager</option>
               <option value="sale">Sales Manager</option>
-              <option value="carrier">Carriers Manager</option>
-              <option value="lead">Leads Manager</option>
+              {/* <option value="carrier">Carriers Manager</option> */}
+              {/* <option value="lead">Leads Manager</option> */}
             </select>
           </div>
 

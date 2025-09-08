@@ -40,7 +40,7 @@ const RequestsTable = ({ activeCategory, filteredRequests, handlePickupClick, ha
                     )}
                     {activeCategory === "Overdraft" && (
                         <tr>
-                            <th className="p-2">Company Name</th>
+                            <th className="p-2">Customer ID</th>
                             <th className="p-2">Account Manager</th>
                             <th className="p-2">Client Type</th>
                             <th className="p-2">Reason</th>
@@ -127,7 +127,7 @@ const RequestsTable = ({ activeCategory, filteredRequests, handlePickupClick, ha
                     {activeCategory === "Overdraft" &&
                         filteredRequests.map(request => (
                             <tr key={request._id} className="bg-gray-100">
-                                <td className="p-2">{request.companyName}</td>
+                                <td className="p-2">{request.customerId}</td>
                                 <td className="p-2">{request.accountManager}</td>
                                 <td className="p-2">{request.clientType}</td>
                                 <td className="p-2">{request.reason}</td>
@@ -212,11 +212,11 @@ const ViewTable = ({ showViewModal, setShowViewModal, selectedRequest }) => {
                             <button
                                 className={`px-4 py-2 rounded-md bg-blue-400 text-white`}
                             >
-                                {selectedRequest.service_category === "CCRate Routes" ? "CC Routes" : "CLI Routes"}
+                                {selectedRequest.service_category === "CCPrivateRate Routes" ? "CC Routes" : "CLI Routes"}
                             </button>
                         </div>
 
-                        {selectedRequest.service_category === "CCRate Routes" && selectedRequest.filteredRates?.length > 0 && (
+                        {selectedRequest.service_category === "CCPrivateRate Routes" && selectedRequest.filteredRates?.length > 0 && (
                             <table className="w-full border-collapse mb-6">
                                 <thead className="bg-yellow-500 text-white">
                                     <tr>
@@ -243,7 +243,7 @@ const ViewTable = ({ showViewModal, setShowViewModal, selectedRequest }) => {
                             </table>
                         )}
 
-                        {selectedRequest.service_category === "CLIRate Routes" && selectedRequest.filteredRates?.length > 0 && (
+                        {selectedRequest.service_category === "CLIPrivateRate Routes" && selectedRequest.filteredRates?.length > 0 && (
                             <table className="w-full border-collapse">
                                 <thead className="bg-yellow-500 text-white">
                                     <tr>

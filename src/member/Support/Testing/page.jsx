@@ -59,18 +59,12 @@ const TestingPage = () => {
   const applyFilters = () => {
     let filtered = testsData
       .map((test) => {
-        const customer = customersData.find((customer) => customer?.customerId == test.companyId);
+        const customer = customersData.find((customer) => customer?.id == test.customerId);
+console.log(customer);
 
         if (!customer) return null;
 
-        if (memberDetails.role === "support" || memberDetails.role === "superAdmin") {
-          return {
-            ...customer,
-            testId: test.id,
-            testStatus: test.testStatus,
-            serviceEngineer: test.serviceEngineer,
-          };
-        } else if (test.serviceEngineer === "NOC CloudQlobe") {
+if (test.serviceEngineer === "NOC CloudQlobe") {
           return {
             ...customer,
             testId: test.id,
@@ -294,7 +288,7 @@ const TestingPage = () => {
                           onClick={() => openModal(customer.testId)}>
                           View
                         </button>
-                        {["superAdmin", "support", "supportMember"].includes(memberDetails.role) && (
+                        {["supportmember"].includes(memberDetails.role) && (
                           <button
                             className='bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition'
                             onClick={() => handlePickupData(customer.testId)}>

@@ -87,7 +87,7 @@ const Chatbot = () => {
         e.preventDefault();
         
         if (!isAuthenticated) {
-            navigate("/login");
+            navigate("/customer/login");
             return;
         }
 

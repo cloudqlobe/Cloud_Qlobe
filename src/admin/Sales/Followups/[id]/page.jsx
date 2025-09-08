@@ -17,12 +17,14 @@ const AdminFollowUpDetails = () => {
   const [error, setError] = useState(null);
   const { followupId } = useParams()
   const id = followupId; // Replace with dynamic ID handling if needed
+console.log(id);
 
   useEffect(() => {
     const fetchFollowUp = async () => {
       try {
         const response = await axiosInstance.get(`api/member/followups/${id}`);
         let followUpData = response.data.followups[0];
+console.log(followUpData);
 
         // Parse followupHistory if it's a string
         if (typeof followUpData.followupHistory === "string") {
@@ -38,7 +40,7 @@ const AdminFollowUpDetails = () => {
         setStatus(followUpData.followupStatus);
         setNextFollowUpType(followUpData.followupMethod)
         setNextFollowUpDate(followUpData.nextFollowupTime || followUpData.followupDate)
-        const customerResponse = await axiosInstance.get(`api/customer/${followUpData.customerId}`);
+        const customerResponse = await axiosInstance.get(`api/customer/${followUpData.userId}`);
         setCustomer(customerResponse.data.customer);
       } catch (err) {
         setError(err.message);
