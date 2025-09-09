@@ -94,7 +94,7 @@ const AddSaleCustomerPage = () => {
       };
 
       await axiosInstance.post("api/member/leadMember/NewLead", mergedData);
-      navigate("/admin/sale/leads");
+      navigate("/member/sale/leads");
     } catch (error) {
       console.error("Error adding customer:", error);
 

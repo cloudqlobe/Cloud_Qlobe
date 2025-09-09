@@ -10,7 +10,7 @@ const AdminMemberSignInPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    selectDepartment: "leadmember",
+    selectDepartment: "",
   });
 
   const handleChange = (e) => {

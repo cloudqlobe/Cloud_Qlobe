@@ -130,7 +130,7 @@ export const getNavItems = (memberRole) => [
     ]
   },
   {
-    id: "communications", label: "Communications", roles: ["leadmember"],
+    id: "communications", label: "Communications", roles: ["leadmember","supportmember"],
     subItems: [
       { label: makeLabel(FaPhoneAlt, "primary", "Enquires"), href: "/member/communication/enquiry" },
       { label: makeLabel(FaHashtag, "secondary", "DID Numbers"), href: "/member/communication/didEnquiry" },
