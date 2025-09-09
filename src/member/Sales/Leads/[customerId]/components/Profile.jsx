@@ -63,8 +63,8 @@ const ProfileTab = ({ customerId }) => {
         processedName = (firstTwo + lastOfFirst + firstOfSecond).toUpperCase();
       }
 
-      customerID = `MGW 1002021${processedName}`;
-    }
+      const currentYear = new Date().getFullYear();
+      customerID = `MGW 100${currentYear}${processedName}`;    }
 
     try {
       await axiosInstance.put(`api/member/leadConversion/${customerId}`, {
@@ -240,7 +240,7 @@ const ProfileTab = ({ customerId }) => {
                 label="Website"
                 value={
                   leadData?.companyWebsite ? (
-                    <a href={leadData.companyWebsite} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                    <a href={`https://${leadData.companyWebsite}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                       {leadData.companyWebsite}
                     </a>
                   ) : "Not Provided"

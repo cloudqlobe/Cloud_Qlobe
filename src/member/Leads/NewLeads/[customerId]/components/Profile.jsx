@@ -17,7 +17,7 @@ const ProfileTab = ({ customerId }) => {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [updatedLeadInfo, setUpdatedLeadInfo] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-console.log("id", customerId);
+  console.log("id", customerId);
 
   useEffect(() => {
     const fetchLeadData = async () => {
@@ -48,7 +48,7 @@ console.log("id", customerId);
   const handleConversion = async (type, type1) => {
     try {
       await axiosInstance.put(`api/member/leadConversion/${customerId}`,
-       { customerType: type, leadType: type1, customerId:leadData?.customerId});
+        { customerType: type, leadType: type1, customerId: leadData?.customerId });
       toast.success("Conversion successful")
 
       if (type1 === "Customer lead") {
@@ -56,7 +56,7 @@ console.log("id", customerId);
       } else if (type1 === "Carrier lead") {
         navigate('/member/carrier/leads')
       }
-      
+
       setLeadData(prev => ({ ...prev, customerType: type }));
     } catch (error) {
       console.error("Error converting lead:", error);
@@ -141,7 +141,7 @@ console.log("id", customerId);
   return (
     <Layout>
       <div className="py-1" >
-        <div className=" mx-auto space-y-10" style={{width:"96vw"}}>
+        <div className=" mx-auto space-y-10" style={{ width: "96vw" }}>
           {/* Main Header Container with Grey Background */}
           <div className="bg-white text-gray-500 px-6 py-4 rounded-lg shadow-lg">
             <div className="flex justify-between items-center">
@@ -218,7 +218,7 @@ console.log("id", customerId);
                 label="Website"
                 value={
                   leadData?.companyWebsite ? (
-                    <a href={leadData.companyWebsite} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                    <a href={`https://${leadData.companyWebsite}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                       {leadData.companyWebsite}
                     </a>
                   ) : "Not Provided"

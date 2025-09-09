@@ -9,7 +9,7 @@ export const CustomerRoute = ({ children }) => {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/customer/login" replace />;
 };
 
 export const MemberRoute = ({ children }) => {

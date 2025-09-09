@@ -63,7 +63,8 @@ const ProfileTab = ({ customerId }) => {
         processedName = (firstTwo + lastOfFirst + firstOfSecond).toUpperCase();
       }
 
-      customerID = `MGW 1002021${processedName}`;
+      const currentYear = new Date().getFullYear();
+      customerID = `MGW 100${currentYear}${processedName}`;
     }
 
     try {
@@ -165,7 +166,7 @@ const ProfileTab = ({ customerId }) => {
   return (
     <Layout>
       <div className="py-1" >
-        <div className=" mx-auto space-y-10" style={{width:"96vw"}}>
+        <div className=" mx-auto space-y-10" style={{ width: "96vw" }}>
           {/* Main Header Container with Grey Background */}
           <div className="bg-white text-gray-500 px-6 py-4 rounded-lg shadow-lg">
             <div className="flex justify-between items-center">
@@ -240,7 +241,7 @@ const ProfileTab = ({ customerId }) => {
                 label="Website"
                 value={
                   leadData?.companyWebsite ? (
-                    <a href={leadData.companyWebsite} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                    <a href={`https://${leadData.companyWebsite}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                       {leadData.companyWebsite}
                     </a>
                   ) : "Not Provided"
