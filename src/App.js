@@ -1,6 +1,4 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Specialrate from "./customer/Components/Specialrate.jsx";
 import PublicRoutes from "./routes/PublicRoutes.jsx";
 import CustomerRoutes from "./routes/CustomerRoutes.jsx";
 import AdminRoutes from "./routes/AdminRoutes.jsx";
@@ -27,7 +25,6 @@ function App() {
         <Route path="/member/*" element={<MemberRoutes />} />
       </Routes>
 
-      <Specialrate />
     </Router>
   );
 }

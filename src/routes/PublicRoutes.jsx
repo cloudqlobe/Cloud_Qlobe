@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import CcRoutes from "../customer/Pages/Services/Ccroutes/Page.jsx";
 import CliVoice from "../customer/Pages/Services/Clivoiceterminations/Page.jsx";
@@ -12,10 +12,17 @@ import Aboutpages from "../customer/Pages/About/pages.jsx";
 import Contactpages from "../customer/Pages/contact/pages.jsx";
 import Faqpages from "../customer/Pages/FAQ/pages.jsx";
 import Ratepages from "../customer/Pages/Rates/pages.jsx";
+import SocialMediaIcons from "../customer/Components/Socialmediaicons.jsx";
+import Specialrate from "../customer/Components/Specialrate.jsx";
 
 const PublicRoutes = () => {
+  const location = useLocation();
+  const isRatePage = location.pathname === "/rates";
+
   return (
-    <Routes>
+    <>
+      {!isRatePage && <SocialMediaIcons />}
+      <Routes>
         <Route path="/" element={<Homepages />} />
         <Route path="/about" element={<Aboutpages />} />
         <Route path="/contact" element={<Contactpages />} />
@@ -29,8 +36,9 @@ const PublicRoutes = () => {
         <Route path="/did-solutions" element={<DidSolutions />} />
         <Route path="/server-hosting" element={<ServerHosting />} />
         <Route path="/voip-websites" element={<VoipWebsites />} />
-
-    </Routes>
+      </Routes>
+      {!isRatePage && <Specialrate />}
+    </>
   );
 };
 
