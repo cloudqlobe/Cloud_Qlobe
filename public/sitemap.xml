@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.cloudqlobe.com/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Sign In Page -->
+  <url>
+    <loc>https://www.cloudqlobe.com/customer/signin</loc>
+    <lastmod>2025-09-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CC Routes -->
+  <url>
+    <loc>https://www.cloudqlobe.com/cc-routes</loc>
+    <lastmod>2025-09-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://www.cloudqlobe.com/about</loc>
+    <lastmod>2025-09-10</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://www.cloudqlobe.com/faq</loc>
+    <lastmod>2025-09-10</lastmod>
+    <priority>0.7</priority>
+  </url>
+</urlset>
