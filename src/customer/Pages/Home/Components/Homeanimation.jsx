@@ -70,32 +70,39 @@ const Homeanimation = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center mt-[-50px]">
         {/* Left Content */}
         <div>
-          <h1 className="text-4xl md:text-4xl font-default mb-6 leading-tight">
+          {/* SEO-friendly h1 (hidden visually, good for Google + screen readers) */}
+          <h1 className="sr-only">Empowering Global Communication</h1>
+
+          {/* Styled visual heading */}
+          <div
+            aria-hidden="true"
+            className="text-4xl md:text-4xl font-default mb-6 leading-tight"
+          >
             Empowering <span className="text-orange-400">Global Communication</span>
-          </h1>
-         
+          </div>
+
+
           {/* Tab Content Box */}
           <div className="text-orange-300 text-base bg-white bg-opacity-10 p-4 square border border-yellow-400 mb-6">
             {renderTabContent()}
           </div>
 
           {/* Tab Buttons */}
-         <div className="mt-4 flex flex-wrap gap-10">
-  {tabs.map((tab) => (
-    <button
-      key={tab.id}
-      onClick={() => setActiveTab(tab.id)}
-      className={`py-2 border squared-full text-sm transition ${
-        activeTab === tab.id
-          ? 'w-40 border-orange-400 text-yellow-400 bg-white bg-opacity-10'
-          : 'w-28 border-orange-300 text-white hover:bg-orange-400 hover:text-white'
-      }`}
-    >
-      {tab.label}
-    </button>
-  ))}
-</div>
-</div>
+          <div className="mt-4 flex flex-wrap gap-10">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`py-2 border squared-full text-sm transition ${activeTab === tab.id
+                    ? 'w-40 border-orange-400 text-yellow-400 bg-white bg-opacity-10'
+                    : 'w-28 border-orange-300 text-white hover:bg-orange-400 hover:text-white'
+                  }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
 
         {/* Signup Bubble (Right Side) */}

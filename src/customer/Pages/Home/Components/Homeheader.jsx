@@ -20,14 +20,19 @@ const Homeheader = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         {/* Left Side */}
         <div className="mt-[-150px]">
-          <h1 className="text-4xl md:text-5xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
+          <h1 className="sr-only">The mastery of Telecom</h1>
+          <div
+            aria-hidden="true"
+            className="text-4xl md:text-5xl font-default leading-snug text-gray-500 ml-[-40px] mb-6"
+          >
             The mastery of <span className="text-blue-500 font-default">Telecom</span>
-          </h1>
-        <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-  Cloudqlobe enables businesses to connect worldwide using reliable VoIP platforms
-  and secure SIP routing. With intelligent telecom solutions, we ensure consistent
-  call quality, data efficiency, and scalable infrastructure across all regions.
-</p>
+          </div>
+
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
+            Cloudqlobe enables businesses to connect worldwide using reliable VoIP platforms
+            and secure SIP routing. With intelligent telecom solutions, we ensure consistent
+            call quality, data efficiency, and scalable infrastructure across all regions.
+          </p>
 
           <div className="flex flex-wrap gap-4 ml-[-40px]">
             <button className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md">
@@ -42,9 +47,9 @@ const Homeheader = () => {
         {/* Right Side Diamond Infographic */}
         <div className="relative w-[320px] h-[320px] mx-auto mt-[-50px]">
           {/* Center Diamond */}
-         <div className="absolute left-[120px] top-[110px] w-[200px] h-[200px] bg-white text-center flex flex-col gap-2 items-center justify-center text-sm font-semibold text-red-500 transform -translate-x-1/2 -translate-y-1/2 rotate-45 shadow-md z-20">
+          <div className="absolute left-[120px] top-[110px] w-[200px] h-[200px] bg-white text-center flex flex-col gap-2 items-center justify-center text-sm font-semibold text-red-500 transform -translate-x-1/2 -translate-y-1/2 rotate-45 shadow-md z-20">
             < SiPaloaltosoftware className="-rotate-45 text-orange-300 w-[100px] h-[100px]" />
-            
+
           </div>
 
           {/* Diamond Icons */}
@@ -55,13 +60,13 @@ const Homeheader = () => {
           </div>
 
           <div className="absolute left-[-173px] top-[118px] w-[142px] h-[110px] bg-blue-500 flex items-center justify-center rotate-45 shadow-md z-10">
-            <MdWifiCalling2  className="-rotate-45 text-blue-200 w-[50px] h-[50px]" />
+            <MdWifiCalling2 className="-rotate-45 text-blue-200 w-[50px] h-[50px]" />
           </div>
 
           <div className="absolute left-[-58px] top-[55px] w-[100px] h-[110px] bg-gray-300 flex items-center justify-center rotate-45 shadow-md z-10" />
 
           <div className="absolute left-[-30px] top-[150px] w-[120px] h-[150px] bg-red-500 flex items-center justify-center rotate-45 shadow-md z-10">
-            <BiSupport  className="-rotate-45 text-red-100 w-[50px] h-[50px]" />
+            <BiSupport className="-rotate-45 text-red-100 w-[50px] h-[50px]" />
           </div>
 
           <div className="absolute left-[130px] top-[160px] w-[150px] h-[100px] bg-purple-500 flex items-center justify-center rotate-45 shadow-md z-10">
@@ -71,7 +76,7 @@ const Homeheader = () => {
           <div className="absolute left-[80px] top-[190px] w-[100px] h-[100px] bg-gray-300 flex items-center justify-center rotate-45 shadow-md z-0" />
 
           <div className="absolute left-[220px] top-[-10px] w-[230px] h-[230px] bg-[#f5c617] flex items-center justify-center rotate-45 shadow-lg shadow-yellow-300/50 z-0">
-            <FaGlobe  className="-rotate-45 text-yellow-100 w-[100px] h-[100px]" />
+            <FaGlobe className="-rotate-45 text-yellow-100 w-[100px] h-[100px]" />
           </div>
         </div>
       </div>

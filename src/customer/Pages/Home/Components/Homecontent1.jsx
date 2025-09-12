@@ -6,10 +6,20 @@ import Homeimage3 from '../../../../assets/5252489.jpg' // Make sure this file e
 const Homecontent1 = () => {
   return (
     <div className="min-h-screen w-full bg-white px-12 py-16 overflow-hidden mt-[-60px]">
-      <h1 className="text-[40px] font-normal font-[Roboto,Arial,sans-serif] text-center text-gray-500 mb-20 mt-8 leading-snug">
-         Seamless of  Communication with Our 
-        <span className="text-orange-500"> Advanced Telecom Technology</span>
-      </h1>
+{/* SEO-friendly h1 (hidden visually but crawled by search engines) */}
+<h1 className="sr-only">
+  Seamless Communication with Our Advanced Telecom Technology
+</h1>
+
+{/* Styled heading (for design only) */}
+<div
+  aria-hidden="true"
+  className="text-[40px] font-normal font-[Roboto,Arial,sans-serif] text-center text-gray-500 mb-20 mt-8 leading-snug"
+>
+  Seamless Communication with Our 
+  <span className="text-orange-500"> Advanced Telecom Technology</span>
+</div>
+
 
       {/* CC Routes Section */}
       <section className="grid md:grid-cols-2 items-center gap-10 mb-10 max-w-7xl mx-auto">
