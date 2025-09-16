@@ -14,8 +14,8 @@ const FollowUpTab = ({ customerId }) => {
   const [noteData, setNoteData] = useState([]);
   const [customerData, setCustomerData] = useState();
   const [newFollowUp, setNewFollowUp] = useState({
-    customerId: customerId,
-    companyId: '',
+    customerId: '',
+    userId: customerId,
     companyName: '',
     followupDescription: '',
     followupMethod: "call",
@@ -43,7 +43,7 @@ const FollowUpTab = ({ customerId }) => {
         setNewFollowUp((prev) => ({
           ...prev,
           companyName: customerResponse.data.customer.companyName,
-          companyId: customerResponse.data.customer.customerId,
+          customerId: customerResponse.data.customer.customerId,
         }));
       } catch (error) {
         console.error(error);
@@ -67,9 +67,9 @@ const FollowUpTab = ({ customerId }) => {
       await axiosInstance.post("api/member/createcustomerfollowups", newFollowUp);
       setFollowups((prev) => [...prev, newFollowUp]);
       setNewFollowUp({
-        customerId: customerId,
+        userId: customerId,
         companyName: customerData.companyName,
-        companyId: customerData.customerId,
+        customerId: customerData.customerId,
         followupDescription: "",
         followupMethod: "",
         followupCategory: "",

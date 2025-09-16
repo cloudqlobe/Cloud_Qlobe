@@ -3,11 +3,11 @@ import Layout from '../../layout/page';
 import { FaSearch } from 'react-icons/fa';
 import { TiStarburst } from "react-icons/ti"; // Import the icon you prefer
 import axiosInstance from '../../../utils/axiosinstance';
-import adminContext from '../../../../../../context/page';
 import { toast, ToastContainer } from "react-toastify";
+import AuthContext from '../../../context/AuthContext';
 
 const EnquiryPage = () => {
-  const { adminDetails } = useContext(adminContext)
+  const { memberDetails } = useContext(AuthContext)
   const [enquiryData, setEnquiryData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
@@ -15,18 +15,12 @@ const EnquiryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (adminDetails.role === "leadmember") {
+        if (memberDetails.role === "leadmember") {
           const response = await axiosInstance.get('api/member/enquiry');
 
           const filteredEnquiry = response.data.enquirys.filter(
             (item) => item.serviceEngineer === "NOC Cloudqlobe"
           );
-
-          setEnquiryData(filteredEnquiry);
-        } else if (adminDetails.role === "lead" || adminDetails.role === "superAdmin") {
-          const response = await axiosInstance.get('api/member/enquiry');
-
-          const filteredEnquiry = response.data.enquirys
 
           setEnquiryData(filteredEnquiry);
         }
@@ -37,7 +31,7 @@ const EnquiryPage = () => {
     };
 
     fetchData();
-  }, [adminDetails?.id]);
+  }, [memberDetails?.id]);
 
   const openModal = (enquiry) => {
     setSelectedEnquiry(enquiry);
@@ -52,9 +46,9 @@ const EnquiryPage = () => {
   const handlePickupData = async (id) => {
     try {
       const enquiryId = id;
-      const serviceEngineer = adminDetails.name;
+      const serviceEngineer = memberDetails.name;
 
-      await axiosInstance.put(`api/member/updateMemberEnquiryId/${adminDetails.id}`, { enquiryId });
+      await axiosInstance.put(`api/member/updateMemberEnquiryId/${memberDetails.id}`, { enquiryId });
 
       await axiosInstance.put(`api/member/enquiry/${enquiryId}`, { serviceEngineer });
 
@@ -64,7 +58,7 @@ const EnquiryPage = () => {
       toast.success("Enquiry picked up successfully!");
     } catch (error) {
       toast.error("Failed to pick up test");
-      console.error("Error updating admin member:", error);
+      console.error("Error updating member:", error);
     }
   };
 
@@ -91,12 +85,12 @@ const EnquiryPage = () => {
             </thead>
             <tbody>
               {enquiryData.map((enquiry) => (
-                <tr key={enquiry.id} className="hover:bg-gray-100 transition duration-200">
+                <tr key={enquiry.id} className="hover:bg-gray-100 transition duration-200 text-center">
                   <td className="py-2 px-4">{enquiry.name}</td>
                   <td className="py-2 px-4">{enquiry.companyName}</td>
                   <td className="py-2 px-4">{enquiry.contactNumber}</td>
                   <td className="py-2 px-4">{enquiry.email}</td>
-                  <td className="py-2 px-4 flex justify-end">
+                  <td className="py-2 px-4">
                     <button
                       className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
                       onClick={() => openModal(enquiry.notes)}

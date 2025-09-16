@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import Layout from '../../layout/page';
 import { FaReply, FaUserCircle, FaCircle, FaPlus, FaEllipsisV, FaCheck, FaCheckDouble } from 'react-icons/fa';
-import axiosInstance from '../../utils/axiosinstance';
-import adminContext from '../../../../../../context/page';
+import AuthContext from '../../../context/AuthContext';
+import axiosInstance from '../../../utils/axiosinstance';
 
 const ChatPanel = () => {
-  const { adminDetails } = useContext(adminContext);
+  const { memberDetails } = useContext(AuthContext);
   const [selectedContact, setSelectedContact] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -157,8 +157,8 @@ const ChatPanel = () => {
         customer_id: selectedContact.id,
         message: inputMessage,
         customer_name: selectedContact.name,
-        sender_id: adminDetails?.id || 'admin',
-        sender_type: 'agent', // Set sender_type to agent for admin messages
+        sender_id: memberDetails?.id || 'member',
+        sender_type: 'agent', // Set sender_type to agent for  messages
       };
 
       // Optimistic update

@@ -27,11 +27,8 @@ const CarrierPage = () => {
       try {
         let data = [];
 
-        if (memberDetails.role === "salemember") {
+        if (memberDetails.role === "carriermember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
-          data = response.data.customer;
-        } else if (memberDetails.role === "superAdmin") {
-          const response = await axiosInstance.get(`api/customers`);
           data = response.data.customer;
         }
         const filteredCustomers = data?.filter(

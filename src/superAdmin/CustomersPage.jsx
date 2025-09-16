@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../utils/axiosinstance';
+import Layout from './layout/Layout';
 
 const CustomersPage = ({ customersData = [] }) => {
   const navigate = useNavigate();
@@ -208,6 +209,7 @@ console.log(transferData);
     });
 
   return (
+        <Layout>
       <div className="text-gray-800 min-h-screen" style={{ width: "78vw",marginLeft:"23px"}}>
         <h1 className="text-3xl font-bold mb-4 text-black">Customer Management</h1>
         <p className="text-gray-600 mb-6">Manage customers and leads here.</p>
@@ -222,12 +224,6 @@ console.log(transferData);
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <button
-            // onClick={handleAddLead}
-            className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors whitespace-nowrap"
-          >
-            Add New Lead
-          </button>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-6">
@@ -449,6 +445,7 @@ console.log(transferData);
           </div>
         )}
       </div>
+      </Layout>
   );
 };
 

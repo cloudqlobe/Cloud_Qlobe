@@ -29,10 +29,11 @@ const AdminAddNewLead = () => {
   });
 
   const [technicalDetails, setTechnicalDetails] = useState({
-    accountManager: adminDetails.fullName,
+    accountManager: adminDetails.name,
+    accountManagerRole:adminDetails.role,
     supportEmail: "",
     sipPort: "",
-    memberId: `admin-${adminDetails.id}`,
+    memberId: adminDetails.id,
     switchIps: [{ ip: "", status: "active" }],
   });
 

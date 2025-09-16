@@ -12,18 +12,16 @@ const FollowUpTab = ({ customerId }) => {
   const { adminDetails } = useContext(AdminAuthContext);
   const [followups, setFollowups] = useState([]);
   const [noteData, setNoteData] = useState([]);
-  const [customerData, setCustomerData] = useState();
   const [newFollowUp, setNewFollowUp] = useState({
-    customerId: customerId,
-    companyId: '',
-    companyName: '',
+    userId: customerId,
     followupDescription: '',
     followupMethod: "call",
     followupStatus: "Pending",
     followupCategory: "Leads",
     followupTime: '',
     followupDate: '',
-    memberId: `admin-${adminDetails.id}`
+    role: adminDetails.role,
+    memberId: adminDetails.id
   });
   const [quickNote, setQuickNote] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -34,17 +32,10 @@ const FollowUpTab = ({ customerId }) => {
       try {
         const response = await axiosInstance.get(`api/member/customerfollowups/${customerId}`);
         const noteResponse = await axiosInstance.get(`api/member/customernotes/${customerId}`);
-        const customerResponse = await axiosInstance.get(`api/customer/${customerId}`);
 
         setFollowups(response.data.followups);
         setNoteData(noteResponse.data.notes);
-        setCustomerData(customerResponse.data.customer);
 
-        setNewFollowUp((prev) => ({
-          ...prev,
-          companyName: customerResponse.data.customer.companyName,
-          companyId: customerResponse.data.customer.customerId,
-        }));
       } catch (error) {
         console.error(error);
       }
@@ -67,15 +58,14 @@ const FollowUpTab = ({ customerId }) => {
       await axiosInstance.post("api/member/createcustomerfollowups", newFollowUp);
       setFollowups((prev) => [...prev, newFollowUp]);
       setNewFollowUp({
-        customerId: customerId,
-        companyName: customerData.companyName,
-        companyId: customerData.customerId,
+        userId:customerId,
         followupDescription: "",
         followupMethod: "",
         followupCategory: "",
         followupTime: "",
         followupDate: "",
-        memberId: `admin-${adminDetails.id}`
+        role: adminDetails.role,
+        memberId: adminDetails.id
       });
       setIsFormVisible(false);
     } catch (error) {
@@ -142,7 +132,6 @@ const FollowUpTab = ({ customerId }) => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl font-bold text-gray-500 flex items-center">
             <LuCircleDollarSign className="text-orange-300 mr-2 text-5xl" />
-            {customerData?.companyName}
           </h2>
           <button
             onClick={handleClockButtonClick}

@@ -15,16 +15,15 @@ const AdminFollowUpDetails = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { followupId } = useParams()
+const { followupId, customerId } = useParams();
   const id = followupId; // Replace with dynamic ID handling if needed
-console.log(id);
+  const customerid = customerId;
 
   useEffect(() => {
     const fetchFollowUp = async () => {
       try {
         const response = await axiosInstance.get(`api/member/followups/${id}`);
         let followUpData = response.data.followups[0];
-console.log(followUpData);
 
         // Parse followupHistory if it's a string
         if (typeof followUpData.followupHistory === "string") {
@@ -115,7 +114,7 @@ console.log(followUpData);
           <h3 className="font-semibold text-xl mb-4 text-black-700">Follow-Up Information</h3>
           <div className="grid grid-cols-2 gap-4">
             <p><span className="font-semibold text-black-600">Follow-Up ID:</span> {followUp.followupId}</p>
-            <p><span className="font-semibold text-black-600">Customer ID:</span> {followUp.customerId}</p>
+            <p><span className="font-semibold text-black-600">Customer ID:</span> {customerid}</p>
             <p><span className="font-semibold text-black-600">Description:</span> {followUp.followupDescription}</p>
             <p><span className="font-semibold text-black-600">Follow-Up Date:</span> {followUp.followupDate}</p>
           </div>

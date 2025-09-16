@@ -20,14 +20,9 @@ const Homeheader = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         {/* Left Side */}
         <div className="mt-[-150px]">
-          <h1 className="sr-only">The mastery of Telecom</h1>
-          <div
-            aria-hidden="true"
-            className="text-4xl md:text-5xl font-default leading-snug text-gray-500 ml-[-40px] mb-6"
-          >
+          <h1 className="text-4xl md:text-5xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
             The mastery of <span className="text-blue-500 font-default">Telecom</span>
-          </div>
-
+          </h1>
           <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
             Cloudqlobe enables businesses to connect worldwide using reliable VoIP platforms
             and secure SIP routing. With intelligent telecom solutions, we ensure consistent

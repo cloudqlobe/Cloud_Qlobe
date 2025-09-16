@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosInstance from '../../../../../utils/axiosinstance';
+import AuthContext from '../../../../../context/AuthContext';
 
 const MyRatesPage = ({ customerId }) => {
+  const {memberDetails} = useContext(AuthContext)
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [customerData, setCustomerData] = useState(null);
@@ -123,12 +125,13 @@ const MyRatesPage = ({ customerId }) => {
       const requestPromises = axiosInstance.post(`api/testrate`, {
         rateId: selectedRates,
         customerId: customerData.id,
-        rateCustomerId: `hwq${customerData._id}`,
+        rateCustomerId: `hwq${customerData.id}`,
         testStatus: 'Test requested',
         testReason: 'Requested',
         rateType: currentRateType,
         companyName: customerData.companyName,
         companyId: customerData.customerId,
+        memberId: memberDetails.id
       });
       await requestPromises;
       toast.success('Tests Requested Successfully');

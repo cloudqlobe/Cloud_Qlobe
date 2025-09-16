@@ -25,11 +25,11 @@ const AdminSigninPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.username || !formData.password || !formData.selectDepartment) {
       return toast.error("Please fill in all fields");
     }
-    
+
     setIsLoading(true);
     try {
       const response = await axiosInstance.post(
@@ -50,6 +50,7 @@ const AdminSigninPage = () => {
       navigate("/admin/verify-token");
       toast.success("Successfully logged in!");
     } catch (error) {
+      
       if (error.response) {
         if (error.response.status === 404) {
           toast.error("Admin account not found!");
@@ -57,6 +58,8 @@ const AdminSigninPage = () => {
           toast.error("Incorrect password");
         } else if (error.response.status === 403) {
           toast.error("Unauthorized department access");
+        } else if (error.response.status === 402) {
+          toast.error(error.response.data.message);
         } else {
           toast.error("Something went wrong. Please try again later.");
         }
@@ -135,8 +138,8 @@ const AdminSigninPage = () => {
               <option value="support">Support Engineer</option>
               <option value="account">Accounts Manager</option>
               <option value="sale">Sales Manager</option>
-              {/* <option value="carrier">Carriers Manager</option> */}
-              {/* <option value="lead">Leads Manager</option> */}
+              <option value="carrier">Carriers Manager</option>
+              <option value="lead">Leads Manager</option>
             </select>
           </div>
 

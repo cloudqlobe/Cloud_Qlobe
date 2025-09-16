@@ -17,7 +17,6 @@ const checkAuth = async () => {
 
     if (response.data.success) {
       const { token, tokenName } = response.data;
-console.log(token);
 
       if (token && tokenName) {
         const existingToken = sessionStorage.getItem(tokenName);

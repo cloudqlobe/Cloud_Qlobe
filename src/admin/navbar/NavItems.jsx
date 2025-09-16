@@ -57,7 +57,7 @@ export const getNavItems = (adminRole) => [
 
   // Carriers
   {
-    id: "carriers", label: "Carriers", roles: ["sale", "carrier"],
+    id: "carriers", label: "Carriers", roles: ["carrier"],
     subItems: [
       { label: makeLabel(FaTruck, "primary", "Leads"), href: "/admin/carrier/leads" },
       { label: makeLabel(FaShippingFast, "secondary", "Carriers"), href: "/admin/carrier/carrier" },

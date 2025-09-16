@@ -72,6 +72,13 @@ import SupportTaskPage from "../member/Support/Tasks/page.jsx";
 //acount
 import AccountsReport from "../member/Accounts/Reports/page.jsx";
 import AccountsMyTicket from "../member/Accounts/MyTicket/page.jsx";
+import EnquiryPage from "../member/Communication/Enquiries/page.jsx";
+import Didnumberenquiery from "../member/Communication/DIDEnquiries/page.jsx";
+import CommunicationMyTicket from "../member/Communication/MyTicket/page.jsx";
+import ChatPanel from "../member/Communication/ChatBot/page.jsx";
+import CommunicationEmail from "../member/Communication/Email/page.jsx";
+import CommunicationMessagesDashboard from "../member/Communication/Messages/page.jsx";
+import CommunicationInternalAssistance from "../member/Communication/InternalAssistance/page.jsx";
 
 const MemberRoutes = () => {
   return (
@@ -155,20 +162,14 @@ const MemberRoutes = () => {
               <Route path="/support/task" element={<SupportTaskPage />} />
 
               {/* Communications */}
-              {/* <Route path="/communication/enquiry" element={<EnquiryPage />} />
+              <Route path="/communication/enquiry" element={<EnquiryPage />} />
               <Route path="/communication/didEnquiry" element={<Didnumberenquiery />} />
-              <Route path="/communication/myTickets" element={<RequestsPage />} />
+              <Route path="/communication/myTickets" element={<CommunicationMyTicket />} />
               <Route path="/communication/chatpanel" element={<ChatPanel />} />
               <Route path="/communication/email" element={<CommunicationEmail />} />
               <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
-              <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} /> */}
+              <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
 
-              {/* Settings */}
-              {/* <Route path="/settings_page" element={<SettingsPage />} />
-              <Route path="/customermanagement" element={<CustomersPage />} />
-              <Route path="/staffmanagement" element={<StaffPageUnderDevelopment />} />
-              <Route path="/allstaffmanagement" element={<AllStaffManagment />} />
-              <Route path="/manager-transfers" element={<ManagerTransfersPage />} /> */}
             </Routes>
           </MemberRoute>
         } />

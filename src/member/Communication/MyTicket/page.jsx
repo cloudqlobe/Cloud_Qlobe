@@ -4,12 +4,12 @@ import DashboardLayout from "../../layout/page";
 import { AiOutlineFolderOpen, AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { BsGraphUp, BsTools } from "react-icons/bs";
-import axiosInstance from "../../utils/axiosinstance";
-import adminContext from "../../../../../../context/page";
 import { PickupTable, RequestsTable, ViewPage } from "./table";
+import AuthContext from "../../../context/AuthContext";
+import axiosInstance from "../../../utils/axiosinstance";
 
-const RequestsPage = () => {
-  const { adminDetails } = useContext(adminContext);
+const CommunicationMyTicket = () => {
+  const { memberDetails } = useContext(AuthContext);
   const [allRequests, setAllRequests] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,13 +29,13 @@ const RequestsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!adminDetails?.id) return;
+      if (!memberDetails?.id) return;
       setIsLoading(true);
 
       try {
-        const role = adminDetails.role;
+        const role = memberDetails.role;
         const [memberDataResponse, response, didresponse] = await Promise.all([
-          axiosInstance.get(`api/member/${role}/${adminDetails.id}`),
+          axiosInstance.get(`api/member/${role}/${memberDetails.id}`),
           axiosInstance.get('api/member/enquiry'),
           axiosInstance.get('api/member/didNumber')
         ]);
@@ -65,7 +65,7 @@ const RequestsPage = () => {
     };
 
     fetchData();
-  }, [adminDetails?.id]);
+  }, [memberDetails?.id]);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -245,4 +245,4 @@ const RequestsPage = () => {
   );
 };
 
-export default RequestsPage;
+export default CommunicationMyTicket;

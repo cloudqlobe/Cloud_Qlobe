@@ -3,15 +3,19 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   UserGroupIcon,
-  UserPlusIcon,
+  UserIcon,
+  EnvelopeIcon,
   PencilIcon,
-  TrashIcon
+  TrashIcon,
+  XMarkIcon,
+  KeyIcon
 } from '@heroicons/react/24/outline';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from '../utils/axiosinstance';
+import Layout from './layout/Layout';
 
-const AllStaffManagement = ({ members = [] }) => {
+const AllStaffManagement = () => {
   const [teams, setTeams] = useState({
     account: [],
     support: [],
@@ -19,7 +23,7 @@ const AllStaffManagement = ({ members = [] }) => {
     sale: [],
     lead: []
   });
-  
+
   const [openSections, setOpenSections] = useState({
     account: false,
     support: false,
@@ -27,44 +31,48 @@ const AllStaffManagement = ({ members = [] }) => {
     sale: false,
     lead: false
   });
-  
+
   const [loading, setLoading] = useState(true);
-  const [selectedMember, setSelectedMember] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [newUser, setNewUser] = useState({ fullName: '', email: '', password: '', role: '', status: 'active' });
+  const [errors, setErrors] = useState({});
+  console.log(newUser);
+
+  // Fetch members
+  const fetchMembers = async () => {
+    try {
+      setLoading(true);
+      const [
+        accountResponse,
+        supportResponse,
+        leadResponse,
+        carrierResponse,
+        saleResponse
+      ] = await Promise.all([
+        axiosInstance.get('api/admin/allaccountMember'),
+        axiosInstance.get('api/admin/allsupportMember'),
+        axiosInstance.get('api/admin/allleadMember'),
+        axiosInstance.get('api/admin/allcarriermember'),
+        axiosInstance.get('api/admin/allsaleMember')
+      ]);
+
+      setTeams({
+        account: accountResponse?.data?.members || [],
+        support: supportResponse?.data?.members || [],
+        lead: leadResponse?.data?.members || [],
+        carrier: carrierResponse?.data?.members || [],
+        sale: saleResponse?.data?.members || []
+      });
+    } catch (error) {
+      console.error("Error fetching team data:", error);
+      toast.error("Failed to load team data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        setLoading(true);
-        const [
-          accountResponse,
-          supportResponse,
-          leadResponse,
-          carrierResponse,
-          saleResponse
-        ] = await Promise.all([
-          axiosInstance.get('api/admin/allaccountMember'),
-          axiosInstance.get('api/admin/allsupportMember'),
-          axiosInstance.get('api/admin/allleadMember'),
-          axiosInstance.get('api/admin/allcarrierMember'),
-          axiosInstance.get('api/admin/allsaleMember')
-        ]);
-        
-        setTeams({
-          account: accountResponse?.data?.members || [],
-          support: supportResponse?.data?.members || [],
-          lead: leadResponse?.data?.members || [],
-          sale: saleResponse?.data?.members || [],
-          carrier: carrierResponse?.data?.members || []
-        });
-      } catch (error) {
-        console.error("Error fetching team data:", error);
-        toast.error("Failed to load team data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchMembers();
   }, []);
 
@@ -75,43 +83,71 @@ const AllStaffManagement = ({ members = [] }) => {
     }));
   };
 
-  const handleEditMember = (member) => {
-    setSelectedMember(member);
-    setShowEditModal(true);
+  const getStatusColor = (status) => {
+    const colors = {
+      active: "bg-green-100 text-green-800 border border-green-300",
+      inactive: "bg-gray-100 text-gray-800 border border-gray-300",
+      restricted: "bg-yellow-100 text-yellow-800 border border-yellow-300",
+      block: "bg-red-100 text-red-800 border border-red-300",
+    };
+    return colors[status] || "bg-gray-100 text-gray-800 border border-gray-300";
   };
 
-  const handleDeleteMember = async (memberId) => {
-    if (window.confirm("Are you sure you want to delete this member?")) {
-      try {
-        await axiosInstance.delete(`/api/admin/members/${memberId}`);
-        toast.success("Member deleted successfully");
-        // Refresh the data
-        const fetchMembers = async () => {
-          const responses = await Promise.all([
-            axiosInstance.get('api/admin/allaccountMember'),
-            axiosInstance.get('api/admin/allsupportMember'),
-            axiosInstance.get('api/admin/allleadMember'),
-            axiosInstance.get('api/admin/allcarrierMember'),
-            axiosInstance.get('api/admin/allsaleMember')
-          ]);
-          
-          setTeams({
-            account: responses[0]?.data?.members || [],
-            support: responses[1]?.data?.members || [],
-            lead: responses[2]?.data?.members || [],
-            sale: responses[3]?.data?.members || [],
-            carrier: responses[4]?.data?.members || []
-          });
-        };
-        
-        fetchMembers();
-      } catch (error) {
-        console.error("Error deleting member:", error);
-        toast.error("Failed to delete member");
+
+  // ------------ EDIT -------------
+  const handleEditUserClick = (member) => {
+    setNewUser({
+      fullName: member.fullName,
+      email: member.email,
+      password: '',
+      role: member.role,
+      status: member.status || 'active'  // 👈 set current status
+    });
+    setEditingUserId(member.id);
+    setErrors({});
+    setIsModalOpen(true);
+  };
+
+
+  const handleSaveUser = async () => {
+    if (!newUser.fullName.trim() || !newUser.email.trim()) {
+      toast.error("Full name and email are required");
+      return;
+    }
+
+    try {
+      let response;
+      const rolePath = newUser.role.replace("member", ""); // "leadmember" -> "lead"
+      if (editingUserId) {
+        response = await axiosInstance.put(
+          `api/admin/update${rolePath}Member/${editingUserId}`,
+          newUser
+        );
+        toast.success("Member updated successfully");
       }
+      setIsModalOpen(false);
+      fetchMembers();
+    } catch (error) {
+      toast.error("Error saving Member");
     }
   };
 
+  // ------------ DELETE -------------
+  const handleDeleteUser = async (member) => {
+    if (!window.confirm("Are you sure you want to delete this member?")) return;
+
+    try {
+      const rolePath = member.role.replace("member", ""); // "leadmember" -> "lead"
+      await axiosInstance.delete(`api/admin/delete${rolePath}Member/${member.id}`);
+      toast.success("Member deleted successfully");
+      fetchMembers();
+    } catch (error) {
+      console.error("Error deleting member:", error);
+      toast.error("Failed to delete member");
+    }
+  };
+
+  // ------------ TEAM SECTION -------------
   const TeamSection = ({ title, members, isOpen, onToggle, teamKey }) => {
     return (
       <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mb-6">
@@ -146,39 +182,35 @@ const AllStaffManagement = ({ members = [] }) => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {members.map((member) => (
-                    <div key={member._id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div key={member.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <h4 className="font-semibold text-gray-800">{member.fullName}</h4>
                           <p className="text-sm text-gray-600">{member.email}</p>
-                          {member.phone && (
-                            <p className="text-sm text-gray-600 mt-1">{member.phone}</p>
-                          )}
+
+                          {/* Status Badge */}
+                          <span className={`inline-block mt-2 px-2 py-1 text-xs font-medium rounded ${getStatusColor(member.status)}`}>
+                            {member.status}
+                          </span>
                         </div>
                         <div className="flex space-x-2">
                           <button
-                            onClick={() => handleEditMember(member)}
+                            onClick={() => handleEditUserClick(member)}
                             className="p-1 text-blue-600 hover:bg-blue-100 rounded transition-colors"
-                            title="Edit member"
                           >
                             <PencilIcon className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => handleDeleteMember(member._id)}
+                            onClick={() => handleDeleteUser(member)}
                             className="p-1 text-red-600 hover:bg-red-100 rounded transition-colors"
-                            title="Delete member"
                           >
                             <TrashIcon className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
-                      {member.department && (
-                        <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                          {member.department}
-                        </span>
-                      )}
                     </div>
                   ))}
+
                 </div>
               )}
             </div>
@@ -197,70 +229,99 @@ const AllStaffManagement = ({ members = [] }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Team Management</h1>
-          <p className="text-gray-600">Manage all team members across different departments</p>
-        </div>
-
-        <div className="mb-6 flex justify-between items-center">
-          <div className="bg-white rounded-lg shadow-sm p-4">
-            <h3 className="font-semibold text-gray-700">Total Members</h3>
-            <p className="text-2xl font-bold text-blue-600">
-              {Object.values(teams).reduce((total, team) => total + team.length, 0)}
-            </p>
+    <Layout>
+      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Team Management</h1>
+            <p className="text-gray-600">Manage all team members across different departments</p>
           </div>
-          
-          <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            <UserPlusIcon className="w-5 h-5 mr-2" />
-            Add New Member
-          </button>
+
+          {/* Team Sections */}
+          <TeamSection title="Lead Team" members={teams.lead} isOpen={openSections.lead} onToggle={toggleSection} teamKey="lead" />
+          <TeamSection title="Account Team" members={teams.account} isOpen={openSections.account} onToggle={toggleSection} teamKey="account" />
+          <TeamSection title="Support Team" members={teams.support} isOpen={openSections.support} onToggle={toggleSection} teamKey="support" />
+          <TeamSection title="Sales Team" members={teams.sale} isOpen={openSections.sale} onToggle={toggleSection} teamKey="sale" />
+          <TeamSection title="Carrier Team" members={teams.carrier} isOpen={openSections.carrier} onToggle={toggleSection} teamKey="carrier" />
+
+          {/* Edit Modal */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white p-6 rounded-xl max-w-md w-full shadow-xl">
+                <div className="flex justify-between items-center mb-5 pb-3 border-b">
+                  <h2 className="text-xl font-bold text-gray-800">Edit Member</h2>
+                  <button onClick={() => setIsModalOpen(false)}>
+                    <XMarkIcon className="w-6 h-6 text-gray-400" />
+                  </button>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    value={newUser.fullName}
+                    onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })}
+                    className="w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-1">Email</label>
+                  <input
+                    type="email"
+                    value={newUser.email}
+                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                    className="w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-1">Password (leave blank to keep current)</label>
+                  <input
+                    type="password"
+                    value={newUser.password}
+                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                    className="w-full border rounded-lg p-2"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-1">Status</label>
+                  <select
+                    value={newUser.status}
+                    onChange={(e) => setNewUser({ ...newUser, status: e.target.value })}
+                    className={`w-full border rounded-lg p-2`}
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="restricted">Restricted</option>
+                    <option value="block">Block</option>
+                  </select>
+                </div>
+
+
+                <div className="flex justify-end space-x-2">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 border rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSaveUser}
+                    className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <ToastContainer position="bottom-right" />
         </div>
-
-        <TeamSection
-          title="Lead Team"
-          members={teams.lead}
-          isOpen={openSections.lead}
-          onToggle={toggleSection}
-          teamKey="lead"
-        />
-        
-        <TeamSection
-          title="Account Team"
-          members={teams.account}
-          isOpen={openSections.account}
-          onToggle={toggleSection}
-          teamKey="account"
-        />
-        
-        <TeamSection
-          title="Support Team"
-          members={teams.support}
-          isOpen={openSections.support}
-          onToggle={toggleSection}
-          teamKey="support"
-        />
-        
-        <TeamSection
-          title="Sales Team"
-          members={teams.sale}
-          isOpen={openSections.sale}
-          onToggle={toggleSection}
-          teamKey="sale"
-        />
-        
-        <TeamSection
-          title="Carrier Team"
-          members={teams.carrier}
-          isOpen={openSections.carrier}
-          onToggle={toggleSection}
-          teamKey="carrier"
-        />
-
-        <ToastContainer position="bottom-right" />
       </div>
-    </div>
+    </Layout>
   );
 };
 

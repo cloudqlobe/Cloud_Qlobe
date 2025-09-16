@@ -3,11 +3,11 @@ import Layout from '../../layout/page';
 import { MdOutlineSearch } from 'react-icons/md';
 import { TbSquareRoundedFilled } from "react-icons/tb"; // Importing the icon
 import axiosInstance from '../../../utils/axiosinstance';
-import adminContext from '../../../../../../context/page';
 import { toast, ToastContainer } from "react-toastify";
+import AuthContext from '../../../context/AuthContext';
 
 const Didnumberenquiery = () => {
-  const { adminDetails } = useContext(adminContext)
+  const { memberDetails } = useContext(AuthContext)
   const [didEnquiryData, setDidEnquiryData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
@@ -16,7 +16,7 @@ const Didnumberenquiery = () => {
     const fetchData = async () => {
       try {
 
-        if (adminDetails.role === "leadmember") {
+        if (memberDetails.role === "leadmember") {
           const response = await axiosInstance.get('api/member/didNumber')
           
           const filteredEnquiry = response.data.didnumbers.filter(
@@ -24,10 +24,6 @@ const Didnumberenquiery = () => {
           );
           setDidEnquiryData(filteredEnquiry)
 
-        } else if (adminDetails.role === "lead" || adminDetails.role === "superAdmin") {
-          const response = await axiosInstance.get('api/member/didNumber')
-          const filteredEnquiry = response.data.didnumbers
-          setDidEnquiryData(filteredEnquiry)
         }
 
       } catch (error) {
@@ -35,7 +31,7 @@ const Didnumberenquiery = () => {
       }
     }
     fetchData()
-  }, [adminDetails.id])
+  }, [memberDetails.id])
 
   const openModal = (enquiry) => {
     setSelectedEnquiry(enquiry);
@@ -50,9 +46,9 @@ const Didnumberenquiery = () => {
   const handlePickupData = async (id) => {
     try {
       const didId = id;
-      const serviceEngineer = adminDetails.name;
+      const serviceEngineer = memberDetails.name;
 
-      await axiosInstance.put(`api/member/updateMemberDIDId/${adminDetails.id}`, { didId });
+      await axiosInstance.put(`api/member/updateMemberDIDId/${memberDetails.id}`, { didId });
 
       await axiosInstance.put(`api/member/did/${didId}`, { serviceEngineer });
 
@@ -63,7 +59,7 @@ const Didnumberenquiery = () => {
 
     } catch (error) {
       toast.error("Failed to pick up");
-      console.error("Error updating admin member:", error);
+      console.error("Error updating member:", error);
     }
   };
 
@@ -92,13 +88,13 @@ const Didnumberenquiery = () => {
             </thead>
             <tbody>
               {didEnquiryData?.map((data) => (
-                <tr key={data.id} className="hover:bg-gray-100 transition duration-200">
+                <tr key={data.id} className="hover:bg-gray-100 transition duration-200 text-center">
                   <td className="py-3 px-4">{data.name}</td>
                   <td className="py-3 px-4">{data.companyName}</td>
                   <td className="py-3 px-4">{data.email}</td>
                   <td className="py-3 px-4">{data.country}</td>
                   <td className="py-3 px-4">{new Date(data.created_at).toLocaleString()}</td>
-                  <td className="py-3 px-4 flex justify-end space-x-2">
+                  <td className="py-3 px-4  space-x-2">
                     <button
                       className="bg-orange-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
                       onClick={() => openModal(data)}

@@ -67,14 +67,14 @@ const RequestsTable = ({ activeCategory, filteredRequests, openModal, handlePick
                     {activeCategory === "DID Numbers" ? (
                         (filteredRequests?.length > 0 ? (
                             filteredRequests.map((data, index) => (
-                                <tr key={data?.id || index} className="hover:bg-gray-100">
+                                <tr key={data?.id || index} className="hover:bg-gray-100 text-center">
                                     <td className="py-3 px-4">{data.name}</td>
                                     <td className="py-3 px-4">{data.companyName}</td>
                                     <td className="py-3 px-4">{data.email}</td>
                                     <td className="py-3 px-4">{data.country}</td>
                                     <td className="py-3 px-4">{new Date(data.created_at).toLocaleString()}</td>
                                     <td className="py-3 px-4">{data.status}</td>
-                                    <td className="border px-6 py-3 space-x-2">
+                                    <td className="py-2 px-4 text-right space-x-2">
                                         <button
                                             className="bg-green-500 text-white px-3 py-1 rounded-lg shadow hover:bg-green-600"
                                             onClick={() => handlePickupClick(data)}

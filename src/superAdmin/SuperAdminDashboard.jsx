@@ -195,43 +195,5 @@ const DashboardView = ({ stats }) => {
   );
 };
 
-// Reusable DataTable Component (for admins and members)
-const DataTable = ({ title, data }) => {
-  return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
-      <div className="bg-white p-4 rounded-lg shadow">
-        <table className="w-full border border-gray-200">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2">ID</th>
-              <th className="border px-4 py-2">Name</th>
-              <th className="border px-4 py-2">Email</th>
-              <th className="border px-4 py-2">Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.length > 0 ? (
-              data.map((item) => (
-                <tr key={item.id}>
-                  <td className="border px-4 py-2">{item.id}</td>
-                  <td className="border px-4 py-2">{item.name}</td>
-                  <td className="border px-4 py-2">{item.email}</td>
-                  <td className="border px-4 py-2">{item.role}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center py-4 text-gray-500">
-                  No Data Found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
 
 export default SuperAdminDashboard;

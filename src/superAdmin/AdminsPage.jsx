@@ -8,21 +8,22 @@ import {
   TrashIcon,
   XMarkIcon,
   UserGroupIcon,
-  KeyIcon,
   EnvelopeIcon
 } from '@heroicons/react/24/outline';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from '../utils/axiosinstance';
+import Layout from './layout/Layout';
 
-const SettingsPage = ({ admins = [] }) => {
+const AdminPage = () => {
   const [isAccessControlOpen, setIsAccessControlOpen] = useState(true);
-  const [users, setUsers] = useState(admins);
+  const [users, setUsers] = useState();
   const [newUser, setNewUser] = useState({
     fullName: '',
     email: '',
     password: '',
-    role: 'account'
+    role: 'account',
+    status: 'active'
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUserId, setEditingUserId] = useState(null);
@@ -48,13 +49,8 @@ const SettingsPage = ({ admins = [] }) => {
     }
   };
 
-  const toggleAccessControl = () => {
-    setIsAccessControlOpen(!isAccessControlOpen);
-  };
-
   const validateInputs = () => {
     const newErrors = {};
-
     if (!newUser.fullName.trim()) {
       newErrors.fullName = 'Full name is required';
     } else if (newUser.fullName.length < 3) {
@@ -79,7 +75,7 @@ const SettingsPage = ({ admins = [] }) => {
   };
 
   const handleAddUserClick = () => {
-    setNewUser({ fullName: '', email: '', password: '', role: 'account' });
+    setNewUser({ fullName: '', email: '', password: '', role: 'account', status: 'active' });
     setEditingUserId(null);
     setErrors({});
     setIsModalOpen(true);
@@ -90,37 +86,39 @@ const SettingsPage = ({ admins = [] }) => {
       fullName: user.fullName,
       email: user.email,
       password: '',
-      role: user.role
+      role: user.role,
+      status: user.status || 'active'
     });
     setEditingUserId(user.id);
     setErrors({});
     setIsModalOpen(true);
   };
 
-  const handleSaveUser = async () => {
-    if (!validateInputs()) return;
+const handleSaveUser = async () => {
+  if (!validateInputs()) return;
 
-    try {
-      if (editingUserId) {
-        await axiosInstance.put(`api/superAdmin/updateAdmin/${editingUserId}`, newUser);
-        setUsers(users.map(user =>
-          user.id === editingUserId ? { ...user, ...newUser } : user
-        ));
-        toast.success("Admin updated successfully");
-      } else {
-        const response = await axiosInstance.post("api/superAdmin/createAdmin", newUser);
-        setUsers([...users, response.data]);
-        toast.success("Admin added successfully");
-      }
-      setIsModalOpen(false);
-    } catch (error) {
-      if (error?.response?.status === 409) {
-        toast.error("Email already exists");
-      } else {
-        toast.error("Error saving admin");
-      }
+  try {
+    if (editingUserId) {
+      await axiosInstance.put(`api/superAdmin/updateAdmin/${editingUserId}`, newUser);
+      setUsers(users.map(user =>
+        user.id === editingUserId ? { ...user, ...newUser } : user
+      ));
+      toast.success("Admin updated successfully");
+    } else {
+      const response = await axiosInstance.post("api/superAdmin/createAdmin", newUser);
+      await fetchAdmins(); // reload fresh data
+      toast.success("Admin added successfully");
     }
-  };
+    setIsModalOpen(false);
+  } catch (error) {
+    if (error?.response?.status === 409) {
+      toast.error("Email already exists");
+    } else {
+      toast.error("Error saving admin");
+    }
+  }
+};
+
 
   const handleDeleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this admin?")) return;
@@ -135,7 +133,6 @@ const SettingsPage = ({ admins = [] }) => {
     }
   };
 
-  // Filter users based on search and role filter
   const filteredUsers = users?.filter(user => {
     const matchesSearch = user.fullName?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchTerm?.toLowerCase());
@@ -155,16 +152,14 @@ const SettingsPage = ({ admins = [] }) => {
     return colors[role] || 'bg-gray-100 text-gray-800';
   };
 
-  const getRoleDisplayName = (role) => {
-    const names = {
-      account: 'Accounts',
-      support: 'Support',
-      carrier: 'Carrier',
-      sale: 'Sales',
-      lead: 'Leads',
-      superAdmin: 'Super Admin'
+  const getStatusColor = (status) => {
+    const colors = {
+      active: 'bg-green-100 text-green-800',
+      inactive: 'bg-gray-100 text-gray-800',
+      restricted: 'bg-yellow-100 text-yellow-800',
+      block: 'bg-red-100 text-red-800',
     };
-    return names[role] || role;
+    return colors[status] || 'bg-gray-100 text-gray-800';
   };
 
   if (loading) {
@@ -176,6 +171,7 @@ const SettingsPage = ({ admins = [] }) => {
   }
 
   return (
+        <Layout>
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
@@ -183,10 +179,9 @@ const SettingsPage = ({ admins = [] }) => {
           <p className="text-gray-600 mt-2">Manage admin accounts and access permissions</p>
         </div>
 
-        {/* Access Control Section */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <button
-            onClick={toggleAccessControl}
+            onClick={() => setIsAccessControlOpen(!isAccessControlOpen)}
             className="w-full flex justify-between items-center px-6 py-4 text-left hover:bg-gray-50 transition-colors"
           >
             <div className="flex items-center">
@@ -275,7 +270,10 @@ const SettingsPage = ({ admins = [] }) => {
 
                       <div className="flex items-center space-x-3">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                          {getRoleDisplayName(user.role)}
+                          {user.role}
+                        </span>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(user.status)}`}>
+                          {user.status || 'NA'}
                         </span>
 
                         <div className="flex space-x-2">
@@ -329,8 +327,7 @@ const SettingsPage = ({ admins = [] }) => {
                   type="text"
                   value={newUser.fullName}
                   onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.fullName ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter full name"
                 />
                 {errors.fullName && (
@@ -346,8 +343,7 @@ const SettingsPage = ({ admins = [] }) => {
                   type="email"
                   value={newUser.email}
                   onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter email address"
                 />
                 {errors.email && (
@@ -363,8 +359,7 @@ const SettingsPage = ({ admins = [] }) => {
                   type="password"
                   value={newUser.password}
                   onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter password"
                 />
                 {errors.password && (
@@ -374,18 +369,36 @@ const SettingsPage = ({ admins = [] }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Rol
+                  Role
                 </label>
                 <select
                   value={newUser.role}
                   onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="account">Accounts</option>
+                  <option value="account">Account</option>
                   <option value="support">Support</option>
-                  {/* <option value="carrier">Carrier</option> */}
+                  <option value="carrier">Carrier</option>
                   <option value="sale">Sales</option>
-                  {/* <option value="lead">Leads</option> */}
+                  <option value="lead">Marketing</option>
+                  <option value="superAdmin">Super Admin</option>
+                </select>
+              </div>
+
+              {/* Status Dropdown */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Status
+                </label>
+                <select
+                  value={newUser.status}
+                  onChange={(e) => setNewUser({ ...newUser, status: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="restricted">Restricted</option>
+                  <option value="block">Block</option>
                 </select>
               </div>
             </div>
@@ -408,9 +421,10 @@ const SettingsPage = ({ admins = [] }) => {
         </div>
       )}
 
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="top-right" />
     </div>
+    </Layout>
   );
 };
 
-export default SettingsPage;
+export default AdminPage;

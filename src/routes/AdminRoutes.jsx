@@ -66,6 +66,14 @@ import TestingPage from "../admin/Support/Testing/page.jsx";
 import TaskPage from "../admin/Support/Tasks/page.jsx";
 import AccountFollowUp from "../admin/account/Followups/page.jsx";
 import AddFollowUpInAccounts from "../admin/account/Followups/Addfollowup/page.jsx";
+//communication
+import EnquiryPage from "../admin/Communication/Enquiries/page.jsx";
+import CommunicationInternalAssistance from "../admin/Communication/InternalAssistance/page.jsx";
+import CommunicationEmail from "../admin/Communication/Email/page.jsx";
+import Didnumberenquiery from "../admin/Communication/DIDEnquiries/page.jsx";
+import MemberCommiunctionMyTicket from "../admin/Communication/MyTicket/page.jsx";
+import ChatPanel from "../admin/Communication/ChatBot/page.jsx";
+import CommunicationMessagesDashboard from "../admin/Communication/Messages/page.jsx";
 
 
 
@@ -116,7 +124,7 @@ const AdminRoutes = () => {
                         <Route path="/sale/customer/addlead" element={<AdminAddCustomerPage />} />
                         <Route path="/SaleLead/customer/:customerId" element={<AdminSaleCustomerLeadDetails />} />
                         <Route path="/sale/followups" element={<AdminSaleFollowUp />} />
-                        <Route path="/detailfollowup/:followupId" element={<AdminFollowUpDetails />} />
+                        <Route path="/detailfollowup/:followupId/:customerId" element={<AdminFollowUpDetails />} />
                         <Route path="/sale/email" element={<AdminSaleEmail />} />
                         <Route path="/sale/assistance" element={<AdminSaleInternalAssistance />} />
                         <Route path="/sale/messages" element={<AdminSaleMessage />} />
@@ -147,13 +155,13 @@ const AdminRoutes = () => {
                         {/* <Route path="/support/myTickets" element={<MyTickets />} /> */}
 
                         {/* Communications */}
-                        {/* <Route path="/communication/enquiry" element={<EnquiryPage />} />
-              <Route path="/communication/didEnquiry" element={<Didnumberenquiery />} />
-              <Route path="/communication/myTickets" element={<RequestsPage />} />
-              <Route path="/communication/chatpanel" element={<ChatPanel />} />
-              <Route path="/communication/email" element={<CommunicationEmail />} />
-              <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
-              <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} /> */}
+                        <Route path="/communication/enquiry" element={<EnquiryPage />} />
+                        <Route path="/communication/didEnquiry" element={<Didnumberenquiery />} />
+                        <Route path="/communication/myTickets" element={<MemberCommiunctionMyTicket />} />
+                        <Route path="/communication/chatpanel" element={<ChatPanel />} />
+                        <Route path="/communication/email" element={<CommunicationEmail />} />
+                        <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
+                        <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
 
 
                     </Routes>

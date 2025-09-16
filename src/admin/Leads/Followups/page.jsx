@@ -12,22 +12,35 @@ const AdminLeadFollowUp = () => {
   const { adminDetails } = useContext(AdminAuthContext)
   const [activeTab, setActiveTab] = useState("call");
   const [followUpData, setFollowUpData] = useState([]);
+    const [customerData, setCustomerData] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+console.log(followUpData);
+console.log(customerData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         let data = [];
-          const followUpsResponse = await axiosInstance.get(`api/member/customerfollowups`);
+          const followUpsResponse = await axiosInstance.get(`api/member/getFollowupsByCategory/Lead`);
           data = followUpsResponse.data.followups;
         setFollowUpData(data);
 
-        const customerIds = [...new Set(data.map(item => item.customerId))];
+        const customerIds = [...new Set(data.map(item => item.userId))];
+        console.log(customerIds);
+        
         const validIds = customerIds.filter(id => id && id.trim() !== "");
 
+        const customers = {};
+        for (const customerId of validIds) {
+          const response = await axiosInstance.get(`api/customer/${customerId}`);
+          customers[customerId] = response.data.customer;
+        }
+        console.log(customers);
+        
+setCustomerData(customers)
       } catch (err) {
         setError(err.message);
       } finally {
@@ -41,11 +54,13 @@ const AdminLeadFollowUp = () => {
   const filteredFollowUps = followUpData.filter(
     (item) =>
       item.followupMethod === activeTab &&
-      item.followupCategory === "Leads" &&
+      item.followupCategory === "Lead" &&
       (selectedStatus === "All" || item.followupStatus === selectedStatus)
   );
 
-  const handleRowClick = (followupId) => navigate(`/member/detailfollowup/${followupId}`);
+const handleRowClick = (followupId, customerId) => {
+  navigate(`/admin/detailfollowup/${followupId}/${customerId}`);
+};
 
   const renderTabContent = () => {
     if (loading) return <div className="text-center py-4 text-gray-600">Loading...</div>;
@@ -70,14 +85,15 @@ const AdminLeadFollowUp = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredFollowUps?.map((followUp) => {
+          {filteredFollowUps.map((followUp) => {
+            const customer = customerData[followUp.userId] || {};
             return (
               <tr
-                key={followUp.followupId}
+                key={followUp.id}
                 className="hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleRowClick(followUp.followupId)}
+                onClick={() => handleRowClick(followUp.followupId, customer.customerId)}
               >
-                <td className="border px-4 py-2">{followUp.companyName || "N/A"}</td>
+                <td className="border px-4 py-2">{customer.customerId || "N/A"}</td>
                 <td className="border px-4 py-2">
                   {followUp.followupDate && followUp.followupTime
                     ? `${followUp.followupDate} - ${followUp.followupTime}`

@@ -72,7 +72,7 @@ export const getNavItems = (memberRole) => [
     ]
   },
   {
-    id: "accounts", label: "Accounts", roles: ["accountmember", "salemember", "carrierMember"],
+    id: "accounts", label: "Accounts", roles: ["accountmember", "salemember", "carriermember"],
     subItems: [
       {
         label: "Rates", subMenu: true,

@@ -68,9 +68,9 @@ const Register = () => {
 
         {/* Right Side - Registration Form */}
         <div className="w-full md:w-1/2 bg-gray-200 p-8  border-orange-300 rounded-none">
-          <h2 className="text-2xl font-default text-center mb-6 text-orange-500">
+          <h1 className="text-2xl font-default text-center mb-6 text-orange-500">
             Open Your Trade Account
-          </h2>
+          </h1>
 
           <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
