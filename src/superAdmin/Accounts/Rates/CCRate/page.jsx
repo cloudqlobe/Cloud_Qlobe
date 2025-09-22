@@ -166,6 +166,10 @@ const SuperAdminCCRate = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 10;
+
     useEffect(() => {
         const fetchRates = async () => {
             try {
@@ -178,29 +182,66 @@ const SuperAdminCCRate = () => {
         fetchRates();
     }, []);
 
-    const handleAddLead = async (ccrates) => {
-
-        try {
-            let response;
-            if (isUpdateMode) {
-                response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
-            } else {
-                response = await axiosInstance.post("api/admin/ccrates", ccrates);
-            }
-            setSuccessMessage(
-                isUpdateMode ? "Rate updated successfully!" : "Rate added successfully!"
+    // Apply filters and sorting first (keep your existing filter & sort logic)
+    const filteredData = rateData
+        .filter((rate) => {
+            if (!rate) return false;
+            const searchTerm = search.toLowerCase();
+            return (
+                (rate.country?.toLowerCase().includes(searchTerm)) ||
+                (rate.profile?.toLowerCase().includes(searchTerm))
             );
-            window.location.reload();
-            setErrorMessage("");
-            setModalOpen(false);
-            setIsUpdateMode(false);
-            setCurrentRate(null);
-        } catch (error) {
-            console.error("Error adding/updating rate:", error);
-            setErrorMessage("Failed to add/update rate. Please try again.");
-            setSuccessMessage("");
+        })
+        .filter((rate) =>
+            (selectedCountry ? rate.country === selectedCountry : true) &&
+            (selectedStatus ? rate?.status?.toLowerCase() === selectedStatus?.toLowerCase() : true)
+        )
+        .sort((a, b) => {
+            if (sort === "country") return a.country.localeCompare(b.country);
+            if (sort === "rate") return a.rate - b.rate;
+            if (sort === "status") return a.status.localeCompare(b.status);
+            return 0;
+        });
+
+    // Pagination calculation
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+
+const handleAddLead = async (ccrates) => {
+    try {
+        let response;
+        if (isUpdateMode) {
+            response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
+
+            // Update the rateData state in-place
+            setRateData(prev =>
+                prev.map(rate => rate._id === currentRate._id ? response.data.updatedRate : rate)
+            );
+
+            setSuccessMessage("Rate updated successfully!");
+        } else {
+            response = await axiosInstance.post("api/admin/ccrates", ccrates);
+
+            // Add new rate to the table
+            setRateData(prev => [...prev, response.data.newRate]);
+
+            setSuccessMessage("Rate added successfully!");
         }
-    };
+
+        setErrorMessage("");
+        setModalOpen(false);
+        setIsUpdateMode(false);
+        setCurrentRate(null);
+    } catch (error) {
+        console.error("Error adding/updating rate:", error);
+        setErrorMessage("Failed to add/update rate. Please try again.");
+        setSuccessMessage("");
+    }
+};
+
 
     const handleUpdateClick = (rate) => {
         setCurrentRate(rate);
@@ -246,12 +287,15 @@ const SuperAdminCCRate = () => {
                             onChange={(e) => setSelectedCountry(e.target.value)}
                             className='border border-gray-300 px-4 py-2'>
                             <option value=''>Select Country</option>
-                            {rateData.map((rate) => (
-                                <option key={rate._id} value={rate.country}>
-                                    {rate.country}
-                                </option>
-                            ))}
+                            {Array.from(new Set(rateData.map(rate => rate.country))) // get unique countries
+                                .filter(Boolean) // remove empty/null
+                                .map((country) => (
+                                    <option key={country} value={country}>
+                                        {country}
+                                    </option>
+                                ))}
                         </select>
+
 
                         <select
                             style={{ height: "41px", marginRight: "15px", width: "190px" }}
@@ -298,53 +342,45 @@ const SuperAdminCCRate = () => {
                             <th className='py-2 px-4'>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {rateData
-                            .filter((rate) => {
-                                if (!rate) return false;
-                                const searchTerm = search.toLowerCase();
-                                return (
-                                    (rate.country?.toLowerCase().includes(searchTerm)) ||
-                                    (rate.profile?.toLowerCase().includes(searchTerm))
-                                );
-                            })
-                            .filter((rate) =>
-                                (selectedCountry ? rate.country === selectedCountry : true) &&
-                                (selectedStatus ? rate?.status?.toLowerCase() === selectedStatus?.toLowerCase() : true)
-                            )
-                            .sort((a, b) => {
-                                if (sort === "country") return a.country.localeCompare(b.country);
-                                if (sort === "rate") return a.rate - b.rate;
-                                if (sort === "status") return a.status.localeCompare(b.status);
-                                return 0;
-                            })
-                            .map((rate, index) => (
-                                <tr
-                                    key={rate._id}
-                                    className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                                    <td className='py-2 px-4'>{rate.countryCode}</td>
-                                    <td className='py-2 px-4'>{rate.country}</td>
-                                    <td className='py-2 px-4'>{rate.qualityDescription}</td>
-                                    <td className='py-2 px-4'>{rate.rate}</td>
-                                    <td className='py-2 px-4'>{rate.status}</td>
-                                    <td className='py-2 px-4'>{rate.profile}</td>
-                                    <td className='py-2 px-4'>{rate.billingCycle}</td>
-                                    <td className='py-2 px-4'>
-                                        <button
-                                            onClick={() => handleUpdateClick(rate)}
-                                            className='text-blue-500 hover:text-blue-700'>
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteClick(rate._id)}
-                                            className='text-red-500 hover:text-red-700 ml-2'>
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
+<tbody>
+  {currentRows.map((rate, index) => (
+    rate ? (
+      <tr key={rate._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+        <td className='py-2 px-4'>{rate.countryCode}</td>
+        <td className='py-2 px-4'>{rate.country}</td>
+        <td className='py-2 px-4'>{rate.qualityDescription}</td>
+        <td className='py-2 px-4'>{rate.rate}</td>
+        <td className='py-2 px-4'>{rate.status}</td>
+        <td className='py-2 px-4'>{rate.profile}</td>
+        <td className='py-2 px-4'>{rate.billingCycle}</td>
+        <td className='py-2 px-4'>
+          <button onClick={() => handleUpdateClick(rate)} className='text-blue-500 hover:text-blue-700'>Edit</button>
+          <button onClick={() => handleDeleteClick(rate._id)} className='text-red-500 hover:text-red-700 ml-2'>Delete</button>
+        </td>
+      </tr>
+    ) : null
+  ))}
+</tbody>
+
                 </table>
+                <div className='flex justify-between items-center mt-4'>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className='px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50'>
+                        Prev
+                    </button>
+                    <span>
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className='px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50'>
+                        Next
+                    </button>
+                </div>
+
             </div>
 
             <Modal

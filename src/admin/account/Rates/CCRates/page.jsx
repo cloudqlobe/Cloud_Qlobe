@@ -247,11 +247,13 @@ const AdminCCRate = () => {
               onChange={(e) => setSelectedCountry(e.target.value)}
               className='border border-gray-300 px-4 py-2'>
               <option value=''>Select Country</option>
-              {rateData.map((rate) => (
-                <option key={rate._id} value={rate.country}>
-                  {rate.country}
-                </option>
-              ))}
+              {Array.from(new Set(rateData.map(rate => rate.country))) // get unique countries
+                .filter(Boolean) // remove empty/null
+                .map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
             </select>
 
             <select
