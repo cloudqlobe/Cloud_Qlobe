@@ -19,7 +19,10 @@ import {
   Truck,
   Network,
   CreditCard,
-  Activity
+  Activity,
+  PieChart,
+  PhoneForwarded,
+  PhoneCall,
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -79,22 +82,25 @@ const DashboardSidebar = () => {
         { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/carriers/settings" }
       ],
     },
-    {
-      id: "accounts",
-      label: "Accounts",
-      icon: FileText,
-      path: "/superadmin/accounts/dashboard",
-      children: [
-        { id: "dashboard", label: "Dashboard", icon: BarChart3, path: "/superadmin/accounts/dashboard" },
-        { id: "overview", label: "Financial Overview", icon: BarChart3, path: "/superadmin/accounts/overview" },
-        { id: "revenue", label: "Revenue Analytics", icon: TrendingUp, path: "/superadmin/accounts/revenue" },
-        { id: "accounts", label: "Account Management", icon: Users, path: "/superadmin/accounts/manage" },
-        { id: "expenses", label: "Expense Tracking", icon: CreditCard, path: "/superadmin/accounts/expenses" },
-        { id: "departments", label: "Department P&L", icon: Building2, path: "/superadmin/accounts/departments" },
-        { id: "reports", label: "Financial Reports", icon: FileText, path: "/superadmin/accounts/reports" },
-        { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/accounts/settings" }
-      ],
-    },
+{
+  id: "accounts",
+  label: "Accounts",
+  icon: FileText,
+  path: "/superadmin/accounts/dashboard",
+  children: [
+    { id: "dashboard", label: "Dashboard", icon: BarChart3, path: "/superadmin/accounts/dashboard" },
+    { id: "overview", label: "Financial Overview", icon: PieChart, path: "/superadmin/accounts/overview" },
+    { id: "ccrate", label: "CC Rate", icon: PhoneCall, path: "/superadmin/accounts/ccrate" },
+    { id: "clirate", label: "CLI Rate", icon: PhoneForwarded, path: "/superadmin/accounts/clirate" },
+    { id: "revenue", label: "Revenue Analytics", icon: TrendingUp, path: "/superadmin/accounts/revenue" },
+    { id: "accounts", label: "Account Management", icon: Users, path: "/superadmin/accounts/manage" },
+    { id: "expenses", label: "Expense Tracking", icon: CreditCard, path: "/superadmin/accounts/expenses" },
+    { id: "departments", label: "Department P&L", icon: Building2, path: "/superadmin/accounts/departments" },
+    { id: "reports", label: "Financial Reports", icon: FileText, path: "/superadmin/accounts/reports" },
+    { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/accounts/settings" }
+  ],
+},
+
     {
       id: "supports",
       label: "Tech Support",
@@ -135,10 +141,9 @@ const DashboardSidebar = () => {
             key={item.id}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center px-4 py-3 transition-colors ${
-                isActive || activeSection?.id === item.id
-                  ? "bg-slate-700 text-white"
-                  : "text-slate-300 hover:bg-slate-700 hover:text-white"
+              `flex items-center px-4 py-3 transition-colors ${isActive || activeSection?.id === item.id
+                ? "bg-slate-700 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
               }`
             }
           >
@@ -160,10 +165,9 @@ const DashboardSidebar = () => {
                 key={child.id}
                 to={child.path}
                 className={({ isActive }) =>
-                  `w-full flex items-center px-6 py-2 transition-colors ${
-                    isActive
-                      ? "bg-slate-700 text-white"
-                      : "text-slate-300 hover:bg-slate-700 hover:text-white"
+                  `w-full flex items-center px-6 py-2 transition-colors ${isActive
+                    ? "bg-slate-700 text-white"
+                    : "text-slate-300 hover:bg-slate-700 hover:text-white"
                   }`
                 }
               >

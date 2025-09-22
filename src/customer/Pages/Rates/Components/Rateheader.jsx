@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Filter, Check, X } from "lucide-react";
 import axiosInstance from "../../../../utils/axiosinstance";
 import CustomerAuthContext from "../../../../context/customer/CustomerAuthContext";
@@ -16,7 +16,6 @@ const Ratepages = () => {
   const [selectedRates, setSelectedRates] = useState({});
   const [showSelectedOnly, setShowSelectedOnly] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
-  console.log("selectedSection", selectedSection);
 
   const [rates, setRates] = useState([]);
   const [clirates, setCliRates] = useState([]);
@@ -73,6 +72,9 @@ const Ratepages = () => {
       currentData = specialRates;
     }
 
+    // Remove archived rates
+    currentData = currentData.filter(rate => rate.status?.toLowerCase() !== 'archive');
+
     const uniqueCountries = Array.from(new Set(currentData.map((rate) => rate.country)));
     setCountryOptions(["All", ...uniqueCountries]);
 
@@ -91,6 +93,7 @@ const Ratepages = () => {
     setFilteredRates(updatedRates);
     setCurrentPage(1);
   }, [activeTab, selectedCountry, qualityFilter, rates, clirates, specialRates]);
+
 
   useEffect(() => {
     if (showSelectedOnly && selectedSection) {
@@ -228,53 +231,52 @@ const Ratepages = () => {
     return selectedRates[selectedSection]?.length || 0;
   };
 
-const renderPagination = () => {
-  const visiblePages = 7;
-  let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
-  let endPage = startPage + visiblePages - 1;
+  const renderPagination = () => {
+    const visiblePages = 7;
+    let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
+    let endPage = startPage + visiblePages - 1;
 
-  if (endPage > totalPages) {
-    endPage = totalPages;
-    startPage = Math.max(endPage - visiblePages + 1, 1);
-  }
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(endPage - visiblePages + 1, 1);
+    }
 
-  const pages = [];
-  for (let i = startPage; i <= endPage; i++) {
-    pages.push(i);
-  }
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
 
-  return (
-    <div className="flex justify-center mt-4">
-      <button
-        className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-      >
-        <ChevronLeft size={16} />
-      </button>
-
-      {pages.map((page) => (
+    return (
+      <div className="flex justify-center mt-4">
         <button
-          key={page}
-          className={`px-3 py-1 mx-1 rounded ${
-            currentPage === page
-              ? "bg-[#0a2463] text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-          onClick={() => setCurrentPage(page)}
+          className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         >
-          {page}
+          <ChevronLeft size={16} />
         </button>
-      ))}
 
-      <button
-        className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
-        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-      >
-        <ChevronRight size={16} />
-      </button>
-    </div>
-  );
-};
+        {pages.map((page) => (
+          <button
+            key={page}
+            className={`px-3 py-1 mx-1 rounded ${currentPage === page
+                ? "bg-[#0a2463] text-white"
+                : "bg-gray-200 text-gray-700"
+              }`}
+            onClick={() => setCurrentPage(page)}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        >
+          <ChevronRight size={16} />
+        </button>
+      </div>
+    );
+  };
 
 
   const renderTable = () => {
@@ -387,7 +389,7 @@ const renderPagination = () => {
                 <tr
                   key={rate._id}
                   className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                {selectionMode && (
+                  {selectionMode && (
                     <td className="px-4 py-2">
                       <input
                         type="checkbox"

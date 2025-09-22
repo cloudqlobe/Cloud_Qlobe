@@ -16,6 +16,8 @@ import TechnicalSupportDashboard from "../superAdmin/TechnicalSupport/page.jsx";
 import TelecomAccountsDashboard from "../superAdmin/Accounts/page.jsx";
 import TelecomSalesDashboard from "../superAdmin/Sales/page.jsx";
 import CarriersManagementDashboard from "../superAdmin/Carriers/page.jsx";
+import SuperAdminCCRate from "../superAdmin/Accounts/Rates/CCRate/page.jsx";
+import SuperAdminCLIRate from "../superAdmin/Accounts/Rates/CLIRate/page.jsx";
 
 const SuperAdminRoutes = () => {
   return (
@@ -60,6 +62,9 @@ const SuperAdminRoutes = () => {
             <Route path="/carriers/settings" element={<Dummy />} />
 
             <Route path="/accounts/dashboard" element={<TelecomAccountsDashboard />} />
+            <Route path="/accounts/ccrate" element={<SuperAdminCCRate />} />
+            <Route path="/accounts/clirate" element={<SuperAdminCLIRate />} />
+
             <Route path="/accounts/overview" element={<Dummy />} />
             <Route path="/accounts/revenue" element={<Dummy />} />
             <Route path="/accounts/manage" element={<Dummy />} />

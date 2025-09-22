@@ -191,29 +191,10 @@ const RatesPage = () => {
     }
   };
 
-  const handleUpdateClick = (rate) => {
-    setCurrentRate(rate);
-    setIsUpdateMode(true);
-    setModalOpen(true);
-  };
-
-  const handleDeleteClick = async (rateId) => {
-    try {
-      await axiosInstance.delete(`api/admin/ccrates/${rateId}`);
-      setRateData(rateData.filter((rate) => rate._id !== rateId));
-      setSuccessMessage("Rate deleted successfully!");
-      setErrorMessage("");
-    } catch (error) {
-      console.error("Error deleting rate:", error);
-      setErrorMessage("Failed to delete rate. Please try again.");
-      setSuccessMessage("");
-    }
-  };
-
   return (
     <Layout>
       <div className='container mx-auto px-4 py-4'>
-        <h1 style={{marginBottom: "15px" }} className='text-2xl font-semibold'>Rates Management</h1>
+        <h1 style={{ marginBottom: "15px" }} className='text-2xl font-semibold'>Rates Management</h1>
         {successMessage && (
           <p className='text-green-600 mt-4'>{successMessage}</p>
         )}
@@ -226,7 +207,7 @@ const RatesPage = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className='border border-gray-300 px-4 py-2'
-            style={{marginRight: "15px", width: "300px" }}
+            style={{ marginRight: "15px", width: "300px" }}
           />
           <span>
             <select
@@ -279,6 +260,10 @@ const RatesPage = () => {
             {rateData
               .filter((rate) => {
                 if (!rate) return false;
+
+                // ❌ Exclude archived rows
+                if (rate.status?.toLowerCase() === "archive") return false;
+
                 const searchTerm = search.toLowerCase();
                 return (
                   (rate.country?.toLowerCase().includes(searchTerm)) ||

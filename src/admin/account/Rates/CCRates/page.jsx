@@ -306,6 +306,10 @@ const AdminCCRate = () => {
             {rateData
               .filter((rate) => {
                 if (!rate) return false;
+
+                // ❌ Exclude archived rows
+                if (rate.status?.toLowerCase() === "archive") return false;
+
                 const searchTerm = search.toLowerCase();
                 return (
                   (rate.country?.toLowerCase().includes(searchTerm)) ||
@@ -316,6 +320,7 @@ const AdminCCRate = () => {
                 (selectedCountry ? rate.country === selectedCountry : true) &&
                 (selectedStatus ? rate?.status?.toLowerCase() === selectedStatus?.toLowerCase() : true)
               )
+
               .sort((a, b) => {
                 if (sort === "country") return a.country.localeCompare(b.country);
                 if (sort === "rate") return a.rate - b.rate;
@@ -323,9 +328,9 @@ const AdminCCRate = () => {
                 return 0;
               })
               .map((rate, index) => (
-                  <tr
-                    key={rate._id}
-                    className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                <tr
+                  key={rate._id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
                   <td className='py-2 px-4'>{rate.countryCode}</td>
                   <td className='py-2 px-4'>{rate.country}</td>
                   <td className='py-2 px-4'>{rate.qualityDescription}</td>

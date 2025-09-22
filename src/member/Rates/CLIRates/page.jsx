@@ -100,6 +100,7 @@ const CLIRatesPage = () => {
   }, []);
 
   const filteredData = rateData
+    .filter(rate => rate.status.toLowerCase() !== 'archive') // <-- hide archived data
     .filter((rate) =>
       (rate.country?.toLowerCase().includes(search.toLowerCase()) || '') ||
       (rate.qualityDescription?.toLowerCase().includes(search.toLowerCase()) || '')
@@ -113,6 +114,7 @@ const CLIRatesPage = () => {
       if (sort === 'rate') return a.rate - b.rate;
       return 0;
     });
+
 
   const handleAddLead = async (leadData) => {
     try {
