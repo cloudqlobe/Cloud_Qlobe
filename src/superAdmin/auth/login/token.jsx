@@ -7,7 +7,7 @@ import axiosInstance from "../../../utils/axiosinstance";
 const SuperAdminTokenVerification = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
-const { updateSuperAdminDetails } = useContext(SuperAdminAuthContext);
+  const { updateSuperAdminDetails } = useContext(SuperAdminAuthContext);
 
   const handleVerify = async () => {
     const id = sessionStorage.getItem("pendingSuperAdminId");
@@ -23,17 +23,24 @@ const { updateSuperAdminDetails } = useContext(SuperAdminAuthContext);
         id,
       }, { withCredentials: true });
 
-      const { adminData } = res.data;
+      const adminData = res.data.sessionToken;
+      console.log(res);
+      console.log(res.data.sessionToken);
+      
+      
+console.log(adminData);
 
       sessionStorage.setItem("SuperAdminAuthToken", JSON.stringify(adminData));
       updateSuperAdminDetails(adminData);
 
       toast.success("Token verified. Welcome!");
       navigate("/superadmin/dashboard");
+      sessionStorage.removeItem("pendingSuperAdminId");
+
     } catch (err) {
       const status = err?.response?.status;
-console.log(status);
-console.log(err);
+      console.log(status);
+      console.log(err);
 
 
       if (status === 410) {

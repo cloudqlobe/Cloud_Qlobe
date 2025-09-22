@@ -137,7 +137,7 @@ const SuperAdminCLIRate = () => {
             } else {
                 response = await axiosInstance.post('api/admin/clirates', leadData);
                 // Add the new row to state
-                setRateData(prev => [...prev, response.data.clirate || leadData]);
+                setRateData(prev => [...prev, response.data.clirate]);
             }
 
             setSuccessMessage(isUpdateMode ? 'Rate updated successfully!' : 'Rate added successfully!');
