@@ -26,12 +26,13 @@
   <meta property="og:image" content="%PUBLIC_URL%/logo510.png" />
 
   <!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@cloudqlobe" />
-<meta name="twitter:title" content="Cloud Qlobe | Next-Gen Telecom & Smart Communication Solutions" />
-<meta name="twitter:description" content="Cloud Qlobe is your business telecom partner, offering customized telecom services and scalable communication solutions worldwide." />
-<meta name="twitter:image" content="%PUBLIC_URL%/logo510.png" />
-<meta name="twitter:url" content="https://twitter.com/cloudqlobe" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@cloudqlobe" />
+  <meta name="twitter:title" content="Cloud Qlobe | Next-Gen Telecom & Smart Communication Solutions" />
+  <meta name="twitter:description"
+    content="Cloud Qlobe is your business telecom partner, offering customized telecom services and scalable communication solutions worldwide." />
+  <meta name="twitter:image" content="%PUBLIC_URL%/logo510.png" />
+  <meta name="twitter:url" content="https://twitter.com/cloudqlobe" />
 
 
   <!-- site map -->
@@ -76,6 +77,17 @@
     }
   </script>
 
+
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault(), false);
+
+    document.addEventListener("keydown", function (event) {
+      if (event.ctrlKey || event.keyCode == 123) { // Ctrl key or F12
+        event.preventDefault();
+      }
+    });
+  </script>
+
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo510.png" />
 
@@ -90,4 +102,5 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 </body>
+
 </html>
