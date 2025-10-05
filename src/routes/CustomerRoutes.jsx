@@ -2,19 +2,19 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { CustomerRoute } from "../auth/ProtectedRoute.jsx";
 
-import Signup from "../customer/Pages/auth/signup/page.jsx";
-import LoginPage from "../customer/Pages/auth/login/page.jsx";
-import VerifyTokenPage from "../customer/Pages/auth/Token/page.jsx";
-import ResetPasswordPage from "../customer/Pages/auth/login/ResetPasswordPage.jsx";
-import ForgotPasswordPage from "../customer/Pages/auth/login/ForgotPasswordPage.jsx";
+import Signup from "../customer/auth/signup/page.jsx";
+import LoginPage from "../customer/auth/login/page.jsx";
+import VerifyTokenPage from "../customer/auth/Token/page.jsx";
+import ResetPasswordPage from "../customer/auth/login/ResetPasswordPage.jsx";
+import ForgotPasswordPage from "../customer/auth/login/ForgotPasswordPage.jsx";
 
-import Dashboard from "../customer/Pages/CustomerDashboard/page.jsx";
-import PaymentsPage from "../customer/Pages/CustomerDashboard/payment/page.jsx";
-import ProfilePage from "../customer/Pages/CustomerDashboard/profile/page.jsx";
-import Support from "../customer/Pages/CustomerDashboard/support/page.jsx";
-import AddTroubleTicket from "../customer/Pages/CustomerDashboard/support/Addfollowup/page.jsx";
-import MyRatesPage from "../customer/Pages/CustomerDashboard/myRate/page.jsx";
-import SettingsPage from "../customer/Pages/CustomerDashboard/settings/page.jsx";
+import Dashboard from "../customer/page.jsx";
+import PaymentsPage from "../customer/payment/page.jsx";
+import ProfilePage from "../customer/profile/page.jsx";
+import Support from "../customer/support/page.jsx";
+import AddTroubleTicket from "../customer/support/Addfollowup/page.jsx";
+import MyRatesPage from "../customer/myRate/page.jsx";
+import SettingsPage from "../customer/settings/page.jsx";
 
 const CustomerRoutes = () => {
   return (
