@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { RiDatabase2Fill } from "react-icons/ri";
 import { GiSurroundedEye } from "react-icons/gi";
 import { GiGroundbreaker } from "react-icons/gi";
@@ -16,6 +16,10 @@ import axiosInstance from "../../utils/axiosinstance";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(""); // 🔥 track selection
+const location = useLocation();
+const currentPath = location.pathname; // e.g., "/services/cc-routes"
+
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -38,7 +42,8 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-    const handleLogout = async () => {
+
+  const handleLogout = async () => {
     try {
       await axiosInstance.post('api/logout', {}, { withCredentials: true });
       sessionStorage.removeItem('authToken');
@@ -62,12 +67,14 @@ const Navbar = () => {
           <Link to="/about" className="hover:text-blue-500 transition">About</Link>
 
           {/* Enhanced Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setShowDropdown(true)}
-            ref={dropdownRef}
-          >
-            <button className="hover:text-blue-500 transition">Services</button>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setShowDropdown((prev) => !prev)} // 🔥 toggle on click
+              className="hover:text-blue-500 transition"
+            >
+              Services
+            </button>
+
 
             {showDropdown && (
               <div
@@ -85,25 +92,28 @@ const Navbar = () => {
                   <div className="flex-1 bg-white rounded-l-xl relative z-10 p-4">
                     <div className="w-full h-full border-2 border-gray-200 squared-xl p-4">
                       <div className="grid grid-cols-3 gap-4">
-                        {dropdownItems.map((item, idx) => (
-                          <div key={idx} className="border border-gray-200 squared-lg p-2">
-                            <Link
-                              to={item.path}
-                              className="group flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 transition-all duration-300 transform hover:scale-102 hover:shadow-lg"
-                              onClick={() => setShowDropdown(false)}
-                            >
-                              <div className="w-16 h-16 border-2 border-gray-200 rounded-xl flex items-center justify-center shadow-sm">
-                                <div className="text-[#5885AF] group-hover:text-blue-400 transition-all duration-300 transform group-hover:scale-110">
-                                  {item.icon}
-                                </div>
+{dropdownItems.map((item, idx) => (
+  <div
+    key={idx}
+    className={`squared-lg p-2 border-2 rounded-xl transition-all duration-300
+      ${currentPath === item.path ? "border-[#5885AF]" : "border-gray-200"}`}
+  >
+    <Link
+      to={item.path}
+      className="group flex items-center gap-4 p-4 rounded-xl transition-all duration-300 transform hover:scale-102 hover:shadow-lg"
+    >
+      <div className="w-16 h-16 border-2 rounded-xl flex items-center justify-center shadow-sm">
+        <div className="text-[#5885AF] group-hover:text-blue-400 transition-all duration-300 transform group-hover:scale-110">
+          {item.icon}
+        </div>
+      </div>
+      <span className="text-sm font-default text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+        {item.label}
+      </span>
+    </Link>
+  </div>
+))}
 
-                              </div>
-                              <span className="text-sm font-default text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
-                                {item.label}
-                              </span>
-                            </Link>
-                          </div>
-                        ))}
                       </div>
                     </div>
                   </div>

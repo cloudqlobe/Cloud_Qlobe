@@ -1,141 +1,81 @@
-import { Globe, Users, Zap, Shield, Phone } from 'lucide-react';
+import Homeimage38 from '../../../../assets/10221126.jpg'
+import Homeimage36 from '../../../../assets/ChatGPT Image Aug 18, 2025, 01_20_13 PM.png'
+import Homeimage45 from '../../../../assets/ChatGPT Image Aug 18, 2025, 02_47_06 PM.png'
 
-const TelecomHeroSection = () => {
-
+const Didcontent1 = () => {
   return (
-    <div className="min-h-[764px] py-4 bg-gradient-to-br from-white to-white flex items-center">
+    <div className="min-h-screen w-full bg-white px-12 py-16 overflow-hidden">
+      <h1 className="text-[40px] font-normal font-[Roboto,Arial,sans-serif] text-center text-black mb-20 mt-8 leading-snug">
+        Elevate Connectivity with <span className="text-blue-800">CloudQlobe DID Number Solutions</span>
+      </h1>
 
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Left Side Content */}
-          <div className="lg:w-1/2 flex flex-col justify-center z-10 ml-[45px] mt-[-50px]">
-            <h1 className="text-4xl lg:text-4xl font-default text-gray-800 mb-6 leading-snug">
-              Smart Dialer <span className="text-blue-500">Solutions for Businesses</span>
-            </h1>
-            <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
-              CloudQlobe Dialer Solutions enable businesses to streamline outbound and inbound calls with efficiency and precision. Our platform ensures high call quality, intelligent routing, and real-time monitoring, helping teams maximize productivity and maintain seamless customer communication.
-            </p>
-            <div className="flex gap-4">
-              <button className="bg-blue-500 text-white px-6 py-3 squared-lg hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                Get Started
-              </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 squared-lg hover:bg-gray-50 transition-all duration-300 hover:border-gray-400">
-                Learn More
-              </button>
-            </div>
-          </div>
-
-          {/* Right Side Infographic */}
-          <div className="lg:w-1/2 relative mt-[-50px]">
-            <div className="space-y-8">
-
-              {/* Top Row - Circular Numbers */}
-              <div className="flex justify-center gap-6">
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    01
-                  </div>
-                  <div className="mt-3 text-center">
-                    <h4 className="font-bold text-blue-600 text-sm">AUTOMATION</h4>
-                    <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Smart auto-dialing for faster outreach</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    02
-                  </div>
-                  <div className="mt-3 text-center">
-                    <h4 className="font-bold text-purple-600 text-sm">EFFICIENCY</h4>
-                    <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Boost call center productivity</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-red-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    03
-                  </div>
-                  <div className="mt-3 text-center">
-                    <h4 className="font-bold text-orange-600 text-sm">CONTROL</h4>
-                    <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Advanced call monitoring tools</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Middle Row - Horizontal Bars */}
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    01
-                  </div>
-                  <div className="flex-1 ml-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full px-6 py-4 text-white shadow-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-bold text-sm">PREDICTIVE DIALING</h4>
-                        <p className="text-xs opacity-90">AI-driven predictive dialers that minimize wait times and maximize agent talk time.</p>
-                      </div>
-                      <Shield className="w-6 h-6 text-white opacity-80" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    02
-                  </div>
-                  <div className="flex-1 ml-4 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full px-6 py-4 text-white shadow-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-bold text-sm">HOSTED SOLUTIONS</h4>
-                        <p className="text-xs opacity-90">Cloud-based dialers with zero hardware dependency, ideal for remote call centers.</p>
-                      </div>
-                      <Users className="w-6 h-6 text-white opacity-80" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    03
-                  </div>
-                  <div className="flex-1 ml-4 bg-gradient-to-r from-red-400 to-orange-500 rounded-full px-6 py-4 text-white shadow-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-bold text-sm">REAL-TIME ANALYTICS</h4>
-                        <p className="text-xs opacity-90">Track live agent performance, call quality, and campaign results instantly.</p>
-                      </div>
-                      <Globe className="w-6 h-6 text-white opacity-80" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Right - Mixed Layout */}
-              <div className="flex justify-end gap-8">
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                      <Shield className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                      <Zap className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-gradient-to-r from-red-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                      <Phone className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Global DID Solutions Section */}
+      <section className="grid md:grid-cols-2 items-center gap-10 mb-24 max-w-7xl mx-auto">
+        <div className="flex justify-center items-center w-full p-2">
+          <img
+            src={Homeimage36}
+            alt="DID Global Solutions"
+            className="w-[480px] h-[540px] object-cover rounded-lg mt-[80px] ml-[-100px]"
+          />
         </div>
-      </div>
+        <div className="flex flex-col justify-center w-full max-w-[850px] ml-[25px] mt-[-40px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
+            Global <span className="text-orange-500">Virtual DID Numbers</span>
+          </h2>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
+            CloudQlobe provides an extensive network of worldwide DID numbers, enabling businesses to establish a strong local presence across multiple continents without the need for physical offices. By leveraging our global DID solutions, companies can expand their customer reach, build stronger brand recognition, and offer seamless accessibility to clients in every region. This ensures that businesses remain competitive in an increasingly connected and digital-first world.
+          </p>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
+            Our advanced DID offerings include robust routing options, a wide selection of local area codes, and multiple number types to suit diverse business needs. Whether it’s handling sales inquiries, customer support, or unified communication strategies, CloudQlobe’s DID solutions are scalable, reliable, and designed to provide maximum flexibility. This empowers enterprises to deliver localized experiences globally, enhancing customer engagement and trust while simplifying complex communication networks.
+          </p>
+        </div>
+      </section>
+
+      {/* Custom DID Integration Section */}
+      <section className="grid md:grid-cols-2 items-center gap-10 mb-24 max-w-7xl mx-auto ml-[35px]">
+        <div className="flex flex-col justify-center w-full max-w-[850px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
+            Seamless <span className="text-orange-500">DID Integration</span>
+          </h2>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
+            Integrate DID numbers seamlessly into your existing PBX, VoIP, or unified communication systems without disruptions. CloudQlobe’s solutions are built to ensure smooth interoperability, enabling businesses to efficiently manage incoming and outgoing calls, extensions, and routing with unparalleled flexibility. This integration simplifies operations, reduces setup times, and allows companies to focus on delivering exceptional customer experiences.
+          </p>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
+            From agile startups to multinational corporations, our DID solutions can be fully customized to meet unique operational requirements. Enjoy the advantages of advanced call forwarding, IVR configuration, SIP trunking, and virtual number portability, all designed to streamline communication workflows. This level of customization ensures businesses can maintain efficiency, responsiveness, and connectivity, even as communication needs evolve and scale globally.
+          </p>
+        </div>
+        <div className="flex justify-center items-center w-full p-2">
+          <img
+            src={Homeimage38}
+            alt="DID Integration"
+            className="w-[590px] h-[450px] object-cover rounded-lg ml-[180px] mt-[70px]"
+          />
+        </div>
+      </section>
+
+      {/* Billing & Call Management Section */}
+      <section className="grid md:grid-cols-2 items-center gap-10 max-w-7xl mx-auto">
+        <div className="flex justify-center items-center w-full p-2">
+          <img
+            src={Homeimage45}
+            alt="DID Billing & Management"
+            className="w-[480px] h-[600px] object-cover rounded-lg mt-[50px] ml-[-100px]"
+          />
+        </div>
+        <div className="flex flex-col justify-center w-full max-w-[850px] ml-[20px] mt-[-100px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
+            Smart <span className="text-orange-500">Billing & Call Management</span>
+          </h2>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
+            Maintain complete control over your communication costs with CloudQlobe’s transparent billing and intelligent call management tools. Our platform provides real-time call tracking, detailed analytics, flexible billing cycles, and intuitive dashboards that allow businesses to monitor usage, forecast expenses, and optimize resource allocation. This ensures financial clarity and operational efficiency across all communication channels.
+          </p>
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
+            Effectively manage large-scale call traffic, track performance metrics, and allocate budgets efficiently while ensuring uninterrupted service. CloudQlobe guarantees enterprise-grade stability, security, and scalability, giving businesses the confidence that their DID numbers and communication infrastructure are robust, reliable, and capable of supporting growth. Our solutions are designed to empower businesses to focus on innovation and customer satisfaction without worrying about connectivity challenges.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default TelecomHeroSection;
+export default Didcontent1;

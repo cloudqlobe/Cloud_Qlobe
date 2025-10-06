@@ -6,16 +6,12 @@ import { SiHiveBlockchain } from "react-icons/si";
 import { MdVpnLock } from "react-icons/md";
 import {
   Lock,
-  Home,
-  User,
-  Settings,
-  Info,
   Shield,
   Key,
   FileCheck
 } from "lucide-react";
 
-const SecurityPanelLayout = () => {
+const SecurityPanelLayout = ({ onLoginClick }) => {
   return (
     <div className="flex h-[500px] bg-white rounded-2xl overflow-hidden mt-[100px]">
       {/* Left Panel */}
@@ -23,10 +19,10 @@ const SecurityPanelLayout = () => {
         {/* Icon Row */}
         <div className="flex justify-around mb-6 mt-[80px]">
           {[
-            { icon: MdOutlineSecurity , gradient: "from-blue-400 to-blue-600" },
-            { icon: SiSecurityscorecard , gradient: "from-purple-400 to-purple-600" },
-            { icon: SiHiveBlockchain , gradient: "from-green-400 to-green-600" },
-            { icon: MdVpnLock , gradient: "from-orange-400 to-orange-600" }
+            { icon: MdOutlineSecurity, gradient: "from-blue-400 to-blue-600" },
+            { icon: SiSecurityscorecard, gradient: "from-purple-400 to-purple-600" },
+            { icon: SiHiveBlockchain, gradient: "from-green-400 to-green-600" },
+            { icon: MdVpnLock, gradient: "from-orange-400 to-orange-600" }
           ].map(({ icon: Icon, gradient }, idx) => (
             <div key={idx} className="group cursor-pointer">
               <div
@@ -49,7 +45,10 @@ const SecurityPanelLayout = () => {
 
           {/* Login Button */}
           <div className="mt-[20px] ml-[-20px]">
-            <button className="flex items-center justify-center gap-3 border border-orange-500 text-orange-500 px-24 py-3 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm">
+            <button
+              onClick={onLoginClick} // 🔥 smooth scroll trigger
+              className="flex items-center justify-center gap-3 border border-orange-500 text-orange-500 px-24 py-3 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm"
+            >
               Login
             </button>
           </div>
@@ -59,12 +58,12 @@ const SecurityPanelLayout = () => {
       {/* Right Panel */}
       <div className="w-1/2 bg-white flex items-center justify-center relative overflow-hidden">
         {/* Background Pattern */}
-       <div className="absolute inset-0">
-  <div className="absolute top-10 left-10 w-20 h-20 border-4 border-orange-500 border-opacity-10 rounded-lg transform rotate-12"></div>
-  <div className="absolute top-32 right-20 w-16 h-16 border-4 border-red-500 border-opacity-10 rounded-full"></div>
-  <div className="absolute bottom-20 left-20 w-12 h-12 border-4 border-yellow-500 border-opacity-10 rounded-lg transform -rotate-45"></div>
-  <div className="absolute bottom-40 right-10 w-14 h-14 border-4 border-teal-500 border-opacity-10 rounded-full"></div>
-</div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-20 h-20 border-4 border-orange-500 border-opacity-10 rounded-lg transform rotate-12"></div>
+          <div className="absolute top-32 right-20 w-16 h-16 border-4 border-red-500 border-opacity-10 rounded-full"></div>
+          <div className="absolute bottom-20 left-20 w-12 h-12 border-4 border-yellow-500 border-opacity-10 rounded-lg transform -rotate-45"></div>
+          <div className="absolute bottom-40 right-10 w-14 h-14 border-4 border-teal-500 border-opacity-10 rounded-full"></div>
+        </div>
 
 
         {/* Animated Circles */}

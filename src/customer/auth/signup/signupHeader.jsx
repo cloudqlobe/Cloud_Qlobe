@@ -13,7 +13,7 @@ import {
   Server,
 } from "lucide-react";
 
-const AnimatedHeader = () => {
+const AnimatedHeader = ({onRegisterClick}) => {
   const flags = [
     "https://flagcdn.com/w40/us.png",
     "https://flagcdn.com/w40/gb.png",
@@ -64,7 +64,7 @@ const AnimatedHeader = () => {
           >
             <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-default text-orange-600">
-                Next-Gen <span className="text-blue-600">Registration</span> 
+                Next-Gen <span className="text-blue-600">Registration</span>
               </h1>
               <p className="text-xl text-gray-600 max-w-lg">
                 Experience the future of secure account creation with our
@@ -89,11 +89,14 @@ const AnimatedHeader = () => {
             </div>
 
             {/* Button */}
-           <button className="group relative px-6 py-2 border border-gray-500 text-gray-500 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm">
-  <span className="relative z-10 flex items-center justify-center gap-2">
-    Register Here
-  </span>
-</button>
+            <button
+              className="group relative px-6 py-2 border border-gray-500 text-gray-500 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm"
+              onClick={onRegisterClick} // 🔥 smooth scroll trigger
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Register Here
+              </span>
+            </button>
 
 
           </div>

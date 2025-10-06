@@ -278,6 +278,97 @@ const Ratepages = () => {
     );
   };
 
+const CountryDropdown = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const getFilteredCountries = () => {
+    let currentData = [];
+    if (activeTab === "cc") currentData = rates;
+    else if (activeTab === "cli") currentData = clirates;
+    else if (activeTab === "special") currentData = specialRates;
+
+    // Remove archived rates
+    currentData = currentData.filter(rate => rate.status?.toLowerCase() !== "archive");
+
+    // Extract unique countries
+    return Array.from(new Set(currentData.map(rate => rate.country))).sort();
+  };
+
+  const isCountryActive = (country) => {
+    let currentData = [];
+    if (activeTab === "cc") currentData = rates;
+    else if (activeTab === "cli") currentData = clirates;
+    else if (activeTab === "special") currentData = specialRates;
+
+    return currentData.some(rate => rate.country === country && rate.status?.toLowerCase() === "active");
+  };
+
+  const options = ["All", ...getFilteredCountries()];
+
+  return (
+    <div className="relative w-full">
+      {/* Selected value */}
+      <div
+        className="border rounded px-3 py-2 flex items-center justify-between cursor-pointer bg-white"
+        style={{ height: "41px" }}
+        onClick={() => setShowDropdown(!showDropdown)}
+      >
+        <div className="flex items-center">
+          {selectedCountry === "All" || !selectedCountry ? (
+            <span>All Countries</span>
+          ) : (
+            <>
+              <div
+                className="w-2 h-2 rounded-full mr-2"
+                style={{
+                  backgroundColor: isCountryActive(selectedCountry) ? "#10B981" : "#EF4444",
+                }}
+              />
+              {selectedCountry}
+            </>
+          )}
+        </div>
+        <svg
+          className={`w-4 h-4 ml-2 transition-transform ${showDropdown ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+
+      {/* Dropdown options */}
+      {showDropdown && (
+        <div
+          className="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-60 overflow-auto"
+        >
+          {options.map((country) => (
+            <div
+              key={country}
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+              onClick={() => {
+                setSelectedCountry(country);
+                setShowDropdown(false);
+              }}
+            >
+              {country !== "All" && (
+                <div
+                  className="w-2 h-2 rounded-full mr-2"
+                  style={{
+                    backgroundColor: isCountryActive(country) ? "#10B981" : "#EF4444",
+                  }}
+                />
+              )}
+              {country}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
   const renderTable = () => {
     if (activeTab === "cli") {
@@ -505,17 +596,10 @@ const Ratepages = () => {
 
         {/* Filters */}
         <div className="flex space-x-4 items-center">
-          <select
-            className="pl-4 pr-4 py-2 border rounded"
-            value={selectedCountry}
-            onChange={(e) => setSelectedCountry(e.target.value)}
-          >
-            {countryOptions.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
+<div className="w-60">
+  <CountryDropdown />
+</div>
+
           <select
             className="pl-4 pr-4 py-2 border rounded"
             value={qualityFilter}

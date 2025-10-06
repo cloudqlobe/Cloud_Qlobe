@@ -27,12 +27,12 @@ const Loginpagemain = () => {
 
     try {
       const response = await axiosInstance.post("/api/login", formData);
-      sessionStorage.setItem("tempAuthToken",response?.data.tempAuthToken)
+      sessionStorage.setItem("tempAuthToken", response?.data.tempAuthToken)
       navigate('/customer/verify-token')
     } catch (err) {
       console.error("Login error:", err);
       setError(
-        err.response?.data?.message || 
+        err.response?.data?.message ||
         "Login failed. Please check your credentials and try again."
       );
     } finally {
@@ -45,61 +45,61 @@ const Loginpagemain = () => {
       {/* Main content */}
       <div className="flex flex-1">
         {/* Left Side - Stacked blocks */}
-{/* SEO-friendly section */}
-<section className="hidden md:flex w-1/2 flex-col justify-center bg-gradient-to-b from-blue-800 to-teal-800 p-8 gap-6">
-  <h2 className="sr-only">Our Core Strengths</h2> {/* Section heading for SEO */}
+        {/* SEO-friendly section */}
+        <section className="hidden md:flex w-1/2 flex-col justify-center bg-gradient-to-b from-blue-800 to-teal-800 p-8 gap-6">
+          <h2 className="sr-only">Our Core Strengths</h2> {/* Section heading for SEO */}
 
-  {[
-    {
-      color: "bg-orange-500",
-      icon: <Lightbulb size={28} className="text-white" />,
-      title: "Creative",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
-    },
-    {
-      color: "bg-purple-600",
-      icon: <Briefcase size={28} className="text-white" />,
-      title: "Planning",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
-    },
-    {
-      color: "bg-cyan-500",
-      icon: <Megaphone size={28} className="text-white" />,
-      title: "Marketing",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
-    },
-    {
-      color: "bg-green-500",
-      icon: <Award size={28} className="text-white" />,
-      title: "Success",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
-    },
-  ].map((block, index) => (
-    <article
-      key={index}
-      className="flex bg-white shadow-md rounded-md overflow-hidden"
-    >
-      {/* Icon box */}
-      <div
-        className={`${block.color} p-5 flex items-center justify-center`}
-        aria-hidden="true" // icons are decorative, not needed for SEO
-      >
-        {block.icon}
-      </div>
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-gray-800">{block.title}</h3>
-        <p className="text-gray-600 text-sm">{block.text}</p>
-      </div>
-    </article>
-  ))}
-</section>
+          {[
+            {
+              color: "bg-orange-500",
+              icon: <Lightbulb size={28} className="text-white" />,
+              title: "Creative",
+              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
+            },
+            {
+              color: "bg-purple-600",
+              icon: <Briefcase size={28} className="text-white" />,
+              title: "Planning",
+              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
+            },
+            {
+              color: "bg-cyan-500",
+              icon: <Megaphone size={28} className="text-white" />,
+              title: "Marketing",
+              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
+            },
+            {
+              color: "bg-green-500",
+              icon: <Award size={28} className="text-white" />,
+              title: "Success",
+              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh sit amet.",
+            },
+          ].map((block, index) => (
+            <article
+              key={index}
+              className="flex bg-white shadow-md rounded-md overflow-hidden"
+            >
+              {/* Icon box */}
+              <div
+                className={`${block.color} p-5 flex items-center justify-center`}
+                aria-hidden="true" // icons are decorative, not needed for SEO
+              >
+                {block.icon}
+              </div>
+              {/* Content */}
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-800">{block.title}</h3>
+                <p className="text-gray-600 text-sm">{block.text}</p>
+              </div>
+            </article>
+          ))}
+        </section>
 
 
         {/* Right Side - Login Form */}
         <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 p-6">
           <div className="w-full max-w-md">
-<h1 className="text-3xl font-bold text-gray-800 mb-6">Login</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-6">Login</h1>
             {error && (
               <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
                 {error}
