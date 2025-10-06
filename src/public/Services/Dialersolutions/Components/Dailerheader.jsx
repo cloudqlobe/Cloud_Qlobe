@@ -1,51 +1,6 @@
-import React from 'react';
-import { Globe, Users, Zap, Shield, Phone, TrendingUp } from 'lucide-react';
+import { Globe, Users, Zap, Shield, Phone } from 'lucide-react';
 
-const TelecomHeroSection = () => {
-  const infographicItems = [
-    {
-      icon: <Globe className="w-5 h-5" />,
-      title: "Global Reach",
-      description: "Connect worldwide with reliable VoIP platforms across all regions and markets",
-      color: "bg-gradient-to-br from-green-400 to-green-600",
-      gearColor: "bg-green-500"
-    },
-    {
-      icon: <Users className="w-5 h-5" />,
-      title: "Customer Focus",
-      description: "Dedicated support and personalized telecom solutions for every business need",
-      color: "bg-gradient-to-br from-blue-400 to-blue-600",
-      gearColor: "bg-blue-500"
-    },
-    {
-      icon: <Shield className="w-5 h-5" />,
-      title: "Secure SIP",
-      description: "Enterprise-grade security with encrypted routing and protected data transmission",
-      color: "bg-gradient-to-br from-purple-400 to-purple-600",
-      gearColor: "bg-purple-500"
-    },
-    {
-      icon: <Zap className="w-5 h-5" />,
-      title: "High Performance",
-      description: "Lightning-fast call processing with optimized network infrastructure worldwide",
-      color: "bg-gradient-to-br from-yellow-400 to-orange-500",
-      gearColor: "bg-orange-500"
-    },
-    {
-      icon: <Phone className="w-5 h-5" />,
-      title: "Call Quality",
-      description: "Crystal clear voice transmission with advanced codec technology and routing",
-      color: "bg-gradient-to-br from-red-400 to-red-600",
-      gearColor: "bg-red-500"
-    },
-    {
-      icon: <TrendingUp className="w-5 h-5" />,
-      title: "Scalability",
-      description: "Grow your business with flexible infrastructure that adapts to your needs",
-      color: "bg-gradient-to-br from-indigo-400 to-indigo-600",
-      gearColor: "bg-indigo-500"
-    }
-  ];
+const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
 
   return (
     <div className="min-h-[764px] py-4 bg-gradient-to-br from-white to-white flex items-center">
@@ -61,13 +16,20 @@ const TelecomHeroSection = () => {
               CloudQlobe Dialer Solutions enable businesses to streamline outbound and inbound calls with efficiency and precision. Our platform ensures high call quality, intelligent routing, and real-time monitoring, helping teams maximize productivity and maintain seamless customer communication.
             </p>
             <div className="flex gap-4">
-              <button className="bg-blue-500 text-white px-6 py-3 squared-lg hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button
+                onClick={onGetStartedClick}
+                className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
                 Get Started
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 squared-lg hover:bg-gray-50 transition-all duration-300 hover:border-gray-400">
+              <button
+                onClick={onLearnMoreClick}
+                className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
+              >
                 Learn More
               </button>
             </div>
+
           </div>
 
           {/* Right Side Infographic */}

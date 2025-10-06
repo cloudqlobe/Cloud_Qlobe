@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CloudQlobeGlobal = () => {
+const CloudQlobeGlobal = ({ onGetStartedClick, onLearnMoreClick }) => {
   const topFlags = [
     { name: 'USA', flagUrl: 'https://flagcdn.com/w160/us.png', color: 'from-red-500 to-blue-600' },
     { name: 'United Kingdom', flagUrl: 'https://flagcdn.com/w160/gb.png', color: 'from-red-600 to-blue-700' },
@@ -36,10 +36,16 @@ const CloudQlobeGlobal = () => {
            CloudQlobe’s CC Routes provide seamless global connectivity with clear voice quality and reliable performance. Built for high volumes, they ensure cost efficiency, flexibility, and scalability, helping businesses connect smarter and faster across international destinations.
           </p>
           <div className="flex gap-4">
-            <button className="bg-blue-500 text-white px-6 py-3 squared-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button
+              className="bg-blue-500 text-white px-6 py-3 squared-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              onClick={onGetStartedClick} // Scroll to Ccanimation
+            >
               Get Started
             </button>
-            <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 squared-lg hover:bg-gray-50 transition-all duration-300 hover:border-gray-400">
+            <button
+              className="border-2 border-gray-300 text-gray-700 px-6 py-3 squared-lg hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
+              onClick={onLearnMoreClick} // Scroll to Cccontent1
+            >
               Learn More
             </button>
           </div>

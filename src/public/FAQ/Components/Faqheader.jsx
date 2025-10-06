@@ -10,7 +10,7 @@ import {
 
 const iconClass = "w-5 h-5 text-white";
 
-const FaqBubbles = () => {
+const FaqBubbles = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="bg-white min-h-[864px] flex items-center justify-center px-4 mt-[-100px]">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -24,13 +24,20 @@ const FaqBubbles = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 ml-[-40px]">
-            <button className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md">
+            <button
+              onClick={onGetStartedClick}
+              className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
+            >
               Get Started
             </button>
-            <button className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm">
-              Learn More
+            <button
+              onClick={onLearnMoreClick}
+              className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+            >
+              Read More
             </button>
           </div>
+
         </div>
 
 

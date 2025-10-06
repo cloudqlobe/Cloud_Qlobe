@@ -8,25 +8,32 @@ import {
   Flag,
 } from "lucide-react";
 
-const Cliheader = () => {
+const Cliheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="flex flex-col lg:flex-row px-4 lg:px-12 py-8 bg-white h-[814px] gap-8 lg:gap-16 mt-[-50px] ">
       {/* Left Content */}
       <div className="lg:w-1/2 flex flex-col justify-center z-10 ml-[30px]">
-       <h1 className="text-4xl lg:text-4xl font-Default text-gray-800 mb-6 leading-snug">
-  The Power of <span className="text-blue-500">True Caller Identity</span>
-</h1>
-                   <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
-         CloudQlobe’s CLI Routes deliver premium voice quality with guaranteed Caller Line Identification for every call. With reliable connectivity, crystal-clear audio, and global coverage, we ensure trust, compliance, and superior communication experiences for businesses worldwide.
+        <h1 className="text-4xl lg:text-4xl font-Default text-gray-800 mb-6 leading-snug">
+          The Power of <span className="text-blue-500">True Caller Identity</span>
+        </h1>
+        <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
+          CloudQlobe’s CLI Routes deliver premium voice quality with guaranteed Caller Line Identification for every call. With reliable connectivity, crystal-clear audio, and global coverage, we ensure trust, compliance, and superior communication experiences for businesses worldwide.
         </p>
         <div className="flex gap-4">
-          <button className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <button
+            onClick={onGetStartedClick}
+            className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          >
             Get Started
           </button>
-          <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-all duration-300 hover:border-gray-400">
+          <button
+            onClick={onLearnMoreClick}
+            className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
+          >
             Learn More
           </button>
         </div>
+
       </div>
 
       {/* Right Infographic */}
@@ -91,7 +98,7 @@ const Cliheader = () => {
         {/* Center Node */}
         <div className="bg-white px-8 py-6 rounded-full shadow-xl border-4 border-gray-200 text-center z-20 mb-12 transform hover:scale-110 transition-all duration-300">
           <p className="text-sm font-bold text-gray-800 uppercase tracking-wide">
-           CLI VOICE TERMINATIONS
+            CLI VOICE TERMINATIONS
           </p>
           <p className="text-xs text-gray-500 mt-1">ASSURED PREMIUM ROUTES</p>
         </div>

@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { LuGlobeLock, LuLoaderPinwheel, LuLayers, LuMails, LuTarget, LuBoxes } from "react-icons/lu";
 
-const Contactheader = () => {
+const Contactheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <section className="bg-white h-[764px] flex items-center px-6 md:px-12 py-12">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full relative">
@@ -16,18 +16,25 @@ const Contactheader = () => {
           <h1 className="text-4xl md:text-4xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
             Start Your Journey <span className="text-blue-500 font-default">with CloudQlobe</span>
           </h1>
-        <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-  At CloudQlobe, we value every connection. Our team is always ready to assist you with inquiries, partnerships, or support. Whether you need details about our telecom solutions or help with existing services, we’re just a message away. Let’s connect and grow together.
-</p>
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
+            At CloudQlobe, we value every connection. Our team is always ready to assist you with inquiries, partnerships, or support. Whether you need details about our telecom solutions or help with existing services, we’re just a message away. Let’s connect and grow together.
+          </p>
 
           <div className="flex flex-wrap gap-4 ml-[-40px]">
-            <button className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md">
+            <button
+              onClick={onGetStartedClick}
+              className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
+            >
               Get Started
             </button>
-            <button className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm">
+            <button
+              onClick={onLearnMoreClick}
+              className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+            >
               Learn More
             </button>
           </div>
+
         </div>
 
         {/* Right Icon Area */}

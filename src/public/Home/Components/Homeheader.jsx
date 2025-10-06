@@ -5,7 +5,7 @@ import { BiSupport } from "react-icons/bi";
 import { MdOutlineMessage } from "react-icons/md";
 import { GrSettingsOption } from "react-icons/gr";
 
-const Homeheader = () => {
+const Homeheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <section className="bg-white py-24 px-6 mt-[200px] ">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
@@ -17,12 +17,17 @@ const Homeheader = () => {
           <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
            CloudQlobe combines next-generation VoIP services with cutting-edge monitoring and testing solutions to deliver unmatched telecom performance. From reliable global connectivity to scalable infrastructure, we ensure that every call is clear, every connection is stable, and every business stays ahead.
           </p>
-
           <div className="flex flex-wrap gap-4 ml-[-40px]">
-            <button className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md">
+            <button
+              className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
+              onClick={onGetStartedClick} // Scroll to Homeanimation
+            >
               Get Started
             </button>
-            <button className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm">
+            <button
+              className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+              onClick={onLearnMoreClick} // Scroll to Homecontent1
+            >
               Learn More
             </button>
           </div>

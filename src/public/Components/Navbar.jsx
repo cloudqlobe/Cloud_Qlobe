@@ -17,8 +17,8 @@ import axiosInstance from "../../utils/axiosinstance";
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState(""); // 🔥 track selection
-const location = useLocation();
-const currentPath = location.pathname; // e.g., "/services/cc-routes"
+  const location = useLocation();
+  const currentPath = location.pathname; // e.g., "/services/cc-routes"
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -92,27 +92,27 @@ const currentPath = location.pathname; // e.g., "/services/cc-routes"
                   <div className="flex-1 bg-white rounded-l-xl relative z-10 p-4">
                     <div className="w-full h-full border-2 border-gray-200 squared-xl p-4">
                       <div className="grid grid-cols-3 gap-4">
-{dropdownItems.map((item, idx) => (
-  <div
-    key={idx}
-    className={`squared-lg p-2 border-2 rounded-xl transition-all duration-300
+                        {dropdownItems.map((item, idx) => (
+                          <div
+                            key={idx}
+                            className={`squared-lg p-2 border-2 rounded-xl transition-all duration-300
       ${currentPath === item.path ? "border-[#5885AF]" : "border-gray-200"}`}
-  >
-    <Link
-      to={item.path}
-      className="group flex items-center gap-4 p-4 rounded-xl transition-all duration-300 transform hover:scale-102 hover:shadow-lg"
-    >
-      <div className="w-16 h-16 border-2 rounded-xl flex items-center justify-center shadow-sm">
-        <div className="text-[#5885AF] group-hover:text-blue-400 transition-all duration-300 transform group-hover:scale-110">
-          {item.icon}
-        </div>
-      </div>
-      <span className="text-sm font-default text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
-        {item.label}
-      </span>
-    </Link>
-  </div>
-))}
+                          >
+                            <Link
+                              to={item.path}
+                              className="group flex items-center gap-4 p-4 rounded-xl transition-all duration-300 transform hover:scale-102 hover:shadow-lg"
+                            >
+                              <div className="w-16 h-16 border-2 rounded-xl flex items-center justify-center shadow-sm">
+                                <div className="text-[#5885AF] group-hover:text-blue-400 transition-all duration-300 transform group-hover:scale-110">
+                                  {item.icon}
+                                </div>
+                              </div>
+                              <span className="text-sm font-default text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+                                {item.label}
+                              </span>
+                            </Link>
+                          </div>
+                        ))}
 
                       </div>
                     </div>

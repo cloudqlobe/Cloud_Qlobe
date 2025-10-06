@@ -1,24 +1,42 @@
-import React from 'react'
-import FaqHeader from './Components/Faqheader'
-import Register from '../Components/Register'
-import Footer from '../Components/Footer'
-import Becomepartner from '../Components/Becomepartner'
-import Faqquires from './Components/Faqquires'
-import Navbar from '../Components/Navbar'
-import HomeAchievement from '../Components/Homeacheivemnet'
+import React, { useRef } from "react";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
+import Register from "../Components/Register";
+import Becomepartner from "../Components/Becomepartner";
+import HomeAchievement from "../Components/Homeacheivemnet";
+import FaqHeader from "./Components/Faqheader";
+import Faqquires from "./Components/Faqquires";
 
 const Faqpages = () => {
+  const registerRef = useRef(null);
+  const faqRef = useRef(null);
+
+  const scrollToRegister = () => {
+    registerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const scrollToFaq = () => {
+    faqRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div>
       <Navbar />
-      <FaqHeader />
+      <FaqHeader
+        onGetStartedClick={scrollToRegister}
+        onLearnMoreClick={scrollToFaq}
+      />
       <Becomepartner />
-      <Faqquires />
+      <div ref={faqRef}>
+        <Faqquires />
+      </div>
       <HomeAchievement />
-      <Register />
+      <div ref={registerRef}>
+        <Register />
+      </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Faqpages
+export default Faqpages;

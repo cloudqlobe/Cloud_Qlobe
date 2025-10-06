@@ -10,7 +10,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 
-const Hostingheader= () => {
+const Hostingheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="py-16 bg-white  flex items-center h-[864px] mt-[-100px]">
       <div className="container mx-auto px-6 lg:px-8">
@@ -19,19 +19,26 @@ const Hostingheader= () => {
           {/* Left Side Content */}
           <div className="mt-[50px] ml-[85px]">
             <h1 className="text-5xl md:text-4xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
-             Advanced <span className="text-blue-500 font-default">Hosting solutions</span>
+              Advanced <span className="text-blue-500 font-default">Hosting solutions</span>
             </h1>
             <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-             CloudQlobe provides secure and scalable cloud hosting solutions for businesses of all sizes. Our platform ensures high performance, reliable uptime, and optimized resources. With advanced security and global infrastructure, we deliver seamless access and uninterrupted connectivity.
+              CloudQlobe provides secure and scalable cloud hosting solutions for businesses of all sizes. Our platform ensures high performance, reliable uptime, and optimized resources. With advanced security and global infrastructure, we deliver seamless access and uninterrupted connectivity.
             </p>
             <div className="flex flex-wrap gap-4 ml-[-40px]">
-              <button className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md">
+              <button
+                onClick={onGetStartedClick}
+                className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
+              >
                 Get Started
               </button>
-              <button className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm">
+              <button
+                onClick={onLearnMoreClick}
+                className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+              >
                 Learn More
               </button>
             </div>
+
           </div>
 
           {/* Right Side Infographic */}

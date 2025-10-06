@@ -1,20 +1,26 @@
 import { Rocket, ShieldCheck, Users, Globe } from 'lucide-react';
 
-const Aboutheader = () => {
+const Aboutheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <section className="bg-white py-40 px-6 md:px-20 h-[764px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
         {/* Left Side: Content */}
         <div className='mt-[20px]'>
           <h1 className="text-4xl font-default text-gray-600 mb-6 ml-[-40px]">Let’s Connect  with <span className='text-blue-500'>Cloud Qlobe</span></h1>
-           <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-  CloudQlobe is a leading telecom company providing reliable and scalable communication solutions. We specialize in delivering clear, efficient, and future-ready VoIP services. Our focus on innovation and trust helps businesses connect and grow globally.
-</p>
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
+            CloudQlobe is a leading telecom company providing reliable and scalable communication solutions. We specialize in delivering clear, efficient, and future-ready VoIP services. Our focus on innovation and trust helps businesses connect and grow globally.
+          </p>
           <div className="flex space-x-4 ml-[-40px]">
-            <button className="bg-blue-500 text-white px-6 py-2 squared hover:bg-blue-600 transition">
+            <button
+              className="bg-blue-500 text-white px-6 py-2 squared hover:bg-blue-600 transition"
+              onClick={onGetStartedClick} // Scroll to Aboutanimation
+            >
               Get Started
             </button>
-            <button className="border border-orange-500 text-orange-500 px-6 py-2 squared hover:bg-orange-50 transition">
+            <button
+              className="border border-orange-500 text-orange-500 px-6 py-2 squared hover:bg-orange-50 transition"
+              onClick={onLearnMoreClick} // Scroll to Aboutcontent1
+            >
               Learn More
             </button>
           </div>
