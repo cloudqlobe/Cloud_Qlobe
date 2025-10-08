@@ -43,7 +43,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                     01
                   </div>
                   <div className="mt-3 text-center">
-                    <h4 className="font-bold text-blue-600 text-sm">AUTOMATION</h4>
+                    <h4 className="font-bold text-blue-600 text-sm">Automation</h4>
                     <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Smart auto-dialing for faster outreach</p>
                   </div>
                 </div>
@@ -53,7 +53,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                     02
                   </div>
                   <div className="mt-3 text-center">
-                    <h4 className="font-bold text-purple-600 text-sm">EFFICIENCY</h4>
+                    <h4 className="font-bold text-purple-600 text-sm">Efficiency</h4>
                     <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Boost call center productivity</p>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                     03
                   </div>
                   <div className="mt-3 text-center">
-                    <h4 className="font-bold text-orange-600 text-sm">CONTROL</h4>
+                    <h4 className="font-bold text-orange-600 text-sm">Control</h4>
                     <p className="text-xs text-gray-600 mt-1 max-w-[80px]">Advanced call monitoring tools</p>
                   </div>
                 </div>
@@ -78,7 +78,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                   <div className="flex-1 ml-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full px-6 py-4 text-white shadow-lg">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-bold text-sm">PREDICTIVE DIALING</h4>
+                        <h4 className="font-bold text-sm">Predictive Dialing</h4>
                         <p className="text-xs opacity-90">AI-driven predictive dialers that minimize wait times and maximize agent talk time.</p>
                       </div>
                       <Shield className="w-6 h-6 text-white opacity-80" />
@@ -93,7 +93,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                   <div className="flex-1 ml-4 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full px-6 py-4 text-white shadow-lg">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-bold text-sm">HOSTED SOLUTIONS</h4>
+                        <h4 className="font-bold text-sm">Hosted Solutions</h4>
                         <p className="text-xs opacity-90">Cloud-based dialers with zero hardware dependency, ideal for remote call centers.</p>
                       </div>
                       <Users className="w-6 h-6 text-white opacity-80" />
@@ -108,7 +108,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
                   <div className="flex-1 ml-4 bg-gradient-to-r from-red-400 to-orange-500 rounded-full px-6 py-4 text-white shadow-lg">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-bold text-sm">REAL-TIME ANALYTICS</h4>
+                        <h4 className="font-bold text-sm">Real-Time Analytics</h4>
                         <p className="text-xs opacity-90">Track live agent performance, call quality, and campaign results instantly.</p>
                       </div>
                       <Globe className="w-6 h-6 text-white opacity-80" />

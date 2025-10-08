@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @keyframes slide-in-left {
   0% {
     transform: translateX(-40px);

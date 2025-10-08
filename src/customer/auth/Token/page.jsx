@@ -108,7 +108,7 @@ const VerifyTokenPage = () => {
                 value={token}
                 onChange={(e) => setToken(e.target.value.replace(/\D/g, ''))}
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm text-center text-xl tracking-widest"
-                placeholder="123456"
+                placeholder="Enter Your OTP Code "
               />
             </div>
           </div>

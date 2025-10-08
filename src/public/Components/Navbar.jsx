@@ -7,21 +7,34 @@ import { FaLayerGroup } from "react-icons/fa";
 import { SiSimilarweb } from "react-icons/si";
 import { GiFlowerTwirl } from "react-icons/gi";
 import {
-  Search,
   ArrowRight,
 } from "lucide-react";
 import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg-preview.png";
 import logo from "../../assets/logo1-removebg-preview.png";
 import axiosInstance from "../../utils/axiosinstance";
+import { Languages } from "lucide-react";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(""); // 🔥 track selection
+  const [open, setOpen] = useState(false);
+  const [language, setLanguage] = useState("Select Language");
   const location = useLocation();
-  const currentPath = location.pathname; // e.g., "/services/cc-routes"
+  const currentPath = location.pathname;
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+
+
+  // 🌍 Language options
+  const languages = [
+    { code: "EN", label: "English" },
+    { code: "FR", label: "Français" },
+    { code: "ES", label: "Español" },
+    { code: "DE", label: "Deutsch" },
+    { code: "AR", label: "العربية" },
+    { code: "ML", label: "മലയാളം" }, // ✅ Added Malayalam
+  ];
+
 
   const dropdownItems = [
     { label: "CC Routes", icon: <GiFlowerTwirl size={40} />, path: "/services/cc-routes" },
@@ -213,14 +226,53 @@ const Navbar = () => {
         </div>
 
         {/* Search bar */}
+        {/* 🌍 Language Selector */}
         <div className="hidden md:flex items-center gap-3">
-          <div className="relative w-[250px] h-10">
+          <div
+            className="relative w-[220px] h-10"
+            onMouseLeave={() => setOpen(false)}
+          >
             <input
               type="text"
-              placeholder="Search"
-              className="w-full h-full border border-gray-300 rounded pl-4 pr-10 text-sm text-gray-700 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
+              value={language}
+              readOnly
+              onClick={() => setOpen(!open)}
+              className="w-full h-full border border-gray-300 rounded pl-4 pr-10 text-sm text-gray-700 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all cursor-pointer"
             />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 w-5 h-5" />
+            <Languages className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 w-5 h-5" />
+
+            {open && (
+              <div className="absolute top-full left-0 w-[500px] bg-white border border-gray-200 rounded-xl shadow-lg mt-1 z-10 p-3 grid grid-cols-4 gap-3">
+                {[
+                  { name: "English", icon: "🇬🇧" },
+                  { name: "Spanish", icon: "🇪🇸" },
+                  { name: "French", icon: "🇫🇷" },
+                  { name: "German", icon: "🇩🇪" },
+                  { name: "Hindi", icon: "🇮🇳" },
+                  { name: "Italian", icon: "🇮🇹" },
+                  { name: "Arabic", icon: "🇸🇦" },
+                  { name: "Japanese", icon: "🇯🇵" },
+                  { name: "Korean", icon: "🇰🇷" },
+                  { name: "Chinese", icon: "🇨🇳" },
+                  { name: "Russian", icon: "🇷🇺" },
+                  { name: "Portuguese", icon: "🇵🇹" },
+                ].map((lang) => (
+                  <div
+                    key={lang.name}
+                    onClick={() => {
+                      setLanguage(lang.name);
+                      setOpen(false);
+                    }}
+                    className="flex flex-col items-center justify-center border border-gray-200 rounded-md py-2 hover:bg-blue-50 hover:border-blue-300 transition cursor-pointer w-[100px] h-[65px]"
+                  >
+                    <span className="text-xl">{lang.icon}</span>
+                    <span className="text-[12px] mt-1 text-gray-700 font-medium">
+                      {lang.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

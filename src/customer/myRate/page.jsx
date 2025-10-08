@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect, useState, useContext } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../utils/axiosinstance';
 import CustomerAuthContext from '../../context/customer/CustomerAuthContext';
@@ -16,16 +16,15 @@ const MyRatesPage = () => {
   const [currentRateType, setCurrentRateType] = useState('CCRate');
   const [ccRatesData, setCCRatesData] = useState([]);
   const [cliRatesData, setCLIRatesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [dataNotFound, setDataNotFound] = useState(false);
   const [ccPrivateData, setCCPrivateData] = useState([]);
   const [cliPrivateData, setCLIPrivateData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [dataNotFound, setDataNotFound] = useState(false);
 
   // ✅ Fetch customer data
   useEffect(() => {
     const fetchCustomerData = async () => {
       if (!customerDetails?.id) return;
-
       try {
         const response = await axiosInstance.get(`api/customer/${customerDetails.id}`);
         const customer = response.data.customer;
@@ -48,18 +47,20 @@ const MyRatesPage = () => {
       if (!customerData) return;
 
       try {
-        const ccRates = customerData?.myRates?.filter(rate => rate.rate === 'CC');
-        const cliRates = customerData?.myRates?.filter(rate => rate.rate === 'CLI');
+        const ccRates = customerData?.myRates?.filter(rate => rate.rate === 'CC') || [];
+        const cliRates = customerData?.myRates?.filter(rate => rate.rate === 'CLI') || [];
 
+        // Fetch tests
         const testsResponse = await axiosInstance.get(`api/testrates`);
         const testData = testsResponse.data.testrate || [];
-        const tests = testData.filter(test => test.customerId === customerData.id);
-        const parsedRates = tests.map(test => ({
+        const tests = testData.filter(test => test.userId === customerData.id);
+        const parsedTests = tests.map(test => ({
           ...test,
           rateId: test.rateId ? JSON.parse(test.rateId) : null
         }));
-        setTestsData(parsedRates);
+        setTestsData(parsedTests);
 
+        // Fetch public CLI rates
         const fetchedCLIRates = await Promise.all(
           cliRates.map(async (rate) => {
             try {
@@ -72,6 +73,7 @@ const MyRatesPage = () => {
           })
         );
 
+        // Fetch public CC rates
         const fetchedCCRates = await Promise.all(
           ccRates.map(async (rate) => {
             try {
@@ -84,26 +86,14 @@ const MyRatesPage = () => {
           })
         );
 
-        // Private rates
-        try {
-          const CCprivaterate = await axiosInstance.get(`api/member/private_ccrates/${customerDetails.id}`);
-          console.log("Private CC Rates:", CCprivaterate.data);
-          const privateCCData = CCprivaterate.data.ccrate || CCprivaterate.data || [];
-          setCCPrivateData(Array.isArray(privateCCData) ? privateCCData : [privateCCData]);
-        } catch (error) {
-          console.error('Error fetching private CC rates:', error);
-          setCCPrivateData([]);
-        }
+        // Fetch private rates
+        const privateCCResponse = await axiosInstance.get(`api/member/private_ccrates/${customerDetails.id}`);
+        const privateCCData = privateCCResponse.data.ccrate || privateCCResponse.data || [];
+        setCCPrivateData(Array.isArray(privateCCData) ? privateCCData : [privateCCData]);
 
-        try {
-          const CLIprivaterate = await axiosInstance.get(`api/member/private_clirates/${customerDetails.id}`);
-          console.log("Private CLI Rates:", CLIprivaterate.data);
-          const privateCLIData = CLIprivaterate.data.clirate || CLIprivaterate.data || [];
-          setCLIPrivateData(Array.isArray(privateCLIData) ? privateCLIData : [privateCLIData]);
-        } catch (error) {
-          console.error('Error fetching private CLI rates:', error);
-          setCLIPrivateData([]);
-        }
+        const privateCLIResponse = await axiosInstance.get(`api/member/private_clirates/${customerDetails.id}`);
+        const privateCLIData = privateCLIResponse.data.clirate || privateCLIResponse.data || [];
+        setCLIPrivateData(Array.isArray(privateCLIData) ? privateCLIData : [privateCLIData]);
 
         setCLIRatesData(fetchedCLIRates.filter(rate => rate && rate._id));
         setCCRatesData(fetchedCCRates.filter(rate => rate && rate._id));
@@ -117,10 +107,9 @@ const MyRatesPage = () => {
     fetchRatesAndTests();
   }, [customerData, customerDetails.id]);
 
+  // Check if any data exists
   useEffect(() => {
-    // Check if any data exists across all rate types
-    const hasData = ccRatesData.length > 0 || cliRatesData.length > 0 ||
-      ccPrivateData.length > 0 || cliPrivateData.length > 0;
+    const hasData = ccRatesData.length > 0 || cliRatesData.length > 0 || ccPrivateData.length > 0 || cliPrivateData.length > 0;
     setDataNotFound(!hasData);
   }, [ccRatesData, cliRatesData, ccPrivateData, cliPrivateData]);
 
@@ -132,66 +121,93 @@ const MyRatesPage = () => {
     );
   };
 
-  const handleRequestTest = async () => {
-    if (selectedRates.length === 0) {
-      toast.error('Please select at least one rate');
-      return;
-    }
-    try {
-      await axiosInstance.post(`api/testrate`, {
-        rateId: selectedRates,
-        customerId: customerData.id,
-        rateCustomerId: `hwq${customerData._id}`,
+const handleRequestTest = async () => {
+  if (selectedRates.length === 0) {
+    toast.error('Please select at least one rate');
+    return;
+  }
+
+  // ✅ Check if any selected rate is already requested
+  const alreadyRequested = selectedRates.some((rate) =>
+    testsData.some((test) => {
+      if (!test.rateId) return false;
+      if (Array.isArray(test.rateId)) {
+        return test.rateId.includes(rate._id);
+      } else {
+        return test.rateId === rate._id;
+      }
+    })
+  );
+
+  if (alreadyRequested) {
+    toast.error('This rate already passed to test');
+    return;
+  }
+
+  try {
+    await axiosInstance.post(`api/testrate`, {
+      rateId: selectedRates.map(rate => rate._id),
+      customerId: customerData.customerId,
+      testStatus: 'Pending',
+      testReason: 'Requested',
+      rateType: currentRateType,
+      companyName: customerData.companyName,
+      userId: customerData.id,
+    });
+
+    toast.success('Tests Requested Successfully');
+
+    // Update local state
+    setTestsData(prevTests => [
+      ...prevTests,
+      ...selectedRates.map(rate => ({
+        rateId: rate._id,
         testStatus: 'Pending',
-        testReason: 'Requested',
-        rateType: currentRateType,
-        companyName: customerData.companyName,
-        companyId: customerData.customerId,
-      });
-      toast.success('Tests Requested Successfully');
-      setShowCheckboxes(false);
-      setSelectedRates([]);
-    } catch (error) {
-      console.error('Error requesting tests:', error);
-      toast.error('Failed to request tests');
-    }
-  };
+        customerId: customerData.id,
+      }))
+    ]);
+
+    setShowCheckboxes(false);
+    setSelectedRates([]);
+  } catch (error) {
+    console.error('Error requesting tests:', error);
+    toast.error('Failed to request tests');
+  }
+};
+
 
   // Get data based on current rate type
   const getCurrentData = () => {
     switch (currentRateType) {
-      case 'CCRate':
-        return ccRatesData;
-      case 'CLIRate':
-        return cliRatesData;
-      case 'CCPrivateRate':
-        return ccPrivateData;
-      case 'CLIPrivateRate':
-        return cliPrivateData;
-      default:
-        return [];
+      case 'CCRate': return ccRatesData;
+      case 'CLIRate': return cliRatesData;
+      case 'CCPrivateRate': return ccPrivateData;
+      case 'CLIPrivateRate': return cliPrivateData;
+      default: return [];
     }
+  };
+
+  // Get test status for a rate
+  const getTestStatus = (rateId) => {
+    if (!testsData || testsData.length === 0) return null;
+    const test = testsData.find(testItem => {
+      if (!testItem.rateId) return false;
+      if (Array.isArray(testItem.rateId)) return testItem.rateId.some(r => String(r).trim() === String(rateId).trim());
+      return String(testItem.rateId).trim() === String(rateId).trim();
+    });
+    return test ? test.testStatus : null;
   };
 
   // Filter data based on search and status
   const filteredData = getCurrentData()
     .filter(item => item)
     .filter(item => {
-      if (statusFilter === 'all') {
-        return item?.country?.toLowerCase().includes(search.toLowerCase());
-      }
-      const hasMatchingTest = testsData.some(test => {
-        if (!test.rateId) return false;
-        if (Array.isArray(test.rateId)) {
-          return test.rateId.some(rate => rate?._id === item?._id) && test.testStatus === statusFilter;
-        } else {
-          return test.rateId === item?._id && test.testStatus === statusFilter;
-        }
-      });
-      return item?.country?.toLowerCase().includes(search.toLowerCase()) && hasMatchingTest;
+      const matchesSearch = item?.country?.toLowerCase().includes(search.toLowerCase());
+      if (statusFilter === 'all') return matchesSearch;
+      const status = getTestStatus(item._id);
+      return matchesSearch && status === statusFilter;
     });
 
-  // Check if current rate type is a private rate
   const isPrivateRate = currentRateType.includes('Private');
 
   return (
@@ -240,30 +256,15 @@ const MyRatesPage = () => {
 
       {/* Rate Type Switch */}
       <div className="flex space-x-4 mb-4">
-        <button
-          className={`px-4 py-2 rounded-lg ${currentRateType === 'CCRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCurrentRateType('CCRate')}
-        >
-          CCRate
-        </button>
-        <button
-          className={`px-4 py-2 rounded-lg ${currentRateType === 'CLIRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCurrentRateType('CLIRate')}
-        >
-          CLIRate
-        </button>
-        <button
-          className={`px-4 py-2 rounded-lg ${currentRateType === 'CCPrivateRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCurrentRateType('CCPrivateRate')}
-        >
-          CC Private Rate
-        </button>
-        <button
-          className={`px-4 py-2 rounded-lg ${currentRateType === 'CLIPrivateRate' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCurrentRateType('CLIPrivateRate')}
-        >
-          CLI Private Rate
-        </button>
+        {['CCRate','CLIRate','CCPrivateRate','CLIPrivateRate'].map(type => (
+          <button
+            key={type}
+            className={`px-4 py-2 rounded-lg ${currentRateType === type ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setCurrentRateType(type)}
+          >
+            {type.replace(/Rate/g,' Rate')}
+          </button>
+        ))}
       </div>
 
       {/* Data Table */}
@@ -279,13 +280,15 @@ const MyRatesPage = () => {
                 {showCheckboxes && !isPrivateRate && <th className="px-4 py-2">Select</th>}
                 <th className="px-4 py-2">Country Code</th>
                 <th className="px-4 py-2">Country Name</th>
-                {(currentRateType === "CCRate" || currentRateType === "CCPrivateRate") && <th className="px-4 py-2">Profile</th>}
+                {(currentRateType.includes("CC")) && <th className="px-4 py-2">Profile</th>}
                 <th className="px-4 py-2">Rate</th>
                 <th className="px-4 py-2">Quality</th>
-                {(currentRateType === "CLIRate" || currentRateType === "CLIPrivateRate") && <th className="px-4 py-2">ASR</th>}
-                {(currentRateType === "CLIRate" || currentRateType === "CLIPrivateRate") && <th className="px-4 py-2">Billing Cycle</th>}
-                {(currentRateType === "CLIRate" || currentRateType === "CLIPrivateRate") && <th className="px-4 py-2">RTP</th>}
-                {(currentRateType === "CLIRate" || currentRateType === "CLIPrivateRate") && <th className="px-4 py-2">ACD</th>}
+                {(currentRateType.includes("CLI")) && <>
+                  <th className="px-4 py-2">ASR</th>
+                  <th className="px-4 py-2">Billing Cycle</th>
+                  <th className="px-4 py-2">RTP</th>
+                  <th className="px-4 py-2">ACD</th>
+                </>}
                 <th className="px-4 py-2">Status</th>
               </tr>
             </thead>
@@ -302,22 +305,33 @@ const MyRatesPage = () => {
                         />
                       </td>
                     )}
-                    <td className="px-4 py-2">{rate.countryCode || rate.prefix || 'N/A'}</td>
+                    <td className="px-4 py-2 flex items-center gap-2">
+                      <span
+                        className={`w-2 h-2 rounded-full ${
+                          getTestStatus(rate._id) === 'Pending'
+                            ? 'bg-yellow-500'
+                            : getTestStatus(rate._id) === 'In Progress'
+                            ? 'bg-blue-500'
+                            : getTestStatus(rate._id) === 'Complete'
+                            ? 'bg-green-500'
+                            : getTestStatus(rate._id) === 'Failed'
+                            ? 'bg-red-500'
+                            : 'bg-gray-400'
+                        }`}
+                      ></span>
+                      <span>{rate.countryCode || rate.prefix || 'N/A'}</span>
+                    </td>
                     <td className="px-4 py-2">{rate.country || 'N/A'}</td>
-                    {(currentRateType === "CCRate" || currentRateType === "CCPrivateRate") && (
-                      <td className="px-4 py-2">{rate.profile || 'N/A'}</td>
-                    )}
+                    {(currentRateType.includes("CC")) && <td className="px-4 py-2">{rate.profile || 'N/A'}</td>}
                     <td className="px-4 py-2">{rate.rate || 'N/A'}</td>
                     <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
-                    {(currentRateType === "CLIRate" || currentRateType === "CLIPrivateRate") && (
-                      <>
-                        <td className="px-4 py-2">{rate.asr || 'N/A'}</td>
-                        <td className="px-4 py-2">{rate.billingCycle || 'N/A'}</td>
-                        <td className="px-4 py-2">{rate.rtp || 'N/A'}</td>
-                        <td className="px-4 py-2">{rate.acd || 'N/A'}</td>
-                      </>
-                    )}
-                    <td className="px-4 py-2">{rate.status || rate.testStatus || 'N/A'}</td>
+                    {(currentRateType.includes("CLI")) && <>
+                      <td className="px-4 py-2">{rate.asr || 'N/A'}</td>
+                      <td className="px-4 py-2">{rate.billingCycle || 'N/A'}</td>
+                      <td className="px-4 py-2">{rate.rtp || 'N/A'}</td>
+                      <td className="px-4 py-2">{rate.acd || 'N/A'}</td>
+                    </>}
+                    <td className="px-4 py-2">{rate.status || 'N/A'}</td>
                   </tr>
                 ))
               ) : (
@@ -348,6 +362,16 @@ const MyRatesPage = () => {
           </button>
         </div>
       )}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

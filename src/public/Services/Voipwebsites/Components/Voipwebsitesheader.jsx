@@ -52,7 +52,7 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                     <DollarSign className="w-6 h-6 text-gray-700" />
                   </div>
                   <div className="text-white flex-1">
-                    <h3 className="text-sm font-bold mb-1">CUSTOM VOIP WEBSITES</h3>
+                    <h3 className="text-sm font-bold mb-1">Custom Voip Websites</h3>
                     <h4 className="text-xs font-semibold mb-1 opacity-90">Tailored for your telecom business</h4>
                     <p className="text-xs opacity-85 leading-tight">
 
@@ -71,7 +71,7 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                     <Settings className="w-6 h-6 text-gray-700" />
                   </div>
                   <div className="text-white flex-1">
-                    <h3 className="text-sm font-bold mb-1">INTEGRATED FEATURES</h3>
+                    <h3 className="text-sm font-bold mb-1">Integrated Features</h3>
                     <h4 className="text-xs font-semibold mb-1 opacity-90">Billing & CRM Ready</h4>
                     <p className="text-xs opacity-85 leading-tight">
 
@@ -90,7 +90,7 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                     <Lightbulb className="w-6 h-6 text-gray-700" />
                   </div>
                   <div className="text-white flex-1">
-                    <h3 className="text-sm font-bold mb-1">SECURE HOSTING</h3>
+                    <h3 className="text-sm font-bold mb-1">Secure Hosting</h3>
                     <h4 className="text-xs font-semibold mb-1 opacity-90">Reliable & Scalable</h4>
                     <p className="text-xs opacity-85 leading-tight">
 
@@ -110,7 +110,7 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                     <PieChart className="w-6 h-6 text-gray-700" />
                   </div>
                   <div className="text-white flex-1">
-                    <h3 className="text-sm font-bold mb-1">REAL-TIME DATA</h3>
+                    <h3 className="text-sm font-bold mb-1">Real-Time Data</h3>
                     <h4 className="text-xs font-semibold mb-1 opacity-90">Analytics & Reports</h4>
                     <p className="text-xs opacity-85 leading-tight">
 
@@ -128,7 +128,7 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                     <BarChart3 className="w-6 h-6 text-gray-700" />
                   </div>
                   <div className="text-white flex-1">
-                    <h3 className="text-sm font-bold mb-1">SIP & API INTEGRATION</h3>
+                    <h3 className="text-sm font-bold mb-1">Sip & Api Integration</h3>
                     <h4 className="text-xs font-semibold mb-1 opacity-90">Advanced Features</h4>
                     <p className="text-xs opacity-85 leading-tight">
 

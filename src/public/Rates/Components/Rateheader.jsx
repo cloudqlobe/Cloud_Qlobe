@@ -176,8 +176,6 @@ const Ratepages = () => {
         await axiosInstance.put(`api/myrate/${customerDetails.id}`, {
           rate: selectedSection.toUpperCase(),
           rateId: rateId,
-          testStatus: "Pending",
-          addedTime: Date.now().toString(),
         });
       }
 

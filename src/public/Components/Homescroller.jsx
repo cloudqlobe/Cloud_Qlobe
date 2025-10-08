@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import axiosInstance from "../../utils/axiosinstance"; // adjust path
+import axiosInstance from "../../utils/axiosinstance";
 
-// Map of country names to ISO 2-letter codes (for flag URLs)
-const flagMap = {
-  Australia: "au",
-  China: "cn",
-  France: "fr",
-  India: "in",
-  USA: "us",
-  UK: "gb",
-  // Add more countries if needed
+// ✅ Utility to convert country name → flag code (based on common mappings)
+const getCountryCode = (countryName) => {
+  const mapping = {
+    "United States": "us",
+    "United Kingdom": "gb",
+    "South Korea": "kr",
+    "North Korea": "kp",
+    "UAE": "ae",
+    "United Arab Emirates": "ae",
+    "Russia": "ru",
+    "Vatican City": "va",
+  };
+
+  // Try lookup map first, then fallback to first two letters of the name
+  return (
+    mapping[countryName] ||
+    countryName?.slice(0, 2).toLowerCase() || // Example: India → "in"
+    "un" // fallback for unknown
+  );
 };
 
 const Homescroller = () => {
@@ -23,12 +33,15 @@ const Homescroller = () => {
         setLoading(true);
         const response = await axiosInstance.get("/api/admin/ccrates");
 
-        // ✅ Filter only specialRate=1
-        const Rates = response.data.ccrates
+        const allRates = response.data.ccrates;
 
-        // ✅ Map backend data into card format
-        const formattedRates = Rates.map((item) => ({
+        // ✅ Show only addToTicker === 1
+        const filteredRates = allRates.filter((item) => item.addToTicker === 1);
+
+        // ✅ Map backend data into display format
+        const formattedRates = filteredRates.map((item) => ({
           country: item.country,
+          flagCode: getCountryCode(item.country),
           status: item.status || "Active",
           outbound:
             item.profile.toLowerCase().includes("outbound") && item.rate
@@ -38,7 +51,7 @@ const Homescroller = () => {
             item.profile.toLowerCase().includes("ivr") && item.rate
               ? `${item.rate} USD`
               : "N/A",
-          trend: Number(item.rate) > 0.02 ? "up" : "down", // simple dummy logic
+          trend: Number(item.rate) > 0.02 ? "up" : "down",
         }));
 
         setRates(formattedRates);
@@ -61,6 +74,8 @@ const Homescroller = () => {
 
       {loading ? (
         <p className="text-center text-white">Loading rates...</p>
+      ) : rates.length === 0 ? (
+        <p className="text-center text-white">No ticker rates available.</p>
       ) : (
         <div className="flex gap-6 px-6 animate-scroll whitespace-nowrap">
           {[...rates, ...rates].map((item, idx) => (
@@ -70,13 +85,11 @@ const Homescroller = () => {
             >
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-bold text-base flex items-center gap-2">
-                  {/* Flag image */}
+                  {/* ✅ Dynamic Flag */}
                   <img
-                    src={`https://flagcdn.com/w40/${
-                      flagMap[item.country] || "un"
-                    }.png`}
+                    src={`https://flagcdn.com/w40/${item.flagCode}.png`}
                     alt={`${item.country} flag`}
-                    className="w-5 h-4 rounded-sm object-cover"
+                    className="w-5 h-4 object-cover"
                   />
                   {item.country}
                 </h3>

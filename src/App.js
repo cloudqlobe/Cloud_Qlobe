@@ -5,8 +5,23 @@ import AdminRoutes from "./routes/AdminRoutes.jsx";
 import SuperAdminRoutes from "./routes/SuperAdminRoutes.jsx";
 import MemberRoutes from "./routes/MemberRoutes.jsx";
 import ScrollToTop from "./ScrollToTop.js";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+  const hideGoogleTranslate = () => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      .goog-te-banner-frame.skiptranslate { display: none !important; }
+      body { top: 0px !important; }
+    `;
+    document.head.appendChild(style);
+  };
+  hideGoogleTranslate();
+}, []);
+
+
   return (
     <Router>
       <ScrollToTop />

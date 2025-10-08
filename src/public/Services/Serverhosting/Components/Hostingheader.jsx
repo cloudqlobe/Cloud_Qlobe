@@ -49,9 +49,9 @@ const Hostingheader = ({ onGetStartedClick, onLearnMoreClick }) => {
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-44 h-44">
                 <div className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center">
                   <div className="w-36 h-36 bg-white rounded-full shadow-lg flex flex-col items-center justify-center">
-                    <h3 className="text-gray-800 font-bold text-sm text-center mb-1">NEXT-GEN </h3>
-                    <h4 className="text-gray-800 font-bold text-xs text-center mb-2">SERVER HOSTING</h4>
-                    <h4 className="text-gray-800 font-bold text-xs text-center">SOLUTIONS</h4>
+                    <h3 className="text-gray-800 font-bold text-sm text-center mb-1">Next-Gen </h3>
+                    <h4 className="text-gray-800 font-bold text-xs text-center mb-2">Server Hosting</h4>
+                    <h4 className="text-gray-800 font-bold text-xs text-center">Solutions</h4>
                   </div>
                 </div>
               </div>

@@ -4,12 +4,12 @@ import Footer from "../Components/Footer";
 import Register from "../Components/Register";
 import Homeheader from "./Components/Homeheader";
 import Homecontent1 from "./Components/Homecontent1";
-import Homescroller from "./Components/Homescroller";
 import Homecontent2 from "./Components/Homecontent2";
 import Homeanimation from "./Components/Homeanimation";
 import Homeservices from "./Components/Homeservices";
 import HomeAchievement from "../Components/Homeacheivemnet";
 import Chatbot from "../chatbot/page";
+import Homescroller from "../Components/Homescroller";
 
 const Homepages = () => {
   const homeAnimationRef = useRef(null); // Ref for Homeanimation
