@@ -13,48 +13,66 @@ import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg
 import logo from "../../assets/logo1-removebg-preview.png";
 import axiosInstance from "../../utils/axiosinstance";
 import { Languages } from "lucide-react";
+import usePageTranslator from "../../usePageTranslator";
+import { serviceTranslations, navbarTranslations } from "./NavbarServiceTranslationsData";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState("Select Language");
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem("selectedLanguage") || "en";
+  });
+
+  usePageTranslator(language)
+
+  useEffect(() => {
+    localStorage.setItem("selectedLanguage", language);
+  }, [language]);
+
   const location = useLocation();
   const currentPath = location.pathname;
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
+  const languageRef = useRef(null);
 
-  // 🌍 Language options
-  const languages = [
-    { code: "EN", label: "English" },
-    { code: "FR", label: "Français" },
-    { code: "ES", label: "Español" },
-    { code: "DE", label: "Deutsch" },
-    { code: "AR", label: "العربية" },
-    { code: "ML", label: "മലയാളം" }, // ✅ Added Malayalam
-  ];
-
-
-  const dropdownItems = [
-    { label: "CC Routes", icon: <GiFlowerTwirl size={40} />, path: "/services/cc-routes" },
-    { label: "CLI Voice", icon: <FaLayerGroup size={40} />, path: "/services/cli-voice" },
-    { label: "DID Solutions", icon: <GiSurroundedEye size={40} />, path: "/services/did-solutions" },
-    { label: "VoIP Websites", icon: <GiGroundbreaker size={40} />, path: "/services/voip-websites" },
-    { label: "Server Hosting", icon: <RiDatabase2Fill size={40} />, path: "/services/server-hosting" },
-    { label: "Dialer Solutions", icon: <SiSimilarweb size={40} />, path: "/services/dialer-solutions" },
-  ];
-
+  // 🔹 Close language menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowDropdown(false);
+      if (languageRef.current && !languageRef.current.contains(e.target)) {
+        setOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const t = serviceTranslations[language] || serviceTranslations.en;
+  const nav = navbarTranslations[language] || navbarTranslations.en;
+
+  const dropdownItems = [
+    { label: t.ccRoutes, icon: <GiFlowerTwirl size={30} />, path: "/services/cc-routes" },
+    { label: t.cliVoice, icon: <FaLayerGroup size={30} />, path: "/services/cli-voice" },
+    { label: t.didSolutions, icon: <GiSurroundedEye size={30} />, path: "/services/did-solutions" },
+    { label: t.voipWebsites, icon: <GiGroundbreaker size={30} />, path: "/services/voip-websites" },
+    { label: t.serverHosting, icon: <RiDatabase2Fill size={30} />, path: "/services/server-hosting" },
+    { label: t.dialerSolutions, icon: <SiSimilarweb size={30} />, path: "/services/dialer-solutions" },
+  ];
+const dropdownOffsets = {
+  en: 166,     // English 🇬🇧
+  es: 188,     // Spanish 🇪🇸
+  fr: 149,     // French 🇫🇷
+  de: 176,     // German 🇩🇪
+  tr: 149,     // Turkish 🇹🇷
+  it: 153,     // Italian 🇮🇹
+  ar: 143,     // Arabic 🇸🇦
+  ja: 205,     // Japanese 🇯🇵
+  ko: 194,     // Korean 🇰🇷
+  "zh-CN": 149, // Chinese 🇨🇳
+  ru: 170,     // Russian 🇷🇺
+  pt: 191,     // Portuguese 🇵🇹
+};
 
   const handleLogout = async () => {
     try {
@@ -67,7 +85,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-white ">
+    <div data-no-translate className="fixed top-0 left-0 right-0 z-50 bg-white ">
       <div className="max-w-8xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0 ml-[50px]">
@@ -76,23 +94,27 @@ const Navbar = () => {
 
         {/* Center Menu */}
         <div className="hidden md:flex flex-grow justify-center space-x-10 text-gray-600 font-medium items-center ml-[80px]">
-          <Link to="/" className="hover:text-blue-500 transition">Home</Link>
-          <Link to="/about" className="hover:text-blue-500 transition">About</Link>
+          <Link to="/" className="hover:text-blue-500 transition">{nav.home}</Link>
+          <Link to="/about" className="hover:text-blue-500 transition">{nav.about}</Link>
 
           {/* Enhanced Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
-              onClick={() => setShowDropdown((prev) => !prev)} // 🔥 toggle on click
+              onClick={() => setShowDropdown((prev) => !prev)}
               className="hover:text-blue-500 transition"
             >
-              Services
+              {nav.services}
             </button>
 
 
             {showDropdown && (
               <div
-                className="absolute top-8 left-[306%] transform -translate-x-1/2 mt-2 w-[1519px] bg-white text-black squared-xl z-50 shadow-2xl border border-gray-200 overflow-hidden"
-                onMouseLeave={() => setShowDropdown(false)}
+                className="absolute top-full transform -translate-x-1/2 mt-2 w-[1515px] bg-white text-black squared-xl z-50 shadow-2xl border border-gray-200 overflow-hidden"
+                // onMouseLeave={() => setShowDropdown(false)}
+                data-no-translate
+                style={{
+                  left: `${dropdownOffsets[language] || 166}px`,
+                }}
               >
                 <div className="flex relative">
                   {/* Animated background pattern */}
@@ -220,18 +242,15 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/contact" className="hover:text-blue-500 transition">Contact</Link>
-          <Link to="/rates" className="hover:text-blue-500 transition">Rates</Link>
-          <Link to="/faq" className="hover:text-blue-500 transition">FAQ</Link>
+          <Link to="/contact" className="hover:text-blue-500 transition">{nav.contact}</Link>
+          <Link to="/rates" className="hover:text-blue-500 transition">{nav.rates}</Link>
+          <Link to="/faq" className="hover:text-blue-500 transition">{nav.faq}</Link>
         </div>
 
         {/* Search bar */}
         {/* 🌍 Language Selector */}
-        <div className="hidden md:flex items-center gap-3">
-          <div
-            className="relative w-[220px] h-10"
-            onMouseLeave={() => setOpen(false)}
-          >
+        <div className="hidden md:flex items-center gap-3" ref={languageRef}>
+          <div className="relative w-[220px] h-10">
             <input
               type="text"
               value={language}
@@ -244,23 +263,23 @@ const Navbar = () => {
             {open && (
               <div className="absolute top-full left-0 w-[500px] bg-white border border-gray-200 rounded-xl shadow-lg mt-1 z-10 p-3 grid grid-cols-4 gap-3">
                 {[
-                  { name: "English", icon: "🇬🇧" },
-                  { name: "Spanish", icon: "🇪🇸" },
-                  { name: "French", icon: "🇫🇷" },
-                  { name: "German", icon: "🇩🇪" },
-                  { name: "Hindi", icon: "🇮🇳" },
-                  { name: "Italian", icon: "🇮🇹" },
-                  { name: "Arabic", icon: "🇸🇦" },
-                  { name: "Japanese", icon: "🇯🇵" },
-                  { name: "Korean", icon: "🇰🇷" },
-                  { name: "Chinese", icon: "🇨🇳" },
-                  { name: "Russian", icon: "🇷🇺" },
-                  { name: "Portuguese", icon: "🇵🇹" },
+                  { name: "English", icon: "🇬🇧", value: "en" },
+                  { name: "Spanish", icon: "🇪🇸", value: "es" },
+                  { name: "French", icon: "🇫🇷", value: "fr" },
+                  { name: "German", icon: "🇩🇪", value: "de" },
+                  { name: "Turkish", icon: "🇹🇷", value: "tr" },
+                  { name: "Italian", icon: "🇮🇹", value: "it" },
+                  { name: "Arabic", icon: "🇸🇦", value: "ar" },
+                  { name: "Japanese", icon: "🇯🇵", value: "ja" },
+                  { name: "Korean", icon: "🇰🇷", value: "ko" },
+                  { name: "Chinese", icon: "🇨🇳", value: "zh-CN" },
+                  { name: "Russian", icon: "🇷🇺", value: "ru" },
+                  { name: "Portuguese", icon: "🇵🇹", value: "pt" },
                 ].map((lang) => (
                   <div
                     key={lang.name}
                     onClick={() => {
-                      setLanguage(lang.name);
+                      setLanguage(lang.value);
                       setOpen(false);
                     }}
                     className="flex flex-col items-center justify-center border border-gray-200 rounded-md py-2 hover:bg-blue-50 hover:border-blue-300 transition cursor-pointer w-[100px] h-[65px]"
@@ -284,15 +303,13 @@ const Navbar = () => {
                 to="/customer/dashboard"
                 className="w-[120px] text-center px-4 py-2 bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition rounded"
               >
-                Dashboard
+                {nav.dashboard}
               </Link>
               <button
-                onClick={() => {
-                  handleLogout()
-                }}
+                onClick={handleLogout}
                 className="w-[120px] text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition rounded"
               >
-                Logout
+                {nav.logout}
               </button>
             </>
           ) : (
@@ -301,16 +318,17 @@ const Navbar = () => {
                 to="/customer/register"
                 className="w-[120px] text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600 transition rounded"
               >
-                Register
+                {nav.register}
               </Link>
               <Link
                 to="/customer/login"
                 className="w-[120px] text-center px-4 py-2 bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition rounded"
               >
-                Login
+                {nav.login}
               </Link>
             </>
           )}
+
         </div>
 
       </div>

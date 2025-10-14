@@ -73,11 +73,11 @@ const Homescroller = () => {
       </h2>
 
       {loading ? (
-        <p className="text-center text-white">Loading rates...</p>
+        <p data-no-translate className="text-center text-white">Loading rates...</p>
       ) : rates.length === 0 ? (
-        <p className="text-center text-white">No ticker rates available.</p>
+        <p data-no-translate className="text-center text-white">No ticker rates available.</p>
       ) : (
-        <div className="flex gap-6 px-6 animate-scroll whitespace-nowrap">
+        <div data-no-translate className="flex gap-6 px-6 animate-scroll whitespace-nowrap">
           {[...rates, ...rates].map((item, idx) => (
             <div
               key={idx}
@@ -123,6 +123,7 @@ const Homescroller = () => {
       )}
 
       {/* Animation Style */}
+      <div data-no-translate>
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }
@@ -132,6 +133,7 @@ const Homescroller = () => {
           animation: scroll 35s linear infinite;
         }
       `}</style>
+      </div>
     </section>
   );
 };

@@ -98,6 +98,7 @@ const HomeAchievement = () => {
           ))}
         </div>
       </div>
+<div data-no-translate>
 
       <style>{`
         .drop-shadow-glow {
@@ -116,6 +117,7 @@ const HomeAchievement = () => {
           animation: blink 3s ease-in-out infinite;
         }
       `}</style>
+      </div>
     </section>
   );
 };

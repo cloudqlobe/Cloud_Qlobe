@@ -30,7 +30,7 @@ const Chatrobot = () => {
         {/* Shadow underneath */}
         <div className="absolute bottom-[-30px] left-1/2 -translate-x-1/2 w-28 h-4 bg-blue-100 rounded-full blur-sm opacity-80 animate-pulse"></div>
       </div>
-
+<div data-no-translate></div>
       {/* Animations */}
       <style>{`
         @keyframes float {

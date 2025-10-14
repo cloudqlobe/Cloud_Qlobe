@@ -1,0 +1,24 @@
+export async function batchTranslateText(texts,page, targetLang) {
+  console.log("Batch translating", texts.length, "items to", targetLang);
+
+  const API_URL = "http://72.60.97.54:5008/translate";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        texts: texts,
+        lang: targetLang,
+        page:page
+      }),
+    });
+
+    const data = await response.json();
+    console.log("API response:", data);
+    return data.translatedTexts || texts;
+  } catch (err) {
+    console.error("Batch translation failed:", err);
+    return texts;
+  }
+}

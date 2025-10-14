@@ -110,22 +110,20 @@ const Specialrate = () => {
               <button
                 onClick={handlePrev}
                 disabled={page === 1}
-                className={`w-8 h-8 rounded text-white flex items-center justify-center ${
-                  page === 1
+                className={`w-8 h-8 rounded text-white flex items-center justify-center ${page === 1
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-orange-500 hover:bg-orange-600"
-                }`}
+                  }`}
               >
                 &lt;
               </button>
               <button
                 onClick={handleNext}
                 disabled={page === totalPages}
-                className={`w-8 h-8 rounded text-white flex items-center justify-center ${
-                  page === totalPages
+                className={`w-8 h-8 rounded text-white flex items-center justify-center ${page === totalPages
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-orange-500 hover:bg-orange-600"
-                }`}
+                  }`}
               >
                 &gt;
               </button>
@@ -175,8 +173,8 @@ const Specialrate = () => {
           </div>
         </div>
       )}
-
-      <style>{`
+      <div data-no-translate >
+        <style>{`
         @keyframes slideIn {
           from { transform: translateX(100%); }
           to { transform: translateX(0); }
@@ -185,6 +183,7 @@ const Specialrate = () => {
           animation: slideIn 0.4s ease-out forwards;
         }
       `}</style>
+      </div>
     </>
   );
 };

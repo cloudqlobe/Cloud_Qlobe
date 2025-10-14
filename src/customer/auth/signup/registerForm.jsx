@@ -138,7 +138,7 @@ const ModernRegisterFlow = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-900 to-slate-900 relative overflow-hidden">
             {/* Enhanced Modern Background with Animated Icons */}
-            <div className="absolute inset-0">
+            <div data-no-translate className="absolute inset-0">
                 {/* Dynamic gradient mesh */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-pulse"></div>
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 via-teal-600/10 to-cyan-600/10" style={{ animation: "pulse 4s infinite" }}></div>
@@ -241,13 +241,14 @@ const ModernRegisterFlow = () => {
             </div>
 
             {/* Custom animations */}
+            <div data-no-translate>
             <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-20px); }
         }
       `}</style>
-
+</div>
             {/* Header Section with Enhanced Design */}
             <div className="relative z-10 flex flex-col items-center pt-8 pb-4">
                 <div className="flex items-center gap-3 mb-4">

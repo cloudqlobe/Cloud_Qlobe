@@ -389,7 +389,7 @@ const TradePartner3DSection = () => {
         </div>
 
       </div>
-
+<div data-no-translate>
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -422,6 +422,7 @@ const TradePartner3DSection = () => {
         .translate-z-18 { transform: translateZ(18px); }
         .translate-z-15 { transform: translateZ(15px); }
       `}</style>
+      </div>
     </section>
   );
 };

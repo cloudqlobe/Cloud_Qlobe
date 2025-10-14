@@ -65,7 +65,7 @@ const HomeAchievement = () => {
 
         {/* Country Flags Set 1 */}
         <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
-          
+
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-items-center mb-12">
           {countriesSet1.map((country, idx) => (
@@ -100,8 +100,8 @@ const HomeAchievement = () => {
           ))}
         </div>
       </div>
-
-      <style>{`
+      <div data-no-translate>
+        <style>{`
         @keyframes blink {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.9; transform: scale(1.05); }
@@ -111,6 +111,7 @@ const HomeAchievement = () => {
           animation: blink 3s ease-in-out infinite;
         }
       `}</style>
+      </div>
     </section>
   );
 };

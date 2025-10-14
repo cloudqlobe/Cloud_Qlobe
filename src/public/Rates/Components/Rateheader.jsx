@@ -304,7 +304,7 @@ const CountryDropdown = () => {
   const options = ["All", ...getFilteredCountries()];
 
   return (
-    <div className="relative w-full">
+    <div data-no-translate className="relative w-full">
       {/* Selected value */}
       <div
         className="border rounded px-3 py-2 flex items-center justify-between cursor-pointer bg-white"
@@ -512,7 +512,7 @@ const CountryDropdown = () => {
   };
 
   return (
-    <div className="p-6">
+    <div data-no-translate className="p-6">
       <title>Rates Page</title>
 
       {/* Action buttons */}

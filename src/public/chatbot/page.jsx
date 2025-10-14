@@ -61,6 +61,7 @@ const Chatbot = () => {
             )}
 
             {/* Animations and styles */}
+            <div data-no-translate>
             <style jsx>{`
         .chat-button {
           width: 120px;
@@ -117,6 +118,7 @@ const Chatbot = () => {
           50% { transform: scale(1.1); }
         }
       `}</style>
+      </div>
         </div>
     );
 };
