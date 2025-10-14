@@ -110,7 +110,7 @@ const dropdownOffsets = {
             {showDropdown && (
               <div
                 className="absolute top-full transform -translate-x-1/2 mt-2 w-[1515px] bg-white text-black squared-xl z-50 shadow-2xl border border-gray-200 overflow-hidden"
-                // onMouseLeave={() => setShowDropdown(false)}
+                onMouseLeave={() => setShowDropdown(false)}
                 data-no-translate
                 style={{
                   left: `${dropdownOffsets[language] || 166}px`,
