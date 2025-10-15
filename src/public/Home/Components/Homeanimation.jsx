@@ -106,7 +106,7 @@ const Homeanimation = () => {
 
 
         {/* Signup Bubble (Right Side) */}
-        <div className="flex justify-center ml-[180px]">
+        <div className="flex justify-end w-full">
           <form
             onSubmit={handleSubmit}
             className="bg-transparent text-black squared-xl shadow-lg p-8 w-full max-w-md"
