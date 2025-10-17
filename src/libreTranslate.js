@@ -1,5 +1,5 @@
 export async function batchTranslateText(texts,page, targetLang) {
-  console.log("Batch translating", texts.length, "items to", targetLang);
+  // console.log("Batch translating", texts.length, "items to", targetLang);
 
   const API_URL = "https://translator.cloudqlobe.com/translate";
 
@@ -15,7 +15,7 @@ export async function batchTranslateText(texts,page, targetLang) {
     });
 
     const data = await response.json();
-    console.log("API response:", data);
+    // console.log("API response:", data);
     return data.translatedTexts || texts;
   } catch (err) {
     console.error("Batch translation failed:", err);

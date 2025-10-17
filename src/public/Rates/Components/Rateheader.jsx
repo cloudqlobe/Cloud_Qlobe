@@ -1,8 +1,13 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Filter, Check, X } from "lucide-react";
 import axiosInstance from "../../../utils/axiosinstance";
 import CustomerAuthContext from "../../../context/customer/CustomerAuthContext";
+import RateTable from "./RateTable";
+import useRateTranslations from "./hook/useRateTranslations";
+import { allTextTranslations, uiText } from "./DummyTranslateData/uiText";
+import { statusTranslations } from "./DummyTranslateData/tableheaderdummydata";
 
 const Ratepages = () => {
   const { customerDetails } = useContext(CustomerAuthContext);
@@ -11,36 +16,55 @@ const Ratepages = () => {
   const [activeTab, setActiveTab] = useState("cc");
   const [qualityFilter, setQualityFilter] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("All");
+  const [translateSelectedCountry, setTranslateSelectedCountry] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedRates, setSelectedRates] = useState({});
   const [showSelectedOnly, setShowSelectedOnly] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
+  console.log(selectedRates);
 
   const [rates, setRates] = useState([]);
   const [clirates, setCliRates] = useState([]);
   const [specialRates, setSpecialRates] = useState([]);
   const [filteredRates, setFilteredRates] = useState([]);
   const [displayRates, setDisplayRates] = useState([]);
-  const [countryOptions, setCountryOptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [selectedLang, setSelectedLang] = useState(
+    () => localStorage.getItem("selectedLanguage") || "en"
+  );
+  // dummytranslatedata
+  const texts = uiText[selectedLang || "en"];
+  const status = statusTranslations[selectedLang || "en"];
+
   const itemsPerPage = 10;
 
+  // --- handle localStorage language changes ---
+  useEffect(() => {
+    const updateLang = () => {
+      const lag = localStorage.getItem("selectedLanguage");
+      setSelectedLang(lag);
+    };
+    window.addEventListener("storage", updateLang);
+    return () => window.removeEventListener("storage", updateLang);
+  }, []);
+
+  // --- fetch rates from backend ---
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const CCResponse = await axiosInstance.get("api/admin/ccrates");
-        const CLIResponse = await axiosInstance.get("api/admin/clirates");
+        const [CCResponse, CLIResponse] = await Promise.all([
+          axiosInstance.get("api/admin/ccrates"),
+          axiosInstance.get("api/admin/clirates"),
+        ]);
 
-        if (CCResponse.status !== 200 || CLIResponse.status !== 200) {
+        if (CCResponse.status !== 200 || CLIResponse.status !== 200)
           throw new Error("Failed to fetch rates");
-        }
 
         const ccratesData = CCResponse.data.ccrates || [];
         const cliratesData = CLIResponse.data.clirates || [];
-
         const specialRatesData = ccratesData.filter((rate) => rate.specialRate === 1);
 
         setRates(ccratesData);
@@ -48,9 +72,6 @@ const Ratepages = () => {
         setSpecialRates(specialRatesData);
         setFilteredRates(ccratesData);
         setDisplayRates(ccratesData);
-
-        const uniqueCountries = Array.from(new Set(ccratesData.map((rate) => rate.country)));
-        setCountryOptions(["All", ...uniqueCountries]);
       } catch (err) {
         console.error("Error fetching rates:", err);
         setError("Error fetching rates.");
@@ -62,213 +83,236 @@ const Ratepages = () => {
     fetchRates();
   }, []);
 
-  useEffect(() => {
+  // --- helper: get filtered country list ---
+  const getFilteredCountries = () => {
     let currentData = [];
-    if (activeTab === "cc") {
-      currentData = rates;
-    } else if (activeTab === "cli") {
-      currentData = clirates;
-    } else if (activeTab === "special") {
-      currentData = specialRates;
+    if (activeTab === "cc") currentData = rates;
+    else if (activeTab === "cli") currentData = clirates;
+    else if (activeTab === "special") currentData = specialRates;
+
+    currentData = currentData.filter(
+      (rate) => rate.status?.toLowerCase() !== "archive"
+    );
+
+    return Array.from(new Set(currentData.map((rate) => rate.country))).sort();
+  };
+
+  // --- use translation hook ---
+  const {
+    translatedCountries,
+    countryMap,
+    displayRates: translatedDisplayRates,
+    translating,
+  } = useRateTranslations(
+    selectedLang,
+    filteredRates,
+    activeTab,
+    currentPage,
+    getFilteredCountries,
+    itemsPerPage
+  );
+
+  const handleCountrySelect = (original, translated, allTranslated) => {
+    if (translated === allTranslated) {
+      setSelectedCountry("All");
+      setTranslateSelectedCountry(allTranslated);
+      setDisplayRates(filteredRates);
+      return;
     }
 
-    // Remove archived rates
-    currentData = currentData.filter(rate => rate.status?.toLowerCase() !== 'archive');
+    setSelectedCountry(original);
+    setTranslateSelectedCountry(translated);
 
-    const uniqueCountries = Array.from(new Set(currentData.map((rate) => rate.country)));
-    setCountryOptions(["All", ...uniqueCountries]);
+    const filtered = filteredRates.filter((r) => r.country === original);
+    setDisplayRates(filtered);
+  };
 
-    let updatedRates = [...currentData];
+  // --- filter rates by tab, country, and quality ---
+useEffect(() => {
+  setFilteredRates([]);
+  let currentData = [];
+  if (activeTab === "cc") currentData = rates;
+  else if (activeTab === "cli") currentData = clirates;
+  else if (activeTab === "special") currentData = specialRates;
 
-    if (selectedCountry !== "All") {
-      updatedRates = updatedRates.filter((rate) => rate.country === selectedCountry);
-    }
+  // Apply status filter
+  let updatedRates = [...currentData];
 
-    if (qualityFilter) {
-      updatedRates = updatedRates.filter((rate) =>
-        rate.qualityDescription?.toLowerCase().includes(qualityFilter.toLowerCase())
-      );
-    }
+  if (qualityFilter && qualityFilter !== "all") {
+    updatedRates = updatedRates.filter(
+      (rate) => rate.status?.toLowerCase() === qualityFilter
+    );
+  } else {
+    updatedRates = updatedRates.filter(
+      (rate) => rate.status?.toLowerCase() !== "archive"
+    );
+  }
 
-    setFilteredRates(updatedRates);
-    setCurrentPage(1);
-  }, [activeTab, selectedCountry, qualityFilter, rates, clirates, specialRates]);
+  // Apply country filter
+  if (selectedCountry !== "All") {
+    updatedRates = updatedRates.filter(
+      (rate) => rate.country === selectedCountry
+    );
+  }
 
+  setFilteredRates(updatedRates);
+  setCurrentPage(1);
+}, [activeTab, selectedCountry, qualityFilter, rates, clirates, specialRates]);
 
+  // --- show selected only ---
   useEffect(() => {
     if (showSelectedOnly && selectedSection) {
-      setDisplayRates(filteredRates.filter(rate => selectedRates[selectedSection]?.includes(rate._id)));
+      setDisplayRates(
+        filteredRates.filter((rate) =>
+          selectedRates[selectedSection]?.includes(rate._id)
+        )
+      );
     } else {
       setDisplayRates(filteredRates);
     }
   }, [showSelectedOnly, filteredRates, selectedRates, selectedSection]);
 
+  // --- pagination ---
   const totalPages = Math.ceil(displayRates.length / itemsPerPage);
-  const paginatedRates = displayRates.slice(
+  const paginatedRates = (translating ? [] : translatedDisplayRates).slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
   console.log(paginatedRates);
+  console.log(translatedDisplayRates);
 
+  console.log(translating);
+
+
+  // --- selection functions ---
   const handleRateSelection = (rateId) => {
-    if (!selectedSection) {
-      setSelectedSection(activeTab);
-    }
+    if (!selectedSection) setSelectedSection(activeTab);
 
     const currentSectionRates = selectedRates[selectedSection] || [];
-
     if (currentSectionRates.includes(rateId)) {
       setSelectedRates({
         ...selectedRates,
-        [selectedSection]: currentSectionRates.filter(id => id !== rateId)
+        [selectedSection]: currentSectionRates.filter((id) => id !== rateId),
       });
     } else {
       setSelectedRates({
         ...selectedRates,
-        [selectedSection]: [...currentSectionRates, rateId]
+        [selectedSection]: [...currentSectionRates, rateId],
       });
     }
   };
 
   const handleSelectAll = () => {
-    if (!selectedSection) {
-      setSelectedSection(activeTab);
-    }
+    if (!selectedSection) setSelectedSection(activeTab);
 
     const currentSectionRates = selectedRates[selectedSection] || [];
 
     if (currentSectionRates.length === paginatedRates.length) {
-      setSelectedRates({
-        ...selectedRates,
-        [selectedSection]: []
-      });
+      setSelectedRates({ ...selectedRates, [selectedSection]: [] });
     } else {
       setSelectedRates({
         ...selectedRates,
-        [selectedSection]: paginatedRates.map(rate => rate._id)
+        [selectedSection]: paginatedRates.map((rate) => rate._id),
       });
     }
   };
 
   const handleSubmitRates = async () => {
-    // Check authentication before submitting
     const authToken = sessionStorage.getItem("authToken");
     if (!authToken) {
       setError("Please login to view rates");
-      setLoading(false);
       return;
     }
 
     if (!selectedSection || !customerDetails.id) {
-      alert("User information not available. Please try logging in again.");
+      alert("User info unavailable. Please re-login.");
       return;
     }
 
     try {
       const selectedRateIds = selectedRates[selectedSection] || [];
-
       if (selectedRateIds.length === 0) {
-        alert("Please select at least one rate to submit");
+        alert("Please select at least one rate");
         return;
       }
 
       for (const rateId of selectedRateIds) {
         await axiosInstance.put(`api/myrate/${customerDetails.id}`, {
           rate: selectedSection.toUpperCase(),
-          rateId: rateId,
+          rateId,
         });
       }
 
-      alert("Rate(s) added Successfully");
-
-      // Reset selection
-      setSelectedRates({
-        ...selectedRates,
-        [selectedSection]: []
-      });
+      alert("Rate(s) added successfully");
+      setSelectedRates({ ...selectedRates, [selectedSection]: [] });
       setSelectionMode(false);
       setShowSelectedOnly(false);
       setSelectedSection(null);
-
     } catch (error) {
-      console.error("Error adding selected rates to My Rates:", error);
-
+      console.error("Error submitting rates:", error);
       if (error.response?.status === 401) {
-        alert("Your session has expired. Please login again.");
-        localStorage.removeItem("authtoken");
-        localStorage.removeItem("userData");
+        alert("Session expired. Please login again.");
         navigate("/customer/login");
       } else {
-        alert("Error submitting rates. Please try again.");
+        alert("Error submitting rates.");
       }
     }
-  };
-
-  const handleTabChange = (tab) => {
-    if (selectionMode && selectedSection && selectedSection !== tab) {
-      alert("You can only select rates from one section at a time. Please submit or cancel your current selection first.");
-      return;
-    }
-    setActiveTab(tab);
   };
 
   const handleCancelSelection = () => {
     setSelectionMode(false);
     setShowSelectedOnly(false);
     if (selectedSection) {
-      setSelectedRates({
-        ...selectedRates,
-        [selectedSection]: []
-      });
+      setSelectedRates({ ...selectedRates, [selectedSection]: [] });
     }
     setSelectedSection(null);
   };
 
-  const getSelectedCount = () => {
-    if (!selectedSection) return 0;
-    return selectedRates[selectedSection]?.length || 0;
+  const getSelectedCount = () =>
+    selectedSection ? selectedRates[selectedSection]?.length || 0 : 0;
+
+  const handleTabChange = (tab) => {
+    if (selectionMode && selectedSection && selectedSection !== tab) {
+      alert(
+        "You can only select rates from one section at a time. Submit or cancel current selection first."
+      );
+      return;
+    }
+    setActiveTab(tab);
   };
 
   const renderPagination = () => {
     const visiblePages = 7;
     let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
-    let endPage = startPage + visiblePages - 1;
-
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(endPage - visiblePages + 1, 1);
-    }
-
-    const pages = [];
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
+    let endPage = Math.min(startPage + visiblePages - 1, totalPages);
 
     return (
       <div className="flex justify-center mt-4">
         <button
           className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
         >
           <ChevronLeft size={16} />
         </button>
 
-        {pages.map((page) => (
-          <button
-            key={page}
-            className={`px-3 py-1 mx-1 rounded ${currentPage === page
+        {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
+          (page) => (
+            <button
+              key={page}
+              className={`px-3 py-1 mx-1 rounded ${currentPage === page
                 ? "bg-[#0a2463] text-white"
                 : "bg-gray-200 text-gray-700"
-              }`}
-            onClick={() => setCurrentPage(page)}
-          >
-            {page}
-          </button>
-        ))}
+                }`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          )
+        )}
 
         <button
           className="px-3 py-1 mx-1 rounded bg-gray-200 text-gray-700"
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
         >
           <ChevronRight size={16} />
         </button>
@@ -276,239 +320,100 @@ const Ratepages = () => {
     );
   };
 
-const CountryDropdown = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const CountryDropdown = () => {
+    const [showDropdown, setShowDropdown] = useState(false);
 
-  const getFilteredCountries = () => {
-    let currentData = [];
-    if (activeTab === "cc") currentData = rates;
-    else if (activeTab === "cli") currentData = clirates;
-    else if (activeTab === "special") currentData = specialRates;
+    const isCountryActive = (country) => {
+      let currentData = [];
+      if (activeTab === "cc") currentData = rates;
+      else if (activeTab === "cli") currentData = clirates;
+      else if (activeTab === "special") currentData = specialRates;
 
-    // Remove archived rates
-    currentData = currentData.filter(rate => rate.status?.toLowerCase() !== "archive");
+      return currentData.some(
+        (rate) =>
+          rate.country === country && rate.status?.toLowerCase() === "active"
+      );
+    };
 
-    // Extract unique countries
-    return Array.from(new Set(currentData.map(rate => rate.country))).sort();
-  };
+    const allTranslated = allTextTranslations[selectedLang] || allTextTranslations.en;
+    const options = [allTranslated, ...Object.values(countryMap)];
 
-  const isCountryActive = (country) => {
-    let currentData = [];
-    if (activeTab === "cc") currentData = rates;
-    else if (activeTab === "cli") currentData = clirates;
-    else if (activeTab === "special") currentData = specialRates;
 
-    return currentData.some(rate => rate.country === country && rate.status?.toLowerCase() === "active");
-  };
-
-  const options = ["All", ...getFilteredCountries()];
-
-  return (
-    <div data-no-translate className="relative w-full">
-      {/* Selected value */}
-      <div
-        className="border rounded px-3 py-2 flex items-center justify-between cursor-pointer bg-white"
-        style={{ height: "41px" }}
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
-        <div className="flex items-center">
-          {selectedCountry === "All" || !selectedCountry ? (
-            <span>All Countries</span>
-          ) : (
-            <>
-              <div
-                className="w-2 h-2 rounded-full mr-2"
-                style={{
-                  backgroundColor: isCountryActive(selectedCountry) ? "#10B981" : "#EF4444",
-                }}
-              />
-              {selectedCountry}
-            </>
-          )}
-        </div>
-        <svg
-          className={`w-4 h-4 ml-2 transition-transform ${showDropdown ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-
-      {/* Dropdown options */}
-      {showDropdown && (
+    return (
+      <div className="relative w-full">
         <div
-          className="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-60 overflow-auto"
+          className="border rounded px-3 py-2 flex items-center justify-between cursor-pointer bg-white"
+          style={{ height: "41px" }}
+          onClick={() => setShowDropdown(!showDropdown)}
         >
-          {options.map((country) => (
-            <div
-              key={country}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
-              onClick={() => {
-                setSelectedCountry(country);
-                setShowDropdown(false);
-              }}
-            >
-              {country !== "All" && (
+          <div className="flex items-center">
+            {selectedCountry === "All" ? (
+              <span>{allTextTranslations[selectedLang] || allTextTranslations.en} Countries</span>
+            ) : (
+              <>
                 <div
                   className="w-2 h-2 rounded-full mr-2"
                   style={{
-                    backgroundColor: isCountryActive(country) ? "#10B981" : "#EF4444",
+                    backgroundColor: isCountryActive(selectedCountry)
+                      ? "#10B981"
+                      : "#EF4444",
                   }}
                 />
-              )}
-              {country}
-            </div>
-          ))}
+                {translateSelectedCountry}
+              </>
+            )}
+          </div>
+          <svg
+            className={`w-4 h-4 ml-2 transition-transform ${showDropdown ? "rotate-180" : ""
+              }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
-      )}
-    </div>
-  );
-};
 
-  const renderTable = () => {
-    if (activeTab === "cli") {
-      return (
-        <table className="min-w-full bg-white border rounded">
-          <thead className="bg-blue-800 text-white">
-            <tr>
-              {selectionMode && (
-                <th className="px-4 py-3 text-left font-normal">
-                  <input
-                    type="checkbox"
-                    checked={getSelectedCount() === paginatedRates.length && paginatedRates.length > 0}
-                    onChange={handleSelectAll}
-                    disabled={selectedSection && selectedSection !== activeTab}
-                  />
-                </th>
-              )}
-              <th className="px-4 py-3 text-left font-normal">Country Code</th>
-              <th className="px-4 py-3 text-left font-normal">Country Name</th>
-              <th className="px-4 py-3 text-left font-normal">Quality</th>
-              <th className="px-4 py-3 text-left font-normal">Rate</th>
-              <th className="px-4 py-3 text-left font-normal">Billing Cycle</th>
-              <th className="px-4 py-3 text-left font-normal">ASR</th>
-              <th className="px-4 py-3 text-left font-normal">ACD</th>
-              <th className="px-4 py-3 text-left font-normal">RTP</th>
-              <th className="px-4 py-3 text-left font-normal">Status</th>
-            </tr>
-          </thead>
+        {showDropdown && (
+          <div className="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-60 overflow-auto">
+            {options.map((translated) => {
+              // Find the original country by translated name
+              const original = Object.keys(countryMap).find(
+                (key) => countryMap[key] === translated
+              );
 
-          <tbody>
-            {paginatedRates.length === 0 ? (
-              <tr>
-                <td colSpan={selectionMode ? 11 : 10} className="text-center py-4">
-                  No results found.
-                </td>
-              </tr>
-            ) : (
-              paginatedRates.map((rate, index) => (
-                <tr
-                  key={rate._id}
-                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                  {selectionMode && (
-                    <td className="px-4 py-2">
-                      <input
-                        type="checkbox"
-                        checked={selectedRates[selectedSection]?.includes(rate._id) || false}
-                        onChange={() => handleRateSelection(rate._id)}
-                        disabled={selectedSection && selectedSection !== activeTab}
-                      />
-                    </td>
+              return (
+                <div
+                  key={translated}
+                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+                  onClick={() => {
+                    handleCountrySelect(original, translated, allTranslated);
+                    setShowDropdown(false);
+                  }}
+                >
+                  {translated !== "All" && (
+                    <div
+                      className="w-2 h-2 rounded-full mr-2"
+                      style={{
+                        backgroundColor: isCountryActive(original || translated)
+                          ? "#10B981"
+                          : "#EF4444",
+                      }}
+                    />
                   )}
-                  <td className="px-4 py-2">{rate.countryCode}</td>
-                  <td className="px-4 py-2">{rate.country}</td>
-                  <td className="px-4 py-2">{rate.qualityDescription}</td>
-                  <td className="px-4 py-2">{rate.rate}</td>
-                  <td className="px-4 py-2">{rate.billingCycle}</td>
-                  <td className="px-4 py-2">{rate.asr}</td>
-                  <td className="px-4 py-2">{rate.acd}</td>
-                  <td className="px-4 py-2">{rate.rtp}</td>
-                  <td
-                    className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
-                      ? "text-green-600 font-semibold"
-                      : "text-red-600 font-semibold"
-                      }`}
-                  >
-                    {rate.status}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-
-        </table>
-      );
-    } else {
-      return (
-        <table className="min-w-full bg-white border rounded">
-          <thead className="bg-blue-800 text-white">
-            <tr>
-              {selectionMode && (
-                <th className="px-4 py-3 text-left font-normal">
-                  <input
-                    type="checkbox"
-                    checked={getSelectedCount() === paginatedRates.length && paginatedRates.length > 0}
-                    onChange={handleSelectAll}
-                    disabled={selectedSection && selectedSection !== activeTab}
-                  />
-                </th>
-              )}
-              <th className="px-4 py-3 text-left font-normal">Country Code</th>
-              <th className="px-4 py-3 text-left font-normal">Country Name</th>
-              <th className="px-4 py-3 text-left font-normal">Quality Description</th>
-              <th className="px-4 py-3 text-center font-normal">Profile</th>
-              <th className="px-4 py-3 text-center font-normal">Billing Cycle</th>
-              <th className="px-4 py-3 text-center font-normal">Rate</th>
-              <th className="px-4 py-3 text-left font-normal">Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {paginatedRates.length === 0 ? (
-              <tr>
-                <td colSpan={selectionMode ? 8 : 7} className="text-center py-4">
-                  No results found.
-                </td>
-              </tr>
-            ) : (
-              paginatedRates.map((rate, index) => (
-                <tr
-                  key={rate._id}
-                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                  {selectionMode && (
-                    <td className="px-4 py-2">
-                      <input
-                        type="checkbox"
-                        checked={selectedRates[selectedSection]?.includes(rate._id) || false}
-                        onChange={() => handleRateSelection(rate._id)}
-                        disabled={selectedSection && selectedSection !== activeTab}
-                      />
-                    </td>
-                  )}
-                  <td className="px-4 py-2 text-left">{rate.countryCode}</td>
-                  <td className="px-4 py-2 text-left">{rate.country}</td>
-                  <td className="px-4 py-2">{rate.qualityDescription}</td>
-                  <td className="px-4 py-2 text-center">{rate.profile || "-"}</td>
-                  <td className="px-4 py-2 text-center">{rate.billingCycle}</td>
-                  <td className="px-4 py-2 text-center">{rate.rate}</td>
-                  <td
-                    className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
-                      ? "text-green-600 font-semibold"
-                      : "text-red-600 font-semibold"
-                      }`}
-                  >
-                    {rate.status}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      );
-    }
+                  {translated}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -517,13 +422,12 @@ const CountryDropdown = () => {
 
       {/* Action buttons */}
       <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-gray-800">Rate Management</h2>
+        <h2 className="text-xl font-bold text-gray-800">{texts.rateManagement}</h2>
         <div className="flex space-x-2">
           {!selectionMode ? (
             <button
               className="px-4 py-2 bg-blue-600 text-white rounded flex items-center"
               onClick={() => {
-                // Check authentication before entering selection mode
                 const authToken = sessionStorage.getItem("authToken");
                 if (!authToken) {
                   alert("Please login to select rates");
@@ -535,7 +439,7 @@ const CountryDropdown = () => {
               }}
             >
               <Check size={16} className="mr-2" />
-              Select Rates
+              {texts.selectRates}
             </button>
           ) : (
             <>
@@ -545,21 +449,21 @@ const CountryDropdown = () => {
                 disabled={getSelectedCount() === 0}
               >
                 <Filter size={16} className="mr-2" />
-                {showSelectedOnly ? "Show All" : "Show Selected"}
+                {showSelectedOnly ? texts.showAll : texts.showSelected}
               </button>
               <button
                 className="px-4 py-2 bg-blue-600 text-white rounded flex items-center"
                 onClick={handleSubmitRates}
                 disabled={getSelectedCount() === 0}
               >
-                Submit My Rates
+                {texts.submitMyRates}
               </button>
               <button
                 className="px-4 py-2 bg-gray-500 text-white rounded flex items-center"
                 onClick={handleCancelSelection}
               >
                 <X size={16} className="mr-2" />
-                Cancel
+                {texts.cancel}
               </button>
             </>
           )}
@@ -569,44 +473,41 @@ const CountryDropdown = () => {
       {/* Tabs */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex space-x-4">
-          <button
-            className={`px-4 py-2 rounded ${activeTab === "cc" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-              }`}
-            onClick={() => handleTabChange("cc")}
-          >
-            CC Routes
-          </button>
-          <button
-            className={`px-4 py-2 rounded ${activeTab === "cli" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-              }`}
-            onClick={() => handleTabChange("cli")}
-          >
-            CLI Routes
-          </button>
-          <button
-            className={`px-4 py-2 rounded ${activeTab === "special" ? "bg-[#0a2463] text-white" : "bg-gray-200 text-gray-700"
-              }`}
-            onClick={() => handleTabChange("special")}
-          >
-            Special Rates
-          </button>
+          {["cc", "cli", "special"].map((tab) => (
+            <button
+              key={tab}
+              className={`px-4 py-2 rounded ${activeTab === tab
+                ? "bg-[#0a2463] text-white"
+                : "bg-gray-200 text-gray-700"
+                }`}
+              onClick={() => handleTabChange(tab)}
+            >
+              {tab === "cc"
+                ? texts.ccRoutes
+                : tab === "cli"
+                  ? texts.cliRoutes
+                  : texts.specialRates}
+            </button>
+          ))}
         </div>
 
         {/* Filters */}
         <div className="flex space-x-4 items-center">
-<div className="w-60">
-  <CountryDropdown />
-</div>
-
+          <div className="w-60">
+            <CountryDropdown />
+          </div>
           <select
             className="pl-4 pr-4 py-2 border rounded"
             value={qualityFilter}
             onChange={(e) => setQualityFilter(e.target.value)}
           >
-            <option value="">All Qualities</option>
-            <option value="Premium">Premium</option>
-            <option value="Standard">Standard</option>
+            {Object.entries(status).map(([key, translated]) => (
+              <option key={key} value={key.toLowerCase()}>
+                {translated}
+              </option>
+            ))}
           </select>
+
         </div>
       </div>
 
@@ -614,15 +515,13 @@ const CountryDropdown = () => {
       {selectionMode && (
         <div className="mb-4 p-3 bg-blue-100 rounded">
           <p className="text-blue-800">
-            {selectedSection && `Selecting from ${selectedSection.toUpperCase()} section. `}
+            {selectedSection &&
+              `Selecting from ${selectedSection.toUpperCase()} section. `}
             {getSelectedCount()} rate(s) selected.{" "}
-            {showSelectedOnly ? "Showing only selected rates." : "Showing all rates."}
+            {showSelectedOnly
+              ? "Showing only selected rates."
+              : "Showing all rates."}
           </p>
-          {selectedSection && (
-            <p className="text-blue-600 text-sm mt-1">
-              You can only select rates from one section at a time.
-            </p>
-          )}
         </div>
       )}
 
@@ -630,10 +529,24 @@ const CountryDropdown = () => {
       <div className="overflow-x-auto">
         {loading ? (
           <div className="text-center py-6">Loading...</div>
+        ) : translating ? (
+          <div className="text-center py-6 text-blue-600 font-medium">
+            Translating table, please wait...
+          </div>
         ) : error ? (
           <div className="text-center text-red-600">{error}</div>
         ) : (
-          renderTable()
+          <RateTable
+            paginatedRates={paginatedRates}
+            activeTab={activeTab}
+            selectionMode={selectionMode}
+            selectedRates={selectedRates}
+            selectedSection={selectedSection}
+            handleRateSelection={handleRateSelection}
+            handleSelectAll={handleSelectAll}
+            getSelectedCount={getSelectedCount}
+            selectedLanguage={selectedLang}
+          />
         )}
       </div>
 

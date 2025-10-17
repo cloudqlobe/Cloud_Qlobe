@@ -12,6 +12,7 @@ import logo from "../../assets/logo1-removebg-preview.png";
 import axiosInstance from "../../utils/axiosinstance";
 import usePageTranslator from "../../usePageTranslator";
 import { serviceTranslations, navbarTranslations } from "./NavbarServiceTranslationsData";
+import Ratepages from "../Rates/Components/Rateheader";
 
 const Navbar = () => {
   // Desktop dropdown (services menu on desktop)
@@ -28,9 +29,11 @@ const Navbar = () => {
   });
 
   usePageTranslator(language);
+  Ratepages(language)
 
   useEffect(() => {
     localStorage.setItem("selectedLanguage", language);
+    window.dispatchEvent(new Event("storage"));
   }, [language]);
 
   const location = useLocation();
