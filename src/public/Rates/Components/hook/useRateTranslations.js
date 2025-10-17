@@ -54,7 +54,7 @@ const useRateTranslations = (
             `${r.country} | ${r.qualityDescription || ""} | ${r.profile || ""}`
         );
 
-        const rowResponse = await axios.post("http://localhost:5008/translate", {
+        const rowResponse = await axios.post("https://translator.cloudqlobe.com/translate", {
           page: "rate_table",
           lang: selectedLang,
           texts: textsToTranslate,
@@ -100,7 +100,7 @@ const useRateTranslations = (
           return;
         }
 
-        const response = await axios.post("http://localhost:5008/translate", {
+        const response = await axios.post("https://translator.cloudqlobe.com/translate", {
           page: "rate_table",
           lang: selectedLang,
           texts: country,
