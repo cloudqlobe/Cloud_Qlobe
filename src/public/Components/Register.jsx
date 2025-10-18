@@ -5,6 +5,9 @@ import {
   Server,
   Cloud,
 } from 'lucide-react';
+import { placeholders } from './DummyTranslateData/Register';
+import { LanguageContext } from '../../context/LanguageContext';
+import { useContext } from 'react';
 
 const leftFeatures = [
   {
@@ -41,6 +44,8 @@ const leftFeatures = [
 ];
 
 const Register = () => {
+    const { language } = useContext(LanguageContext);
+  const t = placeholders[language];
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6 py-12">
       {/* Outer Container with Border */}
@@ -71,41 +76,13 @@ const Register = () => {
           </h1>
 
           <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="Company Name"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="text"
-              placeholder="Country"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="text"
-              placeholder="Contact Person Name"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="text"
-              placeholder="Company Website"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
-            <input
-              type="text"
-              placeholder="IP Address"
-              className="border border-orange-400 p-3 rounded-none w-full"
-            />
+            <input type="text" placeholder={t.companyName} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="text" placeholder={t.country} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="text" placeholder={t.contactPerson} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="email" placeholder={t.email} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="text" placeholder={t.phoneNumber} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="text" placeholder={t.website} className="border border-orange-400 p-3 rounded-none w-full" />
+            <input type="text" placeholder={t.ipAddress} className="border border-orange-400 p-3 rounded-none w-full" />
             <select className="border border-orange-400 p-3 rounded-none w-full">
               <option value="">-- Service Request --</option>
               <option>VoIP Services</option>
@@ -114,11 +91,8 @@ const Register = () => {
               <option>Routing</option>
               <option>SMS/OTT</option>
             </select>
-            <textarea
-              placeholder="Description"
-              rows="3"
-              className="border border-orange-400 p-3 rounded-none w-full col-span-2"
-            />
+            <textarea placeholder={t.description} rows="3" className="border border-orange-400 p-3 rounded-none w-full col-span-2" />
+
             <button
               type="submit"
               className="bg-orange-500 text-white py-3 px-6 rounded-none font-semibold hover:bg-orange-600 col-span-2"

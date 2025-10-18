@@ -22,7 +22,6 @@ const Ratepages = () => {
   const [selectedRates, setSelectedRates] = useState({});
   const [showSelectedOnly, setShowSelectedOnly] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
-  console.log(selectedRates);
 
   const [rates, setRates] = useState([]);
   const [clirates, setCliRates] = useState([]);
@@ -42,14 +41,24 @@ const Ratepages = () => {
   const itemsPerPage = 10;
 
   // --- handle localStorage language changes ---
-  useEffect(() => {
-    const updateLang = () => {
-      const lag = localStorage.getItem("selectedLanguage");
-      setSelectedLang(lag);
-    };
-    window.addEventListener("storage", updateLang);
-    return () => window.removeEventListener("storage", updateLang);
-  }, []);
+
+useEffect(() => {
+  // Get the exact current path
+  const currentPath = window.location.pathname;
+
+  // Only run if the path is exactly "/rates"
+  if (currentPath !== "/rates") return;
+
+  const updateLang = () => {
+    const lag = localStorage.getItem("selectedLanguage");
+    setSelectedLang(lag);
+  };
+
+  window.addEventListener("storage", updateLang);
+
+  // Cleanup
+  return () => window.removeEventListener("storage", updateLang);
+}, []);
 
   // --- fetch rates from backend ---
   useEffect(() => {
@@ -99,7 +108,6 @@ const Ratepages = () => {
 
   // --- use translation hook ---
   const {
-    translatedCountries,
     countryMap,
     displayRates: translatedDisplayRates,
     translating,
@@ -179,10 +187,6 @@ useEffect(() => {
     currentPage * itemsPerPage
   );
   console.log(paginatedRates);
-  console.log(translatedDisplayRates);
-
-  console.log(translating);
-
 
   // --- selection functions ---
   const handleRateSelection = (rateId) => {

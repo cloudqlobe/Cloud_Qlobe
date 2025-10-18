@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { RiDatabase2Fill } from "react-icons/ri";
 import { GiSurroundedEye } from "react-icons/gi";
@@ -11,8 +11,9 @@ import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg
 import logo from "../../assets/logo1-removebg-preview.png";
 import axiosInstance from "../../utils/axiosinstance";
 import usePageTranslator from "../../usePageTranslator";
-import { serviceTranslations, navbarTranslations } from "./NavbarServiceTranslationsData";
+import { serviceTranslations, navbarTranslations } from "./DummyTranslateData/NavbarServiceTranslationsData";
 import Ratepages from "../Rates/Components/Rateheader";
+import { LanguageContext } from "../../context/LanguageContext";
 
 const Navbar = () => {
   // Desktop dropdown (services menu on desktop)
@@ -24,17 +25,10 @@ const Navbar = () => {
   // Mobile services sub-menu inside sidebar
   const [showServices, setShowServices] = useState(false);
 
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("selectedLanguage") || "en";
-  });
+  const { language, setLanguage } = useContext(LanguageContext);
 
   usePageTranslator(language);
   Ratepages(language)
-
-  useEffect(() => {
-    localStorage.setItem("selectedLanguage", language);
-    window.dispatchEvent(new Event("storage"));
-  }, [language]);
 
   const location = useLocation();
   const currentPath = location.pathname;

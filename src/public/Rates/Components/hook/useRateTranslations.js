@@ -29,66 +29,72 @@ const useRateTranslations = (
   }, [activeTab, filteredRates]);
 
   // 🔹 Translate table rows
-  useEffect(() => {
-    const translateTable = async () => {
-      if (!filteredRates?.length) {
-        setDisplayRates([]); // still ensure cleared
-        return;
-      }
+useEffect(() => {
+  let active = true; // flag for current request identity
+  console.log("table row");
+  
+  const translateTable = async () => {
+    if (!filteredRates?.length) {
+      if (active) setDisplayRates([]);
+      return;
+    }
 
-      if (selectedLang === "en") {
-        setDisplayRates(filteredRates);
-        return;
-      }
+    if (selectedLang === "en") {
+      if (active) setDisplayRates(filteredRates);
+      return;
+    }
 
-      try {
-        setTranslating(true);
+    try {
+      setTranslating(true);
 
-        const visibleRates = filteredRates.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
+      const visibleRates = filteredRates.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      );
 
-        const textsToTranslate = visibleRates.map(
-          (r) =>
-            `${r.country} | ${r.qualityDescription || ""} | ${r.profile || ""}`
-        );
+      const textsToTranslate = visibleRates.map(
+        (r) => `${r.country} | ${r.qualityDescription || ""} | ${r.profile || ""}`
+      );
 
-        const rowResponse = await axios.post("https://translator.cloudqlobe.com/translate", {
-          page: "rate_table",
-          lang: selectedLang,
-          texts: textsToTranslate,
-        });
+      const rowResponse = await axios.post("https://translator.cloudqlobe.com/translate/rate_table", {
+        page: "rate_table",
+        lang: selectedLang,
+        texts: textsToTranslate,
+      });
 
-        const translatedTexts = rowResponse.data.translatedTexts;
-        const translatedRates = visibleRates.map((r, i) => {
-          const parts = translatedTexts[i]?.split(/\s*\|\s*/) || [];
-          return {
-            ...r,
-            country: parts[0] || r.country,
-            qualityDescription: parts[1] || r.qualityDescription,
-            profile: parts[2] || r.profile,
-            status: parts[3] || r.status,
-          };
-        });
+      if (!active) return; // ignore if tab/lang changed mid-translation
 
-        const updatedAll = [...filteredRates];
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        updatedAll.splice(startIndex, translatedRates.length, ...translatedRates);
-        setDisplayRates(updatedAll);
-      } catch (err) {
-        console.error("Table translation error:", err);
-      } finally {
-        setTranslating(false);
-      }
-    };
+      const translatedTexts = rowResponse.data.translatedTexts;
+      const translatedRates = visibleRates.map((r, i) => {
+        const parts = translatedTexts[i]?.split(/\s*\|\s*/) || [];
+        return {
+          ...r,
+          country: parts[0] || r.country,
+          qualityDescription: parts[1] || r.qualityDescription,
+          profile: parts[2] || r.profile,
+        };
+      });
 
-    translateTable();
-  }, [selectedLang, currentPage, filteredRates]);
+      const updatedAll = [...filteredRates];
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      updatedAll.splice(startIndex, translatedRates.length, ...translatedRates);
+
+      setDisplayRates(updatedAll);
+    } catch (err) {
+      console.error("Table translation error:", err);
+    } finally {
+      if (active) setTranslating(false);
+    }
+  };
+
+  translateTable();
+  return () => { active = false }; // cancel flag when tab/lang/page changes
+}, [selectedLang, currentPage, filteredRates]);
 
   // 🔹 Translate Country Dropdown
   useEffect(() => {
     if (!country?.length) return;
+  console.log("country");
 
     const translateCountries = async () => {
       try {
@@ -100,7 +106,7 @@ const useRateTranslations = (
           return;
         }
 
-        const response = await axios.post("https://translator.cloudqlobe.com/translate", {
+        const response = await axios.post("https://translator.cloudqlobe.com/translate/rate_table", {
           page: "rate_table",
           lang: selectedLang,
           texts: country,

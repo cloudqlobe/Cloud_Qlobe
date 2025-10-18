@@ -7,6 +7,7 @@ import AuthProvider from "./context/AuthProvider";
 import SuperAdminAuthProvider from "./context/superAdmin/SuperAdminAuthProvider";
 import AdminAuthProvider from "./context/admin/AdminAuthProvider";
 import CustomerAuthProvider from "./context/customer/CustomerAuthProvider";
+import { LanguageProvider } from "./context/LanguageContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
       <SuperAdminAuthProvider>
         <AdminAuthProvider>
           <CustomerAuthProvider>
-            <App />
+            <LanguageProvider>
+              <App />
+            </LanguageProvider>
           </CustomerAuthProvider>
         </AdminAuthProvider>
       </SuperAdminAuthProvider>
