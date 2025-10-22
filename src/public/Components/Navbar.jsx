@@ -98,7 +98,7 @@ const Navbar = () => {
   };
 
   return (
-    <div data-no-translate className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+    <div data-no-translate className="fixed top-0 left-0 right-0 z-50 bg-white ">
       <div className="max-w-8xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0 ml-[20px] md:ml-[50px] flex items-center gap-2">

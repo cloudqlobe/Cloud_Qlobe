@@ -13,7 +13,7 @@ const useRateTranslations = (
   const [countryMap, setCountryMap] = useState({});
   const [country, setCountry] = useState([]);
   const [displayRates, setDisplayRates] = useState([]);
-  const [translating, setTranslating] = useState(false);
+  const [translating, setTranslating] = useState(true);
 
   // ✅ Update country list when tab or filter changes
   useEffect(() => {

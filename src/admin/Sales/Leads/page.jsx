@@ -11,9 +11,9 @@ import {
 import axiosInstance from "../../../utils/axiosinstance";
 import AdminAuthContext from "../../../context/admin/AdminAuthContext";
 
-const AdminCustomersPage = () => {
+const AdminLeadsPage = () => {
   const { adminDetails } = useContext(AdminAuthContext);
-  const [customers, setCustomers] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -22,174 +22,167 @@ const AdminCustomersPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCustomers = async () => {
+    const fetchLeads = async () => {
       setLoading(true);
       try {
-        let data = [];
+        const response = await axiosInstance.get(`api/customers`);
+        const data = response.data.customer;
 
-          const response = await axiosInstance.get(`api/customers`);
-          data = response.data.customer;
-
-        const filteredCustomers = data?.filter(
-          (customer) => customer.leadType === "Customer lead"
+        const filteredLeads = data?.filter(
+          (lead) => lead.leadType === "Customer lead"
         );
-        setCustomers(filteredCustomers);
+        setLeads(filteredLeads);
       } catch (error) {
-        console.error("Error fetching customers:", error);
+        console.error("Error fetching leads:", error);
       } finally {
         setLoading(false);
       }
     };
 
     if (adminDetails?.id) {
-      fetchCustomers();
+      fetchLeads();
     }
-  }, [adminDetails.id, adminDetails.role]);
+  }, [adminDetails?.id]);
 
   const handleSearch = (event) => setSearch(event.target.value);
   const handleFilter = (status) => setLeadStatusFilter(status);
-  const handleRowClick = (customerId) => navigate(`/admin/SaleLead/${customerId}`);
+  const handleRowClick = (leadId) => navigate(`/admin/SaleLead/${leadId}`);
 
-  // Filter customers based on search and lead status
-  const filteredCustomers = useMemo(() => {
-    return customers.filter((customer) => {
+  // Filter leads based on search and lead status
+  const filteredLeads = useMemo(() => {
+    return leads.filter((lead) => {
       const matchesStatus =
         leadStatusFilter === "" ||
-        customer.leadStatus?.toLowerCase() === leadStatusFilter.toLowerCase();
+        lead.leadStatus?.toLowerCase() === leadStatusFilter.toLowerCase();
 
       const matchesSearch =
-        customer.companyName?.toLowerCase().includes(search.toLowerCase()) ||
-        (Array.isArray(JSON.parse(customer.switchIps)) &&
-          JSON.parse(customer.switchIps).some((ipObj) =>
+        lead.companyName?.toLowerCase().includes(search.toLowerCase()) ||
+        (Array.isArray(JSON.parse(lead.switchIps)) &&
+          JSON.parse(lead.switchIps).some((ipObj) =>
             ipObj.ip.toLowerCase().includes(search.toLowerCase())
           ));
 
       return matchesStatus && matchesSearch;
     });
-  }, [customers, search, leadStatusFilter]);
+  }, [leads, search, leadStatusFilter]);
 
   const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
 
   return (
     <div>
       <Layout>
-        {/* Navbar */}
-        <div className="flex items-center px-6 py-4" style={{marginBottom: "40px" }}>
-          {/* Icon */}
+        {/* Header Section */}
+        <div className="flex items-center px-6 py-4 mb-10">
           <div className="bg-orange-500 p-3 flex items-center justify-center">
             <ChartBarIcon className="text-white w-8 h-8" />
           </div>
-          {/* Heading aligned left */}
           <h1 className="text-xl font-bold text-gray-800 ml-2">
             LEAD MANAGEMENT
           </h1>
         </div>
-        <div>
-          {/* Search Bar and Buttons */}
-          <div className="relative flex items-center mt-6 px-6 space-x-4"
-            style={{marginBottom: "45px" }}
-          >
-            {/* Add Lead Button */}
-            <button className="flex items-center bg-green-500 text-white px-4 py-2  hover:bg-green-600 text-sm">
-              <UsersIcon className="w-5 h-5 mr-2" />
-              <Link to="/admin/sale/addlead"><span className="text-sm">ADD LEAD</span></Link>
-            </button>
 
-            {/* Search Bar */}
-            <div className="flex items-center bg-white border border-red-500 rounded-lg px-4 py-2 max-w-lg w-full">
-              <ArrowLeftStartOnRectangleIcon className="w-6 h-6 text-blue-500" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="bg-transparent text-gray-700 focus:outline-none ml-2 w-full"
-                value={search}
-                onChange={handleSearch}
-              />
-            </div>
+        {/* Toolbar Section */}
+        <div className="relative flex items-center mt-6 px-6 space-x-4 mb-10">
+          {/* Add Lead Button */}
+          <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
+            <UsersIcon className="w-5 h-5 mr-2" />
+            <Link to="/admin/sale/addlead">
+              <span className="text-sm">ADD LEAD</span>
+            </Link>
+          </button>
 
-            {/* Search Button */}
-            <button className="flex items-center bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 text-sm">
-              <StopCircleIcon className="w-5 h-5 mr-2" />
-              <span className="text-sm">SEARCH</span>
-            </button>
+          {/* Search Input */}
+          <div className="flex items-center bg-white border border-red-500 rounded-lg px-4 py-2 max-w-lg w-full">
+            <ArrowLeftStartOnRectangleIcon className="w-6 h-6 text-blue-500" />
+            <input
+              type="text"
+              placeholder="Search..."
+              className="bg-transparent text-gray-700 focus:outline-none ml-2 w-full"
+              value={search}
+              onChange={handleSearch}
+            />
+          </div>
 
-            {/* Spacer to push filter controls to the right */}
-            <div className="flex-grow"></div>
+          {/* Search Button */}
+          <button className="flex items-center bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 text-sm">
+            <StopCircleIcon className="w-5 h-5 mr-2" />
+            <span className="text-sm">SEARCH</span>
+          </button>
 
-            {/* Filter controls - now aligned to the right */}
-            <div className="flex items-center space-x-4">
-              {/* Sort By Search Bar */}
-              <div className="relative">
-                <div
-                  className="flex items-center bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-300 shadow-sm w-48 cursor-pointer"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          <div className="flex-grow"></div>
+
+          {/* Filter Dropdown */}
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <div
+                className="flex items-center bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-300 shadow-sm w-48 cursor-pointer"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <span className="text-sm">{leadStatusFilter || "All"}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5 ml-auto text-gray-400"
                 >
-                  <span className="text-sm">{leadStatusFilter || "All"}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 ml-auto text-gray-400"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 9l6 6 6-6"
-                    />
-                  </svg>
-                </div>
-                {isDropdownOpen && (
-                  <div className="absolute top-12 left-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-lg w-48 z-10">
-                    <ul className="divide-y divide-gray-200">
-                      <li>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 9l6 6 6-6"
+                  />
+                </svg>
+              </div>
+              {isDropdownOpen && (
+                <div className="absolute top-12 left-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-lg w-48 z-10">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <button
+                        onClick={() => {
+                          handleFilter("");
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                      >
+                        All
+                      </button>
+                    </li>
+
+                    {leadStatuses.map((status) => (
+                      <li key={status}>
                         <button
                           onClick={() => {
-                            handleFilter("");
+                            handleFilter(status);
                             setIsDropdownOpen(false);
                           }}
                           className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
                         >
-                          All
+                          {status}
                         </button>
                       </li>
-
-                      {leadStatuses.map((status) => (
-                        <li key={status}>
-                          <button
-                            onClick={() => {
-                              handleFilter(status);
-                              setIsDropdownOpen(false);
-                            }}
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
-                          >
-                            {status}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Filter Button */}
-              <div className="relative group">
-                <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
-                  <FunnelIcon className="w-5 h-5 mr-2" />
-                  <span className="text-sm">FILTER</span>
-                </button>
-              </div>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
+
+            {/* Filter Button */}
+            <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
+              <FunnelIcon className="w-5 h-5 mr-2" />
+              <span className="text-sm">FILTER</span>
+            </button>
           </div>
         </div>
-        {/* Customer Table */}
-        <div className="bg-white shadow-md rounded-lg mt-6"
-        >
+
+        {/* Leads Table */}
+        <div className="bg-white shadow-md rounded-lg mt-6">
           {loading ? (
             <p className="text-center text-gray-500 py-4">Loading...</p>
           ) : (
-            <table className="table-auto text-left" style={{width:"97vw", marginLeft:"22px"}}>
+            <table
+              className="table-auto text-left w-[97vw] ml-[22px]"
+            >
               <thead>
                 <tr className="bg-yellow-500 text-white">
                   <th className="py-3 px-4">Company Name</th>
@@ -200,24 +193,24 @@ const AdminCustomersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredCustomers.length > 0 ? (
-                  filteredCustomers.map((customer) => (
+                {filteredLeads.length > 0 ? (
+                  filteredLeads.map((lead) => (
                     <tr
-                      key={customer._id}
-                      onClick={() => handleRowClick(customer.id)}
-                      className="border-b hover:bg-gray-100"
+                      key={lead._id}
+                      onClick={() => handleRowClick(lead.id)}
+                      className="border-b hover:bg-gray-100 cursor-pointer"
                     >
-                      <td className="py-3 px-4">{customer.companyName}</td>
-                      <td className="py-3 px-4">{customer.contactPerson}</td>
-                      <td className="py-3 px-4">{customer.userEmail}</td>
-                      <td className="py-3 px-4">{customer.country}</td>
-                      <td className="py-3 px-4">{customer.leadStatus}</td>
+                      <td className="py-3 px-4">{lead.companyName}</td>
+                      <td className="py-3 px-4">{lead.contactPerson}</td>
+                      <td className="py-3 px-4">{lead.userEmail}</td>
+                      <td className="py-3 px-4">{lead.country}</td>
+                      <td className="py-3 px-4">{lead.leadStatus}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
                     <td colSpan="5" className="text-center text-gray-500 py-4">
-                      No results found.
+                      No leads found.
                     </td>
                   </tr>
                 )}
@@ -230,4 +223,4 @@ const AdminCustomersPage = () => {
   );
 };
 
-export default AdminCustomersPage;
+export default AdminLeadsPage;

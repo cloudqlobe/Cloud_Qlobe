@@ -42,23 +42,23 @@ const Ratepages = () => {
 
   // --- handle localStorage language changes ---
 
-useEffect(() => {
-  // Get the exact current path
-  const currentPath = window.location.pathname;
+  useEffect(() => {
+    // Get the exact current path
+    const currentPath = window.location.pathname;
 
-  // Only run if the path is exactly "/rates"
-  if (currentPath !== "/rates") return;
+    // Only run if the path is exactly "/rates"
+    if (currentPath !== "/rates") return;
 
-  const updateLang = () => {
-    const lag = localStorage.getItem("selectedLanguage");
-    setSelectedLang(lag);
-  };
+    const updateLang = () => {
+      const lag = localStorage.getItem("selectedLanguage");
+      setSelectedLang(lag);
+    };
 
-  window.addEventListener("storage", updateLang);
+    window.addEventListener("storage", updateLang);
 
-  // Cleanup
-  return () => window.removeEventListener("storage", updateLang);
-}, []);
+    // Cleanup
+    return () => window.removeEventListener("storage", updateLang);
+  }, []);
 
   // --- fetch rates from backend ---
   useEffect(() => {
@@ -136,36 +136,36 @@ useEffect(() => {
   };
 
   // --- filter rates by tab, country, and quality ---
-useEffect(() => {
-  setFilteredRates([]);
-  let currentData = [];
-  if (activeTab === "cc") currentData = rates;
-  else if (activeTab === "cli") currentData = clirates;
-  else if (activeTab === "special") currentData = specialRates;
+  useEffect(() => {
+    setFilteredRates([]);
+    let currentData = [];
+    if (activeTab === "cc") currentData = rates;
+    else if (activeTab === "cli") currentData = clirates;
+    else if (activeTab === "special") currentData = specialRates;
 
-  // Apply status filter
-  let updatedRates = [...currentData];
+    // Apply status filter
+    let updatedRates = [...currentData];
 
-  if (qualityFilter && qualityFilter !== "all") {
-    updatedRates = updatedRates.filter(
-      (rate) => rate.status?.toLowerCase() === qualityFilter
-    );
-  } else {
-    updatedRates = updatedRates.filter(
-      (rate) => rate.status?.toLowerCase() !== "archive"
-    );
-  }
+    if (qualityFilter && qualityFilter !== "all") {
+      updatedRates = updatedRates.filter(
+        (rate) => rate.status?.toLowerCase() === qualityFilter
+      );
+    } else {
+      updatedRates = updatedRates.filter(
+        (rate) => rate.status?.toLowerCase() !== "archive"
+      );
+    }
 
-  // Apply country filter
-  if (selectedCountry !== "All") {
-    updatedRates = updatedRates.filter(
-      (rate) => rate.country === selectedCountry
-    );
-  }
+    // Apply country filter
+    if (selectedCountry !== "All") {
+      updatedRates = updatedRates.filter(
+        (rate) => rate.country === selectedCountry
+      );
+    }
 
-  setFilteredRates(updatedRates);
-  setCurrentPage(1);
-}, [activeTab, selectedCountry, qualityFilter, rates, clirates, specialRates]);
+    setFilteredRates(updatedRates);
+    setCurrentPage(1);
+  }, [activeTab, selectedCountry, qualityFilter, rates, clirates, specialRates]);
 
   // --- show selected only ---
   useEffect(() => {
@@ -534,9 +534,7 @@ useEffect(() => {
         {loading ? (
           <div className="text-center py-6">Loading...</div>
         ) : translating ? (
-          <div className="text-center py-6 text-blue-600 font-medium">
-            Translating table, please wait...
-          </div>
+          <div className="text-center py-6 text-blue-600 font-medium"> Translating table, please wait... </div>
         ) : error ? (
           <div className="text-center text-red-600">{error}</div>
         ) : (

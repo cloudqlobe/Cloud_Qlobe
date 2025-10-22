@@ -19,16 +19,17 @@ const AdminNewLeads = () => {
   const [search, setSearch] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [leadStatusFilter, setLeadStatusFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchCustomers = async () => {
       setLoading(true);
       try {
-        let data = [];
-          const response = await axiosInstance.get(`api/customers`);
-          data = response.data.customer;
+        const response = await axiosInstance.get(`api/customers`);
+        const data = response.data.customer || [];
 
-        const filteredCustomers = data?.filter(
+        const filteredCustomers = data.filter(
           (customer) => customer.leadType === "New lead"
         );
         setCustomers(filteredCustomers);
@@ -42,11 +43,18 @@ const AdminNewLeads = () => {
     if (adminDetails?.id) {
       fetchCustomers();
     }
-  }, [adminDetails.id, adminDetails.role]);
+  }, [adminDetails.id]);
 
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+    setCurrentPage(1);
+  };
 
-  const handleSearch = (event) => setSearch(event.target.value);
-  const handleFilter = (status) => setLeadStatusFilter(status);
+  const handleFilter = (status) => {
+    setLeadStatusFilter(status);
+    setCurrentPage(1);
+  };
+
   const handleRowClick = (customerId) => navigate(`/admin/NewLeads/${customerId}`);
 
   // Filter customers based on search and lead status
@@ -67,6 +75,17 @@ const AdminNewLeads = () => {
     });
   }, [customers, search, leadStatusFilter]);
 
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentCustomers = filteredCustomers.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
   const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
 
   return (
@@ -74,154 +93,175 @@ const AdminNewLeads = () => {
       <Layout>
         {/* Navbar */}
         <div className="flex items-center px-6 py-4">
-          {/* Icon */}
           <div className="bg-orange-500 p-3 flex items-center justify-center">
             <ChartBarIcon className="text-white w-8 h-8" />
           </div>
-          {/* Heading aligned left */}
           <h1 className="text-xl font-bold text-gray-800 ml-2">
             LEAD MANAGEMENT
           </h1>
         </div>
-        <div >
-          {/* Search Bar and Buttons */}
-          <div className="relative flex items-center mt-6 px-6 space-x-4"
-          >
-            {/* Add Lead Button */}
-            <button className="flex items-center bg-green-500 text-white px-4 py-2  hover:bg-green-600 text-sm">
-              <UsersIcon className="w-5 h-5 mr-2" />
-              <Link to="/admin/Addlead"><span className="text-sm">ADD LEAD</span></Link>
-            </button>
 
-            {/* Search Bar */}
-            <div className="flex items-center bg-white border border-red-500 rounded-lg px-4 py-2 max-w-lg w-full">
-              <ArrowLeftStartOnRectangleIcon className="w-6 h-6 text-blue-500" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="bg-transparent text-gray-700 focus:outline-none ml-2 w-full"
-                value={search}
-                onChange={handleSearch}
-              />
-            </div>
+        {/* Search & Filters */}
+        <div className="relative flex items-center mt-6 px-6 space-x-4">
+          <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
+            <UsersIcon className="w-5 h-5 mr-2" />
+            <Link to="/admin/Addlead">
+              <span className="text-sm">ADD LEAD</span>
+            </Link>
+          </button>
 
-            {/* Search Button */}
-            <button className="flex items-center bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 text-sm">
-              <StopCircleIcon className="w-5 h-5 mr-2" />
-              <span className="text-sm">SEARCH</span>
-            </button>
+          <div className="flex items-center bg-white border border-red-500 rounded-lg px-4 py-2 max-w-lg w-full">
+            <ArrowLeftStartOnRectangleIcon className="w-6 h-6 text-blue-500" />
+            <input
+              type="text"
+              placeholder="Search..."
+              className="bg-transparent text-gray-700 focus:outline-none ml-2 w-full"
+              value={search}
+              onChange={handleSearch}
+            />
+          </div>
 
-            {/* Spacer to push filter controls to the right */}
-            <div className="flex-grow"></div>
+          <button className="flex items-center bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 text-sm">
+            <StopCircleIcon className="w-5 h-5 mr-2" />
+            <span className="text-sm">SEARCH</span>
+          </button>
 
-            {/* Filter controls - now aligned to the right */}
-            <div className="flex items-center space-x-4">
-              {/* Sort By Search Bar */}
-              <div className="relative">
-                <div
-                  className="flex items-center bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-300 shadow-sm w-48 cursor-pointer"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          <div className="flex-grow"></div>
+
+          {/* Filter Dropdown */}
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <div
+                className="flex items-center bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-300 shadow-sm w-48 cursor-pointer"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <span className="text-sm">{leadStatusFilter || "All"}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5 ml-auto text-gray-400"
                 >
-                  <span className="text-sm">{leadStatusFilter || "All"}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 ml-auto text-gray-400"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 9l6 6 6-6"
-                    />
-                  </svg>
-                </div>
-                {isDropdownOpen && (
-                  <div className="absolute top-12 left-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-lg w-48 z-10">
-                    <ul className="divide-y divide-gray-200">
-                      <li>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+              {isDropdownOpen && (
+                <div className="absolute top-12 left-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-lg w-48 z-10">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <button
+                        onClick={() => {
+                          handleFilter("");
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+                      >
+                        All
+                      </button>
+                    </li>
+                    {leadStatuses.map((status) => (
+                      <li key={status}>
                         <button
                           onClick={() => {
-                            handleFilter("");
+                            handleFilter(status);
                             setIsDropdownOpen(false);
                           }}
                           className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
                         >
-                          All
+                          {status}
                         </button>
                       </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
-                      {leadStatuses.map((status) => (
-                        <li key={status}>
-                          <button
-                            onClick={() => {
-                              handleFilter(status);
-                              setIsDropdownOpen(false);
-                            }}
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
-                          >
-                            {status}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Filter Button */}
-              <div className="relative group">
-                <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
-                  <FunnelIcon className="w-5 h-5 mr-2" />
-                  <span className="text-sm">FILTER</span>
-                </button>
-              </div>
+            <div className="relative group">
+              <button className="flex items-center bg-green-500 text-white px-4 py-2 hover:bg-green-600 text-sm">
+                <FunnelIcon className="w-5 h-5 mr-2" />
+                <span className="text-sm">FILTER</span>
+              </button>
             </div>
           </div>
         </div>
-        {/* Customer Table */}
-        <div className="bg-white shadow-md rounded-lg mt-6"
-  
-        >
+
+        {/* Table */}
+        <div className="bg-white shadow-md rounded-lg mt-6">
           {loading ? (
             <p className="text-center text-gray-500 py-4">Loading...</p>
           ) : (
-            <table className="table-auto text-left" style={{width:"97vw", marginLeft:"22px"}}>
-              <thead>
-                <tr className="bg-yellow-500 text-white">
-                  <th className="py-3 px-4">Company Name</th>
-                  <th className="py-3 px-4">Contact Person</th>
-                  <th className="py-3 px-4">Email</th>
-                  <th className="py-3 px-4">Country</th>
-                  <th className="py-3 px-4">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredCustomers.length > 0 ? (
-                  filteredCustomers.map((customer) => (
-                    <tr
-                      key={customer._id}
-                      onClick={() => handleRowClick(customer.id)}
-                      className="border-b hover:bg-gray-100"
-                    >
-                      <td className="py-3 px-4">{customer.companyName}</td>
-                      <td className="py-3 px-4">{customer.contactPerson}</td>
-                      <td className="py-3 px-4">{customer.userEmail}</td>
-                      <td className="py-3 px-4">{customer.country}</td>
-                      <td className="py-3 px-4">{customer.leadStatus}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="text-center text-gray-500 py-4">
-                      No results found.
-                    </td>
+            <>
+              <table
+                className="table-auto text-left w-[97vw] ml-[22px]"
+              >
+                <thead>
+                  <tr className="bg-yellow-500 text-white">
+                    <th className="py-3 px-4">Company Name</th>
+                    <th className="py-3 px-4">Contact Person</th>
+                    <th className="py-3 px-4">Email</th>
+                    <th className="py-3 px-4">Country</th>
+                    <th className="py-3 px-4">Status</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentCustomers.length > 0 ? (
+                    currentCustomers.map((customer) => (
+                      <tr
+                        key={customer.id}
+                        onClick={() => handleRowClick(customer.id)}
+                        className="border-b hover:bg-gray-100 cursor-pointer"
+                      >
+                        <td className="py-3 px-4">{customer.companyName}</td>
+                        <td className="py-3 px-4">{customer.contactPerson}</td>
+                        <td className="py-3 px-4">{customer.userEmail}</td>
+                        <td className="py-3 px-4">{customer.country}</td>
+                        <td className="py-3 px-4">{customer.leadStatus}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-gray-500 py-4">
+                        No results found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* Pagination */}
+              <div className="flex justify-between items-center px-6 py-4 border-t">
+                <button
+                  onClick={goToPreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 text-sm font-medium rounded ${
+                    currentPage === 1
+                      ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  }`}
+                >
+                  Previous
+                </button>
+
+                <span className="text-gray-700 text-sm">
+                  Page {currentPage} of {totalPages}
+                </span>
+
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 text-sm font-medium rounded ${
+                    currentPage === totalPages
+                      ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  }`}
+                >
+                  Next
+                </button>
+              </div>
+            </>
           )}
         </div>
       </Layout>

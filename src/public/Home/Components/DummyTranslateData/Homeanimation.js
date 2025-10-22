@@ -54,9 +54,9 @@ export const dummyPlaceholders = {
     email: "Email",
     number: "Numero di telefono",
   },
-  hi: {
-    name: "नाम",
-    email: "ईमेल",
-    number: "फोन नंबर",
+  ko: {
+    name: "이름",
+    email: "이메일",
+    number: "전화번호",
   },
 };
