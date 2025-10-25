@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { rateQualityDummyTranslations } from "../DummyTranslateData/rateQualityDescription";
+import { translateCountry } from "../../../../utils/countryTranslator";
 
 const useRateTranslations = (
   selectedLang,
@@ -9,126 +10,98 @@ const useRateTranslations = (
   getFilteredCountries,
   itemsPerPage
 ) => {
-  const [translatedCountries, setTranslatedCountries] = useState([]);
   const [countryMap, setCountryMap] = useState({});
   const [country, setCountry] = useState([]);
   const [displayRates, setDisplayRates] = useState([]);
   const [translating, setTranslating] = useState(true);
 
-  // ✅ Update country list when tab or filter changes
+  // 🔹 Update country list when tab/filter changes
   useEffect(() => {
     const countries = getFilteredCountries();
     setCountry([...countries]);
   }, [activeTab, filteredRates]);
 
-  // ✅ Clear displayRates immediately when filteredRates is empty or tab changes
+  // 🔹 Clear displayRates if no rates
   useEffect(() => {
     if (!filteredRates?.length) {
-      setDisplayRates([]); // clear instantly
+      setDisplayRates([]);
     }
   }, [activeTab, filteredRates]);
 
-  // 🔹 Translate table rows
-useEffect(() => {
-  let active = true; // flag for current request identity
-  console.log("table row");
-  
-  const translateTable = async () => {
-    if (!filteredRates?.length) {
-      if (active) setDisplayRates([]);
-      return;
-    }
+  // 🔹 Translate rate quality description
+  useEffect(() => {
+    let active = true;
 
-    if (selectedLang === "en") {
-      if (active) setDisplayRates(filteredRates);
-      return;
-    }
+    const translateTable = async () => {
+      if (!filteredRates?.length) {
+        if (active) setDisplayRates([]);
+        return;
+      }
 
-    try {
+      if (selectedLang === "en") {
+        if (active) setDisplayRates(filteredRates);
+        return;
+      }
+
       setTranslating(true);
 
-      const visibleRates = filteredRates.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      );
-
-      const textsToTranslate = visibleRates.map(
-        (r) => `${r.country} | ${r.qualityDescription || ""} | ${r.profile || ""}`
-      );
-
-      const rowResponse = await axios.post("https://translator.cloudqlobe.com/translate/rate_table", {
-        page: "rate_table",
-        lang: selectedLang,
-        texts: textsToTranslate,
-      });
-
-      if (!active) return; // ignore if tab/lang changed mid-translation
-
-      const translatedTexts = rowResponse.data.translatedTexts;
-      const translatedRates = visibleRates.map((r, i) => {
-        const parts = translatedTexts[i]?.split(/\s*\|\s*/) || [];
-        return {
-          ...r,
-          country: parts[0] || r.country,
-          qualityDescription: parts[1] || r.qualityDescription,
-          profile: parts[2] || r.profile,
-        };
-      });
-
-      const updatedAll = [...filteredRates];
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      updatedAll.splice(startIndex, translatedRates.length, ...translatedRates);
-
-      setDisplayRates(updatedAll);
-    } catch (err) {
-      console.error("Table translation error:", err);
-    } finally {
-      if (active) setTranslating(false);
-    }
-  };
-
-  translateTable();
-  return () => { active = false }; // cancel flag when tab/lang/page changes
-}, [selectedLang, currentPage, filteredRates]);
-
-  // 🔹 Translate Country Dropdown
-  useEffect(() => {
-    if (!country?.length) return;
-  console.log("country");
-
-    const translateCountries = async () => {
       try {
-        setTranslating(true);
+        const visibleRates = filteredRates.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        );
 
-        if (selectedLang === "en") {
-          setTranslatedCountries(country);
-          setCountryMap(Object.fromEntries(country.map((c) => [c, c])));
-          return;
-        }
+        const translatedRates = visibleRates.map((r) => {
+          if (!r.qualityDescription) return r;
 
-        const response = await axios.post("https://translator.cloudqlobe.com/translate/rate_table", {
-          page: "rate_table",
-          lang: selectedLang,
-          texts: country,
+          // normalize spaces
+          const key = r.qualityDescription.trim().replace(/\s+/g, " ");
+          const translation = rateQualityDummyTranslations[key];
+
+          if (!translation) console.warn("Missing translation for:", key);
+
+          const translatedText = translation?.[selectedLang] || r.qualityDescription;
+
+          return {
+            ...r,
+            qualityDescription: translatedText,
+          };
         });
 
-        const translatedList = response.data.translatedTexts || country;
-        const map = Object.fromEntries(country.map((c, i) => [c, translatedList[i]]));
+        // merge translated rates into full filteredRates array
+        const updatedAll = [...filteredRates];
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        updatedAll.splice(startIndex, translatedRates.length, ...translatedRates);
 
-        setTranslatedCountries(translatedList);
-        setCountryMap(map);
+        if (active) setDisplayRates(updatedAll);
       } catch (err) {
-        console.error("❌ Country translation error:", err);
+        console.error("Dummy translation error:", err);
       } finally {
-        setTranslating(false);
+        if (active) setTranslating(false);
       }
     };
 
-    translateCountries();
+    translateTable();
+
+    return () => {
+      active = false;
+    };
+  }, [selectedLang, currentPage, filteredRates]);
+
+  // 🔹 Country translation
+  useEffect(() => {
+    if (!country?.length) return;
+
+    const translatedList = country.map((c) =>
+      translateCountry(c, selectedLang)
+    );
+    
+    const map = Object.fromEntries(country.map((c, i) => [c, translatedList[i]]));
+
+    setCountryMap(map);
   }, [selectedLang, country]);
 
   return {
-    translatedCountries,
     countryMap,
     displayRates,
     translating,

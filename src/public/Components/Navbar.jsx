@@ -11,7 +11,7 @@ import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg
 import logo from "../../assets/logo1-removebg-preview.png";
 import axiosInstance from "../../utils/axiosinstance";
 import usePageTranslator from "../../usePageTranslator";
-import { serviceTranslations, navbarTranslations } from "./DummyTranslateData/NavbarServiceTranslationsData";
+import { serviceTranslations, navbarTranslations, languageOptions } from "./DummyTranslateData/NavbarServiceTranslationsData";
 import Ratepages from "../Rates/Components/Rateheader";
 import { LanguageContext } from "../../context/LanguageContext";
 
@@ -244,7 +244,7 @@ const Navbar = () => {
           <div className="relative w-[220px] h-10" ref={languageRef}>
             <input
               type="text"
-              value={language}
+              value={languageOptions.find((l) => l.code === language)?.name || language}
               readOnly
               onClick={() => setLangOpen(!langOpen)}
               className="w-full h-full border border-gray-300 rounded pl-4 pr-10 text-sm text-gray-700 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all cursor-pointer"

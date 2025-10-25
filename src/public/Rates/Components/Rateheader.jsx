@@ -8,11 +8,14 @@ import RateTable from "./RateTable";
 import useRateTranslations from "./hook/useRateTranslations";
 import { allTextTranslations, uiText } from "./DummyTranslateData/uiText";
 import { statusTranslations } from "./DummyTranslateData/tableheaderdummydata";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 const Ratepages = () => {
   const { customerDetails } = useContext(CustomerAuthContext);
-  const navigate = useNavigate();
+  const { language } = useContext(LanguageContext);
+    const navigate = useNavigate();
 
+  const [selectedLang, setSelectedLang] = useState();
   const [activeTab, setActiveTab] = useState("cc");
   const [qualityFilter, setQualityFilter] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("All");
@@ -31,34 +34,18 @@ const Ratepages = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [selectedLang, setSelectedLang] = useState(
-    () => localStorage.getItem("selectedLanguage") || "en"
-  );
   // dummytranslatedata
   const texts = uiText[selectedLang || "en"];
   const status = statusTranslations[selectedLang || "en"];
 
   const itemsPerPage = 10;
 
-  // --- handle localStorage language changes ---
-
   useEffect(() => {
-    // Get the exact current path
-    const currentPath = window.location.pathname;
+  if (language && language !== selectedLang) {
+    setSelectedLang(language);
+  }
+}, [language]);
 
-    // Only run if the path is exactly "/rates"
-    if (currentPath !== "/rates") return;
-
-    const updateLang = () => {
-      const lag = localStorage.getItem("selectedLanguage");
-      setSelectedLang(lag);
-    };
-
-    window.addEventListener("storage", updateLang);
-
-    // Cleanup
-    return () => window.removeEventListener("storage", updateLang);
-  }, []);
 
   // --- fetch rates from backend ---
   useEffect(() => {
@@ -186,7 +173,6 @@ const Ratepages = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  console.log(paginatedRates);
 
   // --- selection functions ---
   const handleRateSelection = (rateId) => {

@@ -260,3 +260,33 @@ export const statusTranslations = {
 };
 
 
+export const outboundTranslations = {
+  en: "Outbound",
+  es: "Saliente",
+  fr: "Sortant",
+  de: "Ausgehend",
+  it: "In uscita",
+  pt: "Saída",
+  ru: "Исходящий",
+  "zh-CN": "外呼",
+  ja: "アウトバウンド",
+  ar: "الصادر",
+  tr: "Giden",
+  ko: "발신",
+};
+
+export const ivrTranslations = {
+  en: "IVR",
+  es: "Respuesta de voz interactiva",
+  fr: "Réponse vocale interactive",
+  de: "Interaktive Sprachsteuerung",
+  it: "Risposta vocale interattiva",
+  pt: "Resposta de voz interativa",
+  ru: "Интерактивное голосовое меню",
+  "zh-CN": "交互式语音应答",
+  ja: "音声応答システム",
+  ar: "الرد الصوتي التفاعلي",
+  tr: "Etkileşimli Sesli Yanıt",
+  ko: "음성 응답 시스템",
+};
+

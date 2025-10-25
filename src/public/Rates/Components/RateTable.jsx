@@ -1,4 +1,5 @@
-import { dummyCliTranslatedHeaders, dummyTranslatedHeaders, statusTranslations } from "./DummyTranslateData/tableheaderdummydata";
+import { translateCountry } from "../../../utils/countryTranslator";
+import { dummyCliTranslatedHeaders, dummyTranslatedHeaders, ivrTranslations, outboundTranslations, statusTranslations } from "./DummyTranslateData/tableheaderdummydata";
 
 const RateTable = ({
   paginatedRates,
@@ -70,6 +71,17 @@ const RateTable = ({
             const translatedStatus =
               statusTranslations[currentLang]?.[rate.status] || rate.status;
 
+            // Compute translated profile outside JSX
+            let translatedProfile = "-";
+            const profileKey = rate.profile?.toLowerCase();
+            if (profileKey) {
+              if (profileKey.includes("outbound"))
+                translatedProfile = outboundTranslations[currentLang] || rate.profile;
+              else if (profileKey.includes("ivr"))
+                translatedProfile = ivrTranslations[currentLang] || rate.profile;
+              else translatedProfile = rate.profile;
+            }
+
             return (
               <tr key={rate._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
                 {selectionMode && (
@@ -83,12 +95,15 @@ const RateTable = ({
                   </td>
                 )}
                 <td className="px-4 py-2">{rate.countryCode}</td>
-                <td className="px-4 py-2">{rate.country}</td>
+                <td className="px-4 py-2">{translateCountry(rate.country, currentLang)}</td>
                 <td className="px-4 py-2">{rate.qualityDescription}</td>
+
                 {activeTab !== "cli" && (
-                  <td className="px-4 py-2 text-center">{rate.profile || "-"}</td>
+                  <td className="px-4 py-2 text-center">{translatedProfile}</td>
                 )}
+
                 <td className="px-4 py-2 text-center">{rate.rate}</td>
+
                 {activeTab === "cli" ? (
                   <>
                     <td className="px-4 py-2">{rate.billingCycle}</td>
@@ -99,6 +114,7 @@ const RateTable = ({
                 ) : (
                   <td className="px-4 py-2 text-center">{rate.billingCycle}</td>
                 )}
+
                 <td
                   className={`px-4 py-2 ${
                     rate.status?.toLowerCase() === "active"
