@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { rateQualityDummyTranslations } from "../DummyTranslateData/rateQualityDescription";
+import axios from "axios";
 import { translateCountry } from "../../../../utils/countryTranslator";
 
 const useRateTranslations = (
@@ -15,7 +15,9 @@ const useRateTranslations = (
   const [displayRates, setDisplayRates] = useState([]);
   const [translating, setTranslating] = useState(true);
 
-  // 🔹 Update country list when tab/filter changes
+  const API_URL = "https://translator.cloudqlobe.com/translate/rate_table";
+
+  // 🔹 Update country list
   useEffect(() => {
     const countries = getFilteredCountries();
     setCountry([...countries]);
@@ -28,7 +30,7 @@ const useRateTranslations = (
     }
   }, [activeTab, filteredRates]);
 
-  // 🔹 Translate rate quality description
+  // 🔹 Translate quality descriptions using backend
   useEffect(() => {
     let active = true;
 
@@ -40,52 +42,79 @@ const useRateTranslations = (
 
       if (selectedLang === "en") {
         if (active) setDisplayRates(filteredRates);
+        if (active) setTranslating(false);
         return;
       }
 
       setTranslating(true);
 
       try {
-        const visibleRates = filteredRates.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
+const visibleRates = filteredRates.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
 
-        const translatedRates = visibleRates.map((r) => {
-          if (!r.qualityDescription) return r;
+// 🧩 Replace short forms (case-insensitive)
+const expandShortTerms = (text) => {
+  if (!text) return text;
+  let t = text;
 
-          // normalize spaces
-          const key = r.qualityDescription.trim().replace(/\s+/g, " ");
-          const translation = rateQualityDummyTranslations[key];
+  // Replace full words only to avoid accidental substring changes
+  t = t.replace(/\bCC\b/gi, "Call Center");
+  t = t.replace(/\bIVR\b/gi, "Interactive Voice Response");
+  t = t.replace(/\bEU\b/gi, "European Union");
+  t = t.replace(/\bMobile\b/gi, "Mobile Network");
+  return t.trim();
+};
 
-          if (!translation) console.warn("Missing translation for:", key);
+// 🧩 Normalize + expand all rate descriptions
+const visibleWithExpanded = visibleRates.map((r) => ({
+  ...r,
+  qualityDescription: expandShortTerms(r.qualityDescription),
+}));
 
-          const translatedText = translation?.[selectedLang] || r.qualityDescription;
+// Extract descriptions for translation
+const descriptions = visibleWithExpanded
+  .filter((r) => r.qualityDescription)
+  .map((r) => r.qualityDescription);
 
-          return {
-            ...r,
-            qualityDescription: translatedText,
-          };
+console.log("✅ Expanded visibleRates:", visibleWithExpanded);
+console.log("✅ Descriptions for translation:", descriptions);
+
+if (descriptions.length === 0) {
+  if (active) setDisplayRates(filteredRates);
+  return;
+}
+
+        // 🔹 Send to backend for translation
+        const { data } = await axios.post(API_URL, {
+          lang: selectedLang,
+          descriptions,
         });
 
-        // merge translated rates into full filteredRates array
+        const translatedTexts = data.translated || [];
+
+        // 🔹 Merge translations into visible rates
+        const translatedRates = visibleRates.map((r, i) => ({
+          ...r,
+          qualityDescription:
+            translatedTexts[i] || r.qualityDescription,
+        }));
+
         const updatedAll = [...filteredRates];
         const startIndex = (currentPage - 1) * itemsPerPage;
         updatedAll.splice(startIndex, translatedRates.length, ...translatedRates);
 
         if (active) setDisplayRates(updatedAll);
       } catch (err) {
-        console.error("Dummy translation error:", err);
+        console.error("Translation API error:", err);
       } finally {
         if (active) setTranslating(false);
       }
     };
 
     translateTable();
-
-    return () => {
-      active = false;
-    };
+    return () => (active = false);
   }, [selectedLang, currentPage, filteredRates]);
 
   // 🔹 Country translation
@@ -95,9 +124,8 @@ const useRateTranslations = (
     const translatedList = country.map((c) =>
       translateCountry(c, selectedLang)
     );
-    
-    const map = Object.fromEntries(country.map((c, i) => [c, translatedList[i]]));
 
+    const map = Object.fromEntries(country.map((c, i) => [c, translatedList[i]]));
     setCountryMap(map);
   }, [selectedLang, country]);
 

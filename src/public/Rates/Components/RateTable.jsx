@@ -18,6 +18,7 @@ const RateTable = ({
       : dummyTranslatedHeaders[selectedLanguage] || dummyTranslatedHeaders["en"];
 
   const currentLang = selectedLanguage || "en";
+  console.log("curent lang in the tbale", selectedLanguage);
 
   return (
     <table className="min-w-full bg-white border rounded">
@@ -96,31 +97,33 @@ const RateTable = ({
                 )}
                 <td className="px-4 py-2">{rate.countryCode}</td>
                 <td className="px-4 py-2">{translateCountry(rate.country, currentLang)}</td>
-                <td className="px-4 py-2">{rate.qualityDescription}</td>
-
-                {activeTab !== "cli" && (
-                  <td className="px-4 py-2 text-center">{translatedProfile}</td>
-                )}
+                <td className="px-4 py-2 text-center"> {rate.qualityDescription}</td>
+                {
+                  activeTab !== "cli" && (
+                    <td className="px-4 py-2 text-center">{translatedProfile}</td>
+                  )
+                }
 
                 <td className="px-4 py-2 text-center">{rate.rate}</td>
 
-                {activeTab === "cli" ? (
-                  <>
-                    <td className="px-4 py-2">{rate.billingCycle}</td>
-                    <td className="px-4 py-2">{rate.asr}</td>
-                    <td className="px-4 py-2">{rate.acd}</td>
-                    <td className="px-4 py-2">{rate.rtp}</td>
-                  </>
-                ) : (
-                  <td className="px-4 py-2 text-center">{rate.billingCycle}</td>
-                )}
+                {
+                  activeTab === "cli" ? (
+                    <>
+                      <td className="px-4 py-2">{rate.billingCycle}</td>
+                      <td className="px-4 py-2">{rate.asr}</td>
+                      <td className="px-4 py-2">{rate.acd}</td>
+                      <td className="px-4 py-2">{rate.rtp}</td>
+                    </>
+                  ) : (
+                    <td className="px-4 py-2 text-center">{rate.billingCycle}</td>
+                  )
+                }
 
                 <td
-                  className={`px-4 py-2 ${
-                    rate.status?.toLowerCase() === "active"
-                      ? "text-green-600 font-semibold"
-                      : "text-red-600 font-semibold"
-                  }`}
+                  className={`px-4 py-2 ${rate.status?.toLowerCase() === "active"
+                    ? "text-green-600 font-semibold"
+                    : "text-red-600 font-semibold"
+                    }`}
                 >
                   {translatedStatus}
                 </td>
@@ -129,7 +132,7 @@ const RateTable = ({
           })
         )}
       </tbody>
-    </table>
+    </table >
   );
 };
 
