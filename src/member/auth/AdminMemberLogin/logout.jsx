@@ -45,13 +45,14 @@ const UserDropdown = () => {
         <div className="relative">
           <button
             onClick={toggleDropdown}
-            className="flex items-center space-x-2 text-white px-4 py-2 transition-colors duration-200 bg-orange-500 hover:bg-orange-600"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
           >
-            <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-              <UserIcon className="w-4 h-4 text-orange-600" />
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+              <UserIcon className="w-5 h-5 text-orange-600" />
             </div>
-            <span className="font-medium">Member</span>
+            <span className="hidden sm:block">Account</span>
           </button>
+
           {/* Dropdown Menu */}
           {isOpen && (
             <div

@@ -79,6 +79,11 @@ import ChatPanel from "../member/Communication/ChatBot/page.jsx";
 import CommunicationEmail from "../member/Communication/Email/page.jsx";
 import CommunicationMessagesDashboard from "../member/Communication/Messages/page.jsx";
 import CommunicationInternalAssistance from "../member/Communication/InternalAssistance/page.jsx";
+//team management
+import TaskManager from "../member/TeamManagement/WorkManagement/MyTask/page.jsx";
+import MeetingManager from "../member/TeamManagement/WorkManagement/Meeting/page.jsx";
+import GoalTracker from "../member/TeamManagement/WorkManagement/Targets/page.jsx";
+import ProjectTaskManager from "../member/TeamManagement/WorkManagement/ProjectTask/page.jsx";
 
 const MemberRoutes = () => {
   return (
@@ -86,93 +91,100 @@ const MemberRoutes = () => {
       <Route path="/signin" element={<AdminMemberSignInPage />} />
       <Route path="/verify-token" element={<MemberTokenVerification />} />
 
-        <Route path="/*" element={
-          <MemberRoute>
-            <Routes>
-              <Route path="/dashboard" element={< MemberDashboard />} />
-              {/* Leads */}
-              <Route path="/newLeads" element={<NewLeads />} />
-              <Route path="/NewLeads/:customerId" element={<LeadDetails />} />
-              <Route path="/Addlead" element={<AddCustomerPage />} />
-              <Route path="/leads/assistance" element={<InternalAssistance />} />
-              <Route path="/leads/messages" element={<LeadsMessage />} />
-              <Route path="/notification" element={<FollowUp />} />
-              <Route path="/detailfollowup/:followupId" element={<FollowUpDetails />} />
-              <Route path="/leads/email" element={<LeadEmail />} />
-              <Route path="/leads/report" element={<LeadReport />} />
+      <Route path="/*" element={
+        <MemberRoute>
+          <Routes>
+            <Route path="/dashboard" element={< MemberDashboard />} />
+            {/* Leads */}
+            <Route path="/newLeads" element={<NewLeads />} />
+            <Route path="/NewLeads/:customerId" element={<LeadDetails />} />
+            <Route path="/Addlead" element={<AddCustomerPage />} />
+            <Route path="/leads/assistance" element={<InternalAssistance />} />
+            <Route path="/leads/messages" element={<LeadsMessage />} />
+            <Route path="/notification" element={<FollowUp />} />
+            <Route path="/detailfollowup/:followupId" element={<FollowUpDetails />} />
+            <Route path="/leads/email" element={<LeadEmail />} />
+            <Route path="/leads/report" element={<LeadReport />} />
 
-              {/* Sale */}
-              <Route path="/sale/leads" element={<CustomersPage />} />
-              <Route path="/sale/addlead" element={<AddSaleCustomerPage />} />
-              <Route path="/SaleLead/:customerId" element={<SaleLeadDetails />} />
-              <Route path="/sale/ticket" element={<CreateSaleTroubleTicket />} />
-              <Route path="/sale/customer" element={<SaleCustomersPage />} />
-              <Route path="/sale/customer/addlead" element={<AddSaleCustomerPage />} />
-              <Route path="/SaleLead/customer/:customerId" element={<SaleCustomerLeadDetails />} />
-              <Route path="/sale/followups" element={<SaleFollowUp />} />
-              <Route path="/sale/email" element={<SaleEmail />} />
-              <Route path="/sale/report" element={<SalesReportPage />} />
-              <Route path="/sale/messages" element={<SaleMessage />} />
-              <Route path="/sale/assistance" element={<SaleInternalAssistance />} />
+            {/* Sale */}
+            <Route path="/sale/leads" element={<CustomersPage />} />
+            <Route path="/sale/addlead" element={<AddSaleCustomerPage />} />
+            <Route path="/SaleLead/:customerId" element={<SaleLeadDetails />} />
+            <Route path="/sale/ticket" element={<CreateSaleTroubleTicket />} />
+            <Route path="/sale/customer" element={<SaleCustomersPage />} />
+            <Route path="/sale/customer/addlead" element={<AddSaleCustomerPage />} />
+            <Route path="/SaleLead/customer/:customerId" element={<SaleCustomerLeadDetails />} />
+            <Route path="/sale/followups" element={<SaleFollowUp />} />
+            <Route path="/sale/email" element={<SaleEmail />} />
+            <Route path="/sale/report" element={<SalesReportPage />} />
+            <Route path="/sale/messages" element={<SaleMessage />} />
+            <Route path="/sale/assistance" element={<SaleInternalAssistance />} />
 
-              {/* Carrier */}
-              <Route path="/carrier/leads" element={<CarrierPage />} />
-              <Route path="/carrier/addlead" element={<AddCarrierPage />} />
-              <Route path="/carrier/lead-details/:customerId" element={<CarrierDetails />} />
-              <Route path="/carrrier/ticket" element={<CreateCarrierTroubleTicket />} />
-              <Route path="/carrier/carrier" element={<CarrierCustomersPage />} />
-              <Route path="/carrier/customer/addlead" element={<AddCarrierCustomerPage />} />
-              <Route path="/carrier/followup" element={<CarrierFollowUp />} />
-              <Route path="/carrier/messages" element={<CarriersMessage />} />
-              <Route path="/carrier/assistance" element={<CarrierInternalAssistance />} />
-              <Route path="/carrier/carrier/:customerId" element={<CarriersCustomerLeadDetails />} />
-              <Route path="/carrier/email" element={<CarrierEmail />} />
-              <Route path="/carrier/report" element={<CarrierReport />} />
+            {/* Carrier */}
+            <Route path="/carrier/leads" element={<CarrierPage />} />
+            <Route path="/carrier/addlead" element={<AddCarrierPage />} />
+            <Route path="/carrier/lead-details/:customerId" element={<CarrierDetails />} />
+            <Route path="/carrrier/ticket" element={<CreateCarrierTroubleTicket />} />
+            <Route path="/carrier/carrier" element={<CarrierCustomersPage />} />
+            <Route path="/carrier/customer/addlead" element={<AddCarrierCustomerPage />} />
+            <Route path="/carrier/followup" element={<CarrierFollowUp />} />
+            <Route path="/carrier/messages" element={<CarriersMessage />} />
+            <Route path="/carrier/assistance" element={<CarrierInternalAssistance />} />
+            <Route path="/carrier/carrier/:customerId" element={<CarriersCustomerLeadDetails />} />
+            <Route path="/carrier/email" element={<CarrierEmail />} />
+            <Route path="/carrier/report" element={<CarrierReport />} />
 
-              {/* Accounts */}
-              <Route path="/clirates" element={<CLIRatesPage />} />
-              <Route path="/ccrates" element={<RatesPage />} />
-              <Route path="/targetedrates" element={<TargetedRatePage />} />
-              <Route path="/offer/rates" element={<OfferRatePage />} />
-              <Route path="/specialrates" element={<SpecialRatePage />} />
-              <Route path="/recharge" element={<RechargeForm />} />
-              <Route path="/vendor_form" element={<VendorForm />} />
-              <Route path="/recharge_requests" element={<RechargerequestPage />} />
-              <Route path="/vendorpayment" element={<VendorRequestPage />} />
-              <Route path="/overdraft_requests" element={<OverdraftRequestPage />} />
-              <Route path="/privaterate_requests" element={<PrivateRateRequestPage />} />
-              <Route path="/account/followup" element={<AccountFollowUp />} />
-              <Route path="/account/addFollowup" element={<AddFollowUpInAccounts />} />
-              <Route path="/account/messages" element={<AccountsMessagesDashboard />} />
-              <Route path="/account/assistance" element={<AccountInternalAssistance />} />
-              <Route path="/account/email" element={<AccountsEmail />} />
-              <Route path="/account/report" element={<AccountsReport />} />
-              <Route path="/account/myticket" element={<AccountsMyTicket />} />
+            {/* Accounts */}
+            <Route path="/clirates" element={<CLIRatesPage />} />
+            <Route path="/ccrates" element={<RatesPage />} />
+            <Route path="/targetedrates" element={<TargetedRatePage />} />
+            <Route path="/offer/rates" element={<OfferRatePage />} />
+            <Route path="/specialrates" element={<SpecialRatePage />} />
+            <Route path="/recharge" element={<RechargeForm />} />
+            <Route path="/vendor_form" element={<VendorForm />} />
+            <Route path="/recharge_requests" element={<RechargerequestPage />} />
+            <Route path="/vendorpayment" element={<VendorRequestPage />} />
+            <Route path="/overdraft_requests" element={<OverdraftRequestPage />} />
+            <Route path="/privaterate_requests" element={<PrivateRateRequestPage />} />
+            <Route path="/account/followup" element={<AccountFollowUp />} />
+            <Route path="/account/addFollowup" element={<AddFollowUpInAccounts />} />
+            <Route path="/account/messages" element={<AccountsMessagesDashboard />} />
+            <Route path="/account/assistance" element={<AccountInternalAssistance />} />
+            <Route path="/account/email" element={<AccountsEmail />} />
+            <Route path="/account/report" element={<AccountsReport />} />
+            <Route path="/account/myticket" element={<AccountsMyTicket />} />
 
-              {/* support */}
-              <Route path="/support/troubleTickets" element={<TroubleTicket />} />
-              <Route path="/support/createTickets" element={<CreateTroubleTicket />} />
-              <Route path="/support/testing" element={<TestingPage />} />
-              <Route path="/support/email" element={<SupportEmail />} />
-              <Route path="/support/internalassistence" element={<SupportInternalAssistance />} />
-              <Route path="/support/followups" element={<SupportFollowUp />} />
-              <Route path="/support/addFollowup" element={<AddFollowUpInSupport />} />
-              <Route path="/support/messages" element={<SupportMessagesDashboard />} />
-              <Route path="/support/myTickets" element={<SupportMyticket />} />
-              <Route path="/support/task" element={<SupportTaskPage />} />
+            {/* support */}
+            <Route path="/support/troubleTickets" element={<TroubleTicket />} />
+            <Route path="/support/createTickets" element={<CreateTroubleTicket />} />
+            <Route path="/support/testing" element={<TestingPage />} />
+            <Route path="/support/email" element={<SupportEmail />} />
+            <Route path="/support/internalassistence" element={<SupportInternalAssistance />} />
+            <Route path="/support/followups" element={<SupportFollowUp />} />
+            <Route path="/support/addFollowup" element={<AddFollowUpInSupport />} />
+            <Route path="/support/messages" element={<SupportMessagesDashboard />} />
+            <Route path="/support/myTickets" element={<SupportMyticket />} />
+            <Route path="/support/task" element={<SupportTaskPage />} />
 
-              {/* Communications */}
-              <Route path="/communication/enquiry" element={<EnquiryPage />} />
-              <Route path="/communication/didEnquiry" element={<Didnumberenquiery />} />
-              <Route path="/communication/myTickets" element={<CommunicationMyTicket />} />
-              <Route path="/communication/chatpanel" element={<ChatPanel />} />
-              <Route path="/communication/email" element={<CommunicationEmail />} />
-              <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
-              <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
+            {/* Communications */}
+            <Route path="/communication/enquiry" element={<EnquiryPage />} />
+            <Route path="/communication/didEnquiry" element={<Didnumberenquiery />} />
+            <Route path="/communication/myTickets" element={<CommunicationMyTicket />} />
+            <Route path="/communication/chatpanel" element={<ChatPanel />} />
+            <Route path="/communication/email" element={<CommunicationEmail />} />
+            <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
+            <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
 
-            </Routes>
-          </MemberRoute>
-        } />
+            <Route path="/work/tasks" element={<TaskManager />} />
+            <Route path="/work/meetings" element={<MeetingManager />} />
+            <Route path="/work/projects" element={<ProjectTaskManager />} />
+            <Route path="/work/targets" element={<GoalTracker />} />
+            <Route path="/work/calendar" element={<CommunicationInternalAssistance />} />
+            <Route path="/work/notes" element={<CommunicationInternalAssistance />} />
+
+          </Routes>
+        </MemberRoute>
+      } />
 
     </Routes>
   );

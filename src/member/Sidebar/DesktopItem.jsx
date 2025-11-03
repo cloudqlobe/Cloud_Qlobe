@@ -38,7 +38,7 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
   }
 
   return (
-    <div key={item.id} className="relative" ref={dropdownRef}>
+    <div key={item.id} ref={dropdownRef}>
       <button
         onClick={() => onToggle(!isOpen)}
         className="flex items-center text-gray-600 hover:text-indigo-600 text-base focus:outline-none"
@@ -58,11 +58,11 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
             minHeight: shouldReduceHeight ? "auto" : "39vh"
           }}
         >
-          <div style={{ 
-            display: "flex", 
-            width: "100%", 
-            height: "100%", 
-            justifyContent: "space-evenly" 
+          <div style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            justifyContent: "space-evenly"
           }}>
             <div style={{
               background: "white",
@@ -80,7 +80,7 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
               <p style={{ fontSize: "0.9rem" }}>Description about {item.label} section</p>
             </div>
 
-            <div 
+            <div
               className="grid grid-cols-3"
               style={{
                 gap: "35px",
@@ -106,9 +106,9 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
                       )}
                     </a>
                   ) : subItem.subMenu ? (
-                    <div className="relative p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{height:"45px"}}>
-                      <div 
-                        onClick={() => toggleSubMenu(index)} 
+                    <div className=" p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{ height: "45px", width: "100%" }}>
+                      <div
+                        onClick={() => toggleSubMenu(index)}
                         className="flex justify-between items-center p-1"
                       >
                         <div className="font-medium text-gray-800" style={{ fontSize: "0.9rem" }}>
@@ -120,9 +120,15 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
                         <div className="text-sm text-gray-500 mt-1">{subItem.description}</div>
                       )}
                       {subMenuOpenIndex === index && (
-                        <div 
-                          className="absolute left-0 top-full bg-white border border-gray-200 shadow-lg rounded-lg w-full p-3 z-20"
-                          style={{ marginTop: "5px" }}
+                        <div
+                          className="absolute grid grid-cols-3 bg-white shadow-lg border border-gray-200 rounded-lg p-4 z-20"
+                          style={{
+                            gap: "35px",
+                            top: "100%",         // aligns it directly below the parent
+                            left: "420px",           // starts from the parent’s left edge
+                            minWidth: "600px",
+                            width: "1085px"   // optional width
+                          }}
                         >
                           {subItem.items.map((menuItem, menuIndex) => (
                             <a
@@ -138,6 +144,7 @@ const DesktopItem = ({ item, isOpen, onToggle }) => {
                           ))}
                         </div>
                       )}
+
                     </div>
                   ) : null}
                 </div>

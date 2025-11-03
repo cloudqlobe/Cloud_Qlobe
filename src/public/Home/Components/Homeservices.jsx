@@ -7,9 +7,6 @@ import {
   Globe,
   Headphones,
   ShieldCheck,
-  MapPin,
-  Mic,
-  Car,
   PhoneCall,
   Network,
   Wifi,
@@ -88,7 +85,9 @@ export default function TechDashboard() {
 
       {/* Main Container with Yellow Border */}
       <div className="max-w-8xl mx-auto relative z-10 mt-[-20px] ">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-stretch mb-12">
+{/* Responsive Auto-Scroll Container */}
+<div className="overflow-x-auto scrollbar-hide lg:overflow-visible">
+  <div className="flex lg:grid lg:grid-cols-3 gap-6 items-stretch mb-12 min-w-max lg:min-w-0 auto-scroll-mobile">
           {/* Left Container */}
           <div className="rounded-xl p-4 bg-[#0a2463]/40 backdrop-blur-md shadow-2xl border border-white/20 flex flex-col justify-between hover:shadow-cyan-500/20 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
             <div>
@@ -229,7 +228,7 @@ export default function TechDashboard() {
             </div>
           </div>
         </div>
-
+</div>
         {/* Bottom Scrolling Feature Section */}
         <div className="rounded-xl p-6 bg-[#0a2463]/40 backdrop-blur-md shadow-2xl border-2 border-white/30 relative overflow-hidden mt-10 hover:shadow-cyan-500/20 hover:shadow-2xl transition-all duration-300">
           <div className="absolute inset-0">
@@ -312,6 +311,32 @@ export default function TechDashboard() {
         .animate-pulse-slow {
           animation: pulse-slow 4s ease-in-out infinite;
         }
+
+        /* Auto-scroll animation for mobile */
+@keyframes autoScrollX {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@media (max-width: 1024px) {
+  .auto-scroll-mobile {
+    animation: autoScrollX 20s linear infinite;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Optional: pause scroll on hover/touch */
+.auto-scroll-mobile:hover {
+  animation-play-state: paused;
+}
+
       `}</style>
     </div>
   );

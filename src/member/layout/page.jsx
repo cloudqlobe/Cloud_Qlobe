@@ -2,7 +2,7 @@ import Topbar from '../Sidebar/page';
 
 const Layout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-white">
       {/* Fixed Topbar */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <Topbar />

@@ -15,7 +15,7 @@ const useRateTranslations = (
   const [displayRates, setDisplayRates] = useState([]);
   const [translating, setTranslating] = useState(true);
 
-  const API_URL = "https://translator.cloudqlobe.com/translate/rate_table";
+  const API_URL = "http://127.0.0.1:5008/translate/rate_table";
 
   // 🔹 Update country list
   useEffect(() => {

@@ -10,6 +10,8 @@ import DesktopItem from './DesktopItem';
 import UserDropdown from "../auth/AdminMemberLogin/logout";
 import axiosInstance from "../../utils/axiosinstance";
 import AuthContext from "../../context/AuthContext";
+import { motion } from "framer-motion";
+import { Bell } from "lucide-react";
 
 const Topbar = () => {
   const { memberDetails } = useContext(AuthContext);
@@ -21,7 +23,9 @@ const Topbar = () => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
-console.log(memberDetails);
+  const [notifications, setNotifications] = useState(3);
+
+  console.log(memberDetails);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -195,7 +199,7 @@ console.log(memberDetails);
   };
 
   return (
-    <header className="w-full p-4 bg-white shadow-xl border-b-4 border-gray-300 flex items-center justify-between">
+    <header className="w-full p-4 bg-white flex items-center justify-between">
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -285,6 +289,25 @@ console.log(memberDetails);
           </div>
         </div>
       )}
+
+<motion.button
+  className="relative p-3 bg-gray-100 rounded-xl shadow hover:bg-gray-200 transition"
+  whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.95 }}
+>
+  <Bell className="w-5 h-5 text-gray-800" />
+  {notifications > 0 && (
+    <motion.span
+      className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-md"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+    >
+      {notifications}
+    </motion.span>
+  )}
+</motion.button>
+
 
       {/* User Dropdown */}
       <div className="relative">

@@ -150,9 +150,11 @@ const Footer = () => {
         </div>
 
         {/* Three Sections in One Line */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+{/* Responsive Auto-Scroll Footer Section */}
+<div className="overflow-x-auto scrollbar-hide lg:overflow-visible">
+  <div className="flex lg:grid lg:grid-cols-3 gap-8 mb-16 min-w-max lg:min-w-0 auto-scroll-footer">
           {/* Services */}
-          <div className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+          <div  style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-2 right-2 w-16 h-16 border border-blue-400/20 rounded-full animate-spin group-hover:border-blue-400/40 transition-colors duration-500" style={{ animationDuration: '20s' }}></div>
             <div className="absolute bottom-2 left-2 w-12 h-12 border border-orange-400/20 rounded-full animate-spin group-hover:border-orange-400/40 transition-colors duration-500" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
@@ -185,8 +187,9 @@ const Footer = () => {
 
           </div>
 
+
           {/* Quick Links */}
-          <div className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+          <div style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-1 right-1 w-20 h-20 border border-purple-400/20 rounded-full animate-spin group-hover:border-purple-400/40 transition-colors duration-500" style={{ animationDuration: '25s' }}></div>
             <div className="absolute bottom-1 left-1 w-16 h-16 border border-pink-400/20 rounded-full animate-spin group-hover:border-pink-400/40 transition-colors duration-500" style={{ animationDuration: '18s', animationDirection: 'reverse' }}></div>
@@ -220,7 +223,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+          <div  style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-3 left-3 w-14 h-14 border border-green-400/20 rounded-full animate-pulse group-hover:border-green-400/40 transition-colors duration-500"></div>
             <div className="absolute bottom-3 right-3 w-10 h-10 border border-blue-400/20 rounded-full animate-spin group-hover:border-blue-400/40 transition-colors duration-500" style={{ animationDuration: '12s' }}></div>
@@ -260,6 +263,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
 
         {/* Enhanced Bottom Bar */}
@@ -313,6 +317,33 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <style>{`
+  /* Smooth auto-scroll for footer cards on mobile */
+  @keyframes footerAutoScroll {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  @media (max-width: 1024px) {
+    .auto-scroll-footer {
+      animation: footerAutoScroll 25s linear infinite;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+
+  /* Pause scroll on hover/touch */
+  .auto-scroll-footer:hover {
+    animation-play-state: paused;
+  }
+`}</style>
+
     </footer>
   );
 };
