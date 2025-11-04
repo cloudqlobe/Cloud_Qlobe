@@ -72,27 +72,33 @@ const Homeanimation = () => {
             {renderTabContent()}
           </div>
 
+          {/* Tabs */}
           <div className="mt-4 flex flex-wrap gap-10">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-2 border squared-full text-sm transition ${activeTab === tab.id
-                    ? 'w-40 border-orange-400 text-yellow-400 bg-white bg-opacity-10'
-                    : 'w-28 border-orange-300 text-white hover:bg-orange-400 hover:text-white'
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+
+              const base = "py-2 border squared-full text-sm transition w-28"; // fixed width on mobile
+              const desktopWidth = isActive ? " md:w-40" : " md:w-28";        // different width on md+
+              const activeStyles = isActive
+                ? " border-orange-400 text-yellow-400 bg-white bg-opacity-10"
+                : " border-orange-300 text-white hover:bg-orange-400 hover:text-white";
+
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`${base}${desktopWidth}${activeStyles}`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Signup Form */}
         <div className="flex justify-end w-full">
           <form onSubmit={handleSubmit} className="bg-transparent text-black squared-xl shadow-lg p-8 w-full max-w-md">
-            <h2 className="text-2xl font-semibold mb-6 text-center text-[#0a2463]">Register Now</h2>
-
             <input
               type="text"
               name="name"
