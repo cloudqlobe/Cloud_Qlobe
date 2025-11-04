@@ -106,9 +106,8 @@ export default function TechDashboard() {
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className={`absolute top-0 left-0 w-full transition-opacity duration-700 ease-in-out ${
-                activeIndex === i ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
+              className={`absolute top-0 left-0 w-full transition-opacity duration-700 ease-in-out ${activeIndex === i ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
             >
               {renderBox(i)}
             </div>
@@ -132,35 +131,33 @@ export default function TechDashboard() {
                 return (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                      isActive
-                        ? "translate-x-0 opacity-100 scale-100"
-                        : isPrev
+                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${isActive
+                      ? "translate-x-0 opacity-100 scale-100"
+                      : isPrev
                         ? "-translate-x-full opacity-0 scale-95"
                         : isNext
-                        ? "translate-x-full opacity-0 scale-95"
-                        : "translate-x-full opacity-0 scale-90"
-                    }`}
+                          ? "translate-x-full opacity-0 scale-95"
+                          : "translate-x-full opacity-0 scale-90"
+                      }`}
                   >
-                    <div className="flex items-center gap-6 h-full p-4 relative">
-                      <div className="relative flex-shrink-0">
-                        <div
-                          className={`relative p-3 bg-gradient-to-br ${feature.colors} shadow-xl border-2 border-white/30 rounded-lg animate-zoom`}
-                        >
-                          <Icon className="w-[20px] h-[20px] text-white drop-shadow-xl" />
+                    <div className="flex items-center gap-6 h-full relative">
+                      <div className="flex-shrink-0">
+                        <div className={`p-1.5 sm:p-3 bg-gradient-to-br ${feature.colors} border-2 border-white/30 rounded-lg shadow-md`}>
+                          <Icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                         </div>
                       </div>
 
                       <div className="flex-1 space-y-0.5">
-                        <h3 className="text-lg font-semibold text-white leading-tight tracking-wide">
+                        <h3 className="text-[11px] sm:text-lg font-semibold text-white leading-tight tracking-wide">
                           {feature.title}
                         </h3>
-                        <p className="text-gray-300 text-xs font-normal leading-relaxed">
+                        <p className="text-[9px] sm:text-xs text-gray-300 font-normal leading-relaxed">
                           {feature.description}
                         </p>
                       </div>
 
-                      <div className="absolute right-6 top-1/2 -translate-y-1/2 flex gap-1.5">
+
+                      <div className="hidden sm:flex gap-1.5 sm:absolute sm:right-6 sm:top-1/2 sm:-translate-y-1/2">
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
@@ -173,6 +170,8 @@ export default function TechDashboard() {
                           </svg>
                         ))}
                       </div>
+
+
                     </div>
                   </div>
                 );
