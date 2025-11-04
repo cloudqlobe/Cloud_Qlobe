@@ -84,6 +84,16 @@ import TaskManager from "../member/TeamManagement/WorkManagement/MyTask/page.jsx
 import MeetingManager from "../member/TeamManagement/WorkManagement/Meeting/page.jsx";
 import GoalTracker from "../member/TeamManagement/WorkManagement/Targets/page.jsx";
 import ProjectTaskManager from "../member/TeamManagement/WorkManagement/ProjectTask/page.jsx";
+import MemberNotesPage from "../member/TeamManagement/WorkManagement/Notes/page.jsx";
+import FollowupsPage from "../member/TeamManagement/WorkManagement/FollowUps/page.jsx";
+import Calendar from "../member/TeamManagement/WorkManagement/Calendar/page.jsx";
+//hr
+import LeaveManagementPage from "../member/TeamManagement/HR&Administration/Leave/page.jsx";
+import PayrollPage from "../member/TeamManagement/HR&Administration/Payroll/page.jsx";
+import StaffPerformancePage from "../member/TeamManagement/HR&Administration/Performance/page.jsx";
+import Training from "../member/TeamManagement/HR&Administration/Training/page.jsx";
+import MemberProfilePage from "../member/TeamManagement/HR&Administration/Profile/page.jsx";
+import Attendance from "../member/TeamManagement/HR&Administration/Attendance/page.jsx";
 
 const MemberRoutes = () => {
   return (
@@ -179,8 +189,17 @@ const MemberRoutes = () => {
             <Route path="/work/meetings" element={<MeetingManager />} />
             <Route path="/work/projects" element={<ProjectTaskManager />} />
             <Route path="/work/targets" element={<GoalTracker />} />
-            <Route path="/work/calendar" element={<CommunicationInternalAssistance />} />
-            <Route path="/work/notes" element={<CommunicationInternalAssistance />} />
+            <Route path="/work/calendar" element={<Calendar />} />
+            <Route path="/work/notes" element={<MemberNotesPage />} />
+            <Route path="/work/followups" element={<FollowupsPage />} />
+
+            <Route path="/hr/profile" element={<MemberProfilePage />} />
+            <Route path="/hr/attendance" element={<Attendance />} />
+            <Route path="/hr/leaves" element={<LeaveManagementPage />} />
+            <Route path="/hr/performance" element={<StaffPerformancePage />} />
+            <Route path="/hr/training" element={<Training />} />
+            <Route path="/hr/payroll" element={<PayrollPage />} />
+
 
           </Routes>
         </MemberRoute>
