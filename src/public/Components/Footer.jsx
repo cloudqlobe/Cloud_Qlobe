@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg-preview.png";
-import { Facebook, Instagram, Twitter, Mail, MapPin, Phone, Send, ArrowRight, ExternalLink } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  ArrowRight,
+  ExternalLink,
+} from "lucide-react";
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % 3);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    // Handle subscription logic here
-    console.log('Subscribing:', email);
-    setEmail('');
+    console.log("Subscribing:", email);
+    setEmail("");
   };
 
   return (
     <footer className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden">
-      {/* Animated Background Elements */}
+      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      {/* Floating particles effect */}
+      {/* Floating Particles */}
       <div className="absolute inset-0">
         {[...Array(25)].map((_, i) => (
           <div
@@ -31,78 +48,85 @@ const Footer = () => {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
+              animationDuration: `${3 + Math.random() * 2}s`,
             }}
           ></div>
         ))}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-8">
-        {/* Logo + About Section */}
+        {/* LOGO + ABOUT SECTION */}
         <div className="mb-16">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
             <div className="lg:max-w-2xl space-y-6">
-              <div className="group">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="relative">
-                    {/* Animated rings around logo */}
-                    <div className="absolute inset-0 w-14 h-14 rounded-xl">
-                      <div className="absolute inset-0 border-2 border-blue-400/30 rounded-xl animate-pulse"></div>
-                      <div className="absolute inset-1 border-2 border-orange-400/40 rounded-xl animate-pulse delay-300"></div>
-                      <div className="absolute inset-2 border border-blue-300/20 rounded-xl animate-pulse delay-600"></div>
-                    </div>
-                    {/* Logo container */}
-                    <div className="relative w-12 h-12 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300 backdrop-blur-sm border border-white/10">
-                      <div className="relative w-12 h-12 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300 backdrop-blur-sm border border-white/10">
-                        <img
-                          src={logo1}
-                          alt="Cloudqlobe Logo"
-                          className="w-8 h-8 object-contain filter drop-shadow-lg group-hover:scale-110 transition-transform duration-300 rounded"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-bold">
-                      <span className="text-orange-400">CLOUD</span>
-                      <span className="text-blue-400">QLOBE</span>
-                    </h2>
-                    <p className="text-sm text-gray-400">Global Telecom Solutions</p>
-                  </div>
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="relative w-12 h-12 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-xl flex items-center justify-center border border-white/10">
+                  <img
+                    src={logo1}
+                    alt="Cloudqlobe Logo"
+                    className="w-8 h-8 object-contain drop-shadow-lg"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold">
+                    <span className="text-orange-400">CLOUD</span>
+                    <span className="text-blue-400">QLOBE</span>
+                  </h2>
+                  <p className="text-sm text-gray-400">
+                    Global Telecom Solutions
+                  </p>
                 </div>
               </div>
 
               <p className="text-gray-300 leading-relaxed text-lg">
-                Delivering cutting-edge telecom solutions with global reach and enterprise-grade performance.
-                Connecting businesses worldwide with reliable, scalable communication infrastructure.
+                Delivering cutting-edge telecom solutions with global reach and
+                enterprise-grade performance. Connecting businesses worldwide
+                with reliable, scalable communication infrastructure.
               </p>
 
-              {/* Social Media with Enhanced Design */}
-              {/* Social Media with Enhanced Design */}
+              {/* SOCIAL MEDIA */}
               <div className="flex space-x-4">
                 {[
-                  { Icon: Facebook, color: 'hover:bg-blue-600', label: 'Facebook', url: 'https://www.facebook.com/cloudqlobe' },
-                  { Icon: Twitter, color: 'hover:bg-blue-400', label: 'Twitter', url: 'https://twitter.com/yourprofile' },
-                  { Icon: Instagram, color: 'hover:bg-pink-600', label: 'Instagram', url: 'https://www.instagram.com/cloudqlobe/?hl=en' },
-                  { Icon: Mail, color: 'hover:bg-red-600', label: 'Email', url: 'mailto:yourmail@example.com' }
+                  {
+                    Icon: Facebook,
+                    color: "hover:bg-blue-600",
+                    label: "Facebook",
+                    url: "https://www.facebook.com/cloudqlobe",
+                  },
+                  {
+                    Icon: Twitter,
+                    color: "hover:bg-blue-400",
+                    label: "Twitter",
+                    url: "https://twitter.com/",
+                  },
+                  {
+                    Icon: Instagram,
+                    color: "hover:bg-pink-600",
+                    label: "Instagram",
+                    url: "https://www.instagram.com/cloudqlobe/",
+                  },
+                  {
+                    Icon: Mail,
+                    color: "hover:bg-red-600",
+                    label: "Email",
+                    url: "mailto:yourmail@example.com",
+                  },
                 ].map(({ Icon, color, label, url }, idx) => (
                   <a
                     key={idx}
                     href={url}
-                    target="_blank" // opens in new tab
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 ${color} transition-all duration-300 transform hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25`}
+                    className={`group relative p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 ${color} transition-all duration-300 transform hover:scale-110`}
                     aria-label={label}
                   >
-                    <Icon size={20} className="transition-colors duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <Icon size={20} />
                   </a>
                 ))}
               </div>
-
             </div>
 
-            {/* Subscribe Section */}
+            {/* SUBSCRIBE */}
             <div className="lg:max-w-md w-full">
               <div className="relative backdrop-blur-sm bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-2xl p-8 border border-white/10 overflow-hidden">
                 {/* Animated background rings */}
@@ -149,12 +173,88 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Three Sections in One Line */}
-{/* Responsive Auto-Scroll Footer Section */}
-<div className="overflow-x-auto scrollbar-hide lg:overflow-visible">
-  <div className="flex lg:grid lg:grid-cols-3 gap-8 mb-16 min-w-max lg:min-w-0 auto-scroll-footer">
-          {/* Services */}
-          <div  style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+        {/* 🌐 SERVICES / QUICK LINKS / CONTACT */}
+        <div className="relative">
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8 mb-16">
+            {renderBox("SERVICES")}
+            {renderBox("WE THE CQ")}
+            {renderBox("CONTACT")}
+          </div>
+
+          {/* Mobile One-by-One Fade Slider */}
+          <div className="lg:hidden relative h-[460px] mb-16">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className={`absolute top-0 left-0 w-full transition-opacity duration-700 ease-in-out ${
+                  activeIndex === i ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              >
+                {renderBox(
+                  i === 0 ? "SERVICES" : i === 1 ? "WE THE CQ" : "CONTACT"
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-px"></div>
+
+          <div className="pt-12 grid lg:grid-cols-3 gap-8 items-center">
+            <div className="text-center lg:text-left space-y-2">
+              <a
+                href="mailto:carriers@cloud.com"
+                className="text-gray-400 hover:text-orange-400 text-sm"
+              >
+                CARRIERS@CLOUD.COM
+              </a>
+              <br />
+              <a
+                href="mailto:sales@cloudqlobe.com"
+                className="text-gray-400 hover:text-blue-400 text-sm"
+              >
+                SALES@CLOUDQLOBE.COM
+              </a>
+            </div>
+
+            <div className="text-center text-gray-300 text-sm">
+              © {new Date().getFullYear()}{" "}
+              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400">
+                Cloudqlobe
+              </span>{" "}
+              All rights reserved.
+            </div>
+
+            <div className="flex justify-center lg:justify-end space-x-6 text-sm">
+              <a href="#privacy" className="text-gray-400 hover:text-white">
+                Privacy Policy
+              </a>
+              <a href="#terms" className="text-gray-400 hover:text-white">
+                Terms of Service
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* --- Helper Styles --- */}
+      <style>{`
+        @keyframes fadeSlide {
+          0%,100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+      `}</style>
+    </footer>
+  );
+
+  // Helper render function
+  function renderBox(title) {
+    if (title === "SERVICES") {
+      return (
+          <div  className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-2 right-2 w-16 h-16 border border-blue-400/20 rounded-full animate-spin group-hover:border-blue-400/40 transition-colors duration-500" style={{ animationDuration: '20s' }}></div>
             <div className="absolute bottom-2 left-2 w-12 h-12 border border-orange-400/20 rounded-full animate-spin group-hover:border-orange-400/40 transition-colors duration-500" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
@@ -186,10 +286,12 @@ const Footer = () => {
             </ul>
 
           </div>
+      );
+    }
 
-
-          {/* Quick Links */}
-          <div style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+    if (title === "WE THE CQ") {
+      return (
+          <div  className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-1 right-1 w-20 h-20 border border-purple-400/20 rounded-full animate-spin group-hover:border-purple-400/40 transition-colors duration-500" style={{ animationDuration: '25s' }}></div>
             <div className="absolute bottom-1 left-1 w-16 h-16 border border-pink-400/20 rounded-full animate-spin group-hover:border-pink-400/40 transition-colors duration-500" style={{ animationDuration: '18s', animationDirection: 'reverse' }}></div>
@@ -221,9 +323,12 @@ const Footer = () => {
             </div>
 
           </div>
+      );
+    }
 
-          {/* Contact Info */}
-          <div  style={{width:'360px', height:"450px"}} className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
+    if (title === "CONTACT") {
+      return (
+          <div className="relative backdrop-blur-sm bg-white/5 rounded-2xl p-8 border border-white/10 h-full overflow-hidden group hover:bg-white/10 transition-all duration-500">
             {/* Animated background rings */}
             <div className="absolute top-3 left-3 w-14 h-14 border border-green-400/20 rounded-full animate-pulse group-hover:border-green-400/40 transition-colors duration-500"></div>
             <div className="absolute bottom-3 right-3 w-10 h-10 border border-blue-400/20 rounded-full animate-spin group-hover:border-blue-400/40 transition-colors duration-500" style={{ animationDuration: '12s' }}></div>
@@ -263,89 +368,9 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </div>
-        </div>
-
-        {/* Enhanced Bottom Bar */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-px"></div>
-
-          {/* Social Links and Copyright */}
-          <div className="pt-12 grid lg:grid-cols-3 gap-8 items-center">
-            {/* Email Links */}
-            <div className="lg:col-span-1">
-              <div className="flex flex-col space-y-3 text-center lg:text-left">
-                <a
-                  href="mailto:carriers@cloud.com"
-                  className="group flex items-center justify-center lg:justify-start text-gray-400 hover:text-orange-400 transition-all duration-300 text-sm font-medium"
-                >
-                  CARRIERS@CLOUD.COM
-                  <ExternalLink size={12} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </a>
-                <a
-                  href="mailto:sales@cloudqlobe.com"
-                  className="group flex items-center justify-center lg:justify-start text-gray-400 hover:text-blue-400 transition-all duration-300 text-sm font-medium"
-                >
-                  SALES@CLOUDQLOBE.COM
-                  <ExternalLink size={12} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </a>
-              </div>
-            </div>
-
-            {/* Copyright - Center */}
-            <div className="lg:col-span-1 text-center">
-              <div className="text-gray-300 text-sm">
-                © {new Date().getFullYear()}
-                <span className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent mx-2">
-                  Cloudqlobe
-                </span>
-                All rights reserved.
-              </div>
-            </div>
-
-            {/* Legal Links - Right */}
-            <div className="lg:col-span-1">
-              <div className="flex flex-col lg:flex-row justify-center lg:justify-end space-y-3 lg:space-y-0 lg:space-x-6 text-center lg:text-right">
-                <a href="#privacy" className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-medium">
-                  Privacy Policy
-                </a>
-                <a href="#terms" className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-medium">
-                  Terms of Service
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <style>{`
-  /* Smooth auto-scroll for footer cards on mobile */
-  @keyframes footerAutoScroll {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-
-  @media (max-width: 1024px) {
-    .auto-scroll-footer {
-      animation: footerAutoScroll 25s linear infinite;
-    }
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      );
     }
   }
-
-  /* Pause scroll on hover/touch */
-  .auto-scroll-footer:hover {
-    animation-play-state: paused;
-  }
-`}</style>
-
-    </footer>
-  );
 };
 
 export default Footer;

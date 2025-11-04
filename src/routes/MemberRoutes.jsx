@@ -94,6 +94,8 @@ import StaffPerformancePage from "../member/TeamManagement/HR&Administration/Per
 import Training from "../member/TeamManagement/HR&Administration/Training/page.jsx";
 import MemberProfilePage from "../member/TeamManagement/HR&Administration/Profile/page.jsx";
 import Attendance from "../member/TeamManagement/HR&Administration/Attendance/page.jsx";
+//team connect
+import AdminNotificationPage from "../member/TeamManagement/TeamConnect/Notification/page.jsx";
 
 const MemberRoutes = () => {
   return (
@@ -200,6 +202,8 @@ const MemberRoutes = () => {
             <Route path="/hr/training" element={<Training />} />
             <Route path="/hr/payroll" element={<PayrollPage />} />
 
+            <Route path="team/notifications" element={<AdminNotificationPage />} />
+            <Route path="team/chat" element={<PayrollPage />} />
 
           </Routes>
         </MemberRoute>
