@@ -147,7 +147,7 @@ export const getNavItems = (memberRole) => [
 {
   id: "team",
   label: "Team Management",
-  roles: ["leadmember", "supportmember"],
+  roles: ["leadmember", "supportmember", "salemember", "carriermember", "accountmember"],
   subItems: [
     {
       label: "Work Management",
