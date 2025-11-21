@@ -16,7 +16,6 @@ const Topbar = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
-  const [openDropdownId, setOpenDropdownId] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
 
@@ -244,7 +243,7 @@ const Topbar = () => {
                         )}
                       </a>
                     ) : subItem.subMenu ? (
-                      <div className="relative p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{height:"45px"}}>
+                      <div className="p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{height:"45px"}}>
                         <div 
                           onClick={() => toggleSubMenu(index)} 
                           className="flex justify-between items-center p-1"
@@ -257,25 +256,31 @@ const Topbar = () => {
                         {subItem.description && (
                           <div className="text-sm text-gray-500 mt-1">{subItem.description}</div>
                         )}
-                        {subMenuOpenIndex === index && (
-                          <div 
-                            className="absolute left-0 top-full bg-white border border-gray-200 shadow-lg rounded-lg w-full p-3 z-20"
-                            style={{ marginTop: "5px" }}
-                          >
-                            {subItem.items.map((menuItem, menuIndex) => (
-                              <a
-                                key={menuIndex}
-                                href={menuItem.href}
-                                className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                <div className="font-medium text-gray-800">{menuItem.label}</div>
-                                {menuItem.description && (
-                                  <div className="text-sm text-gray-500 mt-1">{menuItem.description}</div>
-                                )}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                      {subMenuOpenIndex === index && (
+                        <div
+                          className="absolute grid grid-cols-3 bg-white shadow-lg border border-gray-200 rounded-lg p-4 z-20"
+                          style={{
+                            gap: "35px",
+                            top: "100%",         // aligns it directly below the parent
+                            left: "420px",           // starts from the parent’s left edge
+                            minWidth: "600px",
+                            width: "1085px"   // optional width
+                          }}
+                        >
+                          {subItem.items.map((menuItem, menuIndex) => (
+                            <a
+                              key={menuIndex}
+                              href={menuItem.href}
+                              className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                            >
+                              <div className="font-medium text-gray-800">{menuItem.label}</div>
+                              {menuItem.description && (
+                                <div className="text-sm text-gray-500 mt-1">{menuItem.description}</div>
+                              )}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                       </div>
                     ) : null}
                   </div>

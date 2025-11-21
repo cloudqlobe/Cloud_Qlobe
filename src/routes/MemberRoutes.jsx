@@ -187,6 +187,7 @@ const MemberRoutes = () => {
             <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
             <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
 
+            {/* Team Work */}
             <Route path="/work/tasks" element={<TaskManager />} />
             <Route path="/work/meetings" element={<MeetingManager />} />
             <Route path="/work/projects" element={<ProjectTaskManager />} />

@@ -74,6 +74,7 @@ import Didnumberenquiery from "../admin/Communication/DIDEnquiries/page.jsx";
 import MemberCommiunctionMyTicket from "../admin/Communication/MyTicket/page.jsx";
 import ChatPanel from "../admin/Communication/ChatBot/page.jsx";
 import CommunicationMessagesDashboard from "../admin/Communication/Messages/page.jsx";
+import AdminTaskManagementSystem from "../admin/TeamManagement/WorkManagement/MyTask/page.jsx";
 
 
 
@@ -162,6 +163,25 @@ const AdminRoutes = () => {
                         <Route path="/communication/email" element={<CommunicationEmail />} />
                         <Route path="/communication/messages" element={<CommunicationMessagesDashboard />} />
                         <Route path="/communication/assistance" element={<CommunicationInternalAssistance />} />
+
+                        {/* Team Work */}
+                        <Route path="/work/tasks" element={<AdminTaskManagementSystem />} />
+                        {/* <Route path="/work/meetings" element={<MeetingManager />} />
+                        <Route path="/work/projects" element={<ProjectTaskManager />} />
+                        <Route path="/work/targets" element={<GoalTracker />} />
+                        <Route path="/work/calendar" element={<Calendar />} />
+                        <Route path="/work/notes" element={<MemberNotesPage />} />
+                        <Route path="/work/followups" element={<FollowupsPage />} />
+
+                        <Route path="/hr/profile" element={<MemberProfilePage />} />
+                        <Route path="/hr/attendance" element={<Attendance />} />
+                        <Route path="/hr/leaves" element={<LeaveManagementPage />} />
+                        <Route path="/hr/performance" element={<StaffPerformancePage />} />
+                        <Route path="/hr/training" element={<Training />} />
+                        <Route path="/hr/payroll" element={<PayrollPage />} />
+
+                        <Route path="team/notifications" element={<AdminNotificationPage />} />
+                        <Route path="team/chat" element={<PayrollPage />} /> */}
 
 
                     </Routes>

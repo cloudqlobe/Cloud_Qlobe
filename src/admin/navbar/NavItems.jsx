@@ -2,8 +2,11 @@ import {
   FaChartLine, FaUsers, FaBell, FaEnvelope, FaFileAlt, FaComments, FaHandsHelping,
   FaTruck, FaShippingFast, FaMoneyBillWave, FaCreditCard, FaStar, FaBullseye,
   FaPercentage, FaWallet, FaFileInvoiceDollar, FaTools, FaTicketAlt, FaFlask,
-  FaTasks, FaHeadset, FaPhoneAlt, FaHashtag, FaUserCog, FaUsersCog, FaExchangeAlt
+  FaTasks, FaHeadset, FaPhoneAlt, FaHashtag, FaCalendarAlt, FaProjectDiagram,
+  FaCalendarCheck, FaStickyNote, FaUser, FaPlaneDeparture, FaChalkboardTeacher,
+  FaMoneyCheckAlt, FaUsersCog
 } from 'react-icons/fa';
+
 import { SiWebmoney } from "react-icons/si";
 import { HomeIcon } from "@heroicons/react/24/solid";
 
@@ -149,6 +152,50 @@ export const getNavItems = (adminRole) => [
         { label: makeLabel(FaUsers, "primary", "Staff Management"), href: "/admin/staff-management" },
         { label: makeLabel(FaUsersCog, "secondary", "CRM Management"), href: "/admin/customer-management" },
       ] : [])
+    ]
+  },
+
+  {
+    id: "team",
+    label: "Team Management",
+    roles: ["lead", "support", "sale", "carrier", "account"],
+    subItems: [
+      {
+        label: "Work Management",
+        subMenu: true,
+        items: [
+          { label: makeLabel(FaTasks, "primary", "My Tasks"), href: "/admin/work/tasks" },
+          { label: makeLabel(FaBell, "secondary", "Follow-ups"), href: "/member/work/followups" },
+          { label: makeLabel(FaCalendarAlt, "accent", "Meetings"), href: "/member/work/meetings" },
+          { label: makeLabel(FaProjectDiagram, "purple", "Project Tasks"), href: "/member/work/projects" },
+          { label: makeLabel(FaBullseye, "indigo", "Targets / Goals"), href: "/member/work/targets" },
+          { label: makeLabel(FaCalendarCheck, "pink", "Calendar"), href: "/member/work/calendar" },
+          { label: makeLabel(FaStickyNote, "danger", "Notes / Activity Timeline"), href: "/member/work/notes" }
+        ]
+      },
+      {
+        label: "Team Connect",
+        subMenu: true,
+        items: [
+          { label: makeLabel(FaEnvelope, "primary", "Emails"), href: "/member/team/emails" },
+          { label: makeLabel(FaComments, "secondary", "Chat / Messages"), href: "/member/team/messages" },
+          { label: makeLabel(FaFileAlt, "accent", "File Sharing / Document Library"), href: "/member/team/files" },
+          { label: makeLabel(FaBell, "purple", "Notifications / Reminders"), href: "/member/team/notifications" },
+          { label: makeLabel(FaUsers, "indigo", "Discussion Threads"), href: "/member/team/discussions" }
+        ]
+      },
+      {
+        label: "HR & Administration",
+        subMenu: true,
+        items: [
+          { label: makeLabel(FaUser, "primary", "My Profile / Directory"), href: "/member/hr/profile" },
+          { label: makeLabel(FaCalendarCheck, "secondary", "Attendance"), href: "/member/hr/attendance" },
+          { label: makeLabel(FaPlaneDeparture, "accent", "Leave Management"), href: "/member/hr/leaves" },
+          { label: makeLabel(FaChartLine, "purple", "Performance Tracker"), href: "/member/hr/performance" },
+          { label: makeLabel(FaChalkboardTeacher, "indigo", "Training / Learning"), href: "/member/hr/training" },
+          { label: makeLabel(FaMoneyCheckAlt, "pink", "Payroll"), href: "/member/hr/payroll" }
+        ]
+      }
     ]
   }
 ];
