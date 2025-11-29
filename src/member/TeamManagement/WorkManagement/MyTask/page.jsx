@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import axiosInstance from '../../../../utils/axiosinstance';
 import AuthContext from '../../../../context/AuthContext';
+import Layout from '../../../layout/page';
 
 export default function MemberTaskDisplay() {
   const { memberDetails } = useContext(AuthContext);
@@ -181,6 +182,7 @@ export default function MemberTaskDisplay() {
   const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   return (
+    <Layout>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
       <div className="max-w-7xl mx-auto">
 
@@ -396,5 +398,6 @@ export default function MemberTaskDisplay() {
         )}
       </div>
     </div>
+    </Layout>
   );
 }

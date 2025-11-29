@@ -25,8 +25,6 @@ const Topbar = () => {
   const searchRef = useRef(null);
   const [notifications, setNotifications] = useState(3);
 
-  console.log(memberDetails);
-
   useEffect(() => {
     const fetchCustomers = async () => {
       try {

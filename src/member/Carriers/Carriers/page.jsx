@@ -27,7 +27,7 @@ const CarrierCustomersPage = () => {
       try {
         let data = [];
 
-        if (memberDetails.role === "carriermember") {
+        if (memberDetails.role === "carriermember" || "salemember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
           console.log(data);

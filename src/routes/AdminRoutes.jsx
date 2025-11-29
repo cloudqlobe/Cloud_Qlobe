@@ -75,6 +75,7 @@ import MemberCommiunctionMyTicket from "../admin/Communication/MyTicket/page.jsx
 import ChatPanel from "../admin/Communication/ChatBot/page.jsx";
 import CommunicationMessagesDashboard from "../admin/Communication/Messages/page.jsx";
 import AdminTaskManagementSystem from "../admin/TeamManagement/WorkManagement/MyTask/page.jsx";
+import InteractiveCalendar from "../admin/TeamManagement/WorkManagement/Calendar/page.jsx";
 
 
 
@@ -166,14 +167,14 @@ const AdminRoutes = () => {
 
                         {/* Team Work */}
                         <Route path="/work/tasks" element={<AdminTaskManagementSystem />} />
-                        {/* <Route path="/work/meetings" element={<MeetingManager />} />
-                        <Route path="/work/projects" element={<ProjectTaskManager />} />
-                        <Route path="/work/targets" element={<GoalTracker />} />
-                        <Route path="/work/calendar" element={<Calendar />} />
-                        <Route path="/work/notes" element={<MemberNotesPage />} />
-                        <Route path="/work/followups" element={<FollowupsPage />} />
+                        {/* <Route path="/work/meetings" element={<MeetingManager />} /> */}
+                        {/* <Route path="/work/projects" element={<ProjectTaskManager />} /> */}
+                        {/* <Route path="/work/targets" element={<GoalTracker />} /> */}
+                        <Route path="/work/calendar" element={<InteractiveCalendar />} />
+                        {/* <Route path="/work/notes" element={<MemberNotesPage />} /> */}
+                        {/* <Route path="/work/followups" element={<FollowupsPage />} /> */}
 
-                        <Route path="/hr/profile" element={<MemberProfilePage />} />
+                        {/* <Route path="/hr/profile" element={<MemberProfilePage />} />
                         <Route path="/hr/attendance" element={<Attendance />} />
                         <Route path="/hr/leaves" element={<LeaveManagementPage />} />
                         <Route path="/hr/performance" element={<StaffPerformancePage />} />

@@ -27,13 +27,17 @@ const CarrierPage = () => {
       try {
         let data = [];
 
-        if (memberDetails.role === "carriermember") {
+        if (memberDetails.role === "carriermember" || "salemember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
         }
+        console.log(data);
+        
         const filteredCustomers = data?.filter(
           (customer) => customer.leadType === "Carrier lead"
         );
+        console.log(filteredCustomers);
+        
         setCustomers(filteredCustomers);
       } catch (error) {
         console.error("Error fetching customers:", error);

@@ -169,7 +169,7 @@ export const getNavItems = (adminRole) => [
           { label: makeLabel(FaCalendarAlt, "accent", "Meetings"), href: "/member/work/meetings" },
           { label: makeLabel(FaProjectDiagram, "purple", "Project Tasks"), href: "/member/work/projects" },
           { label: makeLabel(FaBullseye, "indigo", "Targets / Goals"), href: "/member/work/targets" },
-          { label: makeLabel(FaCalendarCheck, "pink", "Calendar"), href: "/member/work/calendar" },
+          { label: makeLabel(FaCalendarCheck, "pink", "Calendar"), href: "/admin/work/calendar" },
           { label: makeLabel(FaStickyNote, "danger", "Notes / Activity Timeline"), href: "/member/work/notes" }
         ]
       },

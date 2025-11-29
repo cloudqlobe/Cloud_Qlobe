@@ -63,13 +63,15 @@ const ProfileTab = ({ customerId }) => {
         processedName = (firstTwo + lastOfFirst + firstOfSecond).toUpperCase();
       }
       const currentYear = new Date().getFullYear();
-      customerID = `TGW 100${currentYear}${processedName}`;    }
+      customerID = `TGW 100${currentYear}${processedName}`;
+    }
 
     try {
       await axiosInstance.put(`api/member/leadConversion/${customerId}`, {
         customerType: type,
         leadType: type1,
         customerId: type1 === "Carrier" ? customerID : leadData.customerId,
+        leadConvertTime: new Date().toISOString().slice(0, 19).replace("T", " ")
       });
       toast.success("Conversion successful");
       setLeadData(prev => ({ ...prev, customerType: type, customerId: customerID }));
@@ -162,7 +164,7 @@ const ProfileTab = ({ customerId }) => {
   return (
     <Layout>
       <div className="py-1" >
-        <div className=" mx-auto space-y-10" style={{width:"96vw"}}>
+        <div className=" mx-auto space-y-10" style={{ width: "96vw" }}>
           {/* Main Header Container with Grey Background */}
           <div className="bg-white text-gray-500 px-6 py-4 rounded-lg shadow-lg">
             <div className="flex justify-between items-center">

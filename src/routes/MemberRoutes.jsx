@@ -96,6 +96,10 @@ import MemberProfilePage from "../member/TeamManagement/HR&Administration/Profil
 import Attendance from "../member/TeamManagement/HR&Administration/Attendance/page.jsx";
 //team connect
 import AdminNotificationPage from "../member/TeamManagement/TeamConnect/Notification/page.jsx";
+import EmailClient from "../member/TeamManagement/TeamConnect/Email/page.jsx";
+import TeamChatApp from "../member/TeamManagement/TeamConnect/Chat/page.jsx";
+import DocumentLibrary from "../member/TeamManagement/TeamConnect/Document/page.jsx";
+import EmployeeInfoPortal from "../member/TeamManagement/HR&Administration/information/page.jsx";
 
 const MemberRoutes = () => {
   return (
@@ -202,10 +206,13 @@ const MemberRoutes = () => {
             <Route path="/hr/performance" element={<StaffPerformancePage />} />
             <Route path="/hr/training" element={<Training />} />
             <Route path="/hr/payroll" element={<PayrollPage />} />
+            <Route path="/hr/information" element={<EmployeeInfoPortal />} />
 
             <Route path="team/notifications" element={<AdminNotificationPage />} />
-            <Route path="team/chat" element={<PayrollPage />} />
-
+            <Route path="team/chat" element={<TeamChatApp />} />
+            <Route path="team/emails" element={<EmailClient />} />
+            <Route path="team/chat" element={<TeamChatApp />} />
+            <Route path="team/files" element={<DocumentLibrary />} />
           </Routes>
         </MemberRoute>
       } />
