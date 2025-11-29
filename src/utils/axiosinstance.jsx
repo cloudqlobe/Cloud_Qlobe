@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL:'http://localhost:5000',  //'https://api.cloudqlobe.com/'
+  baseURL:'https://api.cloudqlobe.com',  //'https://api.cloudqlobe.com/'
   withCredentials: true, // If using cookies for authentication
 });
 
