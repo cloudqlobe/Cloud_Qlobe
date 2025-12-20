@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   PhoneCall,
   ShieldCheck,
@@ -5,9 +6,20 @@ import {
   Server,
   Cloud,
 } from 'lucide-react';
-import { placeholders } from './DummyTranslateData/Register';
-import { LanguageContext } from '../../context/LanguageContext';
-import { useContext } from 'react';
+
+// Dummy placeholders for demonstration
+const placeholders = {
+  en: {
+    companyName: 'Company Name',
+    country: 'Country',
+    contactPerson: 'Contact Person',
+    email: 'Email Address',
+    phoneNumber: 'Phone Number',
+    website: 'Website',
+    ipAddress: 'IP Address',
+    description: 'Description'
+  }
+};
 
 const leftFeatures = [
   {
@@ -43,46 +55,78 @@ const leftFeatures = [
 ];
 
 const Register = () => {
-  const { language } = useContext(LanguageContext);
-  const t = placeholders[language];
+  const t = placeholders.en;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted');
+    alert('Registration submitted!');
+  };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-white flex items-center justify-center px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-10 lg:py-12">
       {/* Outer Container */}
-      <div className="w-full max-w-7xl bg-white shadow-lg border border-orange-300 flex flex-col md:flex-row overflow-hidden rounded-none">
+      <div className="w-full max-w-7xl bg-white shadow-lg border border-orange-300 flex flex-col md:flex-row overflow-hidden">
 
         {/* Left Side Features - Hidden on Mobile */}
-        <div className="hidden md:flex w-1/2 p-8 bg-white flex-col gap-8">
+        <div className="hidden md:flex md:w-1/2 lg:w-1/2 p-6 lg:p-8 bg-white flex-col gap-6 lg:gap-8">
           {leftFeatures.map(({ icon: Icon, title, desc, color }, idx) => (
-            <div key={idx} className="flex items-start gap-5">
-              <div className={`w-14 h-14 flex items-center justify-center ${color} shadow-lg rounded-none`}>
-                <Icon className="w-8 h-8 text-white" />
+            <div key={idx} className="flex items-start gap-4 lg:gap-5">
+              <div className={`w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center ${color} shadow-lg flex-shrink-0`}>
+                <Icon className="w-6 h-6 lg:w-8 lg:h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-800">{title}</h3>
-                <p className="text-sm text-gray-600">{desc}</p>
+                <h3 className="text-base lg:text-lg font-semibold text-slate-800 mb-1">{title}</h3>
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">{desc}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* Right Side - Registration Form */}
-        <div className="w-full md:w-1/2 bg-gray-200 p-6 md:p-8 border-orange-300 rounded-none">
-          <h1 className="text-2xl md:text-3xl font-default text-center mb-6 text-orange-500">
+        <div className="w-full md:w-1/2 lg:w-1/2 bg-gray-200 p-4 sm:p-6 md:p-6 lg:p-8 border-orange-300">
+          <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-default text-center mb-4 sm:mb-5 md:mb-6 text-orange-500">
             Open Your Trade Account
           </h1>
 
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Dynamic Input Width for Mobile */}
-            <input type="text" placeholder={t.companyName} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="text" placeholder={t.country} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="text" placeholder={t.contactPerson} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="email" placeholder={t.email} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="text" placeholder={t.phoneNumber} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="text" placeholder={t.website} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
-            <input type="text" placeholder={t.ipAddress} className="border border-orange-400 p-4 rounded-none w-full md:w-auto" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <input 
+              type="text" 
+              placeholder={t.companyName} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="text" 
+              placeholder={t.country} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="text" 
+              placeholder={t.contactPerson} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="email" 
+              placeholder={t.email} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="tel" 
+              placeholder={t.phoneNumber} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="text" 
+              placeholder={t.website} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
+            <input 
+              type="text" 
+              placeholder={t.ipAddress} 
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            />
 
-            <select className="border border-orange-400 p-4 rounded-none w-full md:w-auto">
+            <select className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base bg-white">
               <option value="">-- Service Request --</option>
               <option>VoIP Services</option>
               <option>Carriers</option>
@@ -93,17 +137,18 @@ const Register = () => {
 
             <textarea
               placeholder={t.description}
-              rows="3"
-              className="border border-orange-400 p-4 rounded-none w-full col-span-1 md:col-span-2"
+              rows={3}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full col-span-1 md:col-span-2 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base resize-none"
             />
 
             <button
-              type="submit"
-              className="bg-orange-500 text-white py-3 px-6 rounded-none font-semibold hover:bg-orange-600 col-span-1 md:col-span-2"
+              type="button"
+              onClick={handleSubmit}
+              className="bg-orange-500 text-white py-2.5 sm:py-3 px-6 font-semibold hover:bg-orange-600 transition col-span-1 md:col-span-2 text-sm sm:text-base cursor-pointer"
             >
               Register
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -7,37 +7,50 @@ import { GrSettingsOption } from "react-icons/gr";
 
 const Homeheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
-<section className="bg-white py-24 px-6 mt-16 md:mt-[200px]">
-  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center text-center md:text-left">
-    {/* Left Side */}
-    <div className="flex flex-col items-center md:items-start justify-center md:mt-[-150px]">
-      <h1 className="text-4xl md:text-5xl font-default leading-snug text-orange-500 mb-6">
-        Connecting You <span className="text-blue-500 font-default">Globally</span>
-      </h1>
-      <p className="text-gray-700 text-[15px] leading-relaxed text-justify md:text-left mb-8 max-w-[520px]">
-        CloudQlobe combines next-generation VoIP services with cutting-edge monitoring
-        and testing solutions to deliver unmatched telecom performance. From reliable
-        global connectivity to scalable infrastructure, we ensure that every call is
-        clear, every connection is stable, and every business stays ahead.
-      </p>
-      <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-        <button
-          className="bg-blue-500 text-white px-6 py-3 rounded-sm hover:bg-blue-600 transition font-medium shadow-md"
-          onClick={onGetStartedClick}
+    <section className="bg-white py-24 px-6 mt-16 md:mt-[200px]">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center 
+                text-center md:text-left 
+                [@media(max-width:1337px)]:grid-cols-1">
+        {/* Left Side */}
+        <div
+          className="flex flex-col items-center md:items-start justify-center 
+             md:mt-[-150px]
+             [@media(max-width:1337px)]:items-center
+             [@media(max-width:1337px)]:text-center
+             [@media(max-width:1337px)]:mt-0"
         >
-          Get Started
-        </button>
-        <button
-          className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
-          onClick={onLearnMoreClick}
-        >
-          Learn More
-        </button>
-      </div>
-    </div>
+          <h1 className="text-4xl md:text-5xl font-default leading-snug text-orange-500 mb-6">
+            Connecting You <span className="text-blue-500 font-default">Globally</span>
+          </h1>
+          <p className="text-gray-700 text-[15px] leading-relaxed 
+              text-justify md:text-left 
+              [@media(max-width:1337px)]:text-center 
+              mb-8 max-w-[520px]">
+            CloudQlobe combines next-generation VoIP services with cutting-edge monitoring
+            and testing solutions to deliver unmatched telecom performance. From reliable
+            global connectivity to scalable infrastructure, we ensure that every call is
+            clear, every connection is stable, and every business stays ahead.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+            <button
+              className="bg-blue-500 text-white px-6 py-3 rounded-sm hover:bg-blue-600 transition font-medium shadow-md"
+              onClick={onGetStartedClick}
+            >
+              Get Started
+            </button>
+            <button
+              className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+              onClick={onLearnMoreClick}
+            >
+              Learn More
+            </button>
+          </div>
+        </div>
 
         {/* Right Side Diamond Infographic */}
-    <div className="hidden md:block relative w-[320px] h-[320px] mx-auto mt-[-50px]">
+        {/* Right Side Diamond Infographic */}
+        <div className="relative w-[320px] h-[320px] mx-auto mt-[-50px] 
+                [@media(max-width:1337px)]:hidden">
           {/* Center Diamond */}
           <div className="absolute left-[120px] top-[110px] w-[200px] h-[200px] bg-white text-center flex flex-col gap-2 items-center justify-center text-sm font-semibold text-red-500 transform -translate-x-1/2 -translate-y-1/2 rotate-45 shadow-md z-20">
             <SiPaloaltosoftware className="-rotate-45 text-orange-300 w-[100px] h-[100px]" />

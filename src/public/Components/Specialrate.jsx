@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
-import { SiWebmoney } from "react-icons/si";
-import axiosInstance from "../../utils/axiosinstance"
+import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
+
+// Mock data for demonstration
+const mockRateData = [
+  { _id: '1', country: 'USA', qualityDescription: 'Premium', profile: 'CLI', rate: '0.015', billingCycle: '60/60', specialRate: 1 },
+  { _id: '2', country: 'UK', qualityDescription: 'Standard', profile: 'Non-CLI', rate: '0.012', billingCycle: '60/60', specialRate: 1 },
+  { _id: '3', country: 'Germany', qualityDescription: 'Premium', profile: 'CLI', rate: '0.018', billingCycle: '60/60', specialRate: 1 },
+  { _id: '4', country: 'Canada', qualityDescription: 'Standard', profile: 'CLI', rate: '0.014', billingCycle: '60/60', specialRate: 1 },
+  { _id: '5', country: 'Australia', qualityDescription: 'Premium', profile: 'Non-CLI', rate: '0.016', billingCycle: '60/60', specialRate: 1 },
+  { _id: '6', country: 'France', qualityDescription: 'Standard', profile: 'CLI', rate: '0.013', billingCycle: '60/60', specialRate: 1 },
+  { _id: '7', country: 'India', qualityDescription: 'Premium', profile: 'CLI', rate: '0.011', billingCycle: '60/60', specialRate: 1 },
+  { _id: '8', country: 'UAE', qualityDescription: 'Premium', profile: 'Non-CLI', rate: '0.019', billingCycle: '60/60', specialRate: 1 },
+];
 
 const Specialrate = () => {
   const [open, setOpen] = useState(false);
@@ -15,13 +25,13 @@ const Specialrate = () => {
   const rowsPerPage = 7;
 
   useEffect(() => {
+    // Simulate API call
     const fetchRates = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get("/api/admin/ccrates");
-
-        // ✅ Only special rates
-        const specialRates = response.data.ccrates.filter(
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const specialRates = mockRateData.filter(
           (item) => item.specialRate === 1
         );
 
@@ -41,7 +51,7 @@ const Specialrate = () => {
       ? rateData.filter((row) => row.country === selectedCountry)
       : rateData;
 
-  // ✅ Pagination logic
+  // Pagination logic
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = filteredData.slice(
     (page - 1) * rowsPerPage,
@@ -61,30 +71,42 @@ const Specialrate = () => {
       {!open && (
         <div
           onClick={() => setOpen(true)}
-          className="fixed top-1/2 right-0 -translate-y-1/2 z-50 bg-orange-300 text-orange-600 px-1 py-8 rounded-l-xl cursor-pointer shadow-md hover:bg-orange-500 transition-all "
-        />
+          className="fixed top-1/2 right-0 -translate-y-1/2 z-50 bg-orange-400 text-white px-2 py-8 md:px-1 md:py-8 rounded-l-xl cursor-pointer shadow-lg hover:bg-orange-500 transition-all flex items-center justify-center"
+        >
+          <span className="text-xs font-semibold transform -rotate-90 md:rotate-0 whitespace-nowrap">RATES</span>
+        </div>
       )}
 
       {open && (
-        <div className="fixed top-10 right-0 h-[330px] w-[95vw] md:w-[1000px] bg-white shadow-2xl z-50 transition-transform duration-500 animate-slide-in mt-[100px] border border-gray-300 overflow-hidden rounded-l-xl">
+        <div className="fixed inset-0 md:inset-auto md:top-10 md:right-0 md:h-[400px] md:w-[900px] lg:w-[1000px] bg-white shadow-2xl z-50 transition-transform duration-500 animate-slide-in md:mt-[100px] border border-gray-300 overflow-hidden md:rounded-l-xl m-4 md:m-0 rounded-xl">
           {/* Header */}
-          <div className="flex justify-between items-center px-6 py-3 bg-white relative">
-            <div className="flex items-center space-x-2">
-              <SiWebmoney className="w-8 h-8 text-gray-500" />
-              <h2 className="text-2xl font-default text-gray-500">
-                Special <span className="text-orange-400">Rates</span>
-              </h2>
+          <div className="flex flex-col gap-3 px-4 py-4 bg-gradient-to-r from-orange-50 to-blue-50 border-b border-gray-200">
+            {/* Title Row */}
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-orange-400 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">$</span>
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-700">
+                  Special <span className="text-orange-500">Rates</span>
+                </h2>
+              </div>
+              
+              <X
+                onClick={() => setOpen(false)}
+                className="w-6 h-6 text-gray-500 cursor-pointer hover:text-red-500 transition-colors"
+              />
             </div>
 
-            {/* Filter Dropdown */}
-            <div className="absolute left-1/3 ml-[150px] flex items-center gap-2">
+            {/* Filter Row */}
+            <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
               <select
                 value={selectedCountry}
                 onChange={(e) => {
                   setSelectedCountry(e.target.value);
-                  setPage(1); // reset page when filter changes
+                  setPage(1);
                 }}
-                className="w-[230px] h-[42px] px-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none"
+                className="flex-1 sm:flex-none sm:w-[200px] md:w-[250px] h-10 px-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"
               >
                 <option value="">All Countries</option>
                 {countryOptions.map((country, idx) => (
@@ -99,82 +121,130 @@ const Specialrate = () => {
                   setFilterTrigger(!filterTrigger);
                   setPage(1);
                 }}
-                className="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                className="h-10 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow-sm"
               >
-                Filter
+                {filterTrigger ? 'Clear Filter' : 'Apply Filter'}
               </button>
-            </div>
 
-            {/* Arrows + Close */}
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={handlePrev}
-                disabled={page === 1}
-                className={`w-8 h-8 rounded text-white flex items-center justify-center ${page === 1
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-orange-500 hover:bg-orange-600"
+              {/* Pagination Controls */}
+              <div className="flex items-center gap-2 sm:ml-auto">
+                <span className="text-xs text-gray-600 font-medium">
+                  Page {page} of {totalPages}
+                </span>
+                <button
+                  onClick={handlePrev}
+                  disabled={page === 1}
+                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${
+                    page === 1
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-orange-500 hover:bg-orange-600 shadow-sm"
                   }`}
-              >
-                &lt;
-              </button>
-              <button
-                onClick={handleNext}
-                disabled={page === totalPages}
-                className={`w-8 h-8 rounded text-white flex items-center justify-center ${page === totalPages
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-orange-500 hover:bg-orange-600"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={page === totalPages}
+                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${
+                    page === totalPages
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-orange-500 hover:bg-orange-600 shadow-sm"
                   }`}
-              >
-                &gt;
-              </button>
-              <X
-                onClick={() => setOpen(false)}
-                className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-500"
-              />
+                >
+                  ›
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Table */}
-          <div className="px-5 py-2 overflow-auto h-[350px]">
+          {/* Content Area */}
+          <div className="overflow-auto" style={{ height: 'calc(100% - 140px)' }}>
             {loading ? (
-              <p className="text-center py-10">Loading rates...</p>
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-gray-600">Loading rates...</p>
+                </div>
+              </div>
             ) : (
-              <table className="min-w-full text-xs text-default">
-                <thead className="bg-blue-500 text-white">
-                  <tr>
-                    <th className="p-2 text-left font-normal">Country Name</th>
-                    <th className="p-2 text-center font-normal">Quality analysis Description</th>
-                    <th className="p-2 text-center font-normal">Profile</th>
-                    <th className="p-2 text-center font-normal">Special Rate</th>
-                    <th className="p-2 text-center font-normal">Billing Cycle</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <>
+                {/* Mobile Card View */}
+                <div className="md:hidden p-4 space-y-3">
                   {paginatedData.map((row, index) => (
-                    <tr
+                    <div
                       key={row._id || index}
-                      className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+                      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
                     >
-                      <td className="p-2 text-left">{row.country}</td>
-                      <td className="p-2 text-center">{row.qualityDescription}</td>
-                      <td className="p-2 text-center">{row.profile}</td>
-                      <td className="p-2 text-center">{row.rate}</td>
-                      <td className="p-2 text-center">{row.billingCycle}</td>
-                    </tr>
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h3 className="font-bold text-gray-800 text-base">{row.country}</h3>
+                          <p className="text-xs text-gray-500 mt-1">{row.qualityDescription}</p>
+                        </div>
+                        <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold">
+                          ${row.rate}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-gray-500 text-xs">Profile:</span>
+                          <p className="font-medium text-gray-700">{row.profile}</p>
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-xs">Billing:</span>
+                          <p className="font-medium text-gray-700">{row.billingCycle}</p>
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+                  
+                  {paginatedData.length === 0 && (
+                    <div className="text-center py-12 text-gray-500">
+                      <p>No rates found</p>
+                    </div>
+                  )}
+                </div>
 
-          {/* Page Info */}
-          <div className="px-6 py-2 flex justify-end text-sm text-gray-500">
-            Page {page} of {totalPages}
+                {/* Desktop Table View */}
+                <div className="hidden md:block px-5 py-2">
+                  <table className="min-w-full text-sm">
+                    <thead className="bg-blue-500 text-white sticky top-0">
+                      <tr>
+                        <th className="p-3 text-left font-semibold">Country Name</th>
+                        <th className="p-3 text-center font-semibold">Quality Description</th>
+                        <th className="p-3 text-center font-semibold">Profile</th>
+                        <th className="p-3 text-center font-semibold">Special Rate</th>
+                        <th className="p-3 text-center font-semibold">Billing Cycle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginatedData.map((row, index) => (
+                        <tr
+                          key={row._id || index}
+                          className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-blue-50 transition-colors`}
+                        >
+                          <td className="p-3 text-left font-medium">{row.country}</td>
+                          <td className="p-3 text-center">{row.qualityDescription}</td>
+                          <td className="p-3 text-center">{row.profile}</td>
+                          <td className="p-3 text-center font-semibold text-orange-600">{row.rate}</td>
+                          <td className="p-3 text-center">{row.billingCycle}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  
+                  {paginatedData.length === 0 && (
+                    <div className="text-center py-12 text-gray-500">
+                      <p>No rates found</p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
-      <div data-no-translate >
-        <style>{`
+      
+      <style>{`
         @keyframes slideIn {
           from { transform: translateX(100%); }
           to { transform: translateX(0); }
@@ -182,8 +252,12 @@ const Specialrate = () => {
         .animate-slide-in {
           animation: slideIn 0.4s ease-out forwards;
         }
+        @media (max-width: 768px) {
+          .animate-slide-in {
+            animation: none;
+          }
+        }
       `}</style>
-      </div>
     </>
   );
 };

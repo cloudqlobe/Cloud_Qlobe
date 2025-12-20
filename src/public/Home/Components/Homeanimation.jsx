@@ -36,17 +36,17 @@ const Homeanimation = () => {
   };
 
   const featuresTop = [
-    { icon: <PhoneCall className="w-6 h-6 text-orange-400" />, label: 'HD Calling' },
-    { icon: <Globe className="w-6 h-6 text-orange-400" />, label: 'Global Reach' },
-    { icon: <Share2 className="w-6 h-6 text-orange-400" />, label: 'Interconnects' },
-    { icon: <MessageCircle className="w-6 h-6 text-orange-400" />, label: 'Chat Support' },
+    { icon: <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'HD Calling' },
+    { icon: <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Global Reach' },
+    { icon: <Share2 className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Interconnects' },
+    { icon: <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Chat Support' },
   ];
 
   const featuresBottom = [
-    { icon: <Cloud className="w-6 h-6 text-orange-400" />, label: 'Cloud Infra' },
-    { icon: <Mic className="w-6 h-6 text-orange-400" />, label: 'Voice AI' },
-    { icon: <Wifi className="w-6 h-6 text-orange-400" />, label: 'WiFi Calling' },
-    { icon: <Shield className="w-6 h-6 text-orange-400" />, label: 'Secure Routes' },
+    { icon: <Cloud className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Cloud Infra' },
+    { icon: <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Voice AI' },
+    { icon: <Wifi className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'WiFi Calling' },
+    { icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Secure Routes' },
   ];
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,35 +59,37 @@ const Homeanimation = () => {
   };
 
   return (
-    <section className="bg-[#0a2463] text-white py-20 px-6">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center mt-[-50px]">
+    <section className="bg-[#0a2463] text-white py-12 sm:py-16 md:py-20 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center mt-[-30px] sm:mt-[-40px] md:mt-[-50px]">
         {/* Left Content */}
-        <div>
+        <div className="w-full">
           <h1 className="sr-only">Empowering Global Communication</h1>
-          <div aria-hidden="true" className="text-4xl md:text-4xl font-default mb-6 leading-tight">
+          <div aria-hidden="true" className="text-2xl sm:text-3xl md:text-4xl font-default mb-4 sm:mb-5 md:mb-6 leading-tight text-center md:text-left">
             Empowering <span className="text-orange-400">Global Communication</span>
           </div>
 
-          <div className="text-orange-300 text-base bg-white bg-opacity-10 p-4 square border border-yellow-400 mb-6">
+          <div className="text-orange-300 text-sm sm:text-base bg-white bg-opacity-10 p-3 sm:p-4 square border border-yellow-400 mb-4 sm:mb-5 md:mb-6 text-center md:text-left">
             {renderTabContent()}
           </div>
 
           {/* Tabs */}
-          <div className="mt-4 flex flex-wrap gap-10">
+          <div className="mt-4 flex flex-wrap gap-3 sm:gap-4 md:gap-6 lg:gap-10 justify-center md:justify-start">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
 
-              const base = "py-2 border squared-full text-sm transition w-28"; // fixed width on mobile
-              const desktopWidth = isActive ? " md:w-40" : " md:w-28";        // different width on md+
+              const base = "py-2 border squared-full text-xs sm:text-sm transition";
+              const width = isActive 
+                ? "w-24 sm:w-28 md:w-32 lg:w-40" 
+                : "w-20 sm:w-24 md:w-28";
               const activeStyles = isActive
-                ? " border-orange-400 text-yellow-400 bg-white bg-opacity-10"
-                : " border-orange-300 text-white hover:bg-orange-400 hover:text-white";
+                ? "border-orange-400 text-yellow-400 bg-white bg-opacity-10"
+                : "border-orange-300 text-white hover:bg-orange-400 hover:text-white";
 
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`${base}${desktopWidth}${activeStyles}`}
+                  className={`${base} ${width} ${activeStyles}`}
                 >
                   {tab.label}
                 </button>
@@ -97,15 +99,15 @@ const Homeanimation = () => {
         </div>
 
         {/* Signup Form */}
-        <div className="flex justify-end w-full">
-          <form onSubmit={handleSubmit} className="bg-transparent text-black squared-xl shadow-lg p-8 w-full max-w-md">
+        <div className="flex justify-center md:justify-end w-full mt-6 md:mt-0">
+          <form onSubmit={handleSubmit} className="bg-transparent text-black squared-xl shadow-lg p-6 sm:p-8 w-full max-w-md">
             <input
               type="text"
               name="name"
               placeholder={placeholders.name}
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-4 border squared focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full px-3 sm:px-4 py-2 mb-3 sm:mb-4 border squared focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
               required
             />
             <input
@@ -114,7 +116,7 @@ const Homeanimation = () => {
               placeholder={placeholders.email}
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-4 border squared focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full px-3 sm:px-4 py-2 mb-3 sm:mb-4 border squared focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
               required
             />
             <input
@@ -123,12 +125,12 @@ const Homeanimation = () => {
               placeholder={placeholders.number}
               value={formData.number}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-6 border squared focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full px-3 sm:px-4 py-2 mb-4 sm:mb-6 border squared focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
               required
             />
             <button
               type="submit"
-              className="w-full bg-orange-500 text-white py-2 squared hover:bg-orange-600 transition"
+              className="w-full bg-orange-500 text-white py-2 sm:py-3 squared hover:bg-orange-600 transition text-sm sm:text-base font-medium"
             >
               Get a Connect
             </button>
@@ -137,18 +139,18 @@ const Homeanimation = () => {
       </div>
 
       {/* Feature Boxes */}
-      <div className="mt-16 max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div className="mt-10 sm:mt-12 md:mt-16 max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-8">
         {featuresTop.map((item, index) => (
-          <div key={index} className="flex flex-col items-center bg-white/10 border border-yellow-400 squared-lg p-4 text-sm text-center shadow">
+          <div key={index} className="flex flex-col items-center bg-white/10 border border-yellow-400 squared-lg p-3 sm:p-4 text-xs sm:text-sm text-center shadow hover:bg-white/20 transition">
             {item.icon}
             <span className="mt-2">{item.label}</span>
           </div>
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
         {featuresBottom.map((item, index) => (
-          <div key={index} className="flex flex-col items-center bg-white/10 border border-yellow-400 squared-lg p-4 text-sm text-center shadow">
+          <div key={index} className="flex flex-col items-center bg-white/10 border border-yellow-400 squared-lg p-3 sm:p-4 text-xs sm:text-sm text-center shadow hover:bg-white/20 transition">
             {item.icon}
             <span className="mt-2">{item.label}</span>
           </div>
