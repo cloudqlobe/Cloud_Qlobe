@@ -17,8 +17,8 @@ const placeholders = {
     phoneNumber: 'Phone Number',
     website: 'Website',
     ipAddress: 'IP Address',
-    description: 'Description'
-  }
+    description: 'Description',
+  },
 };
 
 const leftFeatures = [
@@ -72,12 +72,18 @@ const Register = () => {
         <div className="hidden md:flex md:w-1/2 lg:w-1/2 p-6 lg:p-8 bg-white flex-col gap-6 lg:gap-8">
           {leftFeatures.map(({ icon: Icon, title, desc, color }, idx) => (
             <div key={idx} className="flex items-start gap-4 lg:gap-5">
-              <div className={`w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center ${color} shadow-lg flex-shrink-0`}>
+              <div
+                className={`w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center ${color} shadow-lg flex-shrink-0`}
+              >
                 <Icon className="w-6 h-6 lg:w-8 lg:h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-base lg:text-lg font-semibold text-slate-800 mb-1">{title}</h3>
-                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">{desc}</p>
+                <h3 className="text-base lg:text-lg font-semibold text-slate-800 mb-1">
+                  {title}
+                </h3>
+                <p className="text-xs lg:text-sm text-gray-600 leading-relaxed">
+                  {desc}
+                </p>
               </div>
             </div>
           ))}
@@ -89,41 +95,44 @@ const Register = () => {
             Open Your Trade Account
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            <input 
-              type="text" 
-              placeholder={t.companyName} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4"
+          >
+            <input
+              type="text"
+              placeholder={t.companyName}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="text" 
-              placeholder={t.country} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="text"
+              placeholder={t.country}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="text" 
-              placeholder={t.contactPerson} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="text"
+              placeholder={t.contactPerson}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="email" 
-              placeholder={t.email} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="email"
+              placeholder={t.email}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="tel" 
-              placeholder={t.phoneNumber} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="tel"
+              placeholder={t.phoneNumber}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="text" 
-              placeholder={t.website} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="text"
+              placeholder={t.website}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
-            <input 
-              type="text" 
-              placeholder={t.ipAddress} 
-              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base" 
+            <input
+              type="text"
+              placeholder={t.ipAddress}
+              className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
             />
 
             <select className="border border-orange-400 p-3 sm:p-3.5 md:p-4 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base bg-white">
@@ -142,13 +151,12 @@ const Register = () => {
             />
 
             <button
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
               className="bg-orange-500 text-white py-2.5 sm:py-3 px-6 font-semibold hover:bg-orange-600 transition col-span-1 md:col-span-2 text-sm sm:text-base cursor-pointer"
             >
               Register
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

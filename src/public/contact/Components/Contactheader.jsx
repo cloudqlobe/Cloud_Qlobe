@@ -12,15 +12,15 @@ const Contactheader = ({ onGetStartedClick, onLearnMoreClick }) => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full relative">
 
         {/* Left Content */}
-        <div className="mt-[-60px] ml-[-4px]">
-          <h1 className="text-4xl md:text-4xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
+<div className="mt-[-60px] text-center lg:text-left">
+          <h1 className="text-4xl md:text-4xl font-default leading-snug text-gray-500 mb-6">
             Start Your Journey <span className="text-blue-500 font-default">with CloudQlobe</span>
           </h1>
-          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 max-w-[520px]">
             At CloudQlobe, we value every connection. Our team is always ready to assist you with inquiries, partnerships, or support. Whether you need details about our telecom solutions or help with existing services, we’re just a message away. Let’s connect and grow together.
           </p>
 
-          <div className="flex flex-wrap gap-4 ml-[-40px]">
+          <div className="flex flex-wrap gap-4">
             <button
               onClick={onGetStartedClick}
               className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
@@ -38,7 +38,7 @@ const Contactheader = ({ onGetStartedClick, onLearnMoreClick }) => {
         </div>
 
         {/* Right Icon Area */}
-        <div className="relative  h-[600px] mt-[-50px] ml-[145px]">
+        <div className="relative h-[600px] mt-[-50px] max-[1200px]:hidden ml-[100px]">
 
           {/* 1 */}
           <div className="absolute top-[-35px] left-[-20px] bg-[#fbb315] w-[100px] h-[100px]  flex items-center border rounded-lg justify-center rotate-45 shadow-lg mt-[150px]">

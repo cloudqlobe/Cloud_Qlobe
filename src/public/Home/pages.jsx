@@ -10,8 +10,10 @@ import Homeservices from "./Components/Homeservices";
 import HomeAchievement from "../Components/Homeacheivemnet";
 import Chatbot from "../chatbot/page";
 import Homescroller from "../Components/Homescroller";
+import useAuth from "../../auth/useAuth";
 
 const Homepages = () => {
+  const { isAuthenticated, isLoading } = useAuth("customer");
   const homeAnimationRef = useRef(null); // Ref for Homeanimation
   const homeContent1Ref = useRef(null);  // Ref for Homecontent1
 
@@ -30,11 +32,12 @@ const Homepages = () => {
   return (
     <div className="bg-white">
       <Navbar />
-      <Homeheader 
-        onGetStartedClick={handleScrollToAnimation} 
-        onLearnMoreClick={handleScrollToContent1} 
-      /> 
-      <Homescroller />
+      <Homeheader
+        onGetStartedClick={handleScrollToAnimation}
+        onLearnMoreClick={handleScrollToContent1}
+      />
+      {!isLoading && isAuthenticated && <Homescroller />}
+
       <Homeservices />
 
       {/* Section to scroll to when "Learn More" is clicked */}

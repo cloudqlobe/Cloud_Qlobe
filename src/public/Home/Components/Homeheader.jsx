@@ -22,10 +22,8 @@ const Homeheader = ({ onGetStartedClick, onLearnMoreClick }) => {
           <h1 className="text-4xl md:text-5xl font-default leading-snug text-orange-500 mb-6">
             Connecting You <span className="text-blue-500 font-default">Globally</span>
           </h1>
-          <p className="text-gray-700 text-[15px] leading-relaxed 
-              text-justify md:text-left 
-              [@media(max-width:1337px)]:text-center 
-              mb-8 max-w-[520px]">
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 max-w-[520px]">
+
             CloudQlobe combines next-generation VoIP services with cutting-edge monitoring
             and testing solutions to deliver unmatched telecom performance. From reliable
             global connectivity to scalable infrastructure, we ensure that every call is

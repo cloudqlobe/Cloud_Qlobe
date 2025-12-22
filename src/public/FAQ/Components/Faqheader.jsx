@@ -12,18 +12,18 @@ const iconClass = "w-5 h-5 text-white";
 
 const FaqBubbles = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
-    <div className="bg-white min-h-[864px] flex items-center justify-center px-4 mt-[-100px]">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div className="bg-white min-h-[864px] flex items-center justify-center sm:px-6 md:px-12 py-12 px-4 mt-[-100px]">
+      <div className="max-w-7xl w-full flex flex-col min-[1171px]:flex-row min-[1171px]:justify-between items-center min-[1171px]:items-start pt-[50px]">
 
-        <div className="mt-[50px] ml-[-65px]">
-          <h1 className="text-4xl md:text-5xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
+        <div className="flex flex-col items-center md:items-start justify-center ">
+          <h1 className="text-4xl md:text-4xl leading-snug text-gray-500 mb-6">
             Need Clarity? <span className="text-blue-500 font-default">We’ve Got It</span>
           </h1>
-          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
+          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 max-w-[520px]">
             This FAQ section is designed to provide clarity on CloudQlobe’s offerings. Here you’ll find straightforward answers to common questions about our telecom solutions, communication platforms, and global connectivity.
           </p>
 
-          <div className="flex flex-wrap gap-4 ml-[-40px]">
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
             <button
               onClick={onGetStartedClick}
               className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
@@ -42,11 +42,7 @@ const FaqBubbles = ({ onGetStartedClick, onLearnMoreClick }) => {
 
 
         {/* Right: Dual Circle with Icons on Sides */}
-        {/* Right: Dual Circle with Icons on Sides */}
-        <div className="relative w-[300px] h-[300px] mx-auto mt-[60px] ml-[250px] flex items-center justify-center  ">
-
-
-
+        <div className="hidden min-[1171px]:flex relative w-[300px] h-[300px] items-center justify-center mr-[60px]">
           {/* Outer Bordered Circle */}
           <div className="absolute w-[300px] h-[300px] rounded-full border-[10px] border-gray-400"></div>
 
@@ -54,10 +50,6 @@ const FaqBubbles = ({ onGetStartedClick, onLearnMoreClick }) => {
           <div className="w-[250px] h-[250px] rounded-full bg-gray-400 flex items-center justify-center z-10 shadow-lg">
             <span className="text-white text-[220px] font-bold">?</span>
           </div>
-
-          {/* Left Side Icons */}
-          {/* Left Side Icons */}
-          {/* Left Side Icons */}
           <div className="absolute left-[10px] top-[-60px]">
             <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-md">
               <PhoneCall className="w-8 h-8 text-white" />

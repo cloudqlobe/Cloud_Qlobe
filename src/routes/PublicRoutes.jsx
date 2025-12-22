@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import CcRoutes from "../public/Services/Ccroutes/Page.jsx";
 import CliVoice from "../public/Services/Clivoiceterminations/Page.jsx";
@@ -14,20 +14,33 @@ import Faqpages from "../public/FAQ/pages.jsx";
 import Ratepages from "../public/Rates/pages.jsx";
 import SocialMediaIcons from "../public/Components/Socialmediaicons.jsx";
 import Specialrate from "../public/Components/Specialrate.jsx";
+import useAuth from "../auth/useAuth.js";
 
 const PublicRoutes = () => {
   const location = useLocation();
   const isRatePage = location.pathname === "/rates";
+  const { isAuthenticated, isLoading } = useAuth("customer");
+
 
   return (
     <>
       {!isRatePage && <SocialMediaIcons />}
+
       <Routes>
+        {/* Public Pages */}
         <Route path="/" element={<Homepages />} />
         <Route path="/about" element={<Aboutpages />} />
         <Route path="/contact" element={<Contactpages />} />
-        <Route path="/rates" element={<Ratepages />} />
         <Route path="/faq" element={<Faqpages />} />
+
+        {isAuthenticated ? (
+          <Route path="/rates" element={<Ratepages />} />
+        ) : (
+          <Route
+            path="/rates"
+            element={<Navigate to="/customer/login" replace />}
+          />
+        )}
 
         {/* Service Pages */}
         <Route path="/services/cc-routes" element={<CcRoutes />} />
@@ -37,7 +50,8 @@ const PublicRoutes = () => {
         <Route path="/services/server-hosting" element={<ServerHosting />} />
         <Route path="/services/voip-websites" element={<VoipWebsites />} />
       </Routes>
-      {!isRatePage && <Specialrate />}
+
+      {!isLoading && isAuthenticated && <Specialrate />}
     </>
   );
 };
