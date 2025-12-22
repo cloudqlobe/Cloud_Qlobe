@@ -134,11 +134,22 @@ const Loginpagemain = () => {
                   required
                 />
               </div>
-              <div className="text-right">
-                <a href="/customer/forgot-password" className="text-sm text-yellow-500 hover:underline">
+              <div className="flex justify-between items-center text-sm">
+                <a
+                  href="/customer/forgot-password"
+                  className="text-yellow-500 hover:underline"
+                >
                   Forgot password?
                 </a>
+
+                <a
+                  href="/customer/register"
+                  className="text-yellow-500 hover:underline"
+                >
+                  Don’t have an account? Register
+                </a>
               </div>
+
               <button
                 type="submit"
                 className="w-full bg-yellow-400 text-white py-3 rounded-lg font-semibold hover:bg-yellow-500 transition flex justify-center items-center"
