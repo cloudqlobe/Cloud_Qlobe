@@ -4,42 +4,33 @@ import Homeimage22 from '../../../../assets/ChatGPT Image Aug 18, 2025, 09_06_14
 
 const Cccontent1 = () => {
   return (
-    <div className="w-full bg-white px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
-      
-      {/* Page Heading */}
-      <h1 className="text-2xl sm:text-3xl lg:text-[40px] font-normal text-center text-black mb-16">
-        Maximize Call Efficiency with{' '}
-        <span className="text-blue-800">CloudQlobe CC Voice Routes</span>
+    <div className="min-h-screen w-full bg-white px-12 py-16 overflow-hidden">
+      <h1 className="text-[40px] font-normal font-[Roboto,Arial,sans-serif] text-center text-black mb-20 mt-8 leading-snug">
+        Maximize Call Efficiency with <span className="text-blue-800">CloudQlobe CC Voice Routes</span>
       </h1>
 
-      {/* SECTION 1 */}
-      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-20">
-        
-        {/* Image */}
-        <div className="order-1 md:order-1 flex justify-center">
+      {/* Section 1: High-Quality Connectivity */}
+      <section className="grid md:grid-cols-2 items-center gap-10 mb-28 max-w-7xl mx-auto">
+        <div className="flex justify-center items-center w-full p-2">
           <img
             src={Homeimage20}
             alt="High-Performance CC Routes"
-            className="w-full max-w-[640px] rounded-lg"
+            className="w-[760px] h-[480px] object-co  ver rounded-lg ml-[-60px] mt-[50px]"
           />
         </div>
-
-        {/* Content */}
-        <div className="order-2 md:order-2">
-          <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
+        <div className="flex flex-col justify-center w-full max-w-[850px] ml-[25px] mt-[-40px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
             High-Quality <span className="text-orange-500">VoIP CC Routes</span>
           </h2>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify mb-4">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
             At CloudQlobe, we specialize in delivering VoIP CC Routes that raise the standard for voice communication. 
             Every call placed through our network is supported by carrier-grade infrastructure, ensuring unparalleled 
             clarity, stability, and reliability. Businesses that rely on constant communication—whether for call centers, 
             enterprise operations, or customer-facing teams—can trust our routes to deliver consistently high-quality connections. 
             By significantly reducing Post Dial Delay (PDD) and eliminating unnecessary disruptions, we create a calling 
-            environment where conversations flow naturally and efficiently..
+            environment where conversations flow naturally and efficiently.
           </p>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
             With both CLI and non-CLI options, advanced routing structures, and global carrier partnerships, 
             CloudQlobe empowers businesses to maintain the highest level of professional communication. 
             Our VoIP CC Routes are engineered to handle massive call volumes without sacrificing performance, 
@@ -50,25 +41,13 @@ const Cccontent1 = () => {
         </div>
       </section>
 
-      {/* SECTION 2 */}
-      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-20">
-
-        {/* Image (mobile first) */}
-        <div className="order-1 md:order-2 flex justify-center">
-          <img
-            src={Homeimage21}
-            alt="Smart Routing"
-            className="w-full max-w-[520px] rounded-lg"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="order-2 md:order-1">
-          <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
+      {/* Section 2: Smart Routing & Management */}
+      <section className="grid md:grid-cols-2 items-center gap-10  max-w-7xl mx-auto ml-[35px]">
+        <div className="flex flex-col justify-center w-full max-w-[850px] mt-[-150px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
             Smart Routing & <span className="text-orange-500">CC Management</span>
           </h2>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify mb-4">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
             CloudQlobe’s VoIP CC Routes are more than just pathways for communication—they are designed to intelligently 
             manage and optimize every single call. Through multi-layer routing, calls are automatically directed to the 
             most efficient routes available, avoiding congestion and maintaining stability during high-traffic periods. 
@@ -76,8 +55,7 @@ const Cccontent1 = () => {
             Our system ensures that call centers and enterprises handling thousands of calls daily experience consistent 
             service, even when demand peaks.
           </p>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
             What sets CloudQlobe apart is the flexibility we provide in managing your communication. 
             From customizable CLI options to seamless integration with enterprise-level systems, 
             our VoIP CC Routes are designed to adapt to your specific operational needs. 
@@ -87,27 +65,29 @@ const Cccontent1 = () => {
             and overall business efficiency.
           </p>
         </div>
-      </section>
-
-      {/* SECTION 3 */}
-      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto">
-
-        {/* Image */}
-        <div className="order-1 md:order-1 flex justify-center">
+        <div className="flex justify-center items-center w-full p-2">
           <img
-            src={Homeimage22}
-            alt="Monitoring"
-            className="w-full max-w-[520px] rounded-lg"
+            src={Homeimage21}
+            alt="Integration & Management"
+            className="w-[580px] h-[580px]  ml-[200px] mt-[-50px]"
           />
         </div>
+      </section>
 
-        {/* Content */}
-        <div className="order-2 md:order-2">
-          <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
+      {/* Section 3: Monitoring & Reliability */}
+      <section className="grid md:grid-cols-2 items-center gap-10 max-w-7xl mx-auto">
+        <div className="flex justify-center items-center w-full p-2">
+          <img
+            src={Homeimage22}
+            alt="Billing & Call Monitoring"
+            className="w-[550px] h-[580px] object-cover rounded-lg ml-[-100px] mt-[40px]"
+          />
+        </div>
+        <div className="flex flex-col justify-center w-full max-w-[850px] ml-[20px] mt-[-40px]">
+          <h2 className="text-[28px] font-normal font-[Roboto,Arial,sans-serif] text-gray-800 mb-4">
             Monitoring & <span className="text-orange-500">Quality Assurance</span>
           </h2>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify mb-4">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify mb-4">
             At CloudQlobe, we understand that voice quality and reliability must be actively maintained, 
             which is why monitoring is a core part of our VoIP CC Routes. Our system is equipped with 
             real-time performance tracking, automated alerts, and proactive checks that identify issues 
@@ -115,8 +95,7 @@ const Cccontent1 = () => {
             is closely monitored to ensure your business enjoys smooth and professional-grade connectivity 
             around the clock.
           </p>
-
-          <p className="text-[#5f6368] text-[15px] sm:text-[16px] lg:text-[17px] leading-relaxed text-justify">
+          <p className="text-[#5f6368] text-[17px] leading-[1.9] tracking-[0.18px] font-normal text-justify">
             CloudQlobe’s proactive approach means you don’t just get a service—you get peace of mind. 
             Our built-in redundancy and intelligent failover systems ensure that even if one route faces 
             challenges, another takes over instantly, keeping your business conversations uninterrupted. 
@@ -127,7 +106,6 @@ const Cccontent1 = () => {
           </p>
         </div>
       </section>
-
     </div>
   );
 };

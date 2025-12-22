@@ -28,8 +28,9 @@ const TradePartner3DSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-br from-[#0a0f2e] via-[#1a237e] to-[#000051] w-full py-8 px-6 md:px-16 relative overflow-hidden mt-[-100px] "
       onMouseMove={handleMouseMove}
+      className="bg-gradient-to-br from-[#0a0f2e] via-[#1a237e] to-[#000051]
+      w-full py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden lg:mt-[-100px]"
     >
 
       {/* Enhanced 3D Background Grid */}
@@ -66,86 +67,75 @@ const TradePartner3DSection = () => {
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
 
         {/* LEFT SIDE - CONTENT */}
-        <div className="text-white space-y-4 mt-[-100px] ml-[-10px]">
-          {/* Achievements Section */}
-          <div className="space-y-8">
-            <div className="flex items-center gap-4 ">
+        <div
+          className="
+          text-white space-y-6
+          text-center lg:text-left
+          items-center lg:items-start
+          flex flex-col
+          lg:mt-[-100px] lg:ml-[-10px]
+          "
+        >
+          <h1 className="text-3xl md:text-4xl font-normal text-white lg:ml-[-30px]">
+            Get Your <span className="text-yellow-500">VoIP Trade Account</span>
+          </h1>
 
-            </div>
+          <p className="text-lg text-blue-100/80 leading-relaxed max-w-2xl font-light
+            text-justify lg:text-left
+            lg:ml-[-30px]"
+          >
+            Access premium CC routes, CLI routes, and wholesale termination. Join our exclusive VoIP trading network with guaranteed ASR/ACD rates and instant settlements.
+          </p>
 
-            <h1 className="text-3xl md:text-4xl font-normal leading-tight text-transparent bg-clip-text bg-white ml-[-30px]">
-              Get Your <span className='text-yellow-500'>VoIP Trade Account</span>
-            </h1>
-
-
-            <p className="text-lg text-blue-100/80 leading-relaxed max-w-2xl font-light text-justify ml-[-30px]">
-              Access premium CC routes, CLI routes, and wholesale termination. Join our exclusive VoIP trading network with guaranteed ASR/ACD rates and instant settlements.
-            </p>
-
-            <div className="grid grid-cols-2 gap-6 text-sm text-blue-200/90 ml-[-30px]">
-              {[
-                { color: 'yellow', text: 'Premium CC Routes' },
-                { color: 'yellow', text: 'CLI Routes Available' },
-                { color: 'yellow', text: 'Instant Settlements' },
-                { color: 'yellow', text: '24/7 NOC Support' }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className={`w-3 h-3 bg-${item.color}-400 rounded-full animate-pulse shadow-lg`}></div>
-                  <span>{item.text}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-6 ml-[-30px] mt-6">
-              <Link
-                to="/customer/register"
-                className="text-white border border-yellow-300 px-8 py-4 rounded-none font-semibold hover:text-yellow-500 transition-all duration-300 flex items-center justify-center"
-              >
-                Open Trade Account
-              </Link>
-              <Link
-                to="/rates"
-                className="text-white border border-white px-8 py-4 rounded-none font-semibold hover:text-orange-400 hover:border-orange-400 transition-all duration-300 flex items-center justify-center"
-              >
-                View Rate Sheets
-              </Link>
-            </div>
-
+          <div className="grid grid-cols-2 gap-6 text-sm text-blue-200/90 lg:ml-[-30px]">
+            {[
+              'Premium CC Routes',
+              'CLI Routes Available',
+              'Instant Settlements',
+              '24/7 NOC Support'
+            ].map((text, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                <span>{text}</span>
+              </div>
+            ))}
           </div>
 
+          <div className="flex flex-col sm:flex-row gap-6 mt-6 lg:ml-[-30px]">
+            <Link
+              to="/customer/register"
+              className="border border-yellow-300 px-8 py-4 font-semibold hover:text-yellow-500 transition text-center"
+            >
+              Open Trade Account
+            </Link>
 
-          {/* Country Flags Section */}
-          <div className="pt-8 ">
-            <div className="flex items-center gap-8 ml-[-30px]">
-              <div className=" flex items-center gap-8">
-                {/* USA */}
-                <img src="https://flagcdn.com/us.svg" alt="USA" className="w-[80px] h-[80px] rounded-sm" />
+            <Link
+              to="/rates"
+              className="border border-white px-8 py-4 font-semibold hover:text-orange-400 hover:border-orange-400 transition text-center"
+            >
+              View Rate Sheets
+            </Link>
+          </div>
 
-                {/* Canada */}
-                <img src="https://flagcdn.com/ca.svg" alt="Canada" className="w-[80px] h-[80px] rounded-sm" />
-
-                {/* UK */}
-                <img src="https://flagcdn.com/gb.svg" alt="UK" className="w-[80px] h-[80px] rounded-sm" />
-
-                {/* Germany */}
-                <img src="https://flagcdn.com/de.svg" alt="Germany" className="w-[80px] h-[80px] rounded-sm" />
-
-                {/* Australia */}
-                <img src="https://flagcdn.com/au.svg" alt="Australia" className="w-[80px] h-[80px] rounded-sm" />
-
-                {/* Spain */}
-
-              </div>
-            </div>
+          {/* FLAGS */}
+          <div className="pt-8 lg:ml-[-30px] flex flex-wrap justify-center lg:justify-start gap-6">
+            {['us', 'ca', 'gb', 'de', 'au'].map(code => (
+              <img
+                key={code}
+                src={`https://flagcdn.com/${code}.svg`}
+                alt={code}
+                className="w-16 h-16 lg:w-20 lg:h-20 rounded-sm"
+              />
+            ))}
           </div>
         </div>
 
         {/* RIGHT SIDE - ELEGANT 3D VISUALIZATION */}
-        <div className="relative h-[600px] perspective-1000">
+        <div className="relative h-[600px] perspective-1000 hidden lg:block">
 
           {/* Main 3D Container */}
           <div
-            className="absolute inset-0 transition-transform duration-500 ease-out preserve-3d"
+            className="absolute inset-0 preserve-3d transition-transform duration-500"
             style={{
               transform: `rotateX(${mousePos.y * 0.5}deg) rotateY(${mousePos.x * 0.5}deg)`
             }}

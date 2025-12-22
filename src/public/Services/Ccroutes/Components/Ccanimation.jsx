@@ -54,28 +54,30 @@ const Ccanimation = () => {
   };
 
   return (
-    <section className="bg-[#0a2463] text-white py-20 px-6">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 mt-[20px] ml-[120px]">
+    <section className="bg-[#0a2463] text-white py-10 sm:py-16 lg:py-20 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mt-4 sm:mt-8 lg:mt-[20px] lg:ml-[120px]">
         {/* Left Content */}
-        <div className='ml-[-60px]'>
-          <h2 className="text-4xl  text-white font-default mb-4">Cloud Qlobe <span  className='text-orange-500'>CC Routes Solutions</span></h2>
-          <p className="mb-6 text-lg text-white-300">
+        <div className='lg:ml-[-60px]'>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl text-white font-default mb-4">
+            Cloud Qlobe <span className='text-orange-500'>CC Routes Solutions</span>
+          </h2>
+          <p className="mb-6 text-base sm:text-lg text-white-300">
             Choose the right route for your voice business. Flexible, scalable, and supported by experts.
           </p>
 
           {/* New Vertical Card Tabs */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
             {tabs.map((tab) => (
               <div
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer transition-all border 
+                className={`flex items-center gap-2 p-3 sm:p-4 rounded-lg cursor-pointer transition-all border 
                   ${activeTab === tab.id
                     ? 'border-orange-400 bg-orange-500/20'
                     : 'border-orange-300 hover:bg-orange-400/10'}`}
               >
                 {tab.icon}
-                <span className="text-sm font-medium">{tab.label}</span>
+                <span className="text-xs sm:text-sm font-medium">{tab.label}</span>
               </div>
             ))}
           </div>
@@ -84,18 +86,12 @@ const Ccanimation = () => {
           <div className="bg-white/10 border border-orange-400 p-4 rounded text-orange-200 mb-4">
             {tabContent[activeTab]}
           </div>
-
-          {/* Learn More Button */}
-          
         </div>
 
         {/* Right Transparent Registration */}
-        <div className="flex justify-center items-center ml-[200px] mt-[-40px]">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white/10 backdrop-blur-md border border-white/30 rounded-xl shadow-lg p-8 w-full max-w-md"
-          >
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">Request Routes</h3>
+        <div className="flex justify-center items-center lg:ml-[200px] lg:mt-[-40px]">
+          <div className="bg-white/10 backdrop-blur-md border border-white/30 rounded-xl shadow-lg p-6 sm:p-8 w-full max-w-md">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 text-center">Request Routes</h3>
             <input
               type="text"
               name="company"
@@ -119,29 +115,29 @@ const Ccanimation = () => {
               placeholder="Route Requirement"
               value={formData.requirement}
               onChange={handleChange}
-              className="w-full px-4 py-2 mb-6 bg-transparent text-white placeholder-white/60 border border-white/30 rounded focus:outline-none"
+              className="w-full px-4 py-2 mb-6 bg-transparent text-white placeholder-white/60 border border-white/30 rounded focus:outline-none resize-none"
               rows={3}
               required
-            ></textarea>
+            />
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 transition"
             >
               Submit Request
             </button>
-          </form>
+          </div>
         </div>
       </div>
 
       {/* Bottom Features */}
-      <div className="mt-16  w-[1340px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 mt-[30px] ml-[59px]">
+      <div className="mt-12 sm:mt-16 max-w-9xl mx-auto grid grid-cols-2 md:grid-cols-4 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-10 lg:mt-[30px] lg:ml-[59px] lg:w-[1340px]">
         {features.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white/10 text-center p-6 border border-orange-400 squared-xl flex flex-col items-center shadow hover:bg-orange-500 transition"
+            className="bg-white/10 text-center p-4 sm:p-6 border border-orange-400 flex flex-col items-center shadow hover:bg-orange-500 transition"
           >
             <div className="text-orange-300 mb-2">{item.icon}</div>
-            <p className="text-sm">{item.label}</p>
+            <p className="text-xs sm:text-sm">{item.label}</p>
           </div>
         ))}
       </div>
