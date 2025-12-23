@@ -15,6 +15,7 @@ import Support from "../customer/support/page.jsx";
 import AddTroubleTicket from "../customer/support/Addfollowup/page.jsx";
 import MyRatesPage from "../customer/myRate/page.jsx";
 import SettingsPage from "../customer/settings/page.jsx";
+import Ratespages from "../public/Rates/pages.jsx";
 
 const CustomerRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const CustomerRoutes = () => {
           <CustomerRoute>
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/rates" element={<Ratespages />} />
               <Route path="/payment" element={<PaymentsPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/my-rates" element={<MyRatesPage />} />

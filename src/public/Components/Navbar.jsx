@@ -234,7 +234,7 @@ const Navbar = () => {
           </div>
 
           <Link to="/contact" className="hover:text-blue-500 transition">{nav.contact}</Link>
-          <Link to="/rates" className="hover:text-blue-500 transition">{nav.rates}</Link>
+          <Link to="/customer/rates" className="hover:text-blue-500 transition">{nav.rates}</Link>
           <Link to="/faq" className="hover:text-blue-500 transition">{nav.faq}</Link>
         </div>
 
@@ -367,7 +367,7 @@ const Navbar = () => {
           </div>
 
           <Link to="/contact" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.contact}</Link>
-          <Link to="/rates" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.rates}</Link>
+          <Link to="/customer/rates" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.rates}</Link>
           <Link to="/faq" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.faq}</Link>
         </nav>
 

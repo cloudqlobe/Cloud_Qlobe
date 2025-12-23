@@ -32,16 +32,6 @@ const PublicRoutes = () => {
         <Route path="/about" element={<Aboutpages />} />
         <Route path="/contact" element={<Contactpages />} />
         <Route path="/faq" element={<Faqpages />} />
-
-        {isAuthenticated ? (
-          <Route path="/rates" element={<Ratepages />} />
-        ) : (
-          <Route
-            path="/rates"
-            element={<Navigate to="/customer/login" replace />}
-          />
-        )}
-
         {/* Service Pages */}
         <Route path="/services/cc-routes" element={<CcRoutes />} />
         <Route path="/services/cli-voice" element={<CliVoice />} />
