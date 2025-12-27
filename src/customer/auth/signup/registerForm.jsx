@@ -242,24 +242,24 @@ const ModernRegisterFlow = () => {
 
             {/* Custom animations */}
             <div data-no-translate>
-            <style jsx>{`
+                <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-20px); }
         }
       `}</style>
-</div>
+            </div>
             {/* Header Section with Enhanced Design */}
             <div className="relative z-10 flex flex-col items-center pt-8 pb-4">
                 <div className="flex items-center gap-3 mb-4">
                     <Globe className="w-8 h-8 text-blue-600 animate-spin" style={{ animationDuration: "3s" }} />
-                    <h1 className="text-4xl font-default text-yellow-500 text-transparent drop-shadow-lg">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-default text-yellow-500 text-center">
                         Explore the Journey with CloudGlobe
                     </h1>
                     <Globe className="w-8 h-8 text-emerald-600 animate-spin" style={{ animationDuration: "3s", animationDirection: "reverse" }} />
                 </div>
 
-                <p className="text-gray-300 font-medium mb-6 text-lg">
+                <p className="text-sm sm:text-base md:text-lg text-gray-300 text-center">
                     Your Gateway to Global Connectivity & Innovation
                 </p>
 
@@ -273,12 +273,35 @@ const ModernRegisterFlow = () => {
             </div>
 
 
-            <div className="relative z-10 flex items-center justify-center p-6">
+            <div className="relative z-10 flex items-center justify-center px-4 sm:px-6 py-6">
                 <div className="flex flex-col gap-6 w-full max-w-7xl">
                     {/* Main Cards Container */}
-                    <form onSubmit={handleSubmit} className="flex gap-6 flex-wrap justify-center">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="
+    flex flex-col
+    md:flex-row
+    gap-6
+    justify-center
+  "
+                    >
                         {/* Left Card - Company Details */}
-                        <div className="flex-1 max-w-sm mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 border border-gray-100 hover:shadow-3xl transition-all duration-300 hover:-translate-y-1">
+                        <div className="
+  w-full
+  md:max-w-sm
+  flex-1
+  mx-auto
+  bg-white/90
+  backdrop-blur-sm
+  rounded-2xl
+  shadow-2xl
+  p-6
+  border border-gray-100
+  hover:shadow-3xl
+  transition-all
+  duration-300
+  hover:-translate-y-1
+">
                             <div className="flex items-center gap-2 mb-4">
                                 <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                                 <h2 className="text-xl font-bold text-gray-800">Company Details</h2>
@@ -380,8 +403,22 @@ const ModernRegisterFlow = () => {
                         </div>
 
                         {/* Middle Card - User Details */}
-                        <div className="flex-1 max-w-sm mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 border border-gray-100 hover:shadow-3xl transition-all duration-300 hover:-translate-y-1">
-                            <div className="flex items-center gap-2 mb-4">
+                        <div className="
+  w-full
+  md:max-w-sm
+  flex-1
+  mx-auto
+  bg-white/90
+  backdrop-blur-sm
+  rounded-2xl
+  shadow-2xl
+  p-6
+  border border-gray-100
+  hover:shadow-3xl
+  transition-all
+  duration-300
+  hover:-translate-y-1
+">                            <div className="flex items-center gap-2 mb-4">
                                 <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                                 <h2 className="text-xl font-bold text-gray-800">User Details</h2>
                             </div>
@@ -506,8 +543,22 @@ const ModernRegisterFlow = () => {
                         </div>
 
                         {/* Right Card - Technical Details */}
-                        <div className="flex-1 max-w-sm mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 border border-gray-100 hover:shadow-3xl transition-all duration-300 hover:-translate-y-1">
-                            <div className="flex items-center gap-2 mb-4">
+                        <div className="
+  w-full
+  md:max-w-sm
+  flex-1
+  mx-auto
+  bg-white/90
+  backdrop-blur-sm
+  rounded-2xl
+  shadow-2xl
+  p-6
+  border border-gray-100
+  hover:shadow-3xl
+  transition-all
+  duration-300
+  hover:-translate-y-1
+">                            <div className="flex items-center gap-2 mb-4">
                                 <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
                                 <h2 className="text-xl font-bold text-gray-800">Technical Details</h2>
                             </div>

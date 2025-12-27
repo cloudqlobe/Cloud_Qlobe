@@ -2,30 +2,31 @@ import Homeimage20 from '../../../../assets/ChatGPT Image Aug 18, 2025, 08_28_02
 import Homeimage21 from '../../../../assets/ChatGPT Image Aug 18, 2025, 09_08_51 AM.png'
 import Homeimage22 from '../../../../assets/ChatGPT Image Aug 18, 2025, 09_06_14 AM.png'
 
+
 const Cccontent1 = () => {
   return (
-    <div className="w-full bg-white px-4 sm:px-6 lg:px-12 py-12 lg:py-16">
-      
+    <div className="w-full bg-white px-4 sm:px-6 lg:px-12 py-10 sm:py-14 lg:py-16">
+
       {/* Page Heading */}
-      <h1 className="text-2xl sm:text-3xl lg:text-[40px] font-normal text-center text-black mb-16">
-        Maximize Call Efficiency with{' '}
+      <h1 className="text-2xl sm:text-3xl lg:text-[40px] font-normal text-center text-black mb-12 sm:mb-16">
+        Maximize Call Efficiency with{" "}
         <span className="text-blue-800">CloudQlobe CC Voice Routes</span>
       </h1>
 
       {/* SECTION 1 */}
-      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-20">
-        
+      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-16 lg:mb-20">
+
         {/* Image */}
-        <div className="order-1 md:order-1 flex justify-center">
+        <div className="flex justify-center">
           <img
             src={Homeimage20}
             alt="High-Performance CC Routes"
-            className="w-full max-w-[640px] rounded-lg"
+            className="w-full max-w-[320px] sm:max-w-[420px] md:max-w-[640px] rounded-lg"
           />
         </div>
 
         {/* Content */}
-        <div className="order-2 md:order-2">
+        <div className="text-center md:text-left">
           <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
             High-Quality <span className="text-orange-500">VoIP CC Routes</span>
           </h2>
@@ -51,19 +52,19 @@ const Cccontent1 = () => {
       </section>
 
       {/* SECTION 2 */}
-      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-20">
+      <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto mb-16 lg:mb-20">
 
-        {/* Image (mobile first) */}
+        {/* Image */}
         <div className="order-1 md:order-2 flex justify-center">
           <img
             src={Homeimage21}
             alt="Smart Routing"
-            className="w-full max-w-[520px] rounded-lg"
+            className="w-full max-w-[300px] sm:max-w-[420px] md:max-w-[520px] rounded-lg"
           />
         </div>
 
         {/* Content */}
-        <div className="order-2 md:order-1">
+        <div className="order-2 md:order-1 text-center md:text-left ">
           <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
             Smart Routing & <span className="text-orange-500">CC Management</span>
           </h2>
@@ -93,16 +94,16 @@ const Cccontent1 = () => {
       <section className="grid md:grid-cols-2 gap-10 items-center max-w-7xl mx-auto">
 
         {/* Image */}
-        <div className="order-1 md:order-1 flex justify-center">
+        <div className="flex justify-center">
           <img
             src={Homeimage22}
             alt="Monitoring"
-            className="w-full max-w-[520px] rounded-lg"
+            className="w-full max-w-[300px] sm:max-w-[420px] md:max-w-[520px] rounded-lg"
           />
         </div>
 
         {/* Content */}
-        <div className="order-2 md:order-2">
+        <div className="text-center md:text-left">
           <h2 className="text-xl sm:text-2xl lg:text-[28px] text-gray-800 mb-4">
             Monitoring & <span className="text-orange-500">Quality Assurance</span>
           </h2>

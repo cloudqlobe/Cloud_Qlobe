@@ -43,65 +43,66 @@ const countriesSet2 = [
 
 const HomeAchievement = () => {
   return (
-    <section className="bg-white text-gray-900 py-20 px-6">
+    <section className="bg-white text-gray-900 py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20 text-center">
+        {/* Stats Section - Fully Responsive */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16 md:mb-20 text-center">
           {stats.map((stat) => (
             <div
               key={stat.id}
-              className="bg-gradient-to-br from-gray-100 to-gray-50 p-6 shadow-md border border-gray-400 hover:scale-105 transition duration-300 rounded-lg"
+              className="bg-gradient-to-br from-gray-100 to-gray-50 p-5 sm:p-6 shadow-md border border-gray-400 hover:scale-105 transition duration-300 rounded-lg"
             >
-              <div className="flex justify-center mb-4">{stat.icon}</div>
-              <h2 className="text-5xl font-default text-blue-500">
+              <div className="flex justify-center mb-3 sm:mb-4">{stat.icon}</div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-default text-blue-500">
                 {stat.value}
               </h2>
-              <p className="mt-2 text-lg font-semibold">{stat.label}</p>
-              <p className="mt-1 text-sm text-gray-600">{stat.description}</p>
+              <p className="mt-2 text-base sm:text-lg font-semibold">{stat.label}</p>
+              <p className="mt-1 text-xs sm:text-sm text-gray-600 px-2">{stat.description}</p>
             </div>
           ))}
         </div>
 
-        {/* Country Flags Set 1 */}
-        <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
-
+        {/* Country Flags Set 1 - Responsive Grid */}
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-6 sm:mb-8">
+          {/* Optional heading text can go here */}
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-items-center mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-5 md:gap-6 justify-items-center mb-8 sm:mb-10 md:mb-12">
           {countriesSet1.map((country, idx) => (
             <div
               key={idx}
-              className="bg-white p-4 shadow-lg border border-gray-300 hover:scale-110 transition duration-300 rounded-lg"
+              className="bg-white p-3 sm:p-4 shadow-lg border border-gray-300 hover:scale-110 transition duration-300 rounded-lg w-full max-w-[140px]"
             >
               <img
                 src={`https://flagcdn.com/w80/${country.code}.png`}
                 alt={country.name}
-                className="w-20 h-14 rounded shadow-md mb-2"
+                className="w-16 h-12 sm:w-20 sm:h-14 rounded shadow-md mb-2 mx-auto object-cover"
               />
-              <p className="text-sm font-medium text-gray-900 text-center">{country.name}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-900 text-center">{country.name}</p>
             </div>
           ))}
         </div>
 
-        {/* Country Flags Set 2 */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-items-center">
+        {/* Country Flags Set 2 - Responsive Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-5 md:gap-6 justify-items-center">
           {countriesSet2.map((country, idx) => (
             <div
               key={idx}
-              className="bg-white p-4 shadow-lg border border-gray-300 hover:scale-110 transition duration-300 rounded-lg"
+              className="bg-white p-3 sm:p-4 shadow-lg border border-gray-300 hover:scale-110 transition duration-300 rounded-lg w-full max-w-[140px]"
             >
               <img
                 src={`https://flagcdn.com/w80/${country.code}.png`}
                 alt={country.name}
-                className="w-20 h-14 rounded shadow-md mb-2"
+                className="w-16 h-12 sm:w-20 sm:h-14 rounded shadow-md mb-2 mx-auto object-cover"
               />
-              <p className="text-sm font-medium text-gray-900 text-center">{country.name}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-900 text-center">{country.name}</p>
             </div>
           ))}
         </div>
       </div>
-      <div data-no-translate>
-        <style>{`
+      
+      {/* Custom Animations */}
+      <style>{`
         @keyframes blink {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.9; transform: scale(1.05); }
@@ -111,7 +112,6 @@ const HomeAchievement = () => {
           animation: blink 3s ease-in-out infinite;
         }
       `}</style>
-      </div>
     </section>
   );
 };

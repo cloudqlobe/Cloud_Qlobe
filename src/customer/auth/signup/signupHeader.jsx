@@ -13,7 +13,7 @@ import {
   Server,
 } from "lucide-react";
 
-const AnimatedHeader = ({onRegisterClick}) => {
+const AnimatedHeader = ({ onRegisterClick }) => {
   const flags = [
     "https://flagcdn.com/w40/us.png",
     "https://flagcdn.com/w40/gb.png",
@@ -35,7 +35,7 @@ const AnimatedHeader = ({onRegisterClick}) => {
   ];
 
   return (
-    <div className="relative h-[580px] bg-white overflow-hidden">
+    <div className="relative min-h-[580px] lg:h-[580px] bg-white overflow-hidden">
 
       {/* Background scattered icons */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -54,9 +54,16 @@ const AnimatedHeader = ({onRegisterClick}) => {
         ))}
       </div>
 
-      <div className="container mx-auto px-6 py-12 relative z-10">
+      <div className="container px-6 py-12 relative z-10">
         {/* Two-column layout */}
-        <div className="flex flex-col md:flex-row items-center justify-between min-h-[70vh] gap-12 ml-[80px]">
+<div className="
+  flex flex-col md:flex-row 
+  items-center justify-between 
+  min-h-[70vh] gap-12 
+  pt-[123px] 
+  lg:pt-0 
+  lg:ml-[80px]
+">
           {/* Left Content */}
           <div
             className="flex-1 space-y-8 animate-fade-up"
@@ -72,7 +79,7 @@ const AnimatedHeader = ({onRegisterClick}) => {
               </p>
 
               {/* Flags row */}
-              <div className="flex items-center gap-4 mt-6">
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
                 {flags.map((src, idx) => (
                   <div
                     key={idx}
@@ -102,8 +109,8 @@ const AnimatedHeader = ({onRegisterClick}) => {
           </div>
 
           {/* Right Animation */}
-          <div className="flex-1 flex justify-center relative">
-            <div className="relative w-96 h-96">
+          <div className="flex-1 hidden md:flex justify-center relative">
+            <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
               {/* Central Hub */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="w-24 h-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow">
