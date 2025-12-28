@@ -12,14 +12,27 @@ const Cliheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="flex flex-col lg:flex-row px-4 lg:px-12 py-8 bg-white h-[814px] gap-8 lg:gap-16 mt-[-50px] ">
       {/* Left Content */}
-      <div className="lg:w-1/2 flex flex-col justify-center z-10 ml-[30px]">
+<div className="
+  lg:w-1/2
+  flex flex-col
+  justify-center
+  z-10
+  ml-[30px]
+  mt-[253px]
+  lg:mt-0
+  items-center
+  lg:items-start
+  text-center
+  lg:text-left
+">
+
         <h1 className="text-4xl lg:text-4xl font-Default text-gray-800 mb-6 leading-snug">
           The Power of <span className="text-blue-500">True Caller Identity</span>
         </h1>
         <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
           CloudQlobe’s CLI Routes deliver premium voice quality with guaranteed Caller Line Identification for every call. With reliable connectivity, crystal-clear audio, and global coverage, we ensure trust, compliance, and superior communication experiences for businesses worldwide.
         </p>
-        <div className="flex gap-4">
+<div className="flex gap-4 justify-center lg:justify-start">
           <button
             onClick={onGetStartedClick}
             className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
@@ -37,7 +50,7 @@ const Cliheader = ({ onGetStartedClick, onLearnMoreClick }) => {
       </div>
 
       {/* Right Infographic */}
-      <div className="lg:w-1/2 flex flex-col items-center justify-center relative max-h-[700px] mt-[30px] ml-[300px]">
+<div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center relative max-h-[700px] mt-[30px]">
         {/* Dotted Lines */}
         <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 400 450">
           <defs>

@@ -7,32 +7,69 @@ const Didheader = ({ onGetStartedClick, onLearnMoreClick }) => {
         <div className="flex flex-col lg:flex-row items-center gap-10">
 
           {/* Left Side Content */}
-          <div className="lg:w-1/2 flex flex-col justify-center z-10 mt-[-50px] ml-[50px]">
-            <h1 className="text-4xl lg:text-4xl font-default text-gray-800 mb-6 leading-snug">
-              Gateway to <span className="text-blue-500">Worldwide DID Numbers</span>
-            </h1>
-            <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
-              CloudQlobe’s DID solutions provide businesses with direct inward dialing numbers across multiple countries, ensuring seamless global communication. Our platform delivers reliable call quality, scalability, and efficient connectivity. With advanced technology, we help businesses connect with clients professionally and grow globally
-            </p>
-            <div className="flex gap-4">
-              <button
-                onClick={onGetStartedClick}
-                className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-              >
-                Get Started
-              </button>
-              <button
-                onClick={onLearnMoreClick}
-                className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
-              >
-                Learn More
-              </button>
-            </div>
+<div
+  className="
+    w-full
+    lg:w-1/2
+    flex flex-col
+    justify-center
+    z-10
 
-          </div>
+    mt-8
+    md:mt-16
+    lg:mt-[-50px]
+
+    ml-0
+    md:ml-0
+    lg:ml-[50px]
+
+    items-center
+    lg:items-start
+
+    text-center
+    lg:text-left
+  "
+>
+  <h1 className="text-3xl md:text-4xl font-default text-gray-800 mb-6 leading-snug max-w-[600px]">
+    Gateway to <span className="text-blue-500">Worldwide DID Numbers</span>
+  </h1>
+
+<p className="
+  text-gray-700
+  text-[15px]
+  leading-relaxed
+  mb-8
+  max-w-[520px]
+  text-center
+  md:text-center
+  lg:text-justify
+">
+    CloudQlobe’s DID solutions provide businesses with direct inward dialing numbers across multiple countries,
+    ensuring seamless global communication. Our platform delivers reliable call quality, scalability,
+    and efficient connectivity. With advanced technology, we help businesses connect with clients professionally
+    and grow globally.
+  </p>
+
+  <div className="flex gap-4 justify-center lg:justify-start">
+    <button
+      onClick={onGetStartedClick}
+      className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+    >
+      Get Started
+    </button>
+
+    <button
+      onClick={onLearnMoreClick}
+      className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
+    >
+      Learn More
+    </button>
+  </div>
+</div>
+
 
           {/* Right Side Timeline Infographic */}
-          <div className="lg:w-1/2 relative space-y-1.5 ml-[50px] mt-[-40px]">
+<div className="hidden lg:block lg:w-1/2 relative space-y-1.5 ml-[50px] mt-[-40px]">
 
             {/* Item 1 */}
             <div className="flex items-center relative">
