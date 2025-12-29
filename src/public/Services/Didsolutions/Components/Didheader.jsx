@@ -42,7 +42,8 @@ const Didheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   max-w-[520px]
   text-center
   md:text-center
-  lg:text-justify
+  text-justify
+  lg:text-left
 ">
     CloudQlobe’s DID solutions provide businesses with direct inward dialing numbers across multiple countries,
     ensuring seamless global communication. Our platform delivers reliable call quality, scalability,

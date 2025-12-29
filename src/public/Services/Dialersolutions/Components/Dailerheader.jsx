@@ -6,38 +6,43 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
     <div className="min-h-[764px] py-4 bg-gradient-to-br from-white to-white flex items-center">
 
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+<div className="flex flex-col lg:flex-row items-center gap-12
+  mt-[100px] sm:mt-[120px] md:mt-[150px] lg:mt-0">
           {/* Left Side Content */}
-          <div className="lg:w-1/2 flex flex-col justify-center z-10 ml-[45px] mt-[-50px]">
-            <h1 className="text-4xl lg:text-4xl font-default text-gray-800 mb-6 leading-snug">
-              Smart Dialer <span className="text-blue-500">Solutions for Businesses</span>
-            </h1>
-            <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8  max-w-[520px]">
-              CloudQlobe Dialer Solutions enable businesses to streamline outbound and inbound calls with efficiency and precision. Our platform ensures high call quality, intelligent routing, and real-time monitoring, helping teams maximize productivity and maintain seamless customer communication.
-            </p>
-            <div className="flex gap-4">
-              <button
-                onClick={onGetStartedClick}
-                className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-              >
-                Get Started
-              </button>
-              <button
-                onClick={onLearnMoreClick}
-                className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
-              >
-                Learn More
-              </button>
-            </div>
+<div className="lg:w-1/2 flex flex-col justify-center z-10 ml-0 lg:ml-[45px] text-center lg:text-left">
+  <h1 className="text-3xl lg:text-4xl font-default text-gray-800 mb-6 leading-snug">
+    Smart Dialer <span className="text-blue-500">Solutions for Businesses</span>
+  </h1>
 
-          </div>
+  <p className="text-gray-700 text-[15px] text-justify leading-relaxed mb-8 max-w-[520px] mx-auto lg:mx-0">
+    CloudQlobe Dialer Solutions enable businesses to streamline outbound and inbound calls with efficiency and precision. Our platform ensures high call quality, intelligent routing, and real-time monitoring, helping teams maximize productivity and maintain seamless customer communication.
+  </p>
+
+  <div className="flex gap-4 justify-center lg:justify-start">
+    <button
+      onClick={onGetStartedClick}
+      className="bg-blue-500 text-white px-6 py-3 hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+    >
+      Get Started
+    </button>
+
+    <button
+      onClick={onLearnMoreClick}
+      className="border-2 border-gray-300 text-gray-700 px-6 py-3 hover:bg-gray-50 transition-all duration-300 hover:border-gray-400"
+    >
+      Learn More
+    </button>
+  </div>
+</div>
+
 
           {/* Right Side Infographic */}
-          <div className="lg:w-1/2 relative mt-[-50px]">
+          <div className="lg:w-1/2 relative mt-[-40px]">
             <div className="space-y-8">
 
-              {/* Top Row - Circular Numbers */}
-              <div className="flex justify-center gap-6">
+{/* Top Row - Circular Numbers */}
+<div className="hidden lg:flex justify-center gap-6">
+
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
                     01
@@ -118,7 +123,7 @@ const TelecomHeroSection = ({ onGetStartedClick, onLearnMoreClick }) => {
               </div>
 
               {/* Bottom Right - Mixed Layout */}
-              <div className="flex justify-end gap-8">
+<div className="hidden lg:flex justify-end gap-8">
                 <div className="flex gap-4">
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">

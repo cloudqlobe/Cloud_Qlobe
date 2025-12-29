@@ -4,26 +4,26 @@ import {
   Mic,
   UserPlus,
   MessageCircle,
-  Settings,
-  Wifi,
   Headphones,
   Users,
 } from 'lucide-react';
 
 const Daileranimation = () => {
   return (
-    <div className="h-[700px] bg-[#0a2463] text-white px-6 py-16 space-y-20">
+    <div className="min-h-[700px] bg-[#0a2463] text-white px-6 py-16 space-y-20">
+
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row gap-12 items-center">
-        {/* Left Side Content - Bordered Container */}
+
+        {/* Left Side Content */}
         <div className="flex-1">
           <div className="border-2 border-yellow-400 rounded-xl p-8 space-y-8 bg-transparent">
-            {/* Heading & Subheading */}
+
             <div>
-              <h1 className="text-5xl font-default text-white leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-default text-white leading-tight">
                 Smart dialing made simple
               </h1>
-              <p className="mt-4 text-gray-300 text-lg max-w-lg">
+              <p className="mt-4 text-gray-300 text-base sm:text-lg max-w-lg">
                 Automate your outbound calls, connect faster, and keep customers engaged
                 with <span className="text-yellow-400 font-semibold">AI-driven dialers</span>.
               </p>
@@ -32,25 +32,28 @@ const Daileranimation = () => {
             {/* Icons in Two Columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 border-2 border-yellow-400 rounded-full flex items-center justify-center">
+                <div className="p-2 border-2 border-yellow-400 rounded-full">
                   <PhoneCall className="w-7 h-7 text-yellow-400" />
                 </div>
                 <span>Predictive & Power Dialing</span>
               </div>
+
               <div className="flex items-center gap-3">
-                <div className="p-2 border-2 border-yellow-400 rounded-full flex items-center justify-center">
+                <div className="p-2 border-2 border-yellow-400 rounded-full">
                   <Headphones className="w-7 h-7 text-yellow-400" />
                 </div>
                 <span>Live Call Monitoring</span>
               </div>
+
               <div className="flex items-center gap-3">
-                <div className="p-2 border-2 border-yellow-400 rounded-full flex items-center justify-center">
+                <div className="p-2 border-2 border-yellow-400 rounded-full">
                   <Users className="w-7 h-7 text-yellow-400" />
                 </div>
                 <span>CRM Integration</span>
               </div>
+
               <div className="flex items-center gap-3">
-                <div className="p-2 border-2 border-yellow-400 rounded-full flex items-center justify-center">
+                <div className="p-2 border-2 border-yellow-400 rounded-full">
                   <Mic className="w-7 h-7 text-yellow-400" />
                 </div>
                 <span>Voice Broadcasting</span>
@@ -59,9 +62,12 @@ const Daileranimation = () => {
           </div>
         </div>
 
-        {/* Right Side Form - Yellow Theme */}
+        {/* Right Side Form */}
         <div className="flex-1 bg-transparent border-2 border-yellow-400 text-white rounded-2xl p-8 shadow-xl max-w-xl w-full">
-          <h2 className="text-2xl font-default text-white mb-6">Request a Demo</h2>
+          <h2 className="text-xl sm:text-2xl font-default text-white mb-6">
+            Request a Demo
+          </h2>
+
           <form className="space-y-4">
             <input
               type="text"
@@ -100,7 +106,9 @@ const Daileranimation = () => {
             key={idx}
             className="bg-[#0a2463] border border-yellow-400 rounded-xl p-6 text-center hover:scale-105 transition-transform duration-300 shadow-lg"
           >
-            <div className="flex justify-center mb-3 text-yellow-400">{item.icon}</div>
+            <div className="flex justify-center mb-3 text-yellow-400">
+              {item.icon}
+            </div>
             <h4 className="text-lg font-semibold mb-1">{item.title}</h4>
             <p className="text-sm text-gray-300">{item.desc}</p>
           </div>

@@ -10,36 +10,45 @@ const Voipwebsiteheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="h-[764px] bg-white flex items-center justify-center px-4 py-8">
       {/* Main Container */}
-      <div className="max-w-6xl w-full grid grid-cols-2 gap-8">
+<div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
 
         {/* Left Side Content */}
-        <div className="mt-[80px] ml-[-65px]">
-          <h1 className="text-4xl md:text-4xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
-            Next-Gen <span className="text-blue-500 font-default"> Voip Website solutions</span>
-          </h1>
-          <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-            CloudQlobe provides custom VoIP website solutions for seamless online communication. Our platforms offer reliability, performance, and scalability, helping businesses connect with clients efficiently. With advanced features and intuitive design, we ensure secure and future-ready VoIP websites to support your growth.
-          </p>
+<div className="mt-[80px] text-center lg:text-left">
+  <h1 className="text-3xl sm:text-4xl lg:text-4xl font-default leading-snug text-gray-500 mb-6">
+    Next-Gen{' '}
+    <span className="text-blue-500 font-default">
+      Voip Website solutions
+    </span>
+  </h1>
 
-          <div className="flex flex-wrap gap-4 ml-[-40px]">
-            <button
-              onClick={onGetStartedClick}
-              className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
-            >
-              Get Started
-            </button>
-            <button
-              onClick={onLearnMoreClick}
-              className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
-            >
-              Learn More
-            </button>
-          </div>
+  <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 max-w-[520px] mx-auto lg:mx-0">
+    CloudQlobe provides custom VoIP website solutions for seamless online
+    communication. Our platforms offer reliability, performance, and scalability,
+    helping businesses connect with clients efficiently. With advanced features
+    and intuitive design, we ensure secure and future-ready VoIP websites to
+    support your growth.
+  </p>
 
-        </div>
+  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+    <button
+      onClick={onGetStartedClick}
+      className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
+    >
+      Get Started
+    </button>
+
+    <button
+      onClick={onLearnMoreClick}
+      className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
+    >
+      Learn More
+    </button>
+  </div>
+</div>
+
 
         {/* Right Side Infographic */}
-        <div className="relative flex items-center justify-center ml-[50px] mt-[100px] ">
+<div className="hidden lg:flex relative items-center justify-center mt-[100px]">
 
           {/* Timeline Items */}
           <div className="space-y-6">

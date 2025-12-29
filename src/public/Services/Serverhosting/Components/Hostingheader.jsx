@@ -14,23 +14,32 @@ const Hostingheader = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (
     <div className="py-16 bg-white  flex items-center h-[864px] mt-[-100px]">
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
 
           {/* Left Side Content */}
-          <div className="mt-[50px] ml-[85px]">
-            <h1 className="text-5xl md:text-4xl font-default leading-snug text-gray-500 ml-[-40px] mb-6">
-              Advanced <span className="text-blue-500 font-default">Hosting solutions</span>
+          <div className="mt-[50px] ml-0 lg:ml-[40px] text-center lg:text-left">
+            <h1 className="text-3xl md:text-4xl font-default text-gray-800 mb-6 leading-snug max-w-[600px]">
+              Advanced{' '}
+              <span className="text-blue-500 font-default">
+                Hosting solutions
+              </span>
             </h1>
-            <p className="text-gray-700 text-[15px] leading-relaxed text-justify mb-8 ml-[-40px] max-w-[520px]">
-              CloudQlobe provides secure and scalable cloud hosting solutions for businesses of all sizes. Our platform ensures high performance, reliable uptime, and optimized resources. With advanced security and global infrastructure, we deliver seamless access and uninterrupted connectivity.
+
+            <p className="text-gray-700 text-[15px] leading-relaxed mb-8 max-w-[520px] mx-auto lg:mx-0 text-justify">
+              CloudQlobe provides secure and scalable cloud hosting solutions for businesses
+              of all sizes. Our platform ensures high performance, reliable uptime, and
+              optimized resources. With advanced security and global infrastructure, we
+              deliver seamless access and uninterrupted connectivity.
             </p>
-            <div className="flex flex-wrap gap-4 ml-[-40px]">
+
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <button
                 onClick={onGetStartedClick}
                 className="bg-blue-500 text-white px-6 py-3 squared-sm hover:bg-blue-600 transition font-medium shadow-md"
               >
                 Get Started
               </button>
+
               <button
                 onClick={onLearnMoreClick}
                 className="border border-gray-400 text-black px-6 py-3 rounded-sm hover:bg-gray-100 transition font-medium shadow-sm"
@@ -38,11 +47,11 @@ const Hostingheader = ({ onGetStartedClick, onLearnMoreClick }) => {
                 Learn More
               </button>
             </div>
-
           </div>
 
+
           {/* Right Side Infographic */}
-          <div className="lg:w-1/2 relative - ml-[280px] mt-[60px]">
+          <div className="hidden lg:block lg:w-1/2 relative mt-[60px]">
             <div className="relative w-[460px] h-[460px] mx-auto">
 
               {/* Center Circle */}
