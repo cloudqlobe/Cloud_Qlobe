@@ -3,13 +3,14 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 import axiosInstance from "../../../utils/axiosinstance";
+import { useLoader } from "../../../context/LoaderContext/page";
 
 const SuperAdminLoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -150,7 +151,7 @@ const SuperAdminLoginForm = () => {
               Remember me
             </label>
           </div>
-          
+
           <button
             type="button"
             onClick={() => setShowForgotPasswordModal(true)}
@@ -181,12 +182,12 @@ const SuperAdminLoginForm = () => {
             >
               <FaTimes />
             </button>
-            
+
             <h3 className="text-2xl font-bold text-gray-800 mb-2">Reset Password</h3>
             <p className="text-sm text-gray-600 mb-6">
               Enter your email address and we'll send you instructions to reset your password.
             </p>
-            
+
             <div className="mb-6">
               <label className="block text-sm text-gray-700 mb-1">Email Address</label>
               <input
@@ -197,7 +198,7 @@ const SuperAdminLoginForm = () => {
                 className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            
+
             <button
               onClick={handleForgotPassword}
               disabled={isLoading}

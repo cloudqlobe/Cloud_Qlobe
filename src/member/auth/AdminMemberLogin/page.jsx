@@ -3,8 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axiosInstance from "../../../utils/axiosinstance";
+import LoadingAnimation from "../../../components/LoadingPage";
+import { useLoader } from "../../../context/LoaderContext/page";
 
 const AdminMemberSignInPage = () => {
+  const { isLoading, setIsLoading } = useLoader();
+  
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,35 +26,37 @@ const AdminMemberSignInPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (!formData.username || !formData.password || !formData.selectDepartment) {
-      return toast.error("Please fill in all fields");
+      toast.error("Please fill in all fields");
+      return;
     }
 
-    e.preventDefault();
+    setIsLoading(true);
+
     try {
       const response = await axiosInstance.post(
         `/api/member/login`,
         formData,
         { withCredentials: true }
       );
-      
-      // Store member ID for token verification
+
       sessionStorage.setItem("pendingMemberId", response.data.memberId);
-      
+
       setFormData({
         username: "",
         password: "",
         selectDepartment: "",
       });
-      
-      // Redirect to token verification page
-navigate("/member/verify-token", {
-  state: { selectDepartment: formData.selectDepartment }
-});
-      
+
+      navigate("/member/verify-token", {
+        state: { selectDepartment: formData.selectDepartment }
+      });
+
     } catch (error) {
       console.log(error);
-      
+
       if (error.response) {
         if (error.response.status === 404) {
           toast.error("Member not found!");
@@ -64,10 +70,17 @@ navigate("/member/verify-token", {
       } else {
         toast.error("Network error. Please check your connection.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
+
 
   return (
+
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <div className="mb-8 text-center">
@@ -146,10 +159,14 @@ navigate("/member/verify-token", {
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              disabled={isLoading}
+              className={`w-full py-2 px-4 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2
+    ${isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}
+  `}
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
+
           </div>        </form>
       </div>
       <ToastContainer position="top-right" autoClose={5000} />

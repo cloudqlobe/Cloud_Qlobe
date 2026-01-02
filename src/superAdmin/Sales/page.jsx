@@ -60,7 +60,7 @@ const TelecomSalesDashboard = () => {
     activeLeads: 3847,
     inactiveLeads: 2156,
     junkLeads: 1891,
-    spamLeads: 1051,
+    scamLeads: 1051,
     convertedLeads: 1243,
     totalRevenue: 2847632,
     conversionRate: 13.9,
@@ -79,7 +79,7 @@ const TelecomSalesDashboard = () => {
     { id: 3, type: 'inactive', name: 'Amit Sharma', phone: '+91-8765432109', service: 'Prepaid', action: 'No response for 7 days', time: '1 hour ago', priority: 'low', status: 'inactive', location: 'Bangalore, KA' },
     { id: 4, type: 'junk', name: 'Test User', phone: '+91-1111111111', service: 'Enterprise', action: 'Invalid contact details', time: '2 hours ago', priority: 'junk', status: 'junk', location: 'Unknown' },
     { id: 5, type: 'conversion', name: 'Sunita Patel', phone: '+91-9988776655', service: '5G Postpaid', action: 'Plan activated successfully', time: '3 hours ago', priority: 'converted', status: 'converted', location: 'Chennai, TN' },
-    { id: 6, type: 'spam', name: 'Sales Bot', phone: '+91-0000000000', service: 'Multiple', action: 'Automated spam inquiry', time: '4 hours ago', priority: 'spam', status: 'spam', location: 'Bot' }
+    { id: 6, type: 'scam', name: 'Sales Bot', phone: '+91-0000000000', service: 'Multiple', action: 'Automated scam inquiry', time: '4 hours ago', priority: 'scam', status: 'scam', location: 'Bot' }
   ];
 
   const telecomPlans = [
@@ -284,8 +284,8 @@ const TelecomSalesDashboard = () => {
                 subtitle: 'Invalid data' 
               },
               { 
-                title: 'Spam Leads', 
-                value: stats.spamLeads.toLocaleString(), 
+                title: 'Scam Leads', 
+                value: stats.scamLeads.toLocaleString(), 
                 change: '-8.3%', 
                 trend: 'down', 
                 icon: Shield, 
@@ -480,8 +480,8 @@ const TelecomSalesDashboard = () => {
                   <div className="flex items-center space-x-3">
                     <Shield className="w-5 h-5 text-red-600" />
                     <div>
-                      <p className="font-semibold text-red-900">Spam</p>
-                      <p className="text-sm text-red-700">{stats.spamLeads.toLocaleString()} leads</p>
+                      <p className="font-semibold text-red-900">Scam</p>
+                      <p className="text-sm text-red-700">{stats.scamLeads.toLocaleString()} leads</p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -526,7 +526,7 @@ const TelecomSalesDashboard = () => {
                       activity.status === 'active' ? 'bg-green-500' :
                       activity.status === 'inactive' ? 'bg-yellow-500' :
                       activity.status === 'junk' ? 'bg-orange-500' :
-                      activity.status === 'spam' ? 'bg-red-500' :
+                      activity.status === 'scam' ? 'bg-red-500' :
                       activity.status === 'converted' ? 'bg-blue-500' :
                       'bg-gray-500'
                     }`}></div>
@@ -538,7 +538,7 @@ const TelecomSalesDashboard = () => {
                           activity.priority === 'medium' ? 'bg-yellow-100 text-yellow-600' :
                           activity.priority === 'converted' ? 'bg-green-100 text-green-600' :
                           activity.priority === 'junk' ? 'bg-orange-100 text-orange-600' :
-                          activity.priority === 'spam' ? 'bg-red-100 text-red-600' :
+                          activity.priority === 'scam' ? 'bg-red-100 text-red-600' :
                           'bg-gray-100 text-gray-600'
                         }`}>
                           {activity.priority}
@@ -642,7 +642,7 @@ const TelecomSalesDashboard = () => {
             </button>
             <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center shadow-md hover:shadow-lg">
               <Shield className="w-4 h-4 mr-2" />
-              Block Spam Sources
+              Block Scam Sources
             </button>
             <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center shadow-md hover:shadow-lg">
               <Download className="w-4 h-4 mr-2" />

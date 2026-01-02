@@ -29,11 +29,7 @@ const NewLeads = () => {
         if (memberDetails.role === "salemember" || "leadmember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
-          console.log("data",data);
-          
-        } else if (memberDetails.role === "superAdmin") {
-          const response = await axiosInstance.get(`api/customers`);
-          data = response.data.customer;
+          console.log("data", data);
         }
 
         const filteredCustomers = data?.filter(
@@ -75,7 +71,18 @@ const NewLeads = () => {
     });
   }, [customers, search, leadStatusFilter]);
 
-  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
+  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Scam"];
+  const statusColorMap = {
+    new: "text-yellow-500",
+    active: "text-green-500",
+    inactive: "text-red-500",
+    scam: "text-red-500",
+    junk: "text-red-500",
+    dead: "text-red-500",
+    hot: "text-red-500",
+  };
+  const formatStatus = (status = "") =>
+    status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
 
   return (
     <div>
@@ -191,12 +198,12 @@ const NewLeads = () => {
         </div>
         {/* Customer Table */}
         <div className="bg-white shadow-md rounded-lg mt-6"
-  
+
         >
           {loading ? (
             <p className="text-center text-gray-500 py-4">Loading...</p>
           ) : (
-            <table className="table-auto text-left" style={{width:"97vw", marginLeft:"22px"}}>
+            <table className="table-auto text-left" style={{ width: "97vw", marginLeft: "22px" }}>
               <thead>
                 <tr className="bg-yellow-500 text-white">
                   <th className="py-3 px-4">Company Name</th>
@@ -218,7 +225,12 @@ const NewLeads = () => {
                       <td className="py-3 px-4">{customer.contactPerson}</td>
                       <td className="py-3 px-4">{customer.userEmail}</td>
                       <td className="py-3 px-4">{customer.country}</td>
-                      <td className="py-3 px-4">{customer.leadStatus}</td>
+                      <td
+                        className={`py-3 px-4 font-semibold ${statusColorMap[customer.leadStatus] || "text-gray-500"
+                          }`}
+                      >
+                        {formatStatus(customer.leadStatus)}
+                      </td>
                     </tr>
                   ))
                 ) : (

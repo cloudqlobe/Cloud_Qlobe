@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GlobalLoader from "./components/GlobalLoader.jsx";
 
 function App() {
 
@@ -26,27 +27,32 @@ function App() {
 
 
   return (
-    <Router>
-      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
-      <ScrollToTop />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/*" element={<PublicRoutes />} />
+    <>
+      <GlobalLoader />
 
-        {/* Customer Routes */}
-        <Route path="/customer/*" element={<CustomerRoutes />} />
+      <Router>
+        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+        <ScrollToTop />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/*" element={<PublicRoutes />} />
 
-        {/* Admin Routes */}
-        <Route path="/admin/*" element={<AdminRoutes />} />
+          {/* Customer Routes */}
+          <Route path="/customer/*" element={<CustomerRoutes />} />
 
-        {/* SuperAdmin Routes */}
-        <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
+          {/* Admin Routes */}
+          <Route path="/admin/*" element={<AdminRoutes />} />
 
-        {/* Member Routes */}
-        <Route path="/member/*" element={<MemberRoutes />} />
-      </Routes>
+          {/* SuperAdmin Routes */}
+          <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
 
-    </Router>
+          {/* Member Routes */}
+          <Route path="/member/*" element={<MemberRoutes />} />
+        </Routes>
+
+      </Router>
+    </>
+
   );
 }
 

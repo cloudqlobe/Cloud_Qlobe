@@ -32,7 +32,7 @@ const PaymentsTab = ({ customerId }) => {
   // Dummy Data for Refunds (Added reason field)
   // useEffect(() => {
   //   const dummyRefunds = [
-  //     { id: 1, amount: "$100", type: "Online", time: "2025-01-09 15:00", mode: "Credit Card", user: "John Doe", refNo: "DEF123", agent: "Agent1", reason: "spam", status: "Completed" },
+  //     { id: 1, amount: "$100", type: "Online", time: "2025-01-09 15:00", mode: "Credit Card", user: "John Doe", refNo: "DEF123", agent: "Agent1", reason: "Scam", status: "Completed" },
   //     { id: 2, amount: "$50", type: "Bank Transfer", time: "2025-01-08 11:00", mode: "Bank", user: "Jane Doe", refNo: "UVW456", agent: "Agent2", reason: "fake customer", status: "Pending" },
   //     { id: 3, amount: "$200", type: "Cash", time: "2025-01-07 10:00", mode: "Cash", user: "John Smith", refNo: "XYZ789", agent: "Agent3", reason: "Overcharged", status: "Completed" },
   //   ];

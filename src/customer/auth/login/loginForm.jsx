@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Lightbulb, Briefcase, Megaphone, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosinstance";
+import { useLoader } from "../../../context/LoaderContext/page";
 
 const Loginpagemain = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Loginpagemain = () => {
     username: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -22,7 +23,7 @@ const Loginpagemain = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     setError("");
 
     try {
@@ -36,7 +37,7 @@ const Loginpagemain = () => {
         "Login failed. Please check your credentials and try again."
       );
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -153,9 +154,9 @@ const Loginpagemain = () => {
               <button
                 type="submit"
                 className="w-full bg-yellow-400 text-white py-3 rounded-lg font-semibold hover:bg-yellow-500 transition flex justify-center items-center"
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? (
+                {isLoading ? (
                   <>
                     <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

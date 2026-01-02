@@ -66,7 +66,7 @@ const AdminLeadsPage = () => {
     });
   }, [leads, search, leadStatusFilter]);
 
-  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
+  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Scam"];
 
   return (
     <div>

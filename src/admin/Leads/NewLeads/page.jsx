@@ -86,7 +86,7 @@ const AdminNewLeads = () => {
   const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
+  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Scam"];
 
   return (
     <div>

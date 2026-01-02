@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DollarSign } from "lucide-react";
 import { LuTarget } from "react-icons/lu";
 import { SiLightning } from "react-icons/si";
@@ -7,19 +7,17 @@ import { Area, XAxis, YAxis, CartesianGrid } from "recharts";
 
 import {
   AreaChart,
-
   PieChart,
   Pie,
   Cell,
   Legend,
-
-
   Tooltip,
-
   ResponsiveContainer,
 } from "recharts";
 import Layout from "../layout/page";
 import AuthContext from "../../context/AuthContext";
+import { useLoader } from "../../context/LoaderContext/page";
+import axiosInstance from "../../utils/axiosinstance";
 
 // Pie Chart Data
 const pieData = [
@@ -99,8 +97,66 @@ const growthStats = {
 
 
 const MemberDashboard = () => {
-    const { memberDetails } = useContext(AuthContext);
-      if (!memberDetails || !memberDetails.id) {
+  const { memberDetails } = useContext(AuthContext);
+  const { setIsLoading } = useLoader();
+const [activeLeads, setActiveLeads] = useState([]);
+const [activeCustomers, setActiveCustomers] = useState([]);
+const [activeCarriers, setActiveCarriers] = useState([]);
+
+  useEffect(() => {
+const fetchCustomers = async () => {
+  setIsLoading(true);
+  try {
+    let data = [];
+
+    if (
+      memberDetails.role === "salemember" ||
+      memberDetails.role === "leadmember"
+    ) {
+      const response = await axiosInstance.get(
+        `api/member/lead/${memberDetails.id}`
+      );
+      data = response.data.customer || [];
+    }
+
+    // ✅ FILTERING
+    const leads = data.filter(
+      (item) =>
+        item.customerStatus === "active" &&
+        item.leadType === "New lead"
+    );
+
+    const customers = data.filter(
+      (item) =>
+        item.customerStatus === "active" &&
+        item.leadType === "Customer"
+    );
+
+    const carriers = data.filter(
+      (item) =>
+        item.customerStatus === "active" &&
+        item.leadType === "Carrier"
+    );
+
+    // ✅ SET STATE
+    setActiveLeads(leads);
+    setActiveCustomers(customers);
+    setActiveCarriers(carriers);
+
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+    if (memberDetails?.id) {
+      fetchCustomers();
+    }
+  }, [memberDetails.id, memberDetails.role]);
+
+  if (!memberDetails || !memberDetails.id) {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-screen">
@@ -109,7 +165,8 @@ const MemberDashboard = () => {
       </Layout>
     );
   }
-  
+  console.log("activeLeads", activeLeads);
+
   return (
     <Layout>
       <div className="min-h-screen bg-white p-6">
@@ -122,9 +179,9 @@ const MemberDashboard = () => {
             iconBg="bg-[#457B9D]"
             color="bg-white text-[#E63946] border border-[#FECACA]"
             tabData={[
-              { label: "Total", value: "120,000" },
-              { label: "Monthly", value: "72,300" },
-              { label: "Weekly", value: "18,200" },
+              { label: "Total", value: "0" },
+              { label: "Monthly", value: "0" },
+              { label: "Weekly", value: "0" },
             ]}
           />
           <StatCard
@@ -134,9 +191,9 @@ const MemberDashboard = () => {
             iconBg="bg-[#2A9D8F]"
             color="bg-white text-[#2A9D8F] border border-[#C0EDEA]"
             tabData={[
-              { label: "Total", value: "920" },
-              { label: "Monthly", value: "230" },
-              { label: "Weekly", value: "60" },
+              { label: "Total", value: "0" },
+              { label: "Monthly", value: "0" },
+              { label: "Weekly", value: "0" },
             ]}
           />
           <StatCard
@@ -146,9 +203,9 @@ const MemberDashboard = () => {
             iconBg="bg-red-500"
             color="bg-white text-[#457B9D] border border-[#CFE7F0]"
             tabData={[
-              { label: "Total", value: "2,000" },
-              { label: "Monthly", value: "1,340" },
-              { label: "Weekly", value: "380" },
+              { label: "Total", value: "0" },
+              { label: "Monthly", value: "0" },
+              { label: "Weekly", value: "0" },
             ]}
           />
         </div>
@@ -157,36 +214,39 @@ const MemberDashboard = () => {
         <div className="flex gap-6 overflow-x-auto">
           <div className="flex flex-col gap-6 min-w-[calc(280px*4+48px)]">
             <div className="flex gap-4">
-              <MiniCard
-                title="Active Leads"
-                borderColor="border-orange-400"
-                tabs={[
-                  { label: "Weekly", value: 32 },
-                  { label: "Monthly", value: 120 },
-                  { label: "Total", value: 450 },
-                ]}
-                growthData={growthStats.leads}
-              />
-              <MiniCard
-                title="Active Customers"
-                borderColor="border-blue-400"
-                tabs={[
-                  { label: "Weekly", value: 20 },
-                  { label: "Monthly", value: 85 },
-                  { label: "Total", value: 600 },
-                ]}
-                growthData={growthStats.customers}
-              />
-              <MiniCard
-                title="Active Carriers"
-                borderColor="border-green-400"
-                tabs={[
-                  { label: "Local", value: 18 },
-                  { label: "Global", value: 12 },
-                  { label: "Total", value: 30 },
-                ]}
-                growthData={growthStats.carriers}
-              />
+<MiniCard
+  title="Active Leads"
+  borderColor="border-orange-400"
+  tabs={[
+    { label: "Weekly", value: activeLeads.length },
+    { label: "Monthly", value: activeLeads.length },
+    { label: "Total", value: activeLeads.length },
+  ]}
+  growthData={growthStats.leads}
+/>
+
+<MiniCard
+  title="Active Customers"
+  borderColor="border-blue-400"
+  tabs={[
+    { label: "Weekly", value: activeCustomers.length },
+    { label: "Monthly", value: activeCustomers.length },
+    { label: "Total", value: activeCustomers.length },
+  ]}
+  growthData={growthStats.customers}
+/>
+
+<MiniCard
+  title="Active Carriers"
+  borderColor="border-green-400"
+  tabs={[
+    { label: "Local", value: activeCarriers.length },
+    { label: "Global", value: activeCarriers.length },
+    { label: "Total", value: activeCarriers.length },
+  ]}
+  growthData={growthStats.carriers}
+/>
+
               <div className="min-w-[580px] border border-orange-400 squared-2xl p-4 shadow-md">
                 <h3 className="text-lg font-semibold mb-2 text-orange-700">Search</h3>
                 <p className="text-sm text-gray-600 mb-3">Connecting continents</p>

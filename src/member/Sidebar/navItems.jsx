@@ -140,8 +140,8 @@ export const getNavItems = (memberRole) => [
       { label: makeLabel(FaTicketAlt, "accent", "My Tickets"), href: "/member/communication/myTickets" },
       { label: makeLabel(FaEnvelope, "purple", "Emails"), href: "/member/communication/email" },
       { label: makeLabel(FaComments, "indigo", "Chat Panel"), href: "/member/communication/chatpanel" },
-      { label: makeLabel(FaComments, "pink", "Messages"), href: "/member/communication/messages" },
-      { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/member/communication/assistance" }
+      // { label: makeLabel(FaComments, "pink", "Messages"), href: "/member/communication/messages" },
+      // { label: makeLabel(FaHeadset, "danger", "Internal Assistance"), href: "/member/communication/assistance" }
     ]
   },
   {

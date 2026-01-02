@@ -3,10 +3,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axiosInstance from "../../../utils/axiosinstance";
+import { useLoader } from "../../../context/LoaderContext/page";
 
 const AdminSigninPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ const AdminSigninPage = () => {
       navigate("/admin/verify-token");
       toast.success("Successfully logged in!");
     } catch (error) {
-      
+
       if (error.response) {
         if (error.response.status === 404) {
           toast.error("Admin account not found!");

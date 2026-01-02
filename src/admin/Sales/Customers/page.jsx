@@ -80,7 +80,7 @@ const AdminSaleCustomersPage = () => {
     startIndex + itemsPerPage
   );
 
-  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Spam"];
+  const leadStatuses = ["New", "Hot", "Junk", "Active", "Inactive", "Dead", "Scam"];
 
   return (
     <div>

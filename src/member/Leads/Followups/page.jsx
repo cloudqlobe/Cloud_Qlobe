@@ -25,10 +25,6 @@ const FollowUp = () => {
           const followUpsResponse = await axiosInstance.get(`api/member/getCustomerFollowupsByMemberId/${memberDetails.id}`);
           data = followUpsResponse.data.followups;
           console.log(data,"data");
-          
-        } else if (memberDetails.role === "superAdmin") {
-          const followUpsResponse = await axiosInstance.get(`api/member/customerfollowups`);
-          data = followUpsResponse.data.followups;
         }
         setFollowUpData(data);
 
