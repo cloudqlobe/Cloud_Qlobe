@@ -3,6 +3,8 @@ import { Lightbulb, Briefcase, Megaphone, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosinstance";
 import { useLoader } from "../../../context/LoaderContext/page";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Loginpagemain = () => {
   const navigate = useNavigate();
@@ -38,8 +40,12 @@ const Loginpagemain = () => {
         });
 
         sessionStorage.setItem("role", "guest");
-        navigate("/customer/rates"); // or guest dashboard
-      } else {
+
+        toast.success("Guest login successful 🎉");
+
+        navigate("/rates");
+      }
+      else {
         // 👉 Customer Login
         response = await axiosInstance.post("/api/login", formData);
 

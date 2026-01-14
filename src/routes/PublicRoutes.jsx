@@ -15,7 +15,6 @@ import SocialMediaIcons from "../public/Components/Socialmediaicons.jsx";
 import Specialrate from "../public/Components/Specialrate.jsx";
 import useAuth from "../auth/useAuth.js";
 import Ratespages from "../public/Rates/pages.jsx";
-import PublicOrAuthRoute from "../public/Components/PublicOrAuthRoute.jsx";
 
 const PublicRoutes = () => {
   const location = useLocation();
@@ -27,8 +26,6 @@ const PublicRoutes = () => {
   const { isAuthenticated, isLoading } = useAuth(
     shouldCheckAuth ? "customer" : null
   );
-
-
 
   return (
     <>
