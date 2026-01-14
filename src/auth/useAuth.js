@@ -49,9 +49,9 @@ const useAuth = (role = "user") => {
       });
 
       if (error.response?.status !== 401) {
-        toast.error(
-          error.response?.data?.message || "Authentication error"
-        );
+        // toast.error(
+        //   error.response?.data?.message || "Authentication error"
+        // );
       }
     }
   }, [role]);
