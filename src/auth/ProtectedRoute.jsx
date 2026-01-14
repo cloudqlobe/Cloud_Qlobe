@@ -14,7 +14,7 @@ export const GuestRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? children : <Navigate to="/guest/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/customer/login" replace />;
 };
 
 

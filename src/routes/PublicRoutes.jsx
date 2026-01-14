@@ -40,14 +40,6 @@ const PublicRoutes = () => {
         <Route path="/about" element={<Aboutpages />} />
         <Route path="/contact" element={<Contactpages />} />
         <Route path="/faq" element={<Faqpages />} />
-        <Route
-          path="/rates"
-          element={
-            <PublicOrAuthRoute>
-              <Ratespages />
-            </PublicOrAuthRoute>
-          }
-        />
 
         {/* Service Pages */}
         <Route path="/services/cc-routes" element={<CcRoutes />} />
