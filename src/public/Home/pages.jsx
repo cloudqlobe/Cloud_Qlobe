@@ -16,6 +16,7 @@ const Homepages = () => {
   const { isAuthenticated, isLoading } = useAuth("customer");
   const homeAnimationRef = useRef(null); // Ref for Homeanimation
   const homeContent1Ref = useRef(null);  // Ref for Homecontent1
+  const role = sessionStorage.getItem("role");
 
   const handleScrollToAnimation = () => {
     if (homeAnimationRef.current) {
@@ -36,7 +37,11 @@ const Homepages = () => {
         onGetStartedClick={handleScrollToAnimation}
         onLearnMoreClick={handleScrollToContent1}
       />
-      {!isLoading && isAuthenticated && <Homescroller />}
+
+      {role === "guest"
+        ? <Homescroller />
+        : (!isLoading && isAuthenticated && <Homescroller />)
+      }
 
       <Homeservices />
 

@@ -12,6 +12,7 @@ const Loginpagemain = () => {
   });
   const { isLoading, setIsLoading } = useLoader();
   const [error, setError] = useState("");
+  const [isGuest, setIsGuest] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,9 +28,24 @@ const Loginpagemain = () => {
     setError("");
 
     try {
-      const response = await axiosInstance.post("/api/login", formData);
-      sessionStorage.setItem("tempAuthToken", response?.data.tempAuthToken)
-      navigate('/customer/verify-token')
+      let response;
+
+      if (isGuest) {
+        // 👉 Guest Login
+        response = await axiosInstance.post("/api/guest/login", {
+          customerId: formData.username,
+          password: formData.password,
+        });
+
+        sessionStorage.setItem("role", "guest");
+        navigate("/customer/rates"); // or guest dashboard
+      } else {
+        // 👉 Customer Login
+        response = await axiosInstance.post("/api/login", formData);
+
+        sessionStorage.setItem("tempAuthToken", response.data.tempAuthToken);
+        navigate("/customer/verify-token");
+      }
     } catch (err) {
       console.error("Login error:", err);
       setError(
@@ -40,6 +56,7 @@ const Loginpagemain = () => {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="flex flex-col h-[600px] bg-gray-100">
@@ -100,7 +117,16 @@ const Loginpagemain = () => {
         {/* Right Side - Login Form */}
         <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 p-6">
           <div className="w-full max-w-md">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Login</h1>
+            <div className="flex justify-between items-baseline">
+              <h1 className="text-3xl font-bold text-gray-800 mb-6">Login</h1>
+              <p
+                className="text-blue-500 font-semibold cursor-pointer hover:underline"
+                onClick={() => setIsGuest(!isGuest)}
+              >
+                Switch to {isGuest ? "Customer Login" : "Guest Login"}
+              </p>
+            </div>
+
             {error && (
               <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
                 {error}
@@ -109,17 +135,23 @@ const Loginpagemain = () => {
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-medium text-gray-600">
-                  Username / Customer ID
+                  {isGuest ? "Customer ID" : "Username / Customer ID"}
                 </label>
+
                 <input
                   type="text"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  placeholder="Enter your username or customerid"
+                  placeholder={
+                    isGuest
+                      ? "Enter your Customer ID"
+                      : "Enter your username or customer ID"
+                  }
                   className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none bg-white"
                   required
                 />
+
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600">
@@ -135,21 +167,23 @@ const Loginpagemain = () => {
                   required
                 />
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <a
-                  href="/customer/forgot-password"
-                  className="text-yellow-500 hover:underline"
-                >
-                  Forgot password?
-                </a>
+              {!isGuest && (
+                <div className="flex justify-between items-center text-sm">
+                  <a
+                    href="/customer/forgot-password"
+                    className="text-yellow-500 hover:underline"
+                  >
+                    Forgot password?
+                  </a>
 
-                <a
-                  href="/customer/register"
-                  className="text-yellow-500 hover:underline"
-                >
-                  Don’t have an account? Register
-                </a>
-              </div>
+                  <a
+                    href="/customer/register"
+                    className="text-yellow-500 hover:underline"
+                  >
+                    Don’t have an account? Register
+                  </a>
+                </div>
+              )}
 
               <button
                 type="submit"

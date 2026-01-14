@@ -34,6 +34,7 @@ const DashboardSidebar = () => {
   const sidebarItems = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3, path: "/superadmin/dashboard" },
     { id: "customers", label: "Customers", icon: Users, path: "/superadmin/customers" },
+    { id: "guest", label: "Guest", icon: Users, path: "/superadmin/guest/create" },
     { id: "admins", label: "Admins", icon: UserCog, path: "/superadmin/admins" },
     { id: "members", label: "Members", icon: UserCheck, path: "/superadmin/members" },
 
@@ -82,24 +83,24 @@ const DashboardSidebar = () => {
         { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/carriers/settings" }
       ],
     },
-{
-  id: "accounts",
-  label: "Accounts",
-  icon: FileText,
-  path: "/superadmin/accounts/dashboard",
-  children: [
-    { id: "dashboard", label: "Dashboard", icon: BarChart3, path: "/superadmin/accounts/dashboard" },
-    { id: "overview", label: "Financial Overview", icon: PieChart, path: "/superadmin/accounts/overview" },
-    { id: "ccrate", label: "CC Rate", icon: PhoneCall, path: "/superadmin/accounts/ccrate" },
-    { id: "clirate", label: "CLI Rate", icon: PhoneForwarded, path: "/superadmin/accounts/clirate" },
-    { id: "revenue", label: "Revenue Analytics", icon: TrendingUp, path: "/superadmin/accounts/revenue" },
-    { id: "accounts", label: "Account Management", icon: Users, path: "/superadmin/accounts/manage" },
-    { id: "expenses", label: "Expense Tracking", icon: CreditCard, path: "/superadmin/accounts/expenses" },
-    { id: "departments", label: "Department P&L", icon: Building2, path: "/superadmin/accounts/departments" },
-    { id: "reports", label: "Financial Reports", icon: FileText, path: "/superadmin/accounts/reports" },
-    { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/accounts/settings" }
-  ],
-},
+    {
+      id: "accounts",
+      label: "Accounts",
+      icon: FileText,
+      path: "/superadmin/accounts/dashboard",
+      children: [
+        { id: "dashboard", label: "Dashboard", icon: BarChart3, path: "/superadmin/accounts/dashboard" },
+        { id: "overview", label: "Financial Overview", icon: PieChart, path: "/superadmin/accounts/overview" },
+        { id: "ccrate", label: "CC Rate", icon: PhoneCall, path: "/superadmin/accounts/ccrate" },
+        { id: "clirate", label: "CLI Rate", icon: PhoneForwarded, path: "/superadmin/accounts/clirate" },
+        { id: "revenue", label: "Revenue Analytics", icon: TrendingUp, path: "/superadmin/accounts/revenue" },
+        { id: "accounts", label: "Account Management", icon: Users, path: "/superadmin/accounts/manage" },
+        { id: "expenses", label: "Expense Tracking", icon: CreditCard, path: "/superadmin/accounts/expenses" },
+        { id: "departments", label: "Department P&L", icon: Building2, path: "/superadmin/accounts/departments" },
+        { id: "reports", label: "Financial Reports", icon: FileText, path: "/superadmin/accounts/reports" },
+        { id: "settings", label: "Settings", icon: Settings, path: "/superadmin/accounts/settings" }
+      ],
+    },
 
     {
       id: "supports",

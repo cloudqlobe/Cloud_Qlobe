@@ -19,6 +19,7 @@ import CarriersManagementDashboard from "../superAdmin/Carriers/page.jsx";
 import SuperAdminCCRate from "../superAdmin/Accounts/Rates/CCRate/page.jsx";
 import SuperAdminCLIRate from "../superAdmin/Accounts/Rates/CLIRate/page.jsx";
 import SuperAdminProfile from "../superAdmin/Profile/page.jsx";
+import CreateGuestAccount from "../superAdmin/CreateGuestAccount.jsx";
 
 const SuperAdminRoutes = () => {
   return (
@@ -38,6 +39,8 @@ const SuperAdminRoutes = () => {
             <Route path="/reports" element={<Dummy />} />
             <Route path="/settings" element={<Dummy />} />
             <Route path="/profile" element={<SuperAdminProfile />} />
+
+            <Route path="/guest/create" element={<CreateGuestAccount />} />
 
             <Route path="/marketing/dashboard" element={<MarketingDashboard />} />
             <Route path="/marketing/leads" element={<Dummy />} />

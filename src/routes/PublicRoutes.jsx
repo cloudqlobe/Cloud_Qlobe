@@ -11,15 +11,23 @@ import Homepages from "../public/Home/pages.jsx";
 import Aboutpages from "../public/About/pages.jsx";
 import Contactpages from "../public/contact/pages.jsx";
 import Faqpages from "../public/FAQ/pages.jsx";
-import Ratepages from "../public/Rates/pages.jsx";
 import SocialMediaIcons from "../public/Components/Socialmediaicons.jsx";
 import Specialrate from "../public/Components/Specialrate.jsx";
 import useAuth from "../auth/useAuth.js";
+import Ratespages from "../public/Rates/pages.jsx";
+import PublicOrAuthRoute from "../public/Components/PublicOrAuthRoute.jsx";
 
 const PublicRoutes = () => {
   const location = useLocation();
   const isRatePage = location.pathname === "/rates";
-  const { isAuthenticated, isLoading } = useAuth("customer");
+  const role = sessionStorage.getItem("role");
+
+  const shouldCheckAuth = role !== "guest";
+
+  const { isAuthenticated, isLoading } = useAuth(
+    shouldCheckAuth ? "customer" : null
+  );
+
 
 
   return (
@@ -32,6 +40,15 @@ const PublicRoutes = () => {
         <Route path="/about" element={<Aboutpages />} />
         <Route path="/contact" element={<Contactpages />} />
         <Route path="/faq" element={<Faqpages />} />
+        <Route
+          path="/rates"
+          element={
+            <PublicOrAuthRoute>
+              <Ratespages />
+            </PublicOrAuthRoute>
+          }
+        />
+
         {/* Service Pages */}
         <Route path="/services/cc-routes" element={<CcRoutes />} />
         <Route path="/services/cli-voice" element={<CliVoice />} />
@@ -41,7 +58,12 @@ const PublicRoutes = () => {
         <Route path="/services/voip-websites" element={<VoipWebsites />} />
       </Routes>
 
-      {!isLoading && isAuthenticated && <Specialrate />}
+      {(role === "guest" || isAuthenticated) && !isLoading && (
+        <Ratespages />
+      )}
+
+      {((!isLoading && isAuthenticated) || role === "guest") && <Specialrate />}
+
     </>
   );
 };

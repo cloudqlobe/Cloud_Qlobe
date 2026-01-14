@@ -18,6 +18,7 @@ import useAuth from "../../auth/useAuth";
 
 const Navbar = () => {
   const { isAuthenticated } = useAuth("customer");
+  const role = sessionStorage.getItem("role");
   // Desktop dropdown (services menu on desktop)
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -236,7 +237,27 @@ const Navbar = () => {
           </div>
 
           <Link to="/contact" className="hover:text-blue-500 transition">{nav.contact}</Link>
-          {isAuthenticated && (<Link to="/customer/rates" className="hover:text-blue-500 transition">{nav.rates}</Link>)}
+          {role === "guest"
+            ? (
+              <Link
+                to="/rates"
+                className="hover:text-blue-500 transition"
+              >
+                {nav.rates}
+              </Link>
+            )
+            : (
+              isAuthenticated && (
+                <Link
+                  to="/rates"
+                  className="hover:text-blue-500 transition"
+                >
+                  {nav.rates}
+                </Link>
+              )
+            )
+          }
+
           <Link to="/faq" className="hover:text-blue-500 transition">{nav.faq}</Link>
         </div>
 
@@ -369,15 +390,31 @@ const Navbar = () => {
           </div>
 
           <Link to="/contact" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.contact}</Link>
-          {isAuthenticated && (
-            <Link
-              to="/customer/rates"
-              onClick={handleMobileLinkClick}
-              className="text-gray-700 hover:text-blue-500 py-2"
-            >
-              {nav.rates}
-            </Link>
-          )}          <Link to="/faq" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.faq}</Link>
+          {role === "guest"
+            ? (
+              <Link
+                to="/rates"
+                onClick={handleMobileLinkClick}
+                className="text-gray-700 hover:text-blue-500 py-2"
+              >
+                {nav.rates}
+              </Link>
+            )
+            : (
+              isAuthenticated && (
+                <Link
+                  to="/rates"
+                  onClick={handleMobileLinkClick}
+                  className="text-gray-700 hover:text-blue-500 py-2"
+                >
+                  {nav.rates}
+                </Link>
+              )
+            )
+          }
+
+
+          <Link to="/faq" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.faq}</Link>
         </nav>
 
         {/* Language Switcher */}

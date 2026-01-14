@@ -45,7 +45,6 @@ const Ratepages = () => {
     setSelectedLang(language);
   }
 }, [language]);
-console.log("selectedLang",selectedLang);
 
 
   // --- fetch rates from backend ---
