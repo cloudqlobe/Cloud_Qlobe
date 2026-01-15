@@ -158,7 +158,7 @@ const Homescroller = () => {
         <p data-no-translate className="text-center text-white">No ticker rates available.</p>
       ) : (
         <div data-no-translate className="flex gap-6 px-6 animate-scroll whitespace-nowrap">
-          {[...rates, ...rates, ...rates].map((item, idx) => (
+          {[...rates, ...rates].map((item, idx) => (
             <div
               key={idx}
               className="relative min-w-[250px] h-[150px] bg-white text-black px-5 py-4 shadow-lg mt-[-10px]"
