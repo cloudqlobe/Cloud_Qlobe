@@ -10,47 +10,50 @@ import Homeservices from "./Components/Homeservices";
 import HomeAchievement from "../Components/Homeacheivemnet";
 import Chatbot from "../chatbot/page";
 import Homescroller from "../Components/Homescroller";
-import useAuth from "../../auth/useAuth";
 
 const Homepages = () => {
-  const { isAuthenticated, isLoading } = useAuth("customer");
-  const homeAnimationRef = useRef(null); // Ref for Homeanimation
-  const homeContent1Ref = useRef(null);  // Ref for Homecontent1
+  const homeAnimationRef = useRef(null);
+  const homeContent1Ref = useRef(null);
+
   const role = sessionStorage.getItem("role");
+  const authToken = sessionStorage.getItem("authToken");
+
+  const canShowScroller = role === "guest" || Boolean(authToken);
 
   const handleScrollToAnimation = () => {
-    if (homeAnimationRef.current) {
-      homeAnimationRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    homeAnimationRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const handleScrollToContent1 = () => {
-    if (homeContent1Ref.current) {
-      homeContent1Ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    homeContent1Ref.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
     <div className="bg-white">
       <Navbar />
+
       <Homeheader
         onGetStartedClick={handleScrollToAnimation}
         onLearnMoreClick={handleScrollToContent1}
       />
 
-      {role === "guest"
-        ? <Homescroller />
-        : (!isLoading && isAuthenticated && <Homescroller />)
-      }
+      {/* Homescroller */}
+      {canShowScroller && <Homescroller />}
 
       <Homeservices />
 
-      {/* Section to scroll to when "Learn More" is clicked */}
+      {/* Learn More Section */}
       <div ref={homeContent1Ref}>
         <Homecontent1 />
       </div>
 
-      {/* Section to scroll to when "Get Started" is clicked */}
+      {/* Get Started Section */}
       <div ref={homeAnimationRef}>
         <Homeanimation />
       </div>

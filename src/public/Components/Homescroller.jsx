@@ -16,13 +16,13 @@ const getCountryCode = (countryName) => {
     "United Arab Emirates": "ae",
     "Russia": "ru",
     "Vatican City": "va",
+    "Hong Kong": "hk",          // ✅ FIX
   };
 
-  // Try lookup map first, then fallback to first two letters of the name
   return (
     mapping[countryName] ||
-    countryName?.slice(0, 2).toLowerCase() || // Example: India → "in"
-    "un" // fallback for unknown
+    countryName?.slice(0, 2).toLowerCase() ||
+    "un"
   );
 };
 
@@ -34,6 +34,7 @@ const Homescroller = () => {
 
   const [rates, setRates] = useState([]);
   const [loading, setLoading] = useState(true);
+console.log("rates",rates);
 
   useEffect(() => {
     const fetchRates = async () => {
