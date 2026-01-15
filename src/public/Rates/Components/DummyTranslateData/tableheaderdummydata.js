@@ -2,7 +2,7 @@ export const dummyTranslatedHeaders = {
   en: {
     countryCode: "Country Code",
     country: "Country Name",
-    qualityDescription: "Quality",
+    qualityDescription: "Rate Quality Description",
     profile: "Profile",
     billingCycle: "Billing Cycle",
     rate: "Rate",

@@ -40,7 +40,7 @@ const RateTable = ({
           {activeTab !== "cli" && (
             <th className="px-4 py-3 text-center font-normal">{headers.profile}</th>
           )}
-          <th className="px-4 py-3 text-left font-normal">{headers.rate}</th>
+          <th className="px-4 py-3 text-center font-normal">{headers.rate}</th>
           {activeTab === "cli" ? (
             <>
               <th className="px-4 py-3 text-left font-normal">{headers.billingCycle}</th>
@@ -97,7 +97,7 @@ const RateTable = ({
                 )}
                 <td className="px-4 py-2">{rate.countryCode}</td>
                 <td className="px-4 py-2">{translateCountry(rate.country, currentLang)}</td>
-                <td className="px-4 py-2 text-center"> {rate.qualityDescription}</td>
+                <td className="px-4 py-2"> {rate.qualityDescription}</td>
                 {
                   activeTab !== "cli" && (
                     <td className="px-4 py-2 text-center">{translatedProfile}</td>
