@@ -18,7 +18,6 @@ const countries = [
   { name: 'Italy', code: 'it' },
   { name: 'Singapore', code: 'sg' },
   { name: 'Spain', code: 'es' },
-  { name: 'Japan', code: 'jp' }, // ✅ added
 ];
 
 // Function to split countries into pairs for mobile

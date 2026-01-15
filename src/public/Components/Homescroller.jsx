@@ -8,15 +8,31 @@ import { translateCountry } from "../../utils/countryTranslator";
 // ✅ Utility to convert country name → flag code (based on common mappings)
 const getCountryCode = (countryName) => {
   const mapping = {
-    "United States": "us",
-    "United Kingdom": "gb",
-    "South Korea": "kr",
-    "North Korea": "kp",
-    "UAE": "ae",
+    "France": "fr",
+    "Spain": "es",
+    "New Zealand": "nz",
+    "Hong Kong": "hk",
+    "Malaysia": "my",
+    "Australia": "au",
+    "Canada": "ca",
+    "Austria": "at",
     "United Arab Emirates": "ae",
+    "Turkey": "tr",
+    "Singapore": "sg",
+    "United Kingdom": "gb",
+    "Brazil": "br",
+    "China": "cn",
+    "Japan": "jp",
+    "Germany": "de",
     "Russia": "ru",
-    "Vatican City": "va",
-    "Hong Kong": "hk",          // ✅ FIX
+    "United States": "us",
+    "Indonesia": "id",
+    "Philippines": "ph",
+
+    // aliases / safety
+    "UAE": "ae",
+    "UK": "gb",
+    "USA": "us",
   };
 
   return (
@@ -26,6 +42,34 @@ const getCountryCode = (countryName) => {
   );
 };
 
+const countryFlagBands = {
+  "France": ["#0055A4", "#FFFFFF", "#EF4135"],          // blue white red
+  "Spain": ["#AA151B", "#F1BF00", "#AA151B"],           // red yellow red
+  "New Zealand": ["#00247D", "#FFFFFF", "#CC142B"],  // blue white red
+  "Hong Kong": ["#DE2910", "#FFFFFF", "#DE2910"],     // red white red
+  "Malaysia": ["#010066", "#FFFFFF", "#CC0001"],        // blue white red
+  "Australia": ["#012169", "#FFFFFF", "#012169"],       // blue white red
+  "Canada": ["#D52B1E", "#FFFFFF", "#D52B1E"],          // red white red
+  "Austria": ["#ED2939", "#FFFFFF", "#ED2939"],         // red white red
+  "United Arab Emirates": ["#00732F", "#FFFFFF", "#000000"],
+  "Turkey": ["#E30A17", "#FFFFFF", "#E30A17"],          // red white red
+  "Singapore": ["#EF3340", "#FFFFFF", "#EF3340"],       // red white red
+  "United Kingdom": ["#012169", "#FFFFFF", "#C8102E"],
+  "Brazil": ["#009739", "#FFDF00", "#002776"],          // green yellow blue
+  "China": ["#DE2910", "#FFDE00", "#DE2910"],            // red yellow red
+  "Japan": ["#FFFFFF", "#BC002D", "#FFFFFF"],
+  "Germany": ["#000000", "#DD0000", "#FFCE00"],         // black red yellow
+  "Russia": ["#FFFFFF", "#0039A6", "#D52B1E"],          // white blue red
+  "United States": ["#B22234", "#FFFFFF", "#3C3B6E"],
+  "Indonesia": ["#CE1126", "#FFFFFF", "#CE1126"],      // red white red
+  "Philippines": ["#0038A8", "#FFFFFF", "#CE1126"],    // blue white red
+};
+
+
+const getFlagBands = (country) =>
+  countryFlagBands[country] || ["#E5E7EB", "#E5E7EB", "#E5E7EB"];
+
+
 const Homescroller = () => {
   const { language } = useContext(LanguageContext);
   const t = outboundTranslations[language];
@@ -34,7 +78,7 @@ const Homescroller = () => {
 
   const [rates, setRates] = useState([]);
   const [loading, setLoading] = useState(true);
-console.log("rates",rates);
+  // console.log("rates",rates);
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -46,22 +90,49 @@ console.log("rates",rates);
 
         // ✅ Show only addToTicker === 1
         const filteredRates = allRates.filter((item) => item.addToTicker === 1);
+        console.log(filteredRates);
 
         // ✅ Map backend data into display format
-        const formattedRates = filteredRates.map((item) => ({
-          country: item.country,
-          flagCode: getCountryCode(item.country),
-          status: item.status || "Active",
-          outbound:
-            item.profile.toLowerCase().includes("outbound") && item.rate
+        const groupedByCountry = {};
+
+        filteredRates.forEach((item) => {
+          const country = item.country;
+
+          if (!groupedByCountry[country]) {
+            groupedByCountry[country] = {
+              country: item.country,
+              flagCode: getCountryCode(item.country),
+              status: item.status || "Active",
+              outbound: "N/A",
+              ivr: "N/A",
+              trend: "up",
+            };
+          }
+
+          // OUTBOUND
+          if (item.profile.toLowerCase().includes("outbound")) {
+            groupedByCountry[country].outbound = item.rate
               ? `${item.rate} USD`
-              : "N/A",
-          ivr:
-            item.profile.toLowerCase().includes("ivr") && item.rate
+              : "N/A";
+          }
+
+          // IVR
+          if (item.profile.toLowerCase().includes("ivr")) {
+            groupedByCountry[country].ivr = item.rate
               ? `${item.rate} USD`
-              : "N/A",
-          trend: Number(item.rate) > 0.02 ? "up" : "down",
-        }));
+              : "N/A";
+          }
+
+          // Trend (optional – based on any available rate)
+          if (item.rate) {
+            groupedByCountry[country].trend =
+              Number(item.rate) > 0.02 ? "up" : "down";
+          }
+        });
+
+        const formattedRates = Object.values(groupedByCountry);
+        setRates(formattedRates);
+
 
         setRates(formattedRates);
       } catch (err) {
@@ -87,15 +158,15 @@ console.log("rates",rates);
         <p data-no-translate className="text-center text-white">No ticker rates available.</p>
       ) : (
         <div data-no-translate className="flex gap-6 px-6 animate-scroll whitespace-nowrap">
-          {[...rates, ...rates].map((item, idx) => (
+          {[...rates, ...rates, ...rates].map((item, idx) => (
             <div
               key={idx}
-              className="min-w-[250px] h-[150px] bg-white text-black px-5 py-4 shadow-lg mt-[-10px]"
+              className="relative min-w-[250px] h-[150px] bg-white text-black px-5 py-4 shadow-lg mt-[-10px]"
             >
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-bold text-base flex items-center gap-2">
                   <img
-                    src={`https://flagcdn.com/w40/${item.flagCode}.png`}
+                    src={`https://flagcdn.com/w40/${getCountryCode(item.country)}.png`}
                     alt={`${translateCountry(item.country, language)} flag`}
                     className="w-5 h-4 object-cover"
                   />
@@ -133,6 +204,16 @@ console.log("rates",rates);
                   )}
                 </span>
               </div>
+              <div className="absolute bottom-0 left-0 w-full h-3 flex">
+                {getFlagBands(item.country).map((color, i) => (
+                  <div
+                    key={i}
+                    className="flex-1"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+
             </div>
           ))}
         </div>
