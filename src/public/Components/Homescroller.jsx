@@ -54,7 +54,7 @@ const countryFlagBands = {
   "United Arab Emirates": ["#00732F", "#FFFFFF", "#000000"],
   "Turkey": ["#E30A17", "#FFFFFF", "#E30A17"],          // red white red
   "Singapore": ["#EF3340", "#FFFFFF", "#EF3340"],       // red white red
-  "United Kingdom": ["#012169", "#FFFFFF", "#C8102E"],
+  "United Kingdom": ["#012169", "#C8102E", "#012169"],
   "Brazil": ["#009739", "#FFDF00", "#002776"],          // green yellow blue
   "China": ["#DE2910", "#FFDE00", "#DE2910"],            // red yellow red
   "Japan": ["#FFFFFF", "#BC002D", "#FFFFFF"],
