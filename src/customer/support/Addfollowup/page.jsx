@@ -9,7 +9,6 @@ const AddTroubleTicket = () => {
   const { customerDetails } = useContext(CustomerAuthContext);
   const navigate = useNavigate()
   const [customers, setCustomers] = useState([]);
-  const [customerId, setCustomerID] = useState(customerDetails.id);
   const [selectedCustomer, setSelectedCustomer] = useState("");
 
   const [ticketDetails, setTicketDetails] = useState({
@@ -23,23 +22,25 @@ const AddTroubleTicket = () => {
     ticketTime: new Date().toISOString(), // Ensure it's a valid date string
   });
 
-  useEffect(() => {
-    const fetchCustomerById = async () => {
-      try {
-        // Fetch customer by customerId
-        setCustomerID(customerDetails.id)
-        const response = await axiosInstance.get(`api/customer/${customerId}`);
+useEffect(() => {
+  const fetchCustomerById = async () => {
+    try {
+      const id = customerDetails.id; // use local variable
+      const response = await axiosInstance.get(`api/customer/${id}`);
+      setCustomers([response.data.customer]);
+      setTicketDetails((prevDetails) => ({ 
+        ...prevDetails, 
+        customerId: id, 
+        companyName: response.data.companyName 
+      }));
+    } catch (error) {
+      console.error("Error fetching customer by ID:", error);
+    }
+  };
 
-        setCustomers([response.data.customer]);
+  fetchCustomerById();
+}, [customerDetails.id]);
 
-        setTicketDetails((prevDetails) => ({ ...prevDetails, customerId: customerId, companyName: response.data.companyName }))
-      } catch (error) {
-        console.error("Error fetching customer by ID:", error);
-      }
-    };
-
-    fetchCustomerById();
-  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +79,7 @@ const AddTroubleTicket = () => {
               className="w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
               value={selectedCustomer}
               onChange={(e) => {
-                const customer = customers.find(c => c.id == e.target.value);
+                const customer = customers.find(c => c.id === e.target.value);
                 setSelectedCustomer(e.target.value);
                 setTicketDetails({
                   ...ticketDetails,

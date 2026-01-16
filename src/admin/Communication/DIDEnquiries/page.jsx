@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../../layout/page';
 import { MdOutlineSearch } from 'react-icons/md';
 import { TbSquareRoundedFilled } from "react-icons/tb"; // Importing the icon
-import { toast, ToastContainer } from "react-toastify";
 import AdminAuthContext from '../../../context/admin/AdminAuthContext';
 import axiosInstance from '../../../utils/axiosinstance';
 
@@ -35,7 +34,7 @@ const Didnumberenquiery = () => {
       }
     }
     fetchData()
-  }, [adminDetails.id])
+  }, [adminDetails.id, adminDetails.role])
 
   const openModal = (enquiry) => {
     setSelectedEnquiry(enquiry);
@@ -50,7 +49,6 @@ const Didnumberenquiery = () => {
   return (
     <Layout>
       <div className="p-6 bg-gray-50 text-gray-800">
-        <ToastContainer position="top-right" autoClose={5000} />
         {/* Table Heading with Icon */}
         <div className="flex items-center mb-6">
           <MdOutlineSearch className="h-8 w-8 text-teal-500 mr-3" />

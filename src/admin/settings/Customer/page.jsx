@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../utils/axiosinstance';
 import Topbar from '../../navbar/AdminNavbar';
 
 const CustomersManagementPage = ({ customersData = [] }) => {
-  const navigate = useNavigate();
   const [customers, setCustomers] = useState(customersData);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('companyName');
@@ -65,8 +63,6 @@ const CustomersManagementPage = ({ customersData = [] }) => {
     setLeadStatusFilter('');
     setAddedByFilter('');
   };
-
-  const handleAddLead = () => navigate('/member/Addlead');
 
   const handleLeadStatusFilter = (status) => {
     setLeadStatusFilter(status);
@@ -363,7 +359,7 @@ const CustomersManagementPage = ({ customersData = [] }) => {
                   value={transferData.toManagerId}
                   onChange={(e) => {
                     const selectedManager = accountManagers.find(
-                      (manager) => manager.id == e.target.value
+                      (manager) => manager.id === e.target.value
                     );
                     
                     setTransferData({

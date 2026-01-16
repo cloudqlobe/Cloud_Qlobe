@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../../../layout/page';
-import { FaPlusCircle, FaFilter } from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 import { BsBullseye } from "react-icons/bs";
 import { FaChevronDown } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
@@ -79,37 +79,34 @@ const AdminOverdraftRequestPage = () => {
     setShowDropdown(filtered.length > 0);
   }, [companyInput, companies]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [filter, overdraftRequests]);
+useEffect(() => {
+  let filtered = [...overdraftRequests];
 
-  const applyFilters = () => {
-    let filtered = [...overdraftRequests];
+  if (filter.status !== 'All') {
+    filtered = filtered.filter(request => request.status === filter.status);
+  }
 
-    if (filter.status !== 'All') {
-      filtered = filtered.filter(request => request.status === filter.status);
-    }
+  if (filter.clientType !== 'All') {
+    filtered = filtered.filter(request => request.clientType === filter.clientType);
+  }
 
-    if (filter.clientType !== 'All') {
-      filtered = filtered.filter(request => request.clientType === filter.clientType);
-    }
+  if (filter.reason !== 'All') {
+    filtered = filtered.filter(request => request.reason === filter.reason);
+  }
 
-    if (filter.reason !== 'All') {
-      filtered = filtered.filter(request => request.reason === filter.reason);
-    }
+  if (filter.searchTerm) {
+    const searchTerm = filter.searchTerm.toLowerCase();
+    filtered = filtered.filter(request =>
+      (request.customerId?.toLowerCase().includes(searchTerm)) ||
+      (request.accountManager && request.accountManager?.toLowerCase().includes(searchTerm)) ||
+      (request.reason && request.reason?.toLowerCase().includes(searchTerm)) ||
+      (request.amount && request.amount?.toString().includes(searchTerm))
+    );
+  }
 
-    if (filter.searchTerm) {
-      const searchTerm = filter.searchTerm.toLowerCase();
-      filtered = filtered.filter(request =>
-        (request.customerId ?.toLowerCase().includes(searchTerm)) ||
-        (request.accountManager && request.accountManager?.toLowerCase().includes(searchTerm)) ||
-        (request.reason && request.reason?.toLowerCase().includes(searchTerm)) ||
-        (request.amount && request.amount?.toString().includes(searchTerm))
-      );
-    }
+  setFilteredRequests(filtered);
+}, [filter, overdraftRequests]);
 
-    setFilteredRequests(filtered);
-  };
 
   const handleCompanySelect = (company) => {
     setCompanyInput(company.customerId);
@@ -149,7 +146,7 @@ const AdminOverdraftRequestPage = () => {
     }
 
     try {
-      const response = await axiosInstance.post('api/member/createOverdraft', newOverdraft);
+      await axiosInstance.post('api/member/createOverdraft', newOverdraft);
       toast.success('Overdraft Added Successfully');
       setOverdraftRequests(prev => [...prev, newOverdraft]);
       setNewOverdraft({

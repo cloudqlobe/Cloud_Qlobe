@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import axiosInstance from "../utils/axiosinstance";
 
 const useAuth = (role = "user") => {

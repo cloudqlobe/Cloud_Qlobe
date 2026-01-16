@@ -31,7 +31,7 @@ const EnquiryPage = () => {
     };
 
     fetchData();
-  }, [memberDetails?.id]);
+  }, [memberDetails?.id, memberDetails.role]);
 
   const openModal = (enquiry) => {
     setSelectedEnquiry(enquiry);

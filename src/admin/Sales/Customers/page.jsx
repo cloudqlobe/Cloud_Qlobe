@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useContext } from "react";
 import Layout from "../../layout/page";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  FunnelIcon,
   ChartBarIcon,
   UsersIcon,
   ArrowLeftStartOnRectangleIcon,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-const CliRateModal = ({ isOpen, onClose, onSubmit }) => {
   const dataModel = {
     countryCode: '',
     country: '',
@@ -14,6 +13,7 @@ const CliRateModal = ({ isOpen, onClose, onSubmit }) => {
     testStatus: 'no',
     prefix: ''
   }
+const CliRateModal = ({ isOpen, onClose, onSubmit }) => {
   const [newLead, setNewLead] = useState(dataModel);
 
   useEffect(() => {

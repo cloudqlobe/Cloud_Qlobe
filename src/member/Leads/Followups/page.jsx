@@ -27,9 +27,6 @@ const FollowUp = () => {
         }
         setFollowUpData(data);
 
-        const customerIds = [...new Set(data.map(item => item.customerId))];
-        const validIds = customerIds.filter(id => id && id.trim() !== "");
-
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,7 +35,7 @@ const FollowUp = () => {
     };
 
     fetchData();
-  }, [memberDetails.id]);
+  }, [memberDetails.id,memberDetails.role]);
 
   const filteredFollowUps = followUpData.filter(
     (item) =>

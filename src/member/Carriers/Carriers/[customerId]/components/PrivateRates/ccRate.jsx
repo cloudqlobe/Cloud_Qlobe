@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
-  const dataModel={
+const DATA_MODEL = {
     countryCode: "",
     country: "",
     qualityDescription: "",
@@ -10,17 +9,20 @@ const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
     rate: "",
     prefix: "",
     testStatus: "no",
-  }
-  const [newLead, setNewLead] = useState(dataModel);
+};
+
+const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
+
+  const [newLead, setNewLead] = useState(DATA_MODEL);
 
   useEffect(() => {
-      setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   }, []);
 
   const handleAddLead = (e) => {
     e.preventDefault();
     onSubmit(newLead);
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   };
 
   if (!isOpen) return null;

@@ -12,7 +12,6 @@ const SupportFollowUp = () => {
   const { adminDetails } = useContext(AdminAuthContext)
   const [activeTab, setActiveTab] = useState("call");
   const [followUpData, setFollowUpData] = useState([]);
-  const [customerData, setCustomerData] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,8 +23,8 @@ const SupportFollowUp = () => {
         const followUpsResponse = await axiosInstance.get(`api/member/customerfollowups`);
         setFollowUpData(followUpsResponse.data.followups);
 
-        const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.userId))];
-        const validIds = customerIds.filter(id => id && id.trim() !== "");
+        // const customerIds = [...new Set(followUpsResponse.data.followups.map(item => item.userId))];
+        // const validIds = customerIds.filter(id => id && id.trim() !== "");
 
       } catch (err) {
         setError(err.message);

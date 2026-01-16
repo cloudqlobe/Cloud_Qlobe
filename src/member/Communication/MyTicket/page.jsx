@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import DashboardLayout from "../../layout/page";
 import { AiOutlineFolderOpen, AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlineTaskAlt } from "react-icons/md";
-import { BsGraphUp, BsTools } from "react-icons/bs";
+import { BsGraphUp } from "react-icons/bs";
 import { PickupTable, RequestsTable, ViewPage } from "./table";
 import AuthContext from "../../../context/AuthContext";
 import axiosInstance from "../../../utils/axiosinstance";
@@ -18,12 +17,10 @@ const CommunicationMyTicket = () => {
     priority: "", 
     status: "" 
   });
-  const [did, setDID] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedView, setSelectedView] = useState(null);
   const [newStatus, setNewStatus] = useState('');
   const [selectedTest, setSelectedTest] = useState('');
-  const [enquiry, setEnquiry] = useState([]);
   const [showPickupModal, setShowPickupModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,8 +51,6 @@ const CommunicationMyTicket = () => {
           DIDData.find((enquiry) => enquiry.id === item.didId)
         ).filter(Boolean);
 
-        setDID(filterDID);
-        setEnquiry(filterEnquiry);
         setAllRequests([...filterEnquiry, ...filterDID]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -65,7 +60,7 @@ const CommunicationMyTicket = () => {
     };
 
     fetchData();
-  }, [memberDetails?.id]);
+  }, [memberDetails?.id, memberDetails.role]);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });

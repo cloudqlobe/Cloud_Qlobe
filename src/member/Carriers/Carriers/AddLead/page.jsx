@@ -36,7 +36,7 @@ const AddCarrierCustomerPage = () => {
     switchIps: [{ ip: "", status: "active" }],
   });
 
-  const [leads, setLeads] = useState({
+  const [leads] = useState({
     leadType: "Carrier",
     customerType: "Carrier",
   })

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { SiVitest, SiBitcomet } from "react-icons/si";
 import DashboardLayout from "../../layout/page";
 import { toast, ToastContainer } from "react-toastify";
@@ -53,64 +53,65 @@ const TestingPage = () => {
     fetchData();
   }, [adminDetails.role, adminDetails.id]); // Add role to dependencies
 
-  const applyFilters = () => {
-    let filtered = testsData
-      .map((test) => {
-        const customer = customersData.find((customer) => customer?.id === test.customerId);
+const applyFilters = useCallback(() => {
+  let filtered = testsData
+    .map((test) => {
+      const customer = customersData.find((customer) => customer?.id === test.customerId);
 
-        if (!customer) return null;
+      if (!customer) return null;
 
-        if (adminDetails.role === "support") {
-          return {
-            ...customer,
-            testId: test.id,
-            testStatus: test.testStatus,
-            serviceEngineer: test.serviceEngineer,
-          };
-        } else if (test.serviceEngineer === "NOC CloudQlobe") {
-          return {
-            ...customer,
-            testId: test.id,
-            testStatus: test.testStatus,
-            serviceEngineer: test.serviceEngineer,
-          };
-        }
+      if (adminDetails.role === "support") {
+        return {
+          ...customer,
+          testId: test.id,
+          testStatus: test.testStatus,
+          serviceEngineer: test.serviceEngineer,
+        };
+      } else if (test.serviceEngineer === "NOC CloudQlobe") {
+        return {
+          ...customer,
+          testId: test.id,
+          testStatus: test.testStatus,
+          serviceEngineer: test.serviceEngineer,
+        };
+      }
 
-        return null;
-      })
-      .filter(Boolean);
+      return null;
+    })
+    .filter(Boolean);
 
-    if (activeTab === "initiated") {
-      filtered = filtered.filter(
-        (customer) => customer.testStatus === "Initiated"
-      );
-    } else if (activeTab === "failed") {
-      filtered = filtered.filter(
-        (customer) => customer.testStatus === "Failed"
-      );
-    }
+  if (activeTab === "initiated") {
+    filtered = filtered.filter(
+      (customer) => customer.testStatus === "Initiated"
+    );
+  } else if (activeTab === "failed") {
+    filtered = filtered.filter(
+      (customer) => customer.testStatus === "Failed"
+    );
+  }
 
-    if (filterStatus) {
-      filtered = filtered.filter(
-        (customer) => customer.testStatus === filterStatus
-      );
-    }
+  if (filterStatus) {
+    filtered = filtered.filter(
+      (customer) => customer.testStatus === filterStatus
+    );
+  }
 
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (customer) =>
-          customer.companyName
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          customer.customerId.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    setFilteredData(filtered);
-  };
+  if (searchTerm) {
+    filtered = filtered.filter(
+      (customer) =>
+        customer.companyName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        customer.customerId.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+  setFilteredData(filtered);
+}, [testsData, customersData, activeTab, filterStatus, searchTerm, adminDetails.role]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [activeTab, filterStatus, searchTerm, testsData, customersData]);
+useEffect(() => {
+  applyFilters();
+}, [applyFilters]);
+
 
   const openModal = (testId) => {
     const selectedTest = testsData.find((test) => test.id === testId);
@@ -138,7 +139,7 @@ const TestingPage = () => {
       }
 
       const customer = customersData.find(
-        (customer) => customer?.customerId == selectedTest.customerId
+        (customer) => customer?.customerId === selectedTest.customerId
       );
 
       setSelectedCustomer({

@@ -1,5 +1,3 @@
-import React from "react";
-import { SiBitcomet } from "react-icons/si";
 
 const RequestsTable = ({ activeCategory, filteredRequests, openModal, handlePickupClick }) => {
     return (

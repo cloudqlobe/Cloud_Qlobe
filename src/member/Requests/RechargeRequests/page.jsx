@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Layout from '../../layout/page';
 import { useNavigate } from 'react-router-dom';
 import { FaPlusCircle, FaFilter } from 'react-icons/fa';
@@ -15,32 +15,38 @@ const RechargerequestPage = () => {
   const navigate = useNavigate();
 
   // Function to fetch data
-  const fetchData = async () => {
-    try {
-      const response = await axiosInstance.get(`api/member/getTransactionsByMemberId/${memberDetails.id}`);
+const fetchData = useCallback(async () => {
+  try {
+    const response = await axiosInstance.get(
+      `api/member/getTransactionsByMemberId/${memberDetails.id}`
+    );
 
-      if (response.data.success) {
-        let data = response.data.transaction;
+    if (response.data.success) {
+      let data = response.data.transaction;
 
-        // Apply role-based filtering
-        if (memberDetails.role === 'accountmember'|| 'salemember') {
-          data = data.filter(item => item.serviceEngineer === 'NOC CloudQlobe');
-        }
-
-        setAllPayments(data); // Store original data
-        setPayments(data); // Set displayed data
-      } else {
-        console.error('Failed to fetch data:', response);
+      // ✅ FIXED role condition
+      if (
+        memberDetails.role === 'accountmember' ||
+        memberDetails.role === 'salemember'
+      ) {
+        data = data.filter(
+          item => item.serviceEngineer === 'NOC CloudQlobe'
+        );
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
+
+      setAllPayments(data);
+      setPayments(data);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}, [memberDetails.id, memberDetails.role]);
+
 
   // Fetch data when the component mounts
-  useEffect(() => {
-    fetchData();
-  }, [memberDetails?.role,memberDetails.id]);
+useEffect(() => {
+  fetchData();
+}, [fetchData]);
 
   const handleFilterChange = (e) => {
     const selectedFilter = e.target.value;

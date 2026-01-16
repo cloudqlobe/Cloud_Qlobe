@@ -52,12 +52,12 @@ export const validateRegisterForm = (companyDetails, userDetails, technicalDetai
     errors.confirmPassword = 'Passwords do not match';
   }
 
-    // Designation Validation
+  // Designation Validation
   if (!userDetails.designation.trim()) {
     errors.designation = 'Designation is required';
   } else if (userDetails.designation.length < 2) {
     errors.designation = 'Designation must be at least 2 characters';
-  } else if (!/^[a-zA-Z\s\-]+$/.test(userDetails.designation)) {
+  } else if (!/^[a-zA-Z\s-]+$/.test(userDetails.designation)) {
     errors.designation = 'Designation can only contain letters, spaces, and hyphens';
   }
 
@@ -68,7 +68,7 @@ export const validateRegisterForm = (companyDetails, userDetails, technicalDetai
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(technicalDetails.supportEmail)) {
     errors.supportEmail = 'Invalid email format';
   }
-    // SIP Port Validation
+  // SIP Port Validation
   if (!technicalDetails.sipPort) {
     errors.sipPort = 'SIP port is required';
   } else if (!/^[0-9]+$/.test(technicalDetails.sipPort)) {
@@ -76,7 +76,7 @@ export const validateRegisterForm = (companyDetails, userDetails, technicalDetai
   } else if (parseInt(technicalDetails.sipPort) < 1 || parseInt(technicalDetails.sipPort) > 65535) {
     errors.sipPort = 'SIP port must be between 1 and 65535';
   }
-  
+
   // IP Address Validation
   technicalDetails.switchIps.forEach((ip, index) => {
     if (!ip.ip.trim()) {
@@ -94,12 +94,12 @@ export const submitRegistration = async (formData) => {
   try {
     // Create a deep copy of the formData to avoid mutating the original object
     const dataToSend = JSON.parse(JSON.stringify(formData));
-    
+
     // Remove confirmPassword from the user object if it exists
     if (dataToSend.user && dataToSend.user.confirmPassword) {
       delete dataToSend.user.confirmPassword;
     }
-    
+
     const response = await axiosInstance.post('/api/customer', dataToSend, {
       headers: {
         'Content-Type': 'application/json',
@@ -111,13 +111,13 @@ export const submitRegistration = async (formData) => {
     if (error.response) {
       console.error('Registration error response:', error.response.data);
       console.error('Status code:', error.response.status);
-      
+
       // Handle duplicate fields error specifically
-      if (error.response.data?.duplicateFields) {        
+      if (error.response.data?.duplicateFields) {
         const duplicateFields = error.response.data.duplicateFields;
         throw new Error(duplicateFields);
       }
-      
+
       const serverMessage = error.response.data?.message || 'Registration failed';
       throw new Error(serverMessage);
     } else if (error.request) {

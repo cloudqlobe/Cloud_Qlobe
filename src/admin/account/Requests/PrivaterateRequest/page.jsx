@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../../layout/page';
 import { FaFilter, FaTimes } from 'react-icons/fa';
 import { LuBadgeDollarSign } from "react-icons/lu";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../../utils/axiosinstance';
 

@@ -3,29 +3,28 @@ import Layout from "../../../layout/page";
 import AdminAuthContext from "../../../../context/admin/AdminAuthContext";
 import axiosInstance from "../../../../utils/axiosinstance";
 
+const dataModel = {
+  countryCode: "",
+  country: "",
+  qualityDescription: "",
+  status: "Inactive",
+  profile: "",
+  rate: "",
+  category: "",
+  testStatus: "as",
+  billingCycle: "",
+  specialRate: false,
+  addToTicker: false,
+};
+
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
-  const dataModel = {
-    countryCode: "",
-    country: "",
-    qualityDescription: "",
-    status: "Inactive",
-    profile: "",
-    rate: "",
-    category: "",
-    testStatus: "as",
-    billingCycle: "",
-    specialRate: false,
-    addToTicker: false,
-  }
   const [newLead, setNewLead] = useState(initialData || dataModel);
 
   useEffect(() => {
-    if (initialData) {
-      setNewLead(initialData);
-    } else {
-      setNewLead(dataModel);
-    }
+    if (initialData) setNewLead(initialData);
+    else setNewLead(dataModel);
   }, [initialData]);
+
 
   const handleAddLead = (e) => {
     e.preventDefault();
@@ -182,12 +181,12 @@ const AdminCCRate = () => {
   const handleAddLead = async (ccrates) => {
 
     try {
-      let response;
       if (isUpdateMode) {
-        response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
+        await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
       } else {
-        response = await axiosInstance.post("api/admin/ccrates", ccrates);
+        await axiosInstance.post("api/admin/ccrates", ccrates);
       }
+
       setSuccessMessage(
         isUpdateMode ? "Rate updated successfully!" : "Rate added successfully!"
       );

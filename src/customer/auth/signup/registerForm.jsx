@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Facebook, Twitter, Instagram, Linkedin, Globe, Wifi, Shield, Zap, Cloud, Star, Diamond, Hexagon, Triangle, Circle, Server, Database, Lock, Smartphone, Users, Rocket, Heart, Sparkles, X } from "lucide-react";
+import { Eye, EyeOff, Facebook, Twitter, Instagram, Linkedin, Globe, Wifi, Shield, Zap, Cloud, Star, Diamond, Hexagon, Triangle, Server, Database, Lock, Smartphone, Users, Rocket, Heart, Sparkles, X } from "lucide-react";
 import { validateRegisterForm, submitRegistration } from "./registerValidation";
 import { useNavigate } from "react-router-dom";
 

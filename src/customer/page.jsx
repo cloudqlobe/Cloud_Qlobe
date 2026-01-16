@@ -15,7 +15,7 @@ import axiosInstance from "../utils/axiosinstance";
 const Dashboard = () => {
     const { customerDetails } = useContext(CustomerAuthContext);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
-    const [notifications, setNotifications] = useState(3);
+    const [notifications] = useState(3);
     const navigate = useNavigate();
 
     const quickActions = [

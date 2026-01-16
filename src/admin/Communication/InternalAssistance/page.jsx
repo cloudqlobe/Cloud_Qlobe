@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../layout/page';
-import { FaComments, FaChartLine, FaDollarSign, FaHeadset, FaBriefcase } from 'react-icons/fa';
+import { FaComments, FaChartLine, FaHeadset, FaBriefcase } from 'react-icons/fa';
 import { FaReact } from "react-icons/fa6";
 import { SiGraphql } from "react-icons/si";
 

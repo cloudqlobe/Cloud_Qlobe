@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import Layout from '../../layout/page';
 import { FaPlusCircle, FaFilter } from 'react-icons/fa';
 import { SiContributorcovenant } from 'react-icons/si';
@@ -14,28 +14,35 @@ const VendorRequestPage = () => {
   const [vendorRequests, setVendorRequests] = useState([]);
   const navigate = useNavigate()
 
-  const fetchData = async () => {
-    try {
-      const response = await axiosInstance.get(`api/member/getVendorByMemberId/${memberDetails.id}`);
+const fetchData = useCallback(async () => {
+  try {
+    const response = await axiosInstance.get(
+      `api/member/getVendorByMemberId/${memberDetails.id}`
+    );
 
-      if (response.data.success) {
-        if (memberDetails.role === 'accountMember' || 'salemember') {
-          const RequestData = response?.data?.vendor.filter(data => data.serviceEngineer === 'NOC CloudQlobe')
+    if (response.data.success) {
+      if (
+        memberDetails.role === 'accountMember' ||
+        memberDetails.role === 'salemember'
+      ) {
+        const RequestData = response.data.vendor.filter(
+          data => data.serviceEngineer === 'NOC CloudQlobe'
+        );
 
-          setVendorRequests(RequestData);
-          setFilteredRequests(RequestData);
-        }
-      } else {
-        console.error('Failed to fetch data:', response.data.message);
+        setVendorRequests(RequestData);
+        setFilteredRequests(RequestData);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}, [memberDetails.id, memberDetails.role]);
 
-  useEffect(() => {
-    fetchData();
-  }, [memberDetails?.role,memberDetails.id]);
+
+useEffect(() => {
+  fetchData();
+}, [fetchData]);
+
 
   const handleFilterChange = (e) => {
     const selectedFilter = e.target.value;

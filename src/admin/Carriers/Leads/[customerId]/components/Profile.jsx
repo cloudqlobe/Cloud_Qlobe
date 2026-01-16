@@ -545,7 +545,6 @@ const ProfileTab = ({ customerId }) => {
                   )}
 
                 </div>
-                <h3 className="text-lg font-semibold"></h3>
                 <div className="flex justify-between items-center space-x-4 mt-6">
                   {/* Change Status Button on the Left */}
                   <div className="flex items-center space-x-4">

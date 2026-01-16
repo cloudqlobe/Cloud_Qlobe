@@ -34,12 +34,6 @@ setActiveTab('');
   const totalTarget = salesData.reduce((acc, sale) => acc + sale.target, 0);
   const totalAchieved = salesData.reduce((acc, sale) => acc + sale.achieved, 0);
 
-  const categoryCounts = {
-    All: salesData.length,
-    Target: totalTarget,
-    Achieved: totalAchieved,
-  };
-
   const dataBar = {
     labels: salesData.map((sale) => sale.title),
     datasets: [

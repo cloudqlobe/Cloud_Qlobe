@@ -54,7 +54,7 @@ const MyRatesPage = ({ customerId }) => {
         const testData = testsResponse.data.testrate || [];
 
         // Filter tests by customerId
-        const tests = testData.filter(test => test.customerId == customerData.id);
+        const tests = testData.filter(test => test.customerId === customerData.id);
 
         // Parse rateId if it exists
         const parsedRates = tests.length > 0 ? tests.map(test => ({

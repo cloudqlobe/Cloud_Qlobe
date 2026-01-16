@@ -122,7 +122,7 @@ const AdminRechargeForm = () => {
           <div className="w-1/2 bg-offwhite hidden lg:flex items-center justify-center">
             <img
               src="/member/Accountsrecharge.avif"
-              alt="Side Image"
+              alt="Illustration of account recharge process"
               className="w-3/4 h-auto object-cover mt-9"
             />
           </div>

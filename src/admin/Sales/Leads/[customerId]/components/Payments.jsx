@@ -5,7 +5,7 @@ import axiosInstance from "../../../../../utils/axiosinstance";
 
 const PaymentsTab = ({ customerId }) => {
   const [payments, setPayments] = useState([]);
-  const [refunds, setRefunds] = useState([]);
+  const [refunds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // all, completed, pending
   const [activeTab, setActiveTab] = useState("payments"); // payments, refunds

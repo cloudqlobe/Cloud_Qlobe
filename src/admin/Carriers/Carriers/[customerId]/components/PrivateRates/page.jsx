@@ -37,7 +37,7 @@ const PrivateRatePage = ({ customerId }) => {
             }
         };
         fetchCustomerData();
-    }, []);
+    }, [customerId]);
 
     useEffect(() => {
         const fetchRatesAndTests = async () => {
@@ -71,7 +71,7 @@ const PrivateRatePage = ({ customerId }) => {
             }
         };
         fetchRatesAndTests();
-    }, [customerData, testPrivateRate]);
+    }, [customerData, testPrivateRate, customerId]);
 
     const safeJsonParse = (str) => {
         try {
@@ -89,7 +89,7 @@ const PrivateRatePage = ({ customerId }) => {
     const handleAddCCRate = async (ccrates) => {
         const cc_PrivateRate = { ...ccrates, customerId: customerId };
         try {
-            const response = await axiosInstance.post("api/member/private_ccrates", cc_PrivateRate);
+            await axiosInstance.post("api/member/private_ccrates", cc_PrivateRate);
 
             setCCRatesData(prevRates => [...prevRates, cc_PrivateRate]);
             toast.success("CC Rate added successfully!");
@@ -103,7 +103,7 @@ const PrivateRatePage = ({ customerId }) => {
     const handleAddLead = async (clirates) => {
         const cli_PrivateRate = { ...clirates, customerId: customerId };
         try {
-            const response = await axiosInstance.post("api/member/private_clirates", cli_PrivateRate);
+            await axiosInstance.post("api/member/private_clirates", cli_PrivateRate);
 
             setCLIRatesData(prevRates => [...prevRates, cli_PrivateRate]);
             toast.success("CLI Rate added successfully!");

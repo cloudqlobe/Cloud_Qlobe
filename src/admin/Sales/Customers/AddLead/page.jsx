@@ -36,7 +36,7 @@ const AdminAddCustomerPage = () => {
     switchIps: [{ ip: "", status: "active" }],
   });
 
-  const [leads, setLeads] = useState({
+  const [leads] = useState({
     leadType: "Customer",
     customerType: "Customer",
   })

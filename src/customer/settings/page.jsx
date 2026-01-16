@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ChevronDown, Key, Bell, Shield, User, Moon, Lock } from 'lucide-react';
 import axiosInstance from '../../utils/axiosinstance';
 import CustomerAuthContext from '../../context/customer/CustomerAuthContext';
@@ -11,30 +11,27 @@ const SettingsPage = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [email, setEmail] = useState('');
     const [message, setMessage] = useState({ type: '', text: '' });
-    const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [customerId, setCustomerId] = useState(customerDetails.id)
+    const [customerId] = useState(customerDetails.id)
     const [errors, setErrors] = useState({
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
     });
 
-    useEffect(() => {
-        const fetchProfileData = async () => {
-            try {
-                if (customerId) {
-                    const response = await axiosInstance.get(`api/customer/${customerDetails.id}`);
-                    setProfileData(response.data.customer);
-                }
-            } catch (error) {
-                console.error("Error fetching profile data", error);
-            }
-        };
-        fetchProfileData();
-    }, []);
+    // useEffect(() => {
+    //     const fetchProfileData = async () => {
+    //         try {
+    //             if (customerId) {
+    //              await axiosInstance.get(`api/customer/${customerDetails.id}`);
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching profile data", error);
+    //         }
+    //     };
+    //     fetchProfileData();
+    // }, [customerDetails.id, customerId]);
 
     const validatePassword = (password) => {
         // Minimum 6 characters, at least one special character
@@ -129,12 +126,6 @@ const SettingsPage = () => {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handlePasswordReset = (e) => {
-        e.preventDefault();
-        setMessage({ type: 'success', text: 'Password reset link sent to your email!' });
-        setEmail('');
     };
 
     const settingsSections = [

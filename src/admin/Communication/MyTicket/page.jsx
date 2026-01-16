@@ -19,8 +19,6 @@ const MemberCommiunctionMyTicket = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedView, setSelectedView] = useState(null);
-  const [newStatus, setNewStatus] = useState('');
-  const [selectedTest, setSelectedTest] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -67,30 +65,6 @@ const MemberCommiunctionMyTicket = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedView(null);
-  };
-
-
-  const handleUpdateStatus = async () => {
-    try {
-      setIsLoading(true);
-      if (selectedTest.category === 'Enquiry') {
-        await axiosInstance.put(`api/member/updateEnquiryStatus/${selectedTest?.id}`, { newStatus });
-      } else if (selectedTest.category === 'DID Numbers') {
-        await axiosInstance.put(`api/member/updateDidStatus/${selectedTest?.id}`, { newStatus });
-      }
-      
-      // Update the local state
-      setAllRequests(prevRequests =>
-        prevRequests.map(item =>
-          item.id === selectedTest.id ? { ...item, status: newStatus } : item
-        )
-      );
-      
-    } catch (error) {
-      console.error("Error updating status:", error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const filteredRequests = allRequests.filter((request) => {

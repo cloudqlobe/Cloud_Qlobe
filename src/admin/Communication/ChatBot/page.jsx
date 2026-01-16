@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import Layout from '../../layout/page';
 import { FaReply, FaUserCircle, FaCircle, FaPlus, FaEllipsisV, FaCheck, FaCheckDouble } from 'react-icons/fa';
 import AdminAuthContext from '../../../context/admin/AdminAuthContext';
@@ -24,71 +24,71 @@ const ChatPanel = () => {
     }, [messages, selectedContact]);
   
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get('api/member/chat/messages');
-        const messagesData = response.data.chatbot_messages || [];
-        setMessages(messagesData);
-        processContactsAndUnreads(messagesData);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      }
-    };
-    
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-
-  const processContactsAndUnreads = (messagesData) => {
-    const uniqueContacts = {};
-    const counts = {};
-    
-    messagesData.forEach(msg => {
-      // Only process user messages for contacts (sender_type === 'user')
-      if (msg.sender_type === 'user' && msg.customer_id && !uniqueContacts[msg.customer_id]) {
-        uniqueContacts[msg.customer_id] = {
-          id: msg.customer_id,
-          name: msg.customer_name || 'Unknown',
-          lastMessage: msg.message,
-          time: msg.sending_time,
-          formattedTime: formatTime(msg.sending_time),
-          avatar: `https://i.pravatar.cc/100?u=${msg.customer_id}`,
-          online: false,
-          latestMessageTime: new Date(msg.sending_time).getTime(),
-          hasUnread: msg.status === 'sent' && msg.sender_type === 'user'
-        };
-      } else if (msg.sender_type === 'user' && msg.customer_id) {
-        const currentTime = new Date(msg.sending_time).getTime();
-        if (currentTime > uniqueContacts[msg.customer_id].latestMessageTime) {
-          uniqueContacts[msg.customer_id].lastMessage = msg.message;
-          uniqueContacts[msg.customer_id].time = msg.sending_time;
-          uniqueContacts[msg.customer_id].formattedTime = formatTime(msg.sending_time);
-          uniqueContacts[msg.customer_id].latestMessageTime = currentTime;
-          uniqueContacts[msg.customer_id].hasUnread = msg.status === 'sent' && msg.sender_type === 'user';
-        }
-      }
-      
-      // Count unread messages (sent by user and not read)
-      if (msg.sender_type === 'user' && msg.status === 'sent') {
-        counts[msg.customer_id] = (counts[msg.customer_id] || 0) + 1;
-      }
-    });
-    
-    const sortedContacts = Object.values(uniqueContacts).sort((a, b) => 
-      b.latestMessageTime - a.latestMessageTime
-    );
-    
-    setContacts(sortedContacts);
-    setUnreadCounts(counts);
-    
-    if (!selectedContact && sortedContacts.length > 0) {
-      setSelectedContact(sortedContacts[0]);
-      markMessagesAsRead(sortedContacts[0].id);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get('api/member/chat/messages');
+      const messagesData = response.data.chatbot_messages || [];
+      setMessages(messagesData);
+      processContactsAndUnreads(messagesData);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
     }
   };
+
+  fetchData();
+  const interval = setInterval(fetchData, 30000);
+  return () => clearInterval(interval);
+}, [processContactsAndUnreads]);
+
+
+
+const processContactsAndUnreads = useCallback((messagesData) => {
+  const uniqueContacts = {};
+  const counts = {};
+
+  messagesData.forEach(msg => {
+    if (msg.sender_type === 'user' && msg.customer_id && !uniqueContacts[msg.customer_id]) {
+      uniqueContacts[msg.customer_id] = {
+        id: msg.customer_id,
+        name: msg.customer_name || 'Unknown',
+        lastMessage: msg.message,
+        time: msg.sending_time,
+        formattedTime: formatTime(msg.sending_time),
+        avatar: `https://i.pravatar.cc/100?u=${msg.customer_id}`,
+        online: false,
+        latestMessageTime: new Date(msg.sending_time).getTime(),
+        hasUnread: msg.status === 'sent'
+      };
+    } else if (msg.sender_type === 'user' && msg.customer_id) {
+      const currentTime = new Date(msg.sending_time).getTime();
+      if (currentTime > uniqueContacts[msg.customer_id].latestMessageTime) {
+        uniqueContacts[msg.customer_id].lastMessage = msg.message;
+        uniqueContacts[msg.customer_id].time = msg.sending_time;
+        uniqueContacts[msg.customer_id].formattedTime = formatTime(msg.sending_time);
+        uniqueContacts[msg.customer_id].latestMessageTime = currentTime;
+        uniqueContacts[msg.customer_id].hasUnread = msg.status === 'sent';
+      }
+    }
+
+    if (msg.sender_type === 'user' && msg.status === 'sent') {
+      counts[msg.customer_id] = (counts[msg.customer_id] || 0) + 1;
+    }
+  });
+
+  const sortedContacts = Object.values(uniqueContacts).sort(
+    (a, b) => b.latestMessageTime - a.latestMessageTime
+  );
+
+  setContacts(sortedContacts);
+  setUnreadCounts(counts);
+
+  if (!selectedContact && sortedContacts.length > 0) {
+    setSelectedContact(sortedContacts[0]);
+    markMessagesAsRead(sortedContacts[0].id);
+  }
+}, [selectedContact]);
+
 
   const markMessagesAsRead = async (contactId) => {
     

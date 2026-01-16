@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { TiStarburst } from "react-icons/ti"; // Import the icon you prefer
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import axiosInstance from '../../../utils/axiosinstance';
 import AdminAuthContext from '../../../context/admin/AdminAuthContext';
 import Layout from '../../layout/page';
@@ -29,7 +29,7 @@ const EnquiryPage = () => {
     };
 
     fetchData();
-  }, [adminDetails?.id]);
+  }, [adminDetails?.id, adminDetails.role]);
 
   const openModal = (enquiry) => {
     setSelectedEnquiry(enquiry);

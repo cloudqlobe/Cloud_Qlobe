@@ -44,7 +44,7 @@ const CarrierPage = () => {
       }
     };
     fetchCustomers();
-  }, [memberDetails.id]);
+  }, [memberDetails.id, memberDetails.role]);
 
   const handleSearch = (event) => setSearch(event.target.value);
   const handleFilter = (status) => setLeadStatusFilter(status);

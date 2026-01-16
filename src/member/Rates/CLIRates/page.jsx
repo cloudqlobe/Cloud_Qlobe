@@ -2,34 +2,36 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../../layout/page';
 import axiosInstance from '../../../utils/axiosinstance';
 
+const DATA_MODEL = {
+  countryCode: '',
+  country: '',
+  qualityDescription: '',
+  rate: '',
+  status: 'Inactive',
+  billingCycle: '',
+  rtp: '',
+  asr: '',
+  acd: '',
+  ticker: false,
+  testStatus: 'na',
+};
+
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
-  const dataModel = {
-    countryCode: '',
-    country: '',
-    qualityDescription: '',
-    rate: '',
-    status: 'Inactive',
-    billingCycle: '',
-    rtp: '',
-    asr: '',
-    acd: '',
-    ticker: false,
-    testStatus: 'na',
-  }
-  const [newLead, setNewLead] = useState(initialData || dataModel);
+  const [newLead, setNewLead] = useState(initialData || DATA_MODEL);
 
   useEffect(() => {
     if (initialData) {
       setNewLead(initialData);
     } else {
-      setNewLead(dataModel);
+      setNewLead(DATA_MODEL);
     }
   }, [initialData]);
+
 
   const handleAddLead = (e) => {
     e.preventDefault();
     onSubmit(newLead);
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   };
 
   if (!isOpen) return null;
@@ -138,25 +140,6 @@ const CLIRatesPage = () => {
     } catch (error) {
       console.error('Error adding/updating lead:', error);
       setErrorMessage('Failed to add/update lead. Please try again.');
-      setSuccessMessage('');
-    }
-  };
-
-  const handleUpdateClick = (rate) => {
-    setCurrentRate(rate);
-    setIsUpdateMode(true);
-    setModalOpen(true);
-  };
-
-  const handleDeleteClick = async (rateId) => {
-    try {
-      await axiosInstance.delete(`api/admin/clirates/${rateId}`);
-      setRateData((prev) => prev.filter(rate => rate._id !== rateId));
-      setSuccessMessage('Rate deleted successfully!');
-      setErrorMessage('');
-    } catch (error) {
-      console.error('Error deleting rate:', error);
-      setErrorMessage('Failed to delete rate. Please try again.');
       setSuccessMessage('');
     }
   };

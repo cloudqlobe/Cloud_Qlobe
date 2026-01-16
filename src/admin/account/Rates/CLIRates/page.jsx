@@ -3,28 +3,26 @@ import Layout from '../../../layout/page';
 import AdminAuthContext from '../../../../context/admin/AdminAuthContext';
 import axiosInstance from '../../../../utils/axiosinstance';
 
+const dataModel = {
+  countryCode: '',
+  country: '',
+  qualityDescription: '',
+  rate: '',
+  status: 'Inactive',
+  billingCycle: '',
+  rtp: '',
+  asr: '',
+  acd: '',
+  ticker: false,
+  testStatus: 'na',
+};
+
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
-  const dataModel = {
-    countryCode: '',
-    country: '',
-    qualityDescription: '',
-    rate: '',
-    status: 'Inactive',
-    billingCycle: '',
-    rtp: '',
-    asr: '',
-    acd: '',
-    ticker: false,
-    testStatus: 'na',
-  }
   const [newLead, setNewLead] = useState(initialData || dataModel);
 
   useEffect(() => {
-    if (initialData) {
-      setNewLead(initialData);
-    } else {
-      setNewLead(dataModel);
-    }
+    if (initialData) setNewLead(initialData);
+    else setNewLead(dataModel);
   }, [initialData]);
 
   const handleAddLead = (e) => {

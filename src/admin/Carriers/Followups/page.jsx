@@ -12,7 +12,7 @@ const AdminCarrierFollowUp = () => {
   const { adminDetails } = useContext(AdminAuthContext)
   const [activeTab, setActiveTab] = useState("call");
   const [followUpData, setFollowUpData] = useState([]);
-  const [customerData, setCustomerData] = useState({});
+  const [customerData] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,9 +26,6 @@ const AdminCarrierFollowUp = () => {
           const followUpsResponse = await axiosInstance.get(`api/member/customerfollowups`);
           data = followUpsResponse.data.followups;
         setFollowUpData(data);
-
-        const customerIds = [...new Set(data.map(item => item.customerId))];
-        const validIds = customerIds.filter(id => id && id.trim() !== "");
 
       } catch (err) {
         setError(err.message);

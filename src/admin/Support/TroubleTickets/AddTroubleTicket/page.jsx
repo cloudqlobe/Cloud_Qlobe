@@ -35,7 +35,7 @@ const CreateTroubleTicket = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axiosInstance  .get('api/member/fetchCustomerId');
+        const response = await axiosInstance.get('api/member/fetchCustomerId');
         setCustomers(response.data.customers);
         setLoading(false);
       } catch (err) {

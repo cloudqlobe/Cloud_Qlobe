@@ -22,10 +22,10 @@ const OfferRatePage = () => {
         profile: ''
     });
 
-    const [editMode, setEditMode] = useState(false);
+    const [editMode] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
     const [editData, setEditData] = useState({});
-    const [deleteMode, setDeleteMode] = useState(false);
+    const [deleteMode] = useState(false);
     const [selectedToDelete, setSelectedToDelete] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 10;
@@ -113,38 +113,6 @@ const OfferRatePage = () => {
         }
     };
 
-    const handleApplyChanges = async () => {
-        if (editMode && selectedRow !== null) {
-            try {
-                await axiosInstance.put(
-                    `/api/admin/offer/rate/${ccRates[selectedRow]._id}`,
-                    editData
-                );
-                const updatedRates = [...ccRates];
-                updatedRates[selectedRow] = editData;
-                setCcRates(updatedRates);
-                setEditMode(false);
-                setSelectedRow(null);
-            } catch (error) {
-                console.error("Update failed", error);
-            }
-        }
-
-        if (deleteMode && selectedToDelete?.length > 0) {
-            try {
-                await Promise.all(
-                    selectedToDelete?.map(id =>
-                        axiosInstance.delete(`/api/admin/offer/rate/${id}`)
-                    )
-                );
-                setCcRates(ccRates?.filter(rate => !selectedToDelete.includes(rate._id)));
-                setSelectedToDelete([]);
-                setDeleteMode(false);
-            } catch (error) {
-                console.error("Delete failed", error);
-            }
-        }
-    };
 
     const filteredRates = ccRates?.filter(rate => {
         // Check country filter

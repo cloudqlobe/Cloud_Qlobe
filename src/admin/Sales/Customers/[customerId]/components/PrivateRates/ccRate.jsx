@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
+const dataModel = {
+  countryCode: "",
+  country: "",
+  qualityDescription: "",
+  status: "Inactive",
+  profile: "",
+  rate: "",
+  prefix: "",
+  testStatus: "no",
+};
+
 const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
-  const dataModel={
-    countryCode: "",
-    country: "",
-    qualityDescription: "",
-    status: "Inactive",
-    profile: "",
-    rate: "",
-    prefix: "",
-    testStatus: "no",
-  }
   const [newLead, setNewLead] = useState(dataModel);
 
   useEffect(() => {
-      setNewLead(dataModel);
-  }, []);
+    setNewLead(dataModel);
+  }, []); // ✅ now ESLint won't warn
 
   const handleAddLead = (e) => {
     e.preventDefault();

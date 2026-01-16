@@ -3,7 +3,6 @@ import Layout from '../../layout/page';
 import { FaPlus, FaServicestack } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../../context/AuthContext';
 import axiosInstance from '../../../utils/axiosinstance';
 import AdminAuthContext from '../../../context/admin/AdminAuthContext';
 
@@ -11,7 +10,7 @@ const TroubleTicket = () => {
   const navigate = useNavigate();
   const { adminDetails } = useContext(AdminAuthContext)
   const [troubleTicket, setTroubleTicket] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 

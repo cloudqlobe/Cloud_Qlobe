@@ -153,7 +153,7 @@ const fetchCustomers = async () => {
     if (memberDetails?.id) {
       fetchCustomers();
     }
-  }, [memberDetails.id, memberDetails.role]);
+  }, [memberDetails.id, memberDetails.role, setIsLoading]);
 
   if (!memberDetails || !memberDetails.id) {
     return (

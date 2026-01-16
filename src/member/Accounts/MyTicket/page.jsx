@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaSearch, FaMoneyCheckAlt, FaTasks, FaCogs } from "react-icons/fa";
+import { FaMoneyCheckAlt, FaTasks, FaCogs } from "react-icons/fa";
 import DashboardLayout from "../../layout/page";
 import { FcElectroDevices } from "react-icons/fc";
 import { SiTask } from "react-icons/si";
 import { HiChartSquareBar } from "react-icons/hi";
-import { ImBooks, ImPodcast } from "react-icons/im";
+import { ImBooks } from "react-icons/im";
 import { PickupTable, RequestsTable, ViewTable } from "./table";
 import axiosInstance from "../../../utils/axiosinstance";
 import AuthContext from "../../../context/AuthContext";
 
 const AccountsMyTicket = () => {
   const { memberDetails } = useContext(AuthContext);
-  const [requests, setRequests] = useState([]);
+  // const [requests, setRequests] = useState([]);
   const [recharge, setRecharge] = useState([]);
   const [vendor, setVendor] = useState([]);
   const [overdraft, setOverdraft] = useState([]);
@@ -89,12 +89,12 @@ const AccountsMyTicket = () => {
         setRatesData(ratesResponse.data.ccrate);
         
         // Set initial requests to all
-        setRequests([
-          ...(filterRechargeRequest || []).filter(item => item !== undefined),
-          ...(filter || []).filter(item => item !== undefined),
-          ...(filterPrivateRate || []).filter(item => item !== undefined),
-          ...(filterOverdraft || []).filter(item => item !== undefined)
-        ]);
+        // setRequests([
+        //   ...(filterRechargeRequest || []).filter(item => item !== undefined),
+        //   ...(filter || []).filter(item => item !== undefined),
+        //   ...(filterPrivateRate || []).filter(item => item !== undefined),
+        //   ...(filterOverdraft || []).filter(item => item !== undefined)
+        // ]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -127,32 +127,32 @@ const AccountsMyTicket = () => {
   const handleUpdateStatus = async () => {
     if (selectedTest.category === 'Recharge Request') {
        await axiosInstance.put(`api/member/updateTransationStatus/${selectedTest?._id}`, { transactionStatus: newStatus });
-      setRequests(prevRequests =>
-        prevRequests.map(test =>
-          test._id === selectedTest._id ? { ...test, transactionStatus: newStatus } : test
-        )
-      );
+      // setRequests(prevRequests =>
+      //   prevRequests.map(test =>
+      //     test._id === selectedTest._id ? { ...test, transactionStatus: newStatus } : test
+      //   )
+      // );
     } else if (selectedTest.category === 'Vendor Payment') {
       await axiosInstance.put(`api/member/updateVendorStatus/${selectedTest?.id}`, { transactionStatus: newStatus });
-      setRequests(prevRequests =>
-        prevRequests.map(ticket =>
-          ticket.id === selectedTest.id ? { ...ticket, status: newStatus } : ticket
-        )
-      );
+      // setRequests(prevRequests =>
+      //   prevRequests.map(ticket =>
+      //     ticket.id === selectedTest.id ? { ...ticket, status: newStatus } : ticket
+      //   )
+      // );
     } else if (selectedTest.category === 'Private Rate') {
       await axiosInstance.put(`api/member/updatePrivateRateStatus/${selectedTest?._id}`, { status: newStatus });
-      setRequests(prevRequests =>
-        prevRequests.map(ticket =>
-          ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket
-        )
-      );
+      // setRequests(prevRequests =>
+      //   prevRequests.map(ticket =>
+      //     ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket
+      //   )
+      // );
     } else if (selectedTest.category === 'Overdraft') {
       await axiosInstance.put(`api/member/updateOverdraftStatus/${selectedTest?._id}`, { status: newStatus });
-      setRequests(prevRequests =>
-        prevRequests.map(ticket =>
-          ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket
-        )
-      );
+      // setRequests(prevRequests =>
+      //   prevRequests.map(ticket =>
+      //     ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket
+      //   )
+      // );
     }
     setShowPickupModal(false);
   };

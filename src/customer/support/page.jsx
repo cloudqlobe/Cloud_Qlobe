@@ -124,7 +124,7 @@ const customer_id = customerDetails?.id; // For ticket filtering
       try {
         const ticketResponse = await axiosInstance.get(`api/troubleticket`);
         const filteredData = ticketResponse.data.troubletickets.filter(
-          (item) => item.customerId == customer_id
+          (item) => item.customerId === customer_id
         );
         setTroubleTicket(filteredData);
 
@@ -146,7 +146,7 @@ const customer_id = customerDetails?.id; // For ticket filtering
     };
 
     fetchData();
-  }, [customerId]);
+  }, [customerId, customer_id]);
 
   const getFilteredTickets = () => {
     return troubleTicket.filter((ticket) => {

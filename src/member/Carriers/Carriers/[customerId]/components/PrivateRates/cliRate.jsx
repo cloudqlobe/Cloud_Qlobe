@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
 
+const DATA_MODEL = {
+  countryCode: '',
+  country: '',
+  qualityDescription: '',
+  rate: '',
+  status: 'Inactive',
+  billingCycle: '',
+  rtp: '',
+  asr: '',
+  acd: '',
+  testStatus: 'no',
+  prefix: ''
+};
+
 const CliRateModal = ({ isOpen, onClose, onSubmit }) => {
-  const dataModel = {
-    countryCode: '',
-    country: '',
-    qualityDescription: '',
-    rate: '',
-    status: 'Inactive',
-    billingCycle: '',
-    rtp: '',
-    asr: '',
-    acd: '',
-    testStatus: 'no',
-    prefix: ''
-  }
-  const [newLead, setNewLead] = useState(dataModel);
+
+  const [newLead, setNewLead] = useState(DATA_MODEL);
 
   useEffect(() => {
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   }, []);
 
   const handleAddLead = (e) => {
     e.preventDefault();
     onSubmit(newLead);
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   };
 
   if (!isOpen) return null;

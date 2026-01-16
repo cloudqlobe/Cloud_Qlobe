@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Layout from '../../layout/page';
-import { FaPlusCircle, FaFilter } from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 import { BsBullseye } from "react-icons/bs";
 import { FaChevronDown } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
@@ -78,37 +78,40 @@ const OverdraftRequestPage = () => {
     setShowDropdown(filtered.length > 0);
   }, [companyInput, companies]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [filter, overdraftRequests]);
 
-  const applyFilters = () => {
-    let filtered = [...overdraftRequests];
+const applyFilters = useCallback(() => {
+  let filtered = [...overdraftRequests];
 
-    if (filter.status !== 'All') {
-      filtered = filtered.filter(request => request.status === filter.status);
-    }
+  if (filter.status !== 'All') {
+    filtered = filtered.filter(r => r.status === filter.status);
+  }
 
-    if (filter.clientType !== 'All') {
-      filtered = filtered.filter(request => request.clientType === filter.clientType);
-    }
+  if (filter.clientType !== 'All') {
+    filtered = filtered.filter(r => r.clientType === filter.clientType);
+  }
 
-    if (filter.reason !== 'All') {
-      filtered = filtered.filter(request => request.reason === filter.reason);
-    }
+  if (filter.reason !== 'All') {
+    filtered = filtered.filter(r => r.reason === filter.reason);
+  }
 
-    if (filter.searchTerm) {
-      const searchTerm = filter.searchTerm.toLowerCase();
-      filtered = filtered.filter(request => 
-        (request.companyName && request.companyName.toLowerCase().includes(searchTerm)) ||
-        (request.accountManager && request.accountManager.toLowerCase().includes(searchTerm)) ||
-        (request.reason && request.reason.toLowerCase().includes(searchTerm)) ||
-        (request.amount && request.amount.toString().includes(searchTerm))
-      );
-    }
+  if (filter.searchTerm) {
+    const term = filter.searchTerm.toLowerCase();
+    filtered = filtered.filter(r =>
+      (r.companyName && r.companyName.toLowerCase().includes(term)) ||
+      (r.accountManager && r.accountManager.toLowerCase().includes(term)) ||
+      (r.reason && r.reason.toLowerCase().includes(term)) ||
+      (r.amount && r.amount.toString().includes(term))
+    );
+  }
 
-    setFilteredRequests(filtered);
-  };
+  setFilteredRequests(filtered);
+}, [filter, overdraftRequests]);
+
+useEffect(() => {
+  applyFilters();
+}, [applyFilters]);
+
+
 
   const handleCompanySelect = (company) => {
     setCompanyInput(company.companyName);
@@ -148,7 +151,7 @@ const OverdraftRequestPage = () => {
     }
 
     try {
-      const response = await axiosInstance.post('api/member/createOverdraft', newOverdraft);
+      await axiosInstance.post('api/member/createOverdraft', newOverdraft);
       toast.success('Overdraft Added Successfully');
       setOverdraftRequests(prev => [...prev, newOverdraft]);
       setNewOverdraft({

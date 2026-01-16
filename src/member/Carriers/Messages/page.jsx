@@ -62,7 +62,7 @@ const CarriersMessage = () => {
   const filteredMessages = messages.filter(
     (msg) =>
       selectedContact &&
-      (msg.chat_from == selectedContact.role || msg.chat_to == selectedContact.role)
+      (msg.chat_from === selectedContact.role || msg.chat_to === selectedContact.role)
   );
 
   const markMessagesAsRead = async (contactId) => {

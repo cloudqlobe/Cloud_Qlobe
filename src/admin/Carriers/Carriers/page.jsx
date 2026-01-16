@@ -8,7 +8,6 @@ import {
   ArrowLeftStartOnRectangleIcon,
   StopCircleIcon,
 } from "@heroicons/react/24/outline";
-import AuthContext from "../../../context/AuthContext";
 import axiosInstance from "../../../utils/axiosinstance";
 import AdminAuthContext from "../../../context/admin/AdminAuthContext";
 

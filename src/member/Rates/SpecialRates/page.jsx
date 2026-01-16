@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../layout/page';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import axiosInstance from '../../../utils/axiosinstance';
 
 const SpecialRatePage = () => {
@@ -21,21 +21,6 @@ const SpecialRatePage = () => {
         fetchCustomerAndRates();
 
     }, []);
-
-    const removeSpecialRate = async (rateId) => {
-        
-        try {
-            await axiosInstance.put(`api/admin/delete/specialRate/${rateId._id}`, {
-                specialRate: 0  // set specialRate to 0 (or false)
-            });
-             setSpecialRates(specialRates.filter(r => r !== rateId));
-            toast.success("Rate deleted successfully!");
-
-        } catch (error) {
-            console.error("Error deleting rate:", error);
-            toast.error("Failed to delete rate. Please try again.");
-        }
-    };
 
     return (
         <Layout>

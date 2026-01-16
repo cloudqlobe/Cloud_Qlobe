@@ -2,36 +2,34 @@ import { useState, useEffect } from "react";
 import Layout from "../../layout/page";
 import axiosInstance from "../../../utils/axiosinstance";
 
+const DATA_MODEL = {
+  countryCode: "",
+  country: "",
+  qualityDescription: "",
+  status: "Inactive",
+  profile: "",
+  rate: "",
+  category: "",
+  testStatus: "as",
+  specialRate: false,
+  addToTicker: false,
+};
+
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
-  const dataModel = {
-    countryCode: "",
-    country: "",
-    qualityDescription: "",
-    status: "Inactive",
-    profile: "",
-    rate: "",
-    category: "",
-    testStatus: "as",
-    specialRate: false,
-    addToTicker: false,
-  }
-  const [newLead, setNewLead] = useState(initialData || dataModel);
+  const [newLead, setNewLead] = useState(initialData || DATA_MODEL);
 
   useEffect(() => {
-    if (initialData) {
-      setNewLead(initialData);
-    } else {
-      setNewLead(dataModel);
-    }
+    setNewLead(initialData || DATA_MODEL);
   }, [initialData]);
 
   const handleAddLead = (e) => {
     e.preventDefault();
     onSubmit(newLead);
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   };
 
   if (!isOpen) return null;
+
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
@@ -170,11 +168,10 @@ const RatesPage = () => {
   const handleAddLead = async (ccrates) => {
 
     try {
-      let response;
       if (isUpdateMode) {
-        response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
+        await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
       } else {
-        response = await axiosInstance.post("api/admin/ccrates", ccrates);
+        await axiosInstance.post("api/admin/ccrates", ccrates);
       }
       setSuccessMessage(
         isUpdateMode ? "Rate updated successfully!" : "Rate added successfully!"

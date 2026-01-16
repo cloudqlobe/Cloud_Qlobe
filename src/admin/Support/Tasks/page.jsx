@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect, useCallback } from "react"; 
 import { FaRegEye, FaCheckCircle } from "react-icons/fa"; 
 import DashboardLayout from "../../layout/page"; 
 
@@ -21,25 +21,26 @@ const TaskPage = () => {
     setTasks(fetchedTasks);
   }, []);
 
-  const applyFilters = () => {
-    let filtered = tasks;
+const applyFilters = useCallback(() => {
+  let filtered = tasks;
 
-    if (activeTab === "completed") {
-      filtered = filtered.filter((task) => task.status === "Completed");
-    } else if (activeTab === "Pending") {
-      filtered = filtered.filter((task) => task.status === "Pending");
-    }
+  if (activeTab === "completed") {
+    filtered = filtered.filter((task) => task.status === "Completed");
+  } else if (activeTab === "Pending") {
+    filtered = filtered.filter((task) => task.status === "Pending");
+  }
 
-    if (filterStatus) {
-      filtered = filtered.filter((task) => task.status === filterStatus);
-    }
+  if (filterStatus) {
+    filtered = filtered.filter((task) => task.status === filterStatus);
+  }
 
-    setFilteredTasks(filtered);
-  };
+  setFilteredTasks(filtered);
+}, [tasks, activeTab, filterStatus]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [activeTab, filterStatus]);
+useEffect(() => {
+  applyFilters();
+}, [applyFilters]);
+
 
   const getTaskCount = (status) => {
     if (status === "total") return tasks.length;

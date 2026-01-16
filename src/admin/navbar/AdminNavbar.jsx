@@ -103,27 +103,27 @@ const Topbar = () => {
           <div className="px-4 py-2 text-gray-500">No results found</div>
         ) : (
           filteredCustomers.map((customer) => (
-            <a
-              key={customer.id}
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition-colors duration-200"
-              onClick={(e) => {
-                e.preventDefault();
-                setSearchQuery(customer.companyName);
-                setShowSearchResults(false);
-              }}
-            >
-              <div className="font-medium">{customer.companyName}</div>
-              {customer.switchIps && (
-                <div className="text-xs text-gray-500">
-                  IPs:{" "}
-                  {JSON.parse(customer.switchIps)
-                    .map((ip) => ip.ip)
-                    .filter((ip) => ip)
-                    .join(", ")}
-                </div>
-              )}
-            </a>
+<button
+  key={customer.id}
+  type="button"
+  className="w-full text-left px-4 py-2 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition-colors duration-200"
+  onClick={() => {
+    setSearchQuery(customer.companyName);
+    setShowSearchResults(false);
+  }}
+>
+  <div className="font-medium">{customer.companyName}</div>
+  {customer.switchIps && (
+    <div className="text-xs text-gray-500">
+      IPs:{" "}
+      {JSON.parse(customer.switchIps)
+        .map((ip) => ip.ip)
+        .filter((ip) => ip)
+        .join(", ")}
+    </div>
+  )}
+</button>
+
           ))
         )}
       </div>
@@ -162,8 +162,8 @@ const Topbar = () => {
     if (item.href) {
       return (
         <div key={item.id}>
-          <a 
-            href={item.href} 
+          <a
+            href={item.href}
             className="flex items-center text-gray-600 hover:text-indigo-600 text-base focus:outline-none"
           >
             {item.icon}
@@ -195,11 +195,11 @@ const Topbar = () => {
               left: 0
             }}
           >
-            <div style={{ 
-              display: "flex", 
-              width: "100%", 
-              height: "100%", 
-              justifyContent: "space-evenly" 
+            <div style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "space-evenly"
             }}>
               <div style={{
                 background: "white",
@@ -217,7 +217,7 @@ const Topbar = () => {
                 <p style={{ fontSize: "0.9rem" }}>Description about {item.label} section</p>
               </div>
 
-              <div 
+              <div
                 className="grid grid-cols-3"
                 style={{
                   gap: "35px",
@@ -243,9 +243,9 @@ const Topbar = () => {
                         )}
                       </a>
                     ) : subItem.subMenu ? (
-                      <div className="p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{height:"45px"}}>
-                        <div 
-                          onClick={() => toggleSubMenu(index)} 
+                      <div className="p-2 bg-gray-100 rounded-lg transition-colors cursor-pointer" style={{ height: "45px" }}>
+                        <div
+                          onClick={() => toggleSubMenu(index)}
                           className="flex justify-between items-center p-1"
                         >
                           <div className="font-medium text-gray-800" style={{ fontSize: "0.9rem" }}>
@@ -256,31 +256,31 @@ const Topbar = () => {
                         {subItem.description && (
                           <div className="text-sm text-gray-500 mt-1">{subItem.description}</div>
                         )}
-                      {subMenuOpenIndex === index && (
-                        <div
-                          className="absolute grid grid-cols-3 bg-white shadow-lg border border-gray-200 rounded-lg p-4 z-20"
-                          style={{
-                            gap: "35px",
-                            top: "100%",         // aligns it directly below the parent
-                            left: "420px",           // starts from the parent’s left edge
-                            minWidth: "600px",
-                            width: "1085px"   // optional width
-                          }}
-                        >
-                          {subItem.items.map((menuItem, menuIndex) => (
-                            <a
-                              key={menuIndex}
-                              href={menuItem.href}
-                              className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                            >
-                              <div className="font-medium text-gray-800">{menuItem.label}</div>
-                              {menuItem.description && (
-                                <div className="text-sm text-gray-500 mt-1">{menuItem.description}</div>
-                              )}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+                        {subMenuOpenIndex === index && (
+                          <div
+                            className="absolute grid grid-cols-3 bg-white shadow-lg border border-gray-200 rounded-lg p-4 z-20"
+                            style={{
+                              gap: "35px",
+                              top: "100%",         // aligns it directly below the parent
+                              left: "420px",           // starts from the parent’s left edge
+                              minWidth: "600px",
+                              width: "1085px"   // optional width
+                            }}
+                          >
+                            {subItem.items.map((menuItem, menuIndex) => (
+                              <a
+                                key={menuIndex}
+                                href={menuItem.href}
+                                className="block p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                              >
+                                <div className="font-medium text-gray-800">{menuItem.label}</div>
+                                {menuItem.description && (
+                                  <div className="text-sm text-gray-500 mt-1">{menuItem.description}</div>
+                                )}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ) : null}
                   </div>

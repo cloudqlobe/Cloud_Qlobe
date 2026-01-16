@@ -17,14 +17,14 @@ import {
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminSalesReportPage = () => {
-  const [salesData, setSalesData] = useState([
+  const [salesData] = useState([
     { id: 1, title: "January Sales", target: 500, achieved: 4500, date: "2025-01-10" },
     { id: 2, title: "February Sales", target: 600, achieved: 5800, date: "2025-02-10" },
     { id: 3, title: "March Sales", target: 700, achieved: 7200, date: "2025-03-10" },
   ]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [activeTab, setActiveTab] = useState("Sales Targeted");
+  const [activeTab] = useState("Sales Targeted");
 
   const filteredSales = salesData.filter((sale) =>
     sale.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -32,12 +32,6 @@ const AdminSalesReportPage = () => {
 
   const totalTarget = salesData.reduce((acc, sale) => acc + sale.target, 0);
   const totalAchieved = salesData.reduce((acc, sale) => acc + sale.achieved, 0);
-
-  const categoryCounts = {
-    All: salesData.length,
-    Target: totalTarget,
-    Achieved: totalAchieved,
-  };
 
   const dataBar = {
     labels: salesData.map((sale) => sale.title),
