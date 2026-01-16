@@ -184,7 +184,7 @@ const Homescroller = () => {
                 </span>
 
               </div>
-
+{/* asdasdasd */}
               <div className="text-sm text-gray-700 flex justify-between items-center mt-4">
                 <span>{t}</span>
                 <span className="flex items-center gap-1">
