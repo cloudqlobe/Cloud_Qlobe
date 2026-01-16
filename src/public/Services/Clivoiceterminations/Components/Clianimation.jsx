@@ -48,14 +48,7 @@ const Ccanimation = () => {
       desc: 'Best of CLI & CC-CLI in one solution.',
     },
   ];
-
-  const tabDetails = {
-    tab1: 'Get premium CLI Routes with crystal-clear voice quality across global destinations.',
-    tab2: 'Explore cost-effective NCLI Routes for large-scale wholesale traffic.',
-    tab3: 'Experience reliable, traditional TDM voice routing with global interconnects.',
-    tab4: 'Combine the best of CLI and NCLI with our hybrid route optimization.',
-  };
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

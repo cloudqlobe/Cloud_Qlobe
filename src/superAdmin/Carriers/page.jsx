@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { 
   UserCheck, 
   Target, 
@@ -21,9 +20,6 @@ import {
 import Layout from '../layout/Layout';
 
 const CarriersManagementDashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [timeFilter, setTimeFilter] = useState('7d');
-  const [carrierFilter, setCarrierFilter] = useState('all');
 
   // Carriers focused data
   const carrierStats = {
@@ -210,7 +206,6 @@ const CarriersManagementDashboard = () => {
           const activePercentage = (month.active / maxValue) * 100;
           const inactivePercentage = (month.inactive / maxValue) * 100;
           const junkPercentage = (month.junk / maxValue) * 100;
-          const totalPercentage = (month.total / maxValue) * 100;
           
           return (
             <div key={index} className="flex items-center space-x-4">
@@ -251,110 +246,8 @@ const CarriersManagementDashboard = () => {
   return (
     <Layout>
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex">
-      {/* Sidebar */}
-      {/* <div className="w-64 bg-gradient-to-b from-blue-900 to-indigo-900 shadow-xl">
-        <div className="p-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <Truck className="w-5 h-5 text-blue-600" />
-            </div>
-            <h1 className="text-xl font-bold text-white">CarrierPro</h1>
-          </div>
-        </div>
-        
-        <nav className="mt-6">
-          {[
-            { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-            { id: 'carriers', label: 'Carrier Management', icon: Truck },
-            { id: 'network', label: 'Network Coverage', icon: Network },
-            { id: 'performance', label: 'Performance', icon: TrendingUp },
-            { id: 'analytics', label: 'Analytics', icon: Activity },
-            { id: 'reports', label: 'Reports', icon: Eye },
-            { id: 'settings', label: 'Settings', icon: Settings }
-          ].map(item => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center px-6 py-3 text-left transition-all duration-200 ${
-                activeTab === item.id 
-                  ? 'bg-white bg-opacity-20 text-white border-r-4 border-cyan-400 shadow-lg' 
-                  : 'text-blue-200 hover:bg-white hover:bg-opacity-10 hover:text-white'
-              }`}
-            >
-              <item.icon className="w-5 h-5 mr-3" />
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="absolute bottom-0 w-64 p-6">
-          <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-4">
-            <div className="flex items-center space-x-2 mb-2">
-              <Zap className="w-4 h-4 text-cyan-400" />
-              <span className="text-sm font-medium text-white">Carrier Tip</span>
-            </div>
-            <p className="text-xs text-blue-200">Express carriers show 35% higher customer satisfaction rates!</p>
-          </div>
-        </div>
-      </div> */}
-
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
-        {/* Header */}
-        {/* <header className="bg-white shadow-sm border-b border-gray-100">
-          <div className="flex items-center justify-between px-6 py-4">
-            <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-bold text-gray-900">Carriers Management Dashboard</h2>
-              <div className="flex items-center space-x-2">
-                <select 
-                  value={timeFilter}
-                  onChange={(e) => setTimeFilter(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="1d">Last 24 hours</option>
-                  <option value="7d">Last 7 days</option>
-                  <option value="30d">Last 30 days</option>
-                  <option value="90d">Last 3 months</option>
-                </select>
-                <select 
-                  value={carrierFilter}
-                  onChange={(e) => setCarrierFilter(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="all">All Carriers</option>
-                  <option value="active">Active Only</option>
-                  <option value="inactive">Inactive Only</option>
-                  <option value="junk">Junk/Invalid</option>
-                </select>
-                <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                  <RefreshCw className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input 
-                  type="text" 
-                  placeholder="Search carriers..." 
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <button className="relative p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">8</span>
-              </button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-medium">
-                  CM
-                </div>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </div>
-            </div>
-          </div>
-        </header> */}
-
         {/* Dashboard Content */}
         <main className="flex-1 overflow-y-auto p-6">
           {/* Carrier Status Metrics */}

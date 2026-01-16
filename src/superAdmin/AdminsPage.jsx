@@ -105,7 +105,7 @@ const handleSaveUser = async () => {
       ));
       toast.success("Admin updated successfully");
     } else {
-      const response = await axiosInstance.post("api/superAdmin/createAdmin", newUser);
+      await axiosInstance.post("api/superAdmin/createAdmin", newUser);
       await fetchAdmins(); // reload fresh data
       toast.success("Admin added successfully");
     }

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { 
   DollarSign,
   TrendingUp,
@@ -23,9 +22,6 @@ import {
 import Layout from '../layout/Layout';
 
 const TelecomAccountsDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [timeFilter, setTimeFilter] = useState('30d');
-  const [revenueFilter, setRevenueFilter] = useState('all');
 
   // Financial metrics data
   const financialMetrics = {
@@ -186,7 +182,6 @@ const TelecomAccountsDashboard = () => {
         {monthlyGrowthData.map((month, index) => {
           const salesPercentage = (month.sales / maxValue) * 100;
           const carriersPercentage = (month.carriers / maxValue) * 100;
-          const expensesPercentage = (month.expenses / maxValue) * 100;
           const profitPercentage = (month.profit / maxValue) * 100;
           
           return (

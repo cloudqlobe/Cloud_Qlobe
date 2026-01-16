@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  Phone,
   Network,
   Settings,
   Globe,
@@ -8,13 +6,9 @@ import {
   User,
   Mail,
   PhoneCall,
-  Server,
   Shield,
-  MessageSquare,
-  MonitorSmartphone,
   Headphones,
   Cloud,
-  Mic,
 } from 'lucide-react';
 
 const Voipanimation = () => {

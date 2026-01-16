@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Mail,
   Phone,
@@ -63,17 +62,18 @@ const ContactPage = () => {
               { icon: Linkedin, bg: 'bg-blue-700', url: 'https://www.linkedin.com/company/cloud-qlobe/' },
               { icon: Facebook, bg: 'bg-blue-600', url: 'https://www.facebook.com/cloudqlobe' },
               { icon: Instagram, bg: 'bg-gradient-to-tr from-pink-500 to-yellow-500', url: 'https://www.instagram.com/cloudqlobe/?hl=en' },
-            ].map((Item, idx) => (
+            ].map(({ icon: Icon, bg, url }, idx) => (
               <a
                 key={idx}
-                href={Item.url}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`w-10 h-10 flex items-center justify-center rounded-full ${Item.bg} text-white hover:scale-110 transition`}
+                className={`w-10 h-10 flex items-center justify-center rounded-full ${bg} text-white hover:scale-110 transition`}
               >
-                <Item.icon size={20} />
+                <Icon size={20} />   {/* ✅ PascalCase */}
               </a>
             ))}
+
           </div>
         </div>
 

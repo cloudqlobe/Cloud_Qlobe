@@ -41,7 +41,7 @@ const Page = () => {
       </div>
 
       <div ref={ccAnimationRef}>
-        {/* <Ccanimation /> */}
+        <Ccanimation />
       </div>
 
       <Cccontent2 />

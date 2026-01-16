@@ -29,7 +29,6 @@ import {
 import Layout from '../layout/Layout';
 
 const TelecomSalesDashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
   const [timeFilter, setTimeFilter] = useState('7d');
   const [leadFilter, setLeadFilter] = useState('all');
 

@@ -1,13 +1,8 @@
-import React from 'react';
 import {
   Server,
   Cloud,
   ShieldCheck,
   Cpu,
-  Monitor,
-  Settings,
-  Globe,
-  Database,
 } from 'lucide-react';
 
 const Serveranimation = () => {

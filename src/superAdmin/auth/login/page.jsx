@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
@@ -71,7 +71,7 @@ const SuperAdminLoginForm = () => {
 
     setIsLoading(true);
     try {
-      const response = await axiosInstance.post("api/superAdmin/forgot-password", {
+      await axiosInstance.post("api/superAdmin/forgot-password", {
         email: forgotPasswordEmail,
       });
       // sessionStorage.setItem("forgotSuperAdminAuthToken",response?.data.forgotPasswordToken)
