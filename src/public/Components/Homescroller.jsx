@@ -164,7 +164,7 @@ const Homescroller = () => {
               className="relative min-w-[250px] h-[150px] bg-white text-black px-5 py-4 shadow-lg mt-[-10px]"
             >
               <div className="flex justify-between items-center mb-3">
-                <h3 className="font-bold text-base flex items-center gap-2">
+                <h3 className="text-base flex items-center gap-2">
                   <img
                     src={`https://flagcdn.com/w40/${getCountryCode(item.country)}.png`}
                     alt={`${translateCountry(item.country, language)} flag`}
@@ -176,7 +176,7 @@ const Homescroller = () => {
                   className={`${item.status?.toLowerCase() === "active"
                     ? "bg-green-100 text-green-600"
                     : "bg-red-100 text-red-600"
-                    } text-xs font-semibold px-2 py-0.5 uppercase rounded`}
+                    } text-xs px-2 py-0.5`}
                 >
                   {item.status?.toLowerCase() === "active"
                     ? Translatestatus.active
