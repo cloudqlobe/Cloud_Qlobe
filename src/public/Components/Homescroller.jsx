@@ -204,7 +204,7 @@ const Homescroller = () => {
                   )}
                 </span>
               </div>
-              <div className="absolute bottom-0 left-0 w-full h-3 flex">
+              <div className="absolute bottom-0 left-0 w-full h-1 flex">
                 {getFlagBands(item.country).map((color, i) => (
                   <div
                     key={i}
