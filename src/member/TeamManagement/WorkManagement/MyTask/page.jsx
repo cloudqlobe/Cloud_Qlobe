@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
   Calendar,
   Clock,
@@ -21,39 +21,33 @@ export default function MemberTaskDisplay() {
   const [memberInfo, setMemberInfo] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  useEffect(() => {
-    fetchMemberTasks();
-    // fetchMemberInfo();
+const fetchMemberTasks = useCallback(async () => {
+  try {
+    const res = await axiosInstance.get(`/api/member/tasks/${memberDetails.id}`);
+    setTasks(res.data);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+  }
+}, [memberDetails.id]);
 
-    // Update time every minute for countdown
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
+const fetchMemberInfo = useCallback(async () => {
+  try {
+    const res = await axiosInstance("/api/admin/sale-members");
+    const data = await res.json();
+    const member = data.find(m => m.id === memberDetails.id);
+    setMemberInfo(member);
+  } catch (error) {
+    console.error("Error fetching member info:", error);
+  }
+}, [memberDetails.id]);
 
-    return () => clearInterval(timer);
-  }, []);
+useEffect(() => {
+  fetchMemberTasks();
+  fetchMemberInfo(); // only if you need memberInfo on mount
+  const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+  return () => clearInterval(timer);
+}, [fetchMemberTasks, fetchMemberInfo]);
 
-  const fetchMemberTasks = async () => {
-    try {
-      const res = await axiosInstance.get(`/api/member/tasks/${memberDetails.id}`);
-      setTasks(res.data);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
-
-
-
-  const fetchMemberInfo = async () => {
-    try {
-      const res = await axiosInstance("/api/admin/sale-members");
-      const data = await res.json();
-      const member = data.find(m => m.id === memberDetails.id);
-      setMemberInfo(member);
-    } catch (error) {
-      console.error("Error fetching member info:", error);
-    }
-  };
 
   const handleUpdateProgress = async (task) => {
     try {

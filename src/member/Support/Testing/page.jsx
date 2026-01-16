@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SiVitest, SiBitcomet } from "react-icons/si";
 import DashboardLayout from "../../layout/page";
 import { toast, ToastContainer } from "react-toastify";
@@ -56,14 +56,16 @@ const TestingPage = () => {
     fetchData();
   }, [memberDetails.role, memberDetails.id]); // Add role to dependencies
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = testsData
       .map((test) => {
-        const customer = customersData.find((customer) => customer?.id == test.customerId);
+        const customer = customersData.find(
+          (customer) => customer?.id === test.customerId
+        );
 
         if (!customer) return null;
 
-if (test.serviceEngineer === "NOC CloudQlobe") {
+        if (test.serviceEngineer === "NOC CloudQlobe") {
           return {
             ...customer,
             testId: test.id,
@@ -98,15 +100,26 @@ if (test.serviceEngineer === "NOC CloudQlobe") {
           customer.companyName
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          customer.customerId.toLowerCase().includes(searchTerm.toLowerCase())
+          customer.customerId
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
       );
     }
+
     setFilteredData(filtered);
-  };
+  }, [
+    testsData,
+    customersData,
+    activeTab,
+    filterStatus,
+    searchTerm,
+  ]);
+
 
   useEffect(() => {
     applyFilters();
-  }, [activeTab, filterStatus, searchTerm, testsData, customersData]);
+  }, [applyFilters]);
+
 
   const openModal = (testId) => {
     const selectedTest = testsData.find((test) => test.id === testId);
@@ -134,7 +147,7 @@ if (test.serviceEngineer === "NOC CloudQlobe") {
       }
 
       const customer = customersData.find(
-        (customer) => customer?.customerId == selectedTest.customerId
+        (customer) => customer?.customerId === selectedTest.customerId
       );
 
       setSelectedCustomer({
@@ -157,8 +170,7 @@ if (test.serviceEngineer === "NOC CloudQlobe") {
       const testStatus = 'Pending';
 
       // toast.info("Processing your request...", { autoClose: false });
-
-      const [memberResponse, testResponse] = await Promise.all([
+      await Promise.all([
         axiosInstance.put(`api/member/updateMemberTest/${memberDetails.id}`, { testId }),
         axiosInstance.put(`api/member/tests/${testId}`, { serviceEngineer, testStatus })
       ]);

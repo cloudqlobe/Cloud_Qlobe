@@ -32,7 +32,7 @@ const TroubleTicket = () => {
       }
     };
     fetchTroubleTicket();
-  }, [memberDetails?.role]);
+}, [memberDetails.id, memberDetails.role]);
 
   // Filter Trouble Ticket data
   const filteredTickets = troubleTicket.filter((item) =>

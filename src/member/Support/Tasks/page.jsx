@@ -21,25 +21,22 @@ const SupportTaskPage = () => {
     setTasks(fetchedTasks);
   }, []);
 
-  const applyFilters = () => {
-    let filtered = tasks;
 
-    if (activeTab === "completed") {
-      filtered = filtered.filter((task) => task.status === "Completed");
-    } else if (activeTab === "Pending") {
-      filtered = filtered.filter((task) => task.status === "Pending");
-    }
+useEffect(() => {
+  let filtered = tasks;
 
-    if (filterStatus) {
-      filtered = filtered.filter((task) => task.status === filterStatus);
-    }
+  if (activeTab === "completed") {
+    filtered = filtered.filter((task) => task.status === "Completed");
+  } else if (activeTab === "Pending") {
+    filtered = filtered.filter((task) => task.status === "Pending");
+  }
 
-    setFilteredTasks(filtered);
-  };
+  if (filterStatus) {
+    filtered = filtered.filter((task) => task.status === filterStatus);
+  }
 
-  useEffect(() => {
-    applyFilters();
-  }, [activeTab, filterStatus]);
+  setFilteredTasks(filtered);
+}, [tasks, activeTab, filterStatus]);
 
   const getTaskCount = (status) => {
     if (status === "total") return tasks.length;
@@ -99,7 +96,6 @@ const SupportTaskPage = () => {
           </select>
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-            onClick={applyFilters}
           >
             Filter
           </button>

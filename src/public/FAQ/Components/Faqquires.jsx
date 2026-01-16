@@ -5,12 +5,8 @@ import {
   PhoneCall,
   Server,
   ShieldCheck,
-  MessageCircle,
   Link2,
   Lightbulb,
-  Search,
-  Crown,
-  Home,
 } from 'lucide-react';
 
 const faqData = [

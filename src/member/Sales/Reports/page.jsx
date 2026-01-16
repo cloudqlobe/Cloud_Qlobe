@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { FaSearch, FaBullseye, FaChartLine } from "react-icons/fa";
 import DashboardLayout from "../../layout/page";
 import { FcBarChart } from "react-icons/fc";
-import { HiChartSquareBar } from "react-icons/hi";
 import { Bar, Pie } from "react-chartjs-2";
-import { LuAperture, LuBadgeDollarSign } from "react-icons/lu";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -24,10 +22,11 @@ const SalesReportPage = () => {
     { id: 2, title: "February Sales", target: 600, achieved: 5800, date: "2025-02-10" },
     { id: 3, title: "March Sales", target: 700, achieved: 7200, date: "2025-03-10" },
   ]);
+  setSalesData();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeTab, setActiveTab] = useState("Sales Targeted");
-
+setActiveTab('');
   const filteredSales = salesData.filter((sale) =>
     sale.title.toLowerCase().includes(searchTerm.toLowerCase())
   );

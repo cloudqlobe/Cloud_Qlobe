@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TrendingUp, Target, DollarSign, Users, Award, Calendar, ChevronDown, ChevronUp, Plus, X, Phone, ShoppingCart, BarChart3 } from 'lucide-react';
+import { TrendingUp, Target, DollarSign, Users, Award, ChevronDown, ChevronUp, Plus, X, ShoppingCart } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell } from 'recharts';
 import Layout from '../../../layout/page';
 

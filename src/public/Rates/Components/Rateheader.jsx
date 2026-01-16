@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Filter, Check, X } from "lucide-react";
 import axiosInstance from "../../../utils/axiosinstance";
@@ -13,7 +13,7 @@ import { LanguageContext } from "../../../context/LanguageContext";
 const Ratepages = () => {
   const { customerDetails } = useContext(CustomerAuthContext);
   const { language } = useContext(LanguageContext);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [selectedLang, setSelectedLang] = useState();
   const [activeTab, setActiveTab] = useState("cc");
@@ -40,12 +40,11 @@ const Ratepages = () => {
 
   const itemsPerPage = 10;
 
-  useEffect(() => {
+useEffect(() => {
   if (language && language !== selectedLang) {
     setSelectedLang(language);
   }
-}, [language]);
-
+}, [language, selectedLang]);
 
   // --- fetch rates from backend ---
   useEffect(() => {
@@ -80,7 +79,7 @@ const Ratepages = () => {
   }, []);
 
   // --- helper: get filtered country list ---
-  const getFilteredCountries = () => {
+  const getFilteredCountries = useCallback(() => {
     let currentData = [];
     if (activeTab === "cc") currentData = rates;
     else if (activeTab === "cli") currentData = clirates;
@@ -91,7 +90,7 @@ const Ratepages = () => {
     );
 
     return Array.from(new Set(currentData.map((rate) => rate.country))).sort();
-  };
+  }, [activeTab, rates, clirates, specialRates]);
 
   // --- use translation hook ---
   const {

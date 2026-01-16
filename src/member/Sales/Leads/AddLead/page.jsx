@@ -36,10 +36,10 @@ const AddSaleCustomerPage = () => {
     switchIps: [{ ip: "", status: "active" }],
   });
 
-  const [leads, setLeads] = useState({
+const [leads] = useState({
     leadType: "Customer lead",
     customerType: "Customer",
-  })
+  });
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({}); // New state for field errors

@@ -10,7 +10,7 @@ import axiosInstance from "../../../utils/axiosinstance";
 
 const SupportMyticket = () => {
   const { memberDetails } = useContext(AuthContext);
-  const [requests, setRequests] = useState([]);
+  // const [requests, setRequests] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [filters, setFilters] = useState({
     category: "",
@@ -54,7 +54,7 @@ const SupportMyticket = () => {
         ).filter(Boolean);
 
         setTroubleTicket(filterTroubleTicket);
-        setRequests(filterTroubleTicket); // Set initial requests to trouble tickets
+        // setRequests(filterTroubleTicket);
 
         const testId = JSON.parse(memberDataResponse.data.member.testingDataId || "[]");
         const memberData = {
@@ -94,11 +94,11 @@ const SupportMyticket = () => {
 
   const filterByCategory = (category) => {
     if (category === 'Testing Requests') {
-      setRequests(testData);
+      // setRequests(testData);
     } else if (category === 'Trouble Tickets') {
-      setRequests(troubleTicket);
+      // setRequests(troubleTicket);
     } else if (category === 'All') {
-      setRequests([...troubleTicket, ...testData]);
+      // setRequests([...troubleTicket, ...testData]);
     }
     setActiveCategory(category);
     // Reset filters when changing category
@@ -218,18 +218,18 @@ const SupportMyticket = () => {
       }
       
       // Update the combined requests view
-      setRequests(prev => 
-        prev.map(item => {
-          if (item.id === selectedTest.id) {
-            return { 
-              ...item, 
-              status: newStatus, 
-              testStatus: newStatus 
-            };
-          }
-          return item;
-        })
-      );
+      // setRequests(prev => 
+      //   prev.map(item => {
+      //     if (item.id === selectedTest.id) {
+      //       return { 
+      //         ...item, 
+      //         status: newStatus, 
+      //         testStatus: newStatus 
+      //       };
+      //     }
+      //     return item;
+      //   })
+      // );
       
       setShowPickupModal(false);
     } catch (error) {

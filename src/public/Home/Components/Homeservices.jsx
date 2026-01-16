@@ -70,12 +70,12 @@ export default function TechDashboard() {
   }, []);
 
   // 🔄 Auto-slide bottom feature text
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % quickSetup.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentFeature((prev) => (prev + 1) % quickSetup.length);
+  }, 3000);
+  return () => clearInterval(interval);
+}, [quickSetup.length]);
 
   return (
     <div className="min-h-[600px] bg-[#0a2463] p-8 relative overflow-hidden">

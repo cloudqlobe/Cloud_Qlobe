@@ -48,7 +48,7 @@ const SaleFollowUp = () => {
     };
 
     fetchData();
-  }, [memberDetails.id]);
+  }, [memberDetails.id, memberDetails.role]);
 
   const filteredFollowUps = followUpData.filter(
     (item) =>

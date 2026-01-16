@@ -12,7 +12,6 @@ const SupportFollowUp = () => {
   const { memberDetails } = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState("call");
   const [followUpData, setFollowUpData] = useState([]);
-  const [customerData, setCustomerData] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +31,6 @@ const SupportFollowUp = () => {
           const response = await axiosInstance.get(`api/customer/${customerId}`);
           customers[customerId] = response.data.customer;
         }
-        setCustomerData(customers);
       } catch (err) {
         setError(err.message);
       } finally {

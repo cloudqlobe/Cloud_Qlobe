@@ -3,8 +3,6 @@ import { Calendar, Plus, X, Clock, Plane, Flag } from 'lucide-react';
 
 const InteractiveCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [showLeaveForm, setShowLeaveForm] = useState(false);
   const [leaves, setLeaves] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -88,7 +86,6 @@ const InteractiveCalendar = () => {
     if (leaveForm.date && leaveForm.description) {
       setLeaves([...leaves, { ...leaveForm, id: Date.now() }]);
       setLeaveForm({ date: '', type: 'full', description: '' });
-      setShowLeaveForm(false);
     }
   };
 

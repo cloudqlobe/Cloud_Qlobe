@@ -14,10 +14,8 @@ import usePageTranslator from "../../usePageTranslator";
 import { serviceTranslations, navbarTranslations, languageOptions } from "./DummyTranslateData/NavbarServiceTranslationsData";
 import Ratepages from "../Rates/Components/Rateheader";
 import { LanguageContext } from "../../context/LanguageContext";
-import useAuth from "../../auth/useAuth";
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth("customer");
   const role = sessionStorage.getItem("role");
 const authToken = sessionStorage.getItem("authToken");
 

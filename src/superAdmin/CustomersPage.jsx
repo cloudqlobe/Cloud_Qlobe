@@ -353,7 +353,7 @@ const CustomersPage = ({ customersData = [] }) => {
                   value={transferData.toManagerId}
                   onChange={(e) => {
                     const selectedManager = accountManagers.find(
-                      (manager) => manager.id == e.target.value
+                      (manager) => manager.id === e.target.value
                     );
                     
                     setTransferData({

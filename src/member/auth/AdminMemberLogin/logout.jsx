@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../context/AuthContext";
 import axiosInstance from "../../../utils/axiosinstance";
 
 const UserDropdown = () => {
-  const { memberDetails } = useContext(AuthContext)
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DollarSign, CreditCard, Clock, CheckCircle, AlertCircle, Send, MessageSquare, Calendar, Filter, Search, Eye, X } from 'lucide-react';
+import { DollarSign, CreditCard, Clock, CheckCircle, AlertCircle, Send, MessageSquare, Calendar, Search, X } from 'lucide-react';
 import Layout from '../../../layout/page';
 
 export default function PayrollPage() {

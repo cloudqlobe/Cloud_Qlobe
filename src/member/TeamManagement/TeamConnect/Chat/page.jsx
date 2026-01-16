@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Send, Plus, Hash, Lock, Users, Settings, Bell, Search, Paperclip, Smile, MoreVertical, Video, Phone, UserPlus, Crown, Shield, User, ChevronDown, X, Check } from 'lucide-react';
+import { Send, Plus, Hash, Lock, Users, Settings, Bell, Search, Paperclip, Smile, MoreVertical, Video, Phone, UserPlus, Crown, Shield, User, X, Check } from 'lucide-react';
 import Layout from '../../../layout/page';
 
 const TeamChatApp = () => {
   const [selectedChannel, setSelectedChannel] = useState('general');
   const [message, setMessage] = useState('');
   const [showMemberModal, setShowMemberModal] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [userRole, setUserRole] = useState('admin'); // 'superadmin', 'admin', 'member'
   
   const [channels] = useState([
@@ -58,6 +57,7 @@ const TeamChatApp = () => {
     if (message.trim()) {
       // Message sending logic here
       setMessage('');
+      setUserRole();
     }
   };
 

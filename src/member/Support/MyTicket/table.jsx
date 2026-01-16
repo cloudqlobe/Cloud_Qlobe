@@ -217,21 +217,10 @@ const TroubleTicketView = ({
   showModal,
   setShowModal,
   ticket,
-  handleUpdateStatus,
-  newStatus,
-  setNewStatus
 }) => {
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(ticket?.status || '');
-
-  const handleStatusUpdate = () => {
-    handleUpdateStatus({
-      ...ticket,
-      status: selectedStatus
-    });
-    setIsUpdatingStatus(false);
-  };
-
+setIsUpdatingStatus();
   return (
     <>
       {showModal && ticket && (

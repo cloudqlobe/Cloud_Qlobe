@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Target, TrendingUp, Calendar, Award, Plus, Trash2, Edit2, CheckCircle2, Circle } from 'lucide-react';
+import { Target, TrendingUp, Calendar, Award, Plus, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import Layout from '../../../layout/page';
 
 export default function GoalTracker() {

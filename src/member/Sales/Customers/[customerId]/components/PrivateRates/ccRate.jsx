@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 
-const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
-  const dataModel={
-    countryCode: "",
-    country: "",
-    qualityDescription: "",
-    status: "Inactive",
-    profile: "",
-    rate: "",
-    prefix: "",
-    testStatus: "no",
-  }
-  const [newLead, setNewLead] = useState(dataModel);
+const DATA_MODEL = {
+  countryCode: "",
+  country: "",
+  qualityDescription: "",
+  status: "Inactive",
+  profile: "",
+  rate: "",
+  prefix: "",
+  testStatus: "no",
+};
 
-  useEffect(() => {
-      setNewLead(dataModel);
-  }, []);
+const CCRateModal = ({ isOpen, onClose, onSubmit }) => {
+  const [newLead, setNewLead] = useState(DATA_MODEL);
 
   const handleAddLead = (e) => {
     e.preventDefault();
     onSubmit(newLead);
-    setNewLead(dataModel);
+    setNewLead(DATA_MODEL);
   };
 
+
   if (!isOpen) return null;
+
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>

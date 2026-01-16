@@ -26,6 +26,15 @@ const Topbar = () => {
   const [notifications, setNotifications] = useState(3);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotifications(2);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
+  useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await axiosInstance.get("api/customers");
@@ -109,13 +118,10 @@ const Topbar = () => {
           <div className="px-4 py-2 text-gray-500">No results found</div>
         ) : (
           filteredCustomers.map(customer => (
-            <a
-              key={customer.id}
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition-colors duration-200"
-              onClick={(e) => {
-                e.preventDefault();
-                // Handle customer selection here
+            <button
+              type="button"
+              className="w-full text-left px-4 py-2 hover:bg-gray-100 border-b border-gray-200 last:border-b-0 transition-colors duration-200"
+              onClick={() => {
                 setSearchQuery(customer.companyName);
                 setShowSearchResults(false);
               }}
@@ -126,7 +132,7 @@ const Topbar = () => {
                   IPs: {JSON.parse(customer.switchIps).map(ip => ip.ip).filter(ip => ip).join(', ')}
                 </div>
               )}
-            </a>
+            </button>
           ))
         )}
       </div>
@@ -288,23 +294,23 @@ const Topbar = () => {
         </div>
       )}
 
-<motion.button
-  className="relative p-3 bg-gray-100 rounded-xl shadow hover:bg-gray-200 transition"
-  whileHover={{ scale: 1.1 }}
-  whileTap={{ scale: 0.95 }}
->
-  <Bell className="w-5 h-5 text-gray-800" />
-  {notifications > 0 && (
-    <motion.span
-      className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-md"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-    >
-      {notifications}
-    </motion.span>
-  )}
-</motion.button>
+      <motion.button
+        className="relative p-3 bg-gray-100 rounded-xl shadow hover:bg-gray-200 transition"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Bell className="w-5 h-5 text-gray-800" />
+        {notifications > 0 && (
+          <motion.span
+            className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-md"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+          >
+            {notifications}
+          </motion.span>
+        )}
+      </motion.button>
 
 
       {/* User Dropdown */}

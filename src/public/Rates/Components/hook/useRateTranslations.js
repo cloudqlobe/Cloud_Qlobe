@@ -18,10 +18,10 @@ const useRateTranslations = (
   const API_URL = "http://127.0.0.1:5008/translate/rate_table";
 
   // 🔹 Update country list
-  useEffect(() => {
-    const countries = getFilteredCountries();
-    setCountry([...countries]);
-  }, [activeTab, filteredRates]);
+useEffect(() => {
+  const countries = getFilteredCountries();
+  setCountry([...countries]);
+}, [activeTab, filteredRates, getFilteredCountries]);
 
   // 🔹 Clear displayRates if no rates
   useEffect(() => {
@@ -112,7 +112,7 @@ if (descriptions.length === 0) {
 
     translateTable();
     return () => (active = false);
-  }, [selectedLang, currentPage, filteredRates]);
+  }, [selectedLang, currentPage, filteredRates, itemsPerPage]);
 
   // 🔹 Country translation
   useEffect(() => {

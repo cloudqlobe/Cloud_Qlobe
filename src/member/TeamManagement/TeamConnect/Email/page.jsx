@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Send, Reply, ReplyAll, Forward, Trash2, Archive, Star, StarOff, Flag, MoreVertical, Search, RefreshCw, ChevronLeft, ChevronRight, Paperclip, Image, Smile, AlignLeft, Bold, Italic, Underline, Link2, List, X, Menu, Settings, User, Inbox, FileText, AlertCircle, Clock, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, Send, Reply, ReplyAll, Forward, Trash2, Archive, Star, Flag, MoreVertical, Search, RefreshCw, Paperclip, Image, Smile, AlignLeft, Bold, Italic, Underline, Link2, List, X, Menu, Settings, User, Inbox, FileText, AlertCircle } from 'lucide-react';
 import Layout from '../../../layout/page';
 
 const EmailClient = () => {

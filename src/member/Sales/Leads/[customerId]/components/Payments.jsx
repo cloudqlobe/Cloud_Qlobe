@@ -5,7 +5,7 @@ import axiosInstance from "../../../../../utils/axiosinstance";
 
 const PaymentsTab = ({ customerId }) => {
   const [payments, setPayments] = useState([]);
-  const [refunds, setRefunds] = useState([]);
+  // const [refunds, setRefunds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // all, completed, pending
   const [activeTab, setActiveTab] = useState("payments"); // payments, refunds
@@ -31,7 +31,7 @@ const PaymentsTab = ({ customerId }) => {
 
 
   const filteredPayments = payments.filter(payment => filter === "all" || payment.transactionStatus === filter);
-  const filteredRefunds = refunds.filter(refund => filter === "all" || refund.status === filter);
+  // const filteredRefunds = refunds.filter(refund => filter === "all" || refund.status === filter);
 
   if (loading) return <div>Loading...</div>;
 
@@ -131,7 +131,7 @@ const PaymentsTab = ({ customerId }) => {
               <th className="px-4 py-2 text-left">Status</th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {filteredRefunds.map((refund, index) => (
               <tr key={refund.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-200`}>
                 <td className="px-4 py-2">{refund.id}</td>
@@ -149,7 +149,7 @@ const PaymentsTab = ({ customerId }) => {
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
         </table>
       )}
     </div>

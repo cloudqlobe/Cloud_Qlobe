@@ -1,4 +1,3 @@
-import React from "react";
 import {
   PhoneCall,
   Globe,
@@ -7,8 +6,6 @@ import {
   Shield,
   Settings,
 } from "lucide-react";
-
-const iconClass = "w-5 h-5 text-white";
 
 const FaqBubbles = ({ onGetStartedClick, onLearnMoreClick }) => {
   return (

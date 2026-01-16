@@ -25,39 +25,36 @@ export default function AttendancePage() {
     onTimeRate: 0,
   });
 
+useEffect(() => {
+  const timer = setInterval(() => setCurrentTime(new Date()), 1000);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+  const today = new Date().toISOString().split('T')[0];
+  const todayRecord = attendanceRecords.find(r => r.date === today);
 
-    // Check if already punched in today
-    const today = new Date().toISOString().split('T')[0];
-    const todayRecord = attendanceRecords.find(r => r.date === today);
-    if (todayRecord && todayRecord.punchIn && !todayRecord.punchOut) {
-      setIsPunchedIn(true);
-      setTodayAttendance(todayRecord);
-    }
+  if (todayRecord && todayRecord.punchIn && !todayRecord.punchOut) {
+    setIsPunchedIn(true);
+    setTodayAttendance(todayRecord);
+  }
 
-    return () => clearInterval(timer);
-  }, []);
+  return () => clearInterval(timer);
+}, [attendanceRecords]);
 
-  useEffect(() => {
-    const fetchTodayAttendance = async () => {
-      try {
-        const res = await axiosInstance.get(`api/member/teamManagement/attendance/today/${memberId}`);
 
-        if (res.data.success && res.data.today) {
-          setTodayAttendance(res.data.today);
-          setIsPunchedIn(res.data.today.punchIn && !res.data.today.punchOut);
-        }
-      } catch (error) {
-        console.error("Error fetching today's attendance", error);
+useEffect(() => {
+  const fetchTodayAttendance = async () => {
+    try {
+      const res = await axiosInstance.get(`api/member/teamManagement/attendance/today/${memberId}`);
+      if (res.data.success && res.data.today) {
+        setTodayAttendance(res.data.today);
+        setIsPunchedIn(res.data.today.punchIn && !res.data.today.punchOut);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching today's attendance", error);
+    }
+  };
 
-    fetchTodayAttendance();
-  }, []);
+  fetchTodayAttendance();
+}, [memberId]);
 
 
   useEffect(() => {
@@ -118,7 +115,7 @@ export default function AttendancePage() {
     };
 
     fetchMonthlyAttendance();
-  }, [selectedMonth]);
+}, [memberId, selectedMonth]);
 
 
   const formatTime = (date) => {
