@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
 import { 
-  Users, 
   UserCheck, 
-  UserX, 
   Target, 
   TrendingUp, 
   TrendingDown,
@@ -12,36 +9,24 @@ import {
   Phone,
   Globe,
   Search,
-  ChevronDown,
-  BarChart3,
-  Calendar,
   Activity,
-  AlertCircle,
   CheckCircle,
   Clock,
   Filter,
   Download,
-  RefreshCw,
   Eye,
-  MoreHorizontal,
   Send,
   ExternalLink,
   Star,
-  Zap,
   MousePointer,
   Smartphone,
   Monitor,
   ArrowUpRight,
   ArrowDownRight,
-  Bell,
-  Settings
 } from 'lucide-react';
-import DashboardSidebar from '../layout/sidebar';
 import Layout from '../layout/Layout';
 
 const MarketingDashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [timeFilter, setTimeFilter] = useState('7d');
 
   // Marketing-focused data
   const stats = {
