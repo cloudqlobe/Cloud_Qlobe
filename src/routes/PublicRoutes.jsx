@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import CcRoutes from "../public/Services/Ccroutes/Page.jsx";
 import CliVoice from "../public/Services/Clivoiceterminations/Page.jsx";
@@ -35,6 +35,14 @@ const PublicRoutes = () => {
         <Route path="/contact" element={<Contactpages />} />
         <Route path="/faq" element={<Faqpages />} />
 
+        {/* Protected Rates Page */}
+        <Route
+          path="/rates"
+          element={
+            canAccessRates ? <Ratespages /> : <Navigate to="/customer/login" replace />
+          }
+        />
+
         {/* Service Pages */}
         <Route path="/services/cc-routes" element={<CcRoutes />} />
         <Route path="/services/cli-voice" element={<CliVoice />} />
@@ -43,9 +51,6 @@ const PublicRoutes = () => {
         <Route path="/services/server-hosting" element={<ServerHosting />} />
         <Route path="/services/voip-websites" element={<VoipWebsites />} />
       </Routes>
-
-      {/* Rates Page */}
-      {/* {canAccessRates && <Ratespages />} */}
 
       {/* Special Rate Section */}
       {canAccessRates && <Specialrate />}
