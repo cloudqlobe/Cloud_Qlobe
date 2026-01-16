@@ -45,7 +45,7 @@ const PublicRoutes = () => {
       </Routes>
 
       {/* Rates Page */}
-      {canAccessRates && <Ratespages />}
+      {/* {canAccessRates && <Ratespages />} */}
 
       {/* Special Rate Section */}
       {canAccessRates && <Specialrate />}

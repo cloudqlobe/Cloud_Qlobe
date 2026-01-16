@@ -25,7 +25,6 @@ function App() {
     hideGoogleTranslate();
   }, []);
 
-
   return (
     <>
       <GlobalLoader />
