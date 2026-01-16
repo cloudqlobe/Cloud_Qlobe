@@ -17,7 +17,6 @@ const VendorRequestPage = () => {
   const fetchData = async () => {
     try {
       const response = await axiosInstance.get(`api/member/getVendorByMemberId/${memberDetails.id}`);
-      console.log(response.data.vendor);
 
       if (response.data.success) {
         if (memberDetails.role === 'accountMember' || 'salemember') {

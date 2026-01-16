@@ -99,8 +99,6 @@ export const submitRegistration = async (formData) => {
     if (dataToSend.user && dataToSend.user.confirmPassword) {
       delete dataToSend.user.confirmPassword;
     }
-
-    console.log('Data being sent to backend:', dataToSend);
     
     const response = await axiosInstance.post('/api/customer', dataToSend, {
       headers: {

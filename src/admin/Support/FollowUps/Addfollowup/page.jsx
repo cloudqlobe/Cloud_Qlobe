@@ -14,7 +14,6 @@ const AddFollowUpInSupport = () => {
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [companies, setCompanies] = useState([]);
-  console.log(companies);
   
   const [followUpDetails, setFollowUpDetails] = useState({
     customerId: "",

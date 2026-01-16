@@ -18,7 +18,6 @@ const FollowUpDetails = () => {
   const [error, setError] = useState(null);
   const { followupId } = useParams()
   const id = followupId; // Replace with dynamic ID handling if needed
-console.log(id);
 
   useEffect(() => {
     const fetchFollowUp = async () => {

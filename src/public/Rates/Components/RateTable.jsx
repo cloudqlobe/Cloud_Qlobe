@@ -18,7 +18,6 @@ const RateTable = ({
       : dummyTranslatedHeaders[selectedLanguage] || dummyTranslatedHeaders["en"];
 
   const currentLang = selectedLanguage || "en";
-  console.log("curent lang in the tbale", selectedLanguage);
 
   return (
     <table className="min-w-full bg-white border rounded">

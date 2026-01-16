@@ -50,7 +50,6 @@ const AdminOverdraftRequestPage = () => {
     };
     fetchData();
   }, [adminDetails.id]);
-  console.log(companies);
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -75,7 +74,6 @@ const AdminOverdraftRequestPage = () => {
     const filtered = companies.filter(company =>
       company.customerId?.toLowerCase().includes(companyInput?.toLowerCase())
     );
-    console.log("filter",filtered);
     
     setFilteredCompanies(filtered);
     setShowDropdown(filtered.length > 0);

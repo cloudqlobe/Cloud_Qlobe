@@ -17,7 +17,6 @@ const ProfileTab = ({ customerId }) => {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [updatedLeadInfo, setUpdatedLeadInfo] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-console.log("id", customerId);
 
   useEffect(() => {
     const fetchLeadData = async () => {

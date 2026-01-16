@@ -20,7 +20,6 @@ const RechargeForm = () => {
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  console.log(companyInput);
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -90,7 +89,6 @@ const RechargeForm = () => {
     fromData.append('image', image);
     fromData.append('customerId', companyInput);
     fromData.append('memberId', memberDetails.id);
-    console.log(fromData);
 
     try {
       const response = await axiosInstance.post('api/member/Transactions', fromData);

@@ -31,12 +31,10 @@ const CarrierPage = () => {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
         }
-        console.log(data);
         
         const filteredCustomers = data?.filter(
           (customer) => customer.leadType === "Carrier lead"
         );
-        console.log(filteredCustomers);
         
         setCustomers(filteredCustomers);
       } catch (error) {

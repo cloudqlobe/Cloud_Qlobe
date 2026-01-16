@@ -10,7 +10,6 @@ const MemberTokenVerification = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
   const { updateMemberDetails } = useContext(AuthContext);
-console.log(department);
 
 const handleVerify = async () => {
   if (token.length !== 6) {
@@ -33,7 +32,6 @@ const handleVerify = async () => {
     );
 
     const { memberData } = res.data; // ✅ This is the JWT token from backend
-    console.log("Received JWT:", memberData);
 
     // ✅ Store raw token
     sessionStorage.setItem("MemberAuthToken", memberData);

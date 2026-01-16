@@ -117,8 +117,6 @@ const customer_id = customerDetails?.id; // For ticket filtering
   const [customerData, setCustomerData] = useState({});
   const [loading, setLoading] = useState(true);
 
-  console.log(customerId, customer_id);
-
   useEffect(() => {
     const fetchData = async () => {
       if (!customer_id) return;

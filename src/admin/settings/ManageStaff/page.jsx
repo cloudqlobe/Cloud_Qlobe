@@ -17,8 +17,6 @@ const StaffManagement = () => {
   const [editingUserId, setEditingUserId] = useState(null);
   const [errors, setErrors] = useState({ fullName: '', email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
-console.log(url);
-console.log(users);
 
   useEffect(() => {
     if (!url) return;

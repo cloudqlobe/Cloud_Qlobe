@@ -20,7 +20,6 @@ const AdminRechargerequestPage = () => {
 
       if (response.data.success) {
         let data = response.data.transaction;
-        console.log(data);
 
         setAllPayments(data); // Store original data
         setPayments(data); // Set displayed data

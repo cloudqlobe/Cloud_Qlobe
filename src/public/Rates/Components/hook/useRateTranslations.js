@@ -78,9 +78,6 @@ const descriptions = visibleWithExpanded
   .filter((r) => r.qualityDescription)
   .map((r) => r.qualityDescription);
 
-console.log("✅ Expanded visibleRates:", visibleWithExpanded);
-console.log("✅ Descriptions for translation:", descriptions);
-
 if (descriptions.length === 0) {
   if (active) setDisplayRates(filteredRates);
   return;

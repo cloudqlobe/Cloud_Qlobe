@@ -42,7 +42,6 @@ export default function usePageTranslator(language) {
 
       const pathParts = window.location.pathname.split("/").filter(Boolean);
       const page = pathParts.length > 0 ? pathParts : "home";
-console.log(page);
 
       try {
         const translated = await batchTranslateText(originals, page, language);

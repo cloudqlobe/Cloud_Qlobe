@@ -8,9 +8,7 @@ import axiosInstance from "../../../../utils/axiosinstance";
 
 const AddSaleCustomerPage = () => {
   const navigate = useNavigate();
-  const { memberDetails } = useContext(AuthContext);
-  console.log("memberDetails",memberDetails);
-  
+  const { memberDetails } = useContext(AuthContext);  
   const [companyDetails, setCompanyDetails] = useState({
     companyName: "",
     companyEmail: "",

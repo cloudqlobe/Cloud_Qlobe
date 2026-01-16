@@ -46,7 +46,6 @@ export default function AttendancePage() {
     const fetchTodayAttendance = async () => {
       try {
         const res = await axiosInstance.get(`api/member/teamManagement/attendance/today/${memberId}`);
-        console.log(res.data);
 
         if (res.data.success && res.data.today) {
           setTodayAttendance(res.data.today);
@@ -65,7 +64,6 @@ export default function AttendancePage() {
     const fetchMonthlyAttendance = async () => {
       try {
         const res = await axiosInstance.get(`api/member/teamManagement/attendance/monthly/${memberId}/${selectedMonth}`);
-        console.log(res.data);
 
         if (res.data.success) {
           const records = res.data.records;

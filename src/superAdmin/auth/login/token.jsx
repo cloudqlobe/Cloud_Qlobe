@@ -24,11 +24,6 @@ const SuperAdminTokenVerification = () => {
       }, { withCredentials: true });
 
       const adminData = res.data.sessionToken;
-      console.log(res);
-      console.log(res.data.sessionToken);
-      
-      
-console.log(adminData);
 
       sessionStorage.setItem("SuperAdminAuthToken", JSON.stringify(adminData));
       updateSuperAdminDetails(adminData);
@@ -39,7 +34,6 @@ console.log(adminData);
 
     } catch (err) {
       const status = err?.response?.status;
-      console.log(status);
       console.log(err);
 
 

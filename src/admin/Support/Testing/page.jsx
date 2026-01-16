@@ -18,7 +18,6 @@ const TestingPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-console.log(testsData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +52,6 @@ console.log(testsData);
 
     fetchData();
   }, [adminDetails.role, adminDetails.id]); // Add role to dependencies
-console.log(customersData);
 
   const applyFilters = () => {
     let filtered = testsData

@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../utils/axiosinstance';
 import Layout from './layout/Layout';
 
 const CustomersPage = ({ customersData = [] }) => {
-  const navigate = useNavigate();
   const [customers, setCustomers] = useState(customersData);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('companyName');
@@ -28,7 +26,6 @@ const CustomersPage = ({ customersData = [] }) => {
   });
 
   const [accountManagers, setAccountManagers] = useState([]);
-console.log(accountManagers);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -50,7 +47,6 @@ console.log(accountManagers);
     const fetchManagers = async () => {
       try {
         const res = await axiosInstance.get('api/admin/allsaleMember');
-        console.log(res.data);
         
         setAccountManagers(res.data.members || []);
       } catch (error) {
@@ -67,8 +63,6 @@ console.log(accountManagers);
     setLeadStatusFilter('');
     setAddedByFilter('');
   };
-
-  const handleAddLead = () => navigate('/member/Addlead');
 
   const handleLeadStatusFilter = (status) => {
     setLeadStatusFilter(status);
@@ -131,7 +125,6 @@ console.log(accountManagers);
       note,
       date
     } = transferData;
-console.log(transferData);
 
     if (!toManagerId && !toManager) {
       toast.error('Please select a manager to transfer to.');
@@ -362,8 +355,6 @@ console.log(transferData);
                     const selectedManager = accountManagers.find(
                       (manager) => manager.id == e.target.value
                     );
-                    console.log(selectedManager);
-                    console.log(e.target.value);
                     
                     setTransferData({
                       ...transferData,

@@ -59,7 +59,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted');
     alert('Registration submitted!');
   };
 

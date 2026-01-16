@@ -28,7 +28,6 @@ const TargetedRatePage = () => {
     const [selectedToDelete, setSelectedToDelete] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 10;
-    console.log(editData);
 
     const [formData, setFormData] = useState({
         country: '',
@@ -66,7 +65,6 @@ const TargetedRatePage = () => {
     const uniqueCountries = [...new Set(ccRates?.map(rate => rate.country))];
     const uniqueStatuses = [...new Set(ccRates?.map(rate => rate.status))];
     const uniquePriorities = [...new Set(ccRates?.map(rate => rate.priority))];
-    console.log(uniqueCountries);
 
     // Extract profiles from qualityDescription (first word)
     const uniqueProfiles = [...new Set(ccRates?.map(rate => {

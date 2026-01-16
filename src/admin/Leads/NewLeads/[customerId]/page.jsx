@@ -55,7 +55,6 @@ const tabs = [
 
 const AdminLeadDetails = () => {
   const { customerId } = useParams();
-  console.log("customerId",customerId);
   
   const [activeTab, setActiveTab] = useState("profile");
   const [dropdownOpen, setDropdownOpen] = useState(null);

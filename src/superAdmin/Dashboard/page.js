@@ -10,7 +10,6 @@ import axiosInstance from '../../utils/axiosinstance';
 import Layout from '../layout/Layout';
 
 const SuperAdminDashboard = () => {
-    const [activeTab, setActiveTab] = useState("dashboard");
     const [dashboardData, setDashboardData] = useState({
         stats: {
             totalCustomers: 0,
@@ -46,7 +45,6 @@ const SuperAdminDashboard = () => {
             { day: 'Sun', value: 3087, change: 3.0, high: 3121, low: 3045 }
         ]
     });
-    console.log(dashboardData);
 
     useEffect(() => {
         const fetchData = async () => {

@@ -16,10 +16,8 @@ export default function ManagerTaskAssignment() {
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('pending');
   const [members, setMembers] = useState([]);
-  const [extraWork, setExtraWork] = useState({});
 
   const taskTitleSuggestions = [
     "Add Lead",
@@ -37,7 +35,6 @@ export default function ManagerTaskAssignment() {
     priority: 'medium',
     status: 'pending',
   });
-  console.log(tasks);
 
   useEffect(() => {
     fetchTasks();
@@ -48,7 +45,6 @@ export default function ManagerTaskAssignment() {
     try {
       const res = await axiosInstance.get("api/admin/teamManagement/member-tasks");
       setTasks(res.data);
-      console.log(res.data);
 
     } catch (error) {
       console.log("Error fetching tasks:", error);

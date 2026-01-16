@@ -17,7 +17,6 @@ const AccountFollowUp = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  console.log(followUpData);
   
   useEffect(() => {
     const fetchData = async () => {

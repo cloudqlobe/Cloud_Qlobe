@@ -165,7 +165,6 @@ const SuperAdminCCRate = () => {
     const [currentRate, setCurrentRate] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-console.log(rateData);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);

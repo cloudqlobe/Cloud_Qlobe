@@ -9,7 +9,6 @@ const VerifyTokenPage = () => {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
   const [resendDisabled, setResendDisabled] = useState(false);
   const [countdown, setCountdown] = useState(60);
 
@@ -43,7 +42,6 @@ const VerifyTokenPage = () => {
         { token, tempAuthToken },
         { withCredentials: true }
       );
-      console.log(res.data);
 
       sessionStorage.setItem("authToken", JSON.stringify(res.data.authToken))
       sessionStorage.removeItem("tempAuthToken");

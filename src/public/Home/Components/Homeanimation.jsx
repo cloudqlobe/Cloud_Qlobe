@@ -53,7 +53,6 @@ const Homeanimation = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Registered:", formData);
     alert("Registration submitted!");
     setFormData({ name: '', email: '', number: '' });
   };

@@ -24,7 +24,6 @@ const Footer = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    console.log("Subscribing:", email);
     alert("Thank you for subscribing!");
     setEmail("");
   };

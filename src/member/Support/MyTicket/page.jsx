@@ -189,7 +189,6 @@ const SupportMyticket = () => {
     } else if (test.category === 'Trouble Tickets') {
       setNewStatus(test.status);
     }
-    console.log(test);
     
     setSelectedTest(test);
     setShowPickupModal(true);
@@ -200,7 +199,6 @@ const SupportMyticket = () => {
   };
 
   const handleUpdateStatus = async () => {
-    console.log(selectedTest.category);
     
     try {
       if (selectedTest.category === 'Testing Requests') {

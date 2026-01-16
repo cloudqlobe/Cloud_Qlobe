@@ -18,7 +18,6 @@ const AccountsMyTicket = () => {
   const [privateRate, setPrivateRate] = useState([]);
   const [ratesData, setRatesData] = useState([]);
   const [cliRatesData, setCliRatesData] = useState([]);
-console.log(overdraft);
 
   const [activeCategory, setActiveCategory] = useState("All");
   // const [searchTerm, setSearchTerm] = useState("");
@@ -127,28 +126,28 @@ console.log(overdraft);
 
   const handleUpdateStatus = async () => {
     if (selectedTest.category === 'Recharge Request') {
-      const response = await axiosInstance.put(`api/member/updateTransationStatus/${selectedTest?._id}`, { transactionStatus: newStatus });
+       await axiosInstance.put(`api/member/updateTransationStatus/${selectedTest?._id}`, { transactionStatus: newStatus });
       setRequests(prevRequests =>
         prevRequests.map(test =>
           test._id === selectedTest._id ? { ...test, transactionStatus: newStatus } : test
         )
       );
     } else if (selectedTest.category === 'Vendor Payment') {
-      const response = await axiosInstance.put(`api/member/updateVendorStatus/${selectedTest?.id}`, { transactionStatus: newStatus });
+      await axiosInstance.put(`api/member/updateVendorStatus/${selectedTest?.id}`, { transactionStatus: newStatus });
       setRequests(prevRequests =>
         prevRequests.map(ticket =>
           ticket.id === selectedTest.id ? { ...ticket, status: newStatus } : ticket
         )
       );
     } else if (selectedTest.category === 'Private Rate') {
-      const response = await axiosInstance.put(`api/member/updatePrivateRateStatus/${selectedTest?._id}`, { status: newStatus });
+      await axiosInstance.put(`api/member/updatePrivateRateStatus/${selectedTest?._id}`, { status: newStatus });
       setRequests(prevRequests =>
         prevRequests.map(ticket =>
           ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket
         )
       );
     } else if (selectedTest.category === 'Overdraft') {
-      const response = await axiosInstance.put(`api/member/updateOverdraftStatus/${selectedTest?._id}`, { status: newStatus });
+      await axiosInstance.put(`api/member/updateOverdraftStatus/${selectedTest?._id}`, { status: newStatus });
       setRequests(prevRequests =>
         prevRequests.map(ticket =>
           ticket._id === selectedTest._id ? { ...ticket, status: newStatus } : ticket

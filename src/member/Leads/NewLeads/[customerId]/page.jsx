@@ -54,9 +54,7 @@ const tabs = [
 ];
 
 const LeadDetails = () => {
-  const { customerId } = useParams();
-  console.log("customerId",customerId);
-  
+  const { customerId } = useParams();  
   const [activeTab, setActiveTab] = useState("profile");
   const [dropdownOpen, setDropdownOpen] = useState(null);
 

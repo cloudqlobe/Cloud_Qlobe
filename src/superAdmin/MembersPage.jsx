@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   UserGroupIcon,
-  UserIcon,
-  EnvelopeIcon,
   PencilIcon,
   TrashIcon,
   XMarkIcon,
-  KeyIcon
 } from '@heroicons/react/24/outline';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,8 +33,6 @@ const AllStaffManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUserId, setEditingUserId] = useState(null);
   const [newUser, setNewUser] = useState({ fullName: '', email: '', password: '', role: '', status: 'active' });
-  const [errors, setErrors] = useState({});
-  console.log(newUser);
 
   // Fetch members
   const fetchMembers = async () => {
@@ -104,7 +99,6 @@ const AllStaffManagement = () => {
       status: member.status || 'active'  // 👈 set current status
     });
     setEditingUserId(member.id);
-    setErrors({});
     setIsModalOpen(true);
   };
 
@@ -116,10 +110,9 @@ const AllStaffManagement = () => {
     }
 
     try {
-      let response;
       const rolePath = newUser.role.replace("member", ""); // "leadmember" -> "lead"
       if (editingUserId) {
-        response = await axiosInstance.put(
+        await axiosInstance.put(
           `api/admin/update${rolePath}Member/${editingUserId}`,
           newUser
         );

@@ -29,9 +29,7 @@ const CarrierCustomersPage = () => {
 
         if (memberDetails.role === "carriermember" || "salemember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
-          data = response.data.customer;
-          console.log(data);
-          
+          data = response.data.customer;          
         }
         const filteredCustomers = data?.filter(
           (customer) => customer.leadType === "Carrier"

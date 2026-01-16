@@ -31,7 +31,6 @@ const SaleCustomersPage = () => {
         if (memberDetails.role === "salemember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
-          console.log(data);
           
         } else if (memberDetails.role === "superAdmin") {
           const response = await axiosInstance.get(`api/customers`);

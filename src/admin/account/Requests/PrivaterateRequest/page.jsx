@@ -33,7 +33,6 @@ const AdminPrivateRateRequestPage = () => {
           ...test,
           rateId: safeJsonParse(test.rateId)
         }));
-        console.log(parsedRates);
 
         setRequests(parsedRates);
         setPrivateRatesData(privateRatesData);

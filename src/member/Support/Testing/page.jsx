@@ -60,7 +60,6 @@ const TestingPage = () => {
     let filtered = testsData
       .map((test) => {
         const customer = customersData.find((customer) => customer?.id == test.customerId);
-console.log(customer);
 
         if (!customer) return null;
 

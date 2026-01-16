@@ -28,7 +28,6 @@ const pieData = [
 
 const handleCountrySearch = (query) => {
   // Filter or search logic here
-  console.log("Searching for companies in:", query);
 };
 
 
@@ -165,7 +164,6 @@ const fetchCustomers = async () => {
       </Layout>
     );
   }
-  console.log("activeLeads", activeLeads);
 
   return (
     <Layout>

@@ -29,7 +29,6 @@ const NewLeads = () => {
         if (memberDetails.role === "salemember" || "leadmember") {
           const response = await axiosInstance.get(`api/member/lead/${memberDetails.id}`);
           data = response.data.customer;
-          console.log("data", data);
         }
 
         const filteredCustomers = data?.filter(

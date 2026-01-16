@@ -78,7 +78,6 @@ const Homescroller = () => {
 
   const [rates, setRates] = useState([]);
   const [loading, setLoading] = useState(true);
-  // console.log("rates",rates);
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -90,8 +89,7 @@ const Homescroller = () => {
 
         // ✅ Show only addToTicker === 1
         const filteredRates = allRates.filter((item) => item.addToTicker === 1);
-        console.log(filteredRates);
-
+        
         // ✅ Map backend data into display format
         const groupedByCountry = {};
 
@@ -184,7 +182,7 @@ const Homescroller = () => {
                 </span>
 
               </div>
-{/* asdasdasd */}
+
               <div className="text-sm text-gray-700 flex justify-between items-center mt-4">
                 <span>{t}</span>
                 <span className="flex items-center gap-1">

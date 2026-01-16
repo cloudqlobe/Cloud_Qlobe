@@ -37,8 +37,6 @@ export default function MemberTaskDisplay() {
     try {
       const res = await axiosInstance.get(`/api/member/tasks/${memberDetails.id}`);
       setTasks(res.data);
-      console.log(res.data);
-
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -80,8 +78,6 @@ export default function MemberTaskDisplay() {
       const { filteredMembers, taskstatus, solvedTaskNumber, ...taskToSend } = updatedTask;
 
       await axiosInstance.put(`/api/member/tasks/update-progress/${task.id}/${memberDetails.id}`, taskToSend);
-      console.log(task.id);
-      console.log(taskToSend);
 
       fetchMemberTasks();
       alert(`Task status updated to ${nextStatus} ✅`);

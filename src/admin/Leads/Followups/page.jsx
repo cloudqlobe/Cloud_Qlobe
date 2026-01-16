@@ -17,8 +17,7 @@ const AdminLeadFollowUp = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-console.log(followUpData);
-console.log(customerData);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +28,6 @@ console.log(customerData);
         setFollowUpData(data);
 
         const customerIds = [...new Set(data.map(item => item.userId))];
-        console.log(customerIds);
         
         const validIds = customerIds.filter(id => id && id.trim() !== "");
 
@@ -38,7 +36,6 @@ console.log(customerData);
           const response = await axiosInstance.get(`api/customer/${customerId}`);
           customers[customerId] = response.data.customer;
         }
-        console.log(customers);
         
 setCustomerData(customers)
       } catch (err) {
