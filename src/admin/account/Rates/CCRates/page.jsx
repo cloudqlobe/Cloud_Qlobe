@@ -121,6 +121,7 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
               className='border border-gray-300 rounded-lg px-2 py-1'>
               <option value='Active'>Active</option>
               <option value='Inactive'>Inactive</option>
+              <option value='archive'>Archive</option>
             </select>
           </label>
           <label className='flex items-center mb-4'>

@@ -3,17 +3,17 @@ import Layout from "../../../layout/Layout";
 import axiosInstance from "../../../../utils/axiosinstance";
 
 const DEFAULT_DATA_MODEL = {
-        countryCode: "",
-        country: "",
-        qualityDescription: "",
-        status: "Inactive",
-        profile: "",
-        rate: "",
-        category: "",
-        testStatus: "as",
-        billingCycle: "",
-        specialRate: false,
-        addToTicker: false,
+    countryCode: "",
+    country: "",
+    qualityDescription: "",
+    status: "Inactive",
+    profile: "",
+    rate: "",
+    category: "",
+    testStatus: "as",
+    billingCycle: "",
+    specialRate: false,
+    addToTicker: false,
 };
 
 const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
@@ -73,7 +73,70 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
                         required
                     />
 
-                    {/* rest of inputs unchanged */}
+                    <select
+                        value={newLead?.profile || ""}
+                        onChange={(e) =>
+                            setNewLead({ ...newLead, profile: e.target.value })
+                        }
+                        className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'>
+                        <option value='' disabled>
+                            Select Profile
+                        </option>
+                        <option value='Outbound'>Outbound</option>
+                        <option value='IVR'>IVR</option>
+                    </select>
+                    <input
+                        type='text'
+                        placeholder='Billing Cycle'
+                        value={newLead.billingCycle}
+                        onChange={(e) =>
+                            setNewLead({ ...newLead, billingCycle: e.target.value })
+                        }
+                        className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'
+                        required
+                    />
+                    <input
+                        type='number'
+                        placeholder='Enter Rate'
+                        value={newLead?.rate || ""}
+                        onChange={(e) => setNewLead({ ...newLead, rate: e.target.value })}
+                        className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'
+                    />
+                    <label className='flex items-center mb-4'>
+                        <input
+                            type='checkbox'
+                            checked={newLead.specialRate}
+                            onChange={(e) =>
+                                setNewLead({ ...newLead, specialRate: e.target.checked })
+                            }
+                            className='mr-2'
+                        />
+                        Special Rate
+                    </label>
+                    <label className='flex items-center mb-4'>
+                        <span className='mr-2'>Status:</span>
+                        <select
+                            value={newLead.status}
+                            onChange={(e) =>
+                                setNewLead({ ...newLead, status: e.target.value })
+                            }
+                            className='border border-gray-300 rounded-lg px-2 py-1'>
+                            <option value='Active'>Active</option>
+                            <option value='Inactive'>Inactive</option>
+                            <option value='archive'>Archive</option>
+                        </select>
+                    </label>
+                    <label className='flex items-center mb-4'>
+                        <input
+                            type='checkbox'
+                            checked={newLead.addToTicker}
+                            onChange={(e) =>
+                                setNewLead({ ...newLead, addToTicker: e.target.checked })
+                            }
+                            className='mr-2'
+                        />
+                        Add to Ticker
+                    </label>
 
                     <div className="flex justify-between mt-4">
                         <button type="button" onClick={onClose} className="bg-gray-300 px-4 py-2 rounded-lg">
@@ -101,6 +164,8 @@ const SuperAdminCCRate = () => {
     const [currentRate, setCurrentRate] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -146,56 +211,42 @@ const SuperAdminCCRate = () => {
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
 
-const handleAddLead = async (ccrates) => {
-    try {
-        let response;
-        if (isUpdateMode) {
-            response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
+    const handleAddLead = async (ccrates) => {
+        try {
+            let response;
+            if (isUpdateMode) {
+                response = await axiosInstance.put(`api/admin/ccrates/${currentRate._id}`, ccrates);
 
-            // Update the rateData state in-place
-            setRateData(prev =>
-                prev.map(rate => rate._id === currentRate._id ? response.data.updatedRate : rate)
-            );
+                // Update the rateData state in-place
+                setRateData(prev =>
+                    prev.map(rate => rate._id === currentRate._id ? response.data.updatedRate : rate)
+                );
 
-            setSuccessMessage("Rate updated successfully!");
-        } else {
-            response = await axiosInstance.post("api/admin/ccrates", ccrates);
+                setSuccessMessage("Rate updated successfully!");
+            } else {
+                response = await axiosInstance.post("api/admin/ccrates", ccrates);
 
-            // Add new rate to the table
-            setRateData(prev => [...prev, response.data.newRate]);
+                // Add new rate to the table
+                setRateData(prev => [...prev, response.data.newRate]);
 
-            setSuccessMessage("Rate added successfully!");
+                setSuccessMessage("Rate added successfully!");
+            }
+
+            setErrorMessage("");
+            setModalOpen(false);
+            setIsUpdateMode(false);
+            setCurrentRate(null);
+        } catch (error) {
+            console.error("Error adding/updating rate:", error);
+            setErrorMessage("Failed to add/update rate. Please try again.");
+            setSuccessMessage("");
         }
-
-        setErrorMessage("");
-        setModalOpen(false);
-        setIsUpdateMode(false);
-        setCurrentRate(null);
-    } catch (error) {
-        console.error("Error adding/updating rate:", error);
-        setErrorMessage("Failed to add/update rate. Please try again.");
-        setSuccessMessage("");
-    }
-};
-
+    };
 
     const handleUpdateClick = (rate) => {
         setCurrentRate(rate);
         setIsUpdateMode(true);
         setModalOpen(true);
-    };
-
-    const handleDeleteClick = async (rateId) => {
-        try {
-            await axiosInstance.delete(`api/admin/ccrates/${rateId}`);
-            setRateData(rateData.filter((rate) => rate._id !== rateId));
-            setSuccessMessage("Rate deleted successfully!");
-            setErrorMessage("");
-        } catch (error) {
-            console.error("Error deleting rate:", error);
-            setErrorMessage("Failed to delete rate. Please try again.");
-            setSuccessMessage("");
-        }
     };
 
     return (
@@ -278,25 +329,33 @@ const handleAddLead = async (ccrates) => {
                             <th className='py-2 px-4'>Actions</th>
                         </tr>
                     </thead>
-<tbody>
-  {currentRows.map((rate, index) => (
-    rate ? (
-      <tr key={rate._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-        <td className='py-2 px-4'>{rate.countryCode}</td>
-        <td className='py-2 px-4'>{rate.country}</td>
-        <td className='py-2 px-4'>{rate.qualityDescription}</td>
-        <td className='py-2 px-4'>{rate.rate}</td>
-        <td className='py-2 px-4'>{rate.status}</td>
-        <td className='py-2 px-4'>{rate.profile}</td>
-        <td className='py-2 px-4'>{rate.billingCycle}</td>
-        <td className='py-2 px-4'>
-          <button onClick={() => handleUpdateClick(rate)} className='text-blue-500 hover:text-blue-700'>Edit</button>
-          <button onClick={() => handleDeleteClick(rate._id)} className='text-red-500 hover:text-red-700 ml-2'>Delete</button>
-        </td>
-      </tr>
-    ) : null
-  ))}
-</tbody>
+                    <tbody>
+                        {currentRows.map((rate, index) => (
+                            rate ? (
+                                <tr key={rate._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                                    <td className='py-2 px-4'>{rate.countryCode}</td>
+                                    <td className='py-2 px-4'>{rate.country}</td>
+                                    <td className='py-2 px-4'>{rate.qualityDescription}</td>
+                                    <td className='py-2 px-4'>{rate.rate}</td>
+                                    <td className='py-2 px-4'>{rate.status}</td>
+                                    <td className='py-2 px-4'>{rate.profile}</td>
+                                    <td className='py-2 px-4'>{rate.billingCycle}</td>
+                                    <td className='py-2 px-4'>
+                                        <button onClick={() => handleUpdateClick(rate)} className='text-blue-500 hover:text-blue-700'>Edit</button>
+                                        <button
+                                            onClick={() => {
+                                                setDeleteId(rate._id);
+                                                setConfirmOpen(true);
+                                            }}
+                                            className="text-red-500 hover:text-red-700 ml-2"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ) : null
+                        ))}
+                    </tbody>
 
                 </table>
                 <div className='flex justify-between items-center mt-4'>
@@ -318,6 +377,52 @@ const handleAddLead = async (ccrates) => {
                 </div>
 
             </div>
+
+            {confirmOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h3 className="text-lg font-semibold mb-4">
+                            Confirm Delete
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Are you sure you want to delete this rate?
+                        </p>
+
+                        <div className="flex justify-end gap-3">
+                            <button
+                                onClick={() => {
+                                    setConfirmOpen(false);
+                                    setDeleteId(null);
+                                }}
+                                className="px-4 py-2 bg-gray-300 rounded-lg"
+                            >
+                                No
+                            </button>
+
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        await axiosInstance.delete(`api/admin/ccrates/${deleteId}`);
+                                        setRateData(prev =>
+                                            prev.filter(rate => rate._id !== deleteId)
+                                        );
+                                        setSuccessMessage("Rate deleted successfully!");
+                                        setErrorMessage("");
+                                    } catch (error) {
+                                        setErrorMessage("Failed to delete rate.");
+                                    } finally {
+                                        setConfirmOpen(false);
+                                        setDeleteId(null);
+                                    }
+                                }}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg"
+                            >
+                                Yes, Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <Modal
                 isOpen={modalOpen}

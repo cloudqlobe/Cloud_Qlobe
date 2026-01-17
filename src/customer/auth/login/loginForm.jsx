@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lightbulb, Briefcase, Megaphone, Award } from "lucide-react";
+import { Lightbulb, Briefcase, Megaphone, Award, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosinstance";
 import { useLoader } from "../../../context/LoaderContext/page";
@@ -15,6 +15,7 @@ const Loginpagemain = () => {
   const { isLoading, setIsLoading } = useLoader();
   const [error, setError] = useState("");
   const [isGuest, setIsGuest] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -159,20 +160,31 @@ const Loginpagemain = () => {
                 />
 
               </div>
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-600">
                   Password
                 </label>
+
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Enter your password"
-                  className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none bg-white"
+                  className="mt-1 block w-full p-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none bg-white"
                   required
                 />
+
+                {/* Eye Icon */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(prev => !prev)}
+                  className="absolute right-3 top-[38px] text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
+
               {!isGuest && (
                 <div className="flex justify-between items-center text-sm">
                   <a

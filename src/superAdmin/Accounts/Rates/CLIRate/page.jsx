@@ -44,44 +44,36 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 </h3>
 
                 <form onSubmit={handleAddLead}>
-                    <input
-                        type="text"
-                        placeholder="Country Code"
-                        value={newLead.countryCode}
-                        onChange={(e) => setNewLead({ ...newLead, countryCode: e.target.value })}
-                        className="mb-2 w-full px-4 py-2 border rounded-lg"
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Country"
-                        value={newLead.country}
-                        onChange={(e) => setNewLead({ ...newLead, country: e.target.value })}
-                        className="mb-2 w-full px-4 py-2 border rounded-lg"
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Quality Description"
-                        value={newLead.qualityDescription}
-                        onChange={(e) =>
-                            setNewLead({ ...newLead, qualityDescription: e.target.value })
-                        }
-                        className="mb-2 w-full px-4 py-2 border rounded-lg"
-                        required
-                    />
-
-                    {/* rest of inputs unchanged */}
+                    <input type="text" placeholder="Country Code" value={newLead.countryCode} onChange={(e) => setNewLead({ ...newLead, countryCode: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <input type="text" placeholder="Country" value={newLead.country} onChange={(e) => setNewLead({ ...newLead, country: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <input type="text" placeholder="Quality Description" value={newLead.qualityDescription} onChange={(e) => setNewLead({ ...newLead, qualityDescription: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <input type="number" placeholder="Rate" value={newLead.rate} onChange={(e) => setNewLead({ ...newLead, rate: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <input type="text" placeholder="Billing Cycle" value={newLead.billingCycle} onChange={(e) => setNewLead({ ...newLead, billingCycle: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    <input type="text" placeholder="RTP" value={newLead.rtp} onChange={(e) => setNewLead({ ...newLead, rtp: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    <input type="text" placeholder="ASR" value={newLead.asr} onChange={(e) => setNewLead({ ...newLead, asr: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    <input type="text" placeholder="ACD" value={newLead.acd} onChange={(e) => setNewLead({ ...newLead, acd: e.target.value })} className="mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                    <label className="flex items-center mb-4">
+                        <span className="mr-2">Status:</span>
+                        <select
+                            value={newLead.status}
+                            onChange={(e) => setNewLead({ ...newLead, status: e.target.value })}
+                            className="border border-gray-300 rounded-lg px-2 py-1"
+                        >
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="archive">Archive</option>
+                        </select>
+                    </label>
+                    <div className="mb-4">
+                        <label className="inline-flex items-center">
+                            <input type="checkbox" checked={newLead.ticker} onChange={(e) => setNewLead({ ...newLead, ticker: e.target.checked })} className="form-checkbox h-5 w-5 text-blue-600" />
+                            <span className="ml-2">Add to Ticker</span>
+                        </label>
+                    </div>
 
                     <div className="flex justify-between mt-4">
-                        <button type="button" onClick={onClose} className="bg-gray-300 px-4 py-2 rounded-lg">
-                            Cancel
-                        </button>
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                            {initialData ? 'Update Rate' : 'Add Rate'}
-                        </button>
+                        <button type="button" onClick={onClose} className="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-200">Cancel</button>
+                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">{initialData ? 'Update Rate' : 'Add Rate'}</button>
                     </div>
                 </form>
             </div>
@@ -101,6 +93,8 @@ const SuperAdminCLIRate = () => {
     const [currentRate, setCurrentRate] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -170,19 +164,6 @@ const SuperAdminCLIRate = () => {
         setCurrentRate(rate);
         setIsUpdateMode(true);
         setModalOpen(true);
-    };
-
-    const handleDeleteClick = async (rateId) => {
-        try {
-            await axiosInstance.delete(`api/admin/clirates/${rateId}`);
-            setRateData(prev => prev.filter(rate => rate._id !== rateId));
-            setSuccessMessage('Rate deleted successfully!');
-            setErrorMessage('');
-        } catch (error) {
-            console.error('Error deleting rate:', error);
-            setErrorMessage('Failed to delete rate. Please try again.');
-            setSuccessMessage('');
-        }
     };
 
     return (
@@ -260,8 +241,15 @@ const SuperAdminCLIRate = () => {
                                 <td className={`px-4 py-2 ${rate.status.toLowerCase() === 'active' ? 'text-green-600' : 'text-red-600'}`}>{rate.status}</td>
                                 <td className="px-4 py-2">
                                     <button onClick={() => handleUpdateClick(rate)} className="text-blue-500 hover:underline">Edit</button>
-                                    <button onClick={() => handleDeleteClick(rate._id)} className="text-red-500 hover:underline ml-2">Delete</button>
-                                </td>
+                                    <button
+                                        onClick={() => {
+                                            setDeleteId(rate._id);
+                                            setConfirmOpen(true);
+                                        }}
+                                        className="text-red-500 hover:text-red-700 ml-2"
+                                    >
+                                        Delete
+                                    </button>                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -285,6 +273,53 @@ const SuperAdminCLIRate = () => {
                         Next
                     </button>
                 </div>
+
+                {confirmOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                            <h3 className="text-lg font-semibold mb-4">
+                                Confirm Delete
+                            </h3>
+                            <p className="text-gray-600 mb-6">
+                                Are you sure you want to delete this rate?
+                            </p>
+
+                            <div className="flex justify-end gap-3">
+                                <button
+                                    onClick={() => {
+                                        setConfirmOpen(false);
+                                        setDeleteId(null);
+                                    }}
+                                    className="px-4 py-2 bg-gray-300 rounded-lg"
+                                >
+                                    No
+                                </button>
+
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            await axiosInstance.delete(`api/admin/clirates/${deleteId}`);
+                                            setRateData(prev =>
+                                                prev.filter(rate => rate._id !== deleteId)
+                                            );
+                                            setSuccessMessage("Rate deleted successfully!");
+                                            setErrorMessage("");
+                                        } catch (error) {
+                                            setErrorMessage("Failed to delete rate.");
+                                        } finally {
+                                            setConfirmOpen(false);
+                                            setDeleteId(null);
+                                        }
+                                    }}
+                                    className="px-4 py-2 bg-red-600 text-white rounded-lg"
+                                >
+                                    Yes, Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
 
                 <Modal
                     isOpen={modalOpen}

@@ -1,17 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-
-// Mock data for demonstration
-const mockRateData = [
-  { _id: '1', country: 'USA', qualityDescription: 'Premium', profile: 'CLI', rate: '0.015', billingCycle: '60/60', specialRate: 1 },
-  { _id: '2', country: 'UK', qualityDescription: 'Standard', profile: 'Non-CLI', rate: '0.012', billingCycle: '60/60', specialRate: 1 },
-  { _id: '3', country: 'Germany', qualityDescription: 'Premium', profile: 'CLI', rate: '0.018', billingCycle: '60/60', specialRate: 1 },
-  { _id: '4', country: 'Canada', qualityDescription: 'Standard', profile: 'CLI', rate: '0.014', billingCycle: '60/60', specialRate: 1 },
-  { _id: '5', country: 'Australia', qualityDescription: 'Premium', profile: 'Non-CLI', rate: '0.016', billingCycle: '60/60', specialRate: 1 },
-  { _id: '6', country: 'France', qualityDescription: 'Standard', profile: 'CLI', rate: '0.013', billingCycle: '60/60', specialRate: 1 },
-  { _id: '7', country: 'India', qualityDescription: 'Premium', profile: 'CLI', rate: '0.011', billingCycle: '60/60', specialRate: 1 },
-  { _id: '8', country: 'UAE', qualityDescription: 'Premium', profile: 'Non-CLI', rate: '0.019', billingCycle: '60/60', specialRate: 1 },
-];
+import axiosInstance from '../../utils/axiosinstance';
 
 const Specialrate = () => {
   const [open, setOpen] = useState(false);
@@ -19,30 +8,32 @@ const Specialrate = () => {
   const [filterTrigger, setFilterTrigger] = useState(false);
   const [rateData, setRateData] = useState([]);
   const [loading, setLoading] = useState(true);
+console.log(rateData);
 
   // pagination
   const [page, setPage] = useState(1);
   const rowsPerPage = 7;
 
   useEffect(() => {
-    // Simulate API call
-    const fetchRates = async () => {
+    const fetchSpecialRates = async () => {
       try {
         setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        const specialRates = mockRateData.filter(
-          (item) => item.specialRate === 1
+
+        const res = await axiosInstance.get("api/admin/ccrates");
+
+        const filtered = res.data.ccrates.filter(
+          rate => rate.specialRate === 1
         );
 
-        setRateData(specialRates);
+        setRateData(filtered);   // 👈 UI data
       } catch (error) {
         console.error("Error fetching rates:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchRates();
+
+    fetchSpecialRates();
   }, []);
 
   const countryOptions = [...new Set(rateData.map((item) => item.country))];
@@ -91,7 +82,7 @@ const Specialrate = () => {
                   Special <span className="text-orange-500">Rates</span>
                 </h2>
               </div>
-              
+
               <X
                 onClick={() => setOpen(false)}
                 className="w-6 h-6 text-gray-500 cursor-pointer hover:text-red-500 transition-colors"
@@ -134,22 +125,20 @@ const Specialrate = () => {
                 <button
                   onClick={handlePrev}
                   disabled={page === 1}
-                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${
-                    page === 1
-                      ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-orange-500 hover:bg-orange-600 shadow-sm"
-                  }`}
+                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${page === 1
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-orange-500 hover:bg-orange-600 shadow-sm"
+                    }`}
                 >
                   ‹
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={page === totalPages}
-                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${
-                    page === totalPages
-                      ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-orange-500 hover:bg-orange-600 shadow-sm"
-                  }`}
+                  className={`w-8 h-8 rounded-lg text-white flex items-center justify-center text-sm font-bold transition-all ${page === totalPages
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-orange-500 hover:bg-orange-600 shadow-sm"
+                    }`}
                 >
                   ›
                 </button>
@@ -196,7 +185,7 @@ const Specialrate = () => {
                       </div>
                     </div>
                   ))}
-                  
+
                   {paginatedData.length === 0 && (
                     <div className="text-center py-12 text-gray-500">
                       <p>No rates found</p>
@@ -231,7 +220,7 @@ const Specialrate = () => {
                       ))}
                     </tbody>
                   </table>
-                  
+
                   {paginatedData.length === 0 && (
                     <div className="text-center py-12 text-gray-500">
                       <p>No rates found</p>
@@ -243,7 +232,7 @@ const Specialrate = () => {
           </div>
         </div>
       )}
-      
+
       <style>{`
         @keyframes slideIn {
           from { transform: translateX(100%); }

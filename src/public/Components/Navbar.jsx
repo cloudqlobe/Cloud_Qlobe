@@ -16,8 +16,12 @@ import Ratepages from "../Rates/Components/Rateheader";
 import { LanguageContext } from "../../context/LanguageContext";
 
 const Navbar = () => {
+
+  const authToken = sessionStorage.getItem("authToken");
   const role = sessionStorage.getItem("role");
-const authToken = sessionStorage.getItem("authToken");
+
+  const hasAuthToken = !!authToken;
+  const hasRoleOnly = !!role && !authToken;
 
   // Desktop dropdown (services menu on desktop)
   const [showDropdown, setShowDropdown] = useState(false);
@@ -88,6 +92,7 @@ const authToken = sessionStorage.getItem("authToken");
     try {
       await axiosInstance.post('api/logout', {}, { withCredentials: true });
       sessionStorage.removeItem('authToken');
+      sessionStorage.removeItem('role')
       navigate('/customer/login');
     } catch (error) {
       console.log(error);
@@ -237,15 +242,15 @@ const authToken = sessionStorage.getItem("authToken");
           </div>
 
           <Link to="/contact" className="hover:text-blue-500 transition">{nav.contact}</Link>
-{(role === "guest" || authToken) && (
-  <Link
-    to="/rates"
-    onClick={handleMobileLinkClick}
-    className="text-gray-700 hover:text-blue-500 py-2"
-  >
-    {nav.rates}
-  </Link>
-)}
+          {(role === "guest" || authToken) && (
+            <Link
+              to="/rates"
+              onClick={handleMobileLinkClick}
+              className="text-gray-700 hover:text-blue-500 py-2"
+            >
+              {nav.rates}
+            </Link>
+          )}
 
 
           <Link to="/faq" className="hover:text-blue-500 transition">{nav.faq}</Link>
@@ -298,18 +303,60 @@ const authToken = sessionStorage.getItem("authToken");
 
           {/* Auth Buttons */}
           <div className="flex items-end gap-3 ml-6">
-            {sessionStorage.getItem("authToken") ? (
+            {hasAuthToken ? (
+              /* 🔐 Logged in user */
               <>
-                <Link to="/customer/dashboard" className="w-[120px] text-center px-4 py-2 bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition rounded">{nav.dashboard}</Link>
-                <button onClick={handleLogout} className="w-[120px] text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition rounded">{nav.logout}</button>
+                <Link
+                  to="/customer/dashboard"
+                  className="w-[120px] text-center px-4 py-2 bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition rounded"
+                >
+                  {nav.dashboard}
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-[120px] text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition rounded"
+                >
+                  {nav.logout}
+                </button>
+              </>
+            ) : hasRoleOnly ? (
+              /* 👤 Role exists but no token */
+              <>
+                <Link
+                  to="/customer/register"
+                  className="w-[120px] text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600 transition rounded"
+                >
+                  {nav.register}
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-[120px] text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition rounded"
+                >
+                  {nav.logout}
+                </button>
               </>
             ) : (
+              /* 🚪 Not logged in */
               <>
-                <Link to="/customer/register" className="w-[120px] text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600 transition rounded">{nav.register}</Link>
-                <Link to="/customer/login" className="w-[120px] text-center px-4 py-2 bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition rounded">{nav.login}</Link>
+                <Link
+                  to="/customer/register"
+                  className="w-[120px] text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600 transition rounded"
+                >
+                  {nav.register}
+                </Link>
+
+                <Link
+                  to="/customer/login"
+                  className="w-[120px] text-center px-4 py-2 bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition rounded"
+                >
+                  {nav.login}
+                </Link>
               </>
             )}
           </div>
+
         </div>
 
         {/* 🍔 Mobile Menu Button */}
@@ -380,15 +427,15 @@ const authToken = sessionStorage.getItem("authToken");
           </div>
 
           <Link to="/contact" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-blue-500 py-2">{nav.contact}</Link>
-{(role === "guest" || authToken) && (
-  <Link
-    to="/rates"
-    onClick={handleMobileLinkClick}
-    className="text-gray-700 hover:text-blue-500 py-2"
-  >
-    {nav.rates}
-  </Link>
-)}
+          {(role === "guest" || authToken) && (
+            <Link
+              to="/rates"
+              onClick={handleMobileLinkClick}
+              className="text-gray-700 hover:text-blue-500 py-2"
+            >
+              {nav.rates}
+            </Link>
+          )}
 
 
 
@@ -415,10 +462,16 @@ const authToken = sessionStorage.getItem("authToken");
 
         {/* Auth Buttons */}
         <div className="mt-6 flex flex-col px-6 space-y-3">
-          {sessionStorage.getItem("authToken") ? (
+          {hasAuthToken ? (
             <>
               <Link to="/customer/dashboard" onClick={handleMobileLinkClick} className="w-full text-center px-4 py-2 bg-green-500 text-white text-sm font-semibold rounded hover:bg-green-600 transition">{nav.dashboard}</Link>
               <button onClick={() => { handleLogout(); handleMobileLinkClick(); }} className="w-full text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700 transition">{nav.logout}</button>
+            </>
+          ) : hasRoleOnly ? (
+            <>
+              <Link to="/customer/register" onClick={handleMobileLinkClick} className="w-full text-center px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded hover:bg-blue-600 transition">{nav.register}</Link>
+              <button onClick={() => { handleLogout(); handleMobileLinkClick(); }} className="w-full text-center px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700 transition">{nav.logout}</button>
+
             </>
           ) : (
             <>
