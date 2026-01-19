@@ -4,6 +4,7 @@ import { Phone, Mail, MessageSquare, User, Briefcase } from 'lucide-react';
 import axiosInstance from "../../../utils/axiosinstance";
 import CustomerAuthContext from "../../../context/customer/CustomerAuthContext";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../../public/Components/Navbar";
 
 const AddTroubleTicket = () => {
   const { customerDetails } = useContext(CustomerAuthContext);
@@ -69,6 +70,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen p-8">
+            <Navbar />
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-gray-800">Add Ticket</h2>
 
