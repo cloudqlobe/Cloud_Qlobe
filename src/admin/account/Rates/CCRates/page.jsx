@@ -10,6 +10,7 @@ const dataModel = {
   status: "Inactive",
   profile: "",
   rate: "",
+  prefix: "",
   category: "",
   testStatus: "as",
   billingCycle: "",
@@ -92,6 +93,13 @@ const Modal = ({ isOpen, onClose, onSubmit, initialData }) => {
             }
             className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'
             required
+          />
+          <input
+            type='number'
+            placeholder='Enter Prefix'
+            value={newLead?.prefix || ""}
+            onChange={(e) => setNewLead({ ...newLead, prefix: e.target.value })}
+            className='mb-2 w-full px-4 py-2 border border-gray-300 rounded-lg'
           />
           <input
             type='number'
@@ -295,6 +303,7 @@ const AdminCCRate = () => {
               <th className='py-2 px-4'>Country Code</th>
               <th className='py-2 px-4'>Country</th>
               <th className='py-2 px-4'>Quality Description</th>
+              <th className='py-2 px-4'>Prefix</th>
               <th className='py-2 px-4'>Rate</th>
               <th className='py-2 px-4'>Status</th>
               <th className='py-2 px-4'>Profile</th>
@@ -336,6 +345,7 @@ const AdminCCRate = () => {
                   <td className='py-2 px-4'>{rate.countryCode}</td>
                   <td className='py-2 px-4'>{rate.country}</td>
                   <td className='py-2 px-4'>{rate.qualityDescription}</td>
+                  <td className='py-2 px-4'>{rate.prefix}</td>
                   <td className='py-2 px-4'>{rate.rate}</td>
                   <td className='py-2 px-4'>{rate.status}</td>
                   <td className='py-2 px-4'>{rate.profile}</td>

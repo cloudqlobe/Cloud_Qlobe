@@ -18,6 +18,7 @@ const TestingPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+console.log(selectedCustomer);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +61,7 @@ const TestingPage = () => {
     let filtered = testsData
       .map((test) => {
         const customer = customersData.find(
-          (customer) => customer?.id === test.customerId
+          (customer) => customer?.id === test.userId
         );
 
         if (!customer) return null;
@@ -123,6 +124,8 @@ const TestingPage = () => {
 
   const openModal = (testId) => {
     const selectedTest = testsData.find((test) => test.id === testId);
+console.log(selectedTest);
+console.log(customersData);
 
     if (selectedTest) {
       let rates = [];
@@ -149,6 +152,7 @@ const TestingPage = () => {
       const customer = customersData.find(
         (customer) => customer?.customerId === selectedTest.customerId
       );
+console.log(customer);
 
       setSelectedCustomer({
         ...selectedTest,

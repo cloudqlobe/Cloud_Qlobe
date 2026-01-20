@@ -18,6 +18,7 @@ const TestingPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+console.log(testsData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +57,11 @@ const TestingPage = () => {
 const applyFilters = useCallback(() => {
   let filtered = testsData
     .map((test) => {
-      const customer = customersData.find((customer) => customer?.id === test.customerId);
+      const customer = customersData.find((customer) => customer?.id === test.userId);
+console.log(customer);
+console.log(customersData);
+console.log(testsData);
+
 
       if (!customer) return null;
 
@@ -241,7 +246,7 @@ useEffect(() => {
             <table className='min-w-full bg-white'>
               <thead className='bg-[#005F73] text-white'>
                 <tr>
-                  <th className='py-2 px-4'>Customer ID</th>
+                  <th className='py-2 px-4 text-center'>Customer ID</th>
                   <th className='py-2 px-4'>Company Name</th>
                   <th className='py-2 px-4'>Service Engineer</th>
                   <th className='py-2 px-4 text-center'>Status</th>
@@ -254,10 +259,10 @@ useEffect(() => {
                     <tr
                       key={customer.testId}
                       className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                      <td className='py-2 px-4'>{customer.customerId}</td>
-                      <td className='py-2 px-4'>{customer.companyName || "N/A"}</td>
-                      <td className='py-2 px-4'>{customer.serviceEngineer || "NOC CloudQlobe"}</td>
-                      <td className='py-2 px-4'>{customer.testStatus || "N/A"}</td>
+                      <td className='py-2 px-4 text-center'>{customer.customerId}</td>
+                      <td className='py-2 px-4 text-center'>{customer.companyName || "N/A"}</td>
+                      <td className='py-2 px-4 text-center'>{customer.serviceEngineer || "NOC CloudQlobe"}</td>
+                      <td className='py-2 px-4 text-center'>{customer.testStatus || "N/A"}</td>
                       <td className='py-2 px-4 text-right'>
                         <button
                           className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition mr-2'

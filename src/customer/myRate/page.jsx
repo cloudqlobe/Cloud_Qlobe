@@ -121,59 +121,59 @@ const MyRatesPage = () => {
     );
   };
 
-const handleRequestTest = async () => {
-  if (selectedRates.length === 0) {
-    toast.error('Please select at least one rate');
-    return;
-  }
+  const handleRequestTest = async () => {
+    if (selectedRates.length === 0) {
+      toast.error('Please select at least one rate');
+      return;
+    }
 
-  // ✅ Check if any selected rate is already requested
-  const alreadyRequested = selectedRates.some((rate) =>
-    testsData.some((test) => {
-      if (!test.rateId) return false;
-      if (Array.isArray(test.rateId)) {
-        return test.rateId.includes(rate._id);
-      } else {
-        return test.rateId === rate._id;
-      }
-    })
-  );
+    // ✅ Check if any selected rate is already requested
+    const alreadyRequested = selectedRates.some((rate) =>
+      testsData.some((test) => {
+        if (!test.rateId) return false;
+        if (Array.isArray(test.rateId)) {
+          return test.rateId.includes(rate._id);
+        } else {
+          return test.rateId === rate._id;
+        }
+      })
+    );
 
-  if (alreadyRequested) {
-    toast.error('This rate already passed to test');
-    return;
-  }
+    if (alreadyRequested) {
+      toast.error('This rate already passed to test');
+      return;
+    }
 
-  try {
-    await axiosInstance.post(`api/testrate`, {
-      rateId: selectedRates.map(rate => rate._id),
-      customerId: customerData.customerId,
-      testStatus: 'Pending',
-      testReason: 'Requested',
-      rateType: currentRateType,
-      companyName: customerData.companyName,
-      userId: customerData.id,
-    });
-
-    toast.success('Tests Requested Successfully');
-
-    // Update local state
-    setTestsData(prevTests => [
-      ...prevTests,
-      ...selectedRates.map(rate => ({
-        rateId: rate._id,
+    try {
+      await axiosInstance.post(`api/testrate`, {
+        rateId: selectedRates.map(rate => rate._id),
+        customerId: customerData.customerId,
         testStatus: 'Pending',
-        customerId: customerData.id,
-      }))
-    ]);
+        testReason: 'Requested',
+        rateType: currentRateType,
+        companyName: customerData.companyName,
+        userId: customerData.id,
+      });
 
-    setShowCheckboxes(false);
-    setSelectedRates([]);
-  } catch (error) {
-    console.error('Error requesting tests:', error);
-    toast.error('Failed to request tests');
-  }
-};
+      toast.success('Tests Requested Successfully');
+
+      // Update local state
+      setTestsData(prevTests => [
+        ...prevTests,
+        ...selectedRates.map(rate => ({
+          rateId: rate._id,
+          testStatus: 'Pending',
+          customerId: customerData.id,
+        }))
+      ]);
+
+      setShowCheckboxes(false);
+      setSelectedRates([]);
+    } catch (error) {
+      console.error('Error requesting tests:', error);
+      toast.error('Failed to request tests');
+    }
+  };
 
 
   // Get data based on current rate type
@@ -197,6 +197,12 @@ const handleRequestTest = async () => {
     });
     return test ? test.testStatus : null;
   };
+
+  const getDisplayStatus = (rate) => {
+  const testStatus = getTestStatus(rate._id);
+  return testStatus || rate.status || 'N/A';
+};
+
 
   // Filter data based on search and status
   const filteredData = getCurrentData()
@@ -246,7 +252,7 @@ const handleRequestTest = async () => {
 
         {!showCheckboxes && !isPrivateRate && (
           <button
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 mt-2 sm:mt-0"
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-800 mt-2 sm:mt-0"
             onClick={() => setShowCheckboxes(true)}
           >
             Select Rates
@@ -256,13 +262,13 @@ const handleRequestTest = async () => {
 
       {/* Rate Type Switch */}
       <div className="flex space-x-4 mb-4">
-        {['CCRate','CLIRate','CCPrivateRate','CLIPrivateRate'].map(type => (
+        {['CCRate', 'CLIRate', 'CCPrivateRate', 'CLIPrivateRate'].map(type => (
           <button
             key={type}
-            className={`px-4 py-2 rounded-lg ${currentRateType === type ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded-lg ${currentRateType === type ? 'bg-blue-800 text-white' : 'bg-gray-200'}`}
             onClick={() => setCurrentRateType(type)}
           >
-            {type.replace(/Rate/g,' Rate')}
+            {type.replace(/Rate/g, ' Rate')}
           </button>
         ))}
       </div>
@@ -273,77 +279,96 @@ const handleRequestTest = async () => {
       ) : dataNotFound ? (
         <div className="text-center py-10 text-gray-500">No data found.</div>
       ) : (
-        <div className="overflow-x-auto bg-white rounded-lg shadow">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-800 text-white text-left">
-                {showCheckboxes && !isPrivateRate && <th className="px-4 py-2">Select</th>}
-                <th className="px-4 py-2">Country Code</th>
-                <th className="px-4 py-2">Country Name</th>
-                {(currentRateType.includes("CC")) && <th className="px-4 py-2">Profile</th>}
-                <th className="px-4 py-2">Rate</th>
-                <th className="px-4 py-2">Quality</th>
-                {(currentRateType.includes("CLI")) && <>
-                  <th className="px-4 py-2">ASR</th>
-                  <th className="px-4 py-2">Billing Cycle</th>
-                  <th className="px-4 py-2">RTP</th>
-                  <th className="px-4 py-2">ACD</th>
-                </>}
-                <th className="px-4 py-2">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.length > 0 ? (
-                filteredData.map((rate, index) => (
-                  <tr key={index} className="border-t hover:bg-gray-50">
-                    {showCheckboxes && !isPrivateRate && (
-                      <td className="px-4 py-2">
-                        <input
-                          type="checkbox"
-                          checked={selectedRates.some(item => item._id === rate._id)}
-                          onChange={() => handleCheckboxChange(rate)}
-                        />
-                      </td>
-                    )}
-                    <td className="px-4 py-2 flex items-center gap-2">
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          getTestStatus(rate._id) === 'Pending'
-                            ? 'bg-yellow-500'
-                            : getTestStatus(rate._id) === 'In Progress'
-                            ? 'bg-blue-500'
-                            : getTestStatus(rate._id) === 'Complete'
+        <table className="min-w-full bg-white border rounded">
+          <thead className="bg-blue-800 text-white">
+            <tr className="text-left">
+              {showCheckboxes && !isPrivateRate && <th className="px-4 py-2">Select</th>}
+              <th className="px-4 py-2">Country Code</th>
+              <th className="px-4 py-2">Country Name</th>
+              <th className="px-4 py-2">Rate Quality Description</th>
+              {(currentRateType.includes("CC")) && <th className="px-4 py-2 text-center">Profile</th>}
+              <th className="px-4 py-2 text-center">Rate</th>
+              <th className="text-center">Billing Cycle</th>
+              <th className="px-4 py-2">Prefix</th>
+              {(currentRateType.includes("CLI")) && <>
+                <th className="px-4 py-2">ASR</th>
+                <th className="px-4 py-2">Billing Cycle</th>
+                <th className="px-4 py-2">RTP</th>
+                <th className="px-4 py-2">ACD</th>
+              </>}
+              <th className="px-4 py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.length > 0 ? (
+              filteredData.map((rate, index) => (
+              <tr key={rate._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                  {showCheckboxes && !isPrivateRate && (
+                    <td className="px-4 py-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedRates.some(item => item._id === rate._id)}
+                        onChange={() => handleCheckboxChange(rate)}
+                      />
+                    </td>
+                  )}
+                  <td className="px-4 py-2 flex items-center gap-2">
+                    <span
+                      className={`w-2 h-2 rounded-full ${getTestStatus(rate._id) === 'Pending'
+                        ? 'bg-yellow-500'
+                        : getTestStatus(rate._id) === 'In Progress'
+                          ? 'bg-blue-500'
+                          : getTestStatus(rate._id) === 'Complete'
                             ? 'bg-green-500'
                             : getTestStatus(rate._id) === 'Failed'
-                            ? 'bg-red-500'
-                            : 'bg-gray-400'
+                              ? 'bg-red-500'
+                              : 'bg-gray-400'
                         }`}
-                      ></span>
-                      <span>{rate.countryCode || rate.prefix || 'N/A'}</span>
-                    </td>
-                    <td className="px-4 py-2">{rate.country || 'N/A'}</td>
-                    {(currentRateType.includes("CC")) && <td className="px-4 py-2">{rate.profile || 'N/A'}</td>}
-                    <td className="px-4 py-2">{rate.rate || 'N/A'}</td>
-                    <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
-                    {(currentRateType.includes("CLI")) && <>
-                      <td className="px-4 py-2">{rate.asr || 'N/A'}</td>
-                      <td className="px-4 py-2">{rate.billingCycle || 'N/A'}</td>
-                      <td className="px-4 py-2">{rate.rtp || 'N/A'}</td>
-                      <td className="px-4 py-2">{rate.acd || 'N/A'}</td>
-                    </>}
-                    <td className="px-4 py-2">{rate.status || 'N/A'}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="10" className="px-4 py-4 text-center text-gray-500">
-                    No rates found matching your criteria
+                    ></span>
+                    <span>{rate.countryCode || rate.prefix || 'N/A'}</span>
                   </td>
+                  <td className="px-4 py-2">{rate.country || 'N/A'}</td>
+                  <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
+                  {(currentRateType.includes("CC")) && <td className="px-4 py-2 text-center">{rate.profile || 'N/A'}</td>}
+                  <td className="px-4 py-2 text-center">{rate.rate || 'N/A'}</td>
+                  <td className="px-4 py-2 text-center">{rate.billingCycle || 'N/A'}</td>
+                  <td className="px-4 py-2">{rate.prefix || 'N/A'}</td>
+
+                  {(currentRateType.includes("CLI")) && <>
+                    <td className="px-4 py-2">{rate.asr || 'N/A'}</td>
+                    <td className="px-4 py-2 text-center">{rate.billingCycle || 'N/A'}</td>
+                    <td className="px-4 py-2">{rate.rtp || 'N/A'}</td>
+                    <td className="px-4 py-2">{rate.acd || 'N/A'}</td>
+                  </>}
+                  <td className="px-4 py-2 font-semibold">
+  <span
+    className={`px-2 py-1 rounded-full text-xs ${
+      getDisplayStatus(rate) === 'Pending'
+        ? 'bg-yellow-100 text-yellow-700'
+        : getDisplayStatus(rate) === 'In Progress'
+        ? 'bg-blue-100 text-blue-700'
+        : getDisplayStatus(rate) === 'Complete'
+        ? 'bg-green-100 text-green-700'
+        : getDisplayStatus(rate) === 'Failed'
+        ? 'bg-red-100 text-red-700'
+        : 'bg-gray-100 text-gray-700'
+    }`}
+  >
+    {getDisplayStatus(rate)}
+  </span>
+</td>
+
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10" className="px-4 py-4 text-center text-gray-500">
+                  No rates found matching your criteria
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       )}
 
       {showCheckboxes && !isPrivateRate && (

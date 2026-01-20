@@ -43,22 +43,14 @@ const SecurityPanelLayout = ({ onLoginClick }) => {
           </div>
 
           {/* Login Button */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-[10px] ml-[39px] sm:mt-8 lg:mt-0">
+          <div className="lg:mt-[20px] lg:ml-[-20px] w-full sm:w-auto">
             <button
               onClick={onLoginClick}
-              className="flex items-center justify-center border border-orange-500 text-orange-500 px-12 sm:px-16 lg:px-24 py-3 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm w-full sm:w-auto"
+              className="flex items-center justify-center gap-3 border border-orange-500 text-orange-500 px-12 sm:px-16 lg:px-24 py-3 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm w-full sm:w-auto"
             >
-              Customer Login
-            </button>
-
-            <button
-              onClick={onLoginClick}
-              className="flex items-center justify-center border border-orange-500 text-orange-500 px-12 sm:px-16 lg:px-24 py-3 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm w-full sm:w-auto"
-            >
-              Carrier Login
+              Login
             </button>
           </div>
-
         </div>
       </div>
 
