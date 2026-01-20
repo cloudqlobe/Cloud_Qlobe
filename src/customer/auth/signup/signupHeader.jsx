@@ -12,8 +12,27 @@ import {
   Lock,
   Server,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
-const AnimatedHeader = ({ onRegisterClick }) => {
+const AnimatedHeader = ({ onRegisterClick, selectedType  }) => {
+
+const handleCustomerRegister = () => {
+  toast.success("Customer Registration Page");
+  onRegisterClick("customer"); // 🔥 pass type
+};
+
+const handleCarrierRegister = () => {
+  toast.info("Carrier Registration Page");
+  onRegisterClick("carrier"); // 🔥 pass type
+};
+
+  const activeClass =
+    "bg-yellow-500 text-white border-yellow-500 shadow-lg scale-105";
+
+  const inactiveClass =
+    "bg-white text-gray-500 border-gray-400 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-500";
+
+
   const flags = [
     "https://flagcdn.com/w40/us.png",
     "https://flagcdn.com/w40/gb.png",
@@ -96,14 +115,27 @@ const AnimatedHeader = ({ onRegisterClick }) => {
             </div>
 
             {/* Button */}
-            <button
-              className="group relative px-6 py-2 border border-gray-500 text-gray-500 rounded-lg hover:bg-orange-50 transition font-medium shadow-sm"
-              onClick={onRegisterClick} // 🔥 smooth scroll trigger
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                Register Here
-              </span>
-            </button>
+      <button
+        onClick={handleCustomerRegister}
+        className={`
+          px-6 py-2 rounded-lg border font-medium transition-all duration-300
+          ${selectedType === "customer" ? activeClass : inactiveClass}
+        `}
+      >
+        Register As Customer
+      </button>
+
+      {/* Carrier */}
+      <button
+        onClick={handleCarrierRegister}
+        className={`
+          ml-6 px-6 py-2 rounded-lg border font-medium transition-all duration-300
+          ${selectedType === "carrier" ? activeClass : inactiveClass}
+        `}
+      >
+        Register As Carrier
+      </button>
+
 
 
           </div>

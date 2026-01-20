@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Globe, Wifi, Shield, Zap, Cloud, Star, Diamond, Hexagon, Triangle, Server, Database, Lock, Smartphone, Users, Rocket, Heart, Sparkles } from "lucide-react";
 import CustomerRegisterFlow from "./forms/customerForm";
 import VendorRegisterForm from "./forms/carrierForm";
 
-const ModernRegisterFlow = () => {
-    const [registrationType, setRegistrationType] = useState("customer");
+const ModernRegisterFlow = ({ FormType }) => {
+    const [registrationType, setRegistrationType] = useState(FormType || "customer");
 
+    // 🔥 Sync when parent changes (button click above)
+    useEffect(() => {
+        if (FormType) {
+            setRegistrationType(FormType);
+        }
+    }, [FormType]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-900 to-slate-900 relative overflow-hidden">
@@ -115,34 +121,23 @@ const ModernRegisterFlow = () => {
 
 
             <div className="relative z-10 flex flex-col items-center pb-4">
-<p
-  onClick={() =>
-    setRegistrationType(prev =>
-      prev === "carrier" ? "customer" : "carrier"
-    )
-  }
-  className="
-  text-sm sm:text-base md:text-lg
-    ml-[1216px]
-    mt-[25px]
-    text-white
-    cursor-pointer
-    no-underline
-    hover:text-yellow-500
-    hover:underline
-    transition-all
-    duration-200
-  "
->
-  {registrationType === "carrier"
-    ? "Switch to Customer Registration"
-    : "Switch to Carrier Registration"}
-</p>
+                {/* <p
+                    onClick={() =>
+                        setRegistrationType(prev =>
+                            prev === "carrier" ? "customer" : "carrier"
+                        )
+                    }
+                    className="text-white cursor-pointer hover:text-yellow-500 underline text-right mr-10 mt-5"
+                >
+                    {registrationType === "carrier"
+                        ? "Switch to Customer Registration"
+                        : "Switch to Carrier Registration"}
+                </p> */}
 
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mt-10 mb-4">
                     <Globe className="w-8 h-8 text-blue-600 animate-spin" style={{ animationDuration: "3s" }} />
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-default text-yellow-500 text-center">
-                        Explore the Journey with CloudGlobe
+                        Explore the Journey with CloudQlobe
                     </h1>
                     <Globe className="w-8 h-8 text-emerald-600 animate-spin" style={{ animationDuration: "3s", animationDirection: "reverse" }} />
                 </div>
