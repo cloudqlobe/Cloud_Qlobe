@@ -228,9 +228,9 @@ const MyRatesPage = ({ customerId }) => {
               <th className="px-4 py-2">Rate</th>
               <th className="px-4 py-2">Quality Description</th>
               {currentRateType === "CLIRate" && <th className="px-4 py-2">asr</th>}
-              {currentRateType === "CLIRate" && <th className="px-4 py-2">billingCycle</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">rtp</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">acd</th>}
+                            <th className="px-4 py-2">Billing Cycle</th>
               <th className="px-4 py-2">Status</th>
             </tr>
           </thead>

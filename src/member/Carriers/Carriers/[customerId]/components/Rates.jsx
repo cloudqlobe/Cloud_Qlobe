@@ -227,6 +227,7 @@ const MyRatesPage = ({ customerId }) => {
               {currentRateType === "CCRate" && <th className="px-4 py-2">Profile</th>}
               <th className="px-4 py-2">Rate</th>
               <th className="px-4 py-2">Quality Description</th>
+                                          <th className="px-4 py-2">Billing Cycle</th>
               {currentRateType === "CLIRate" && <th className="px-4 py-2">asr</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">billingCycle</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">rtp</th>}
