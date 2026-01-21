@@ -21,9 +21,9 @@ const MyRatesPage = ({ customerId }) => {
       if (customerId) {
         try {
           const response = await axiosInstance.get(`api/customer/${customerId}`);
-          const customer = response.data.customer;          
+          const customer = response.data.customer;
           const parsedMyRates = customer.myRates ? JSON.parse(customer.myRates) : null;
-          
+
           setCustomerData({
             ...customer,
             myRates: parsedMyRates,
@@ -48,7 +48,7 @@ const MyRatesPage = ({ customerId }) => {
         const myRatesArray = Array.isArray(customerData?.myRates) ? customerData.myRates : [];
         const ccRates = myRatesArray.filter(rate => rate.rate === 'CC');
         const cliRates = myRatesArray.filter(rate => rate.rate === 'CLI');
-        
+
         // Fetching test rates
         const testsResponse = await axiosInstance.get(`api/testrates`);
         const testData = testsResponse.data.testrate || [];
@@ -224,10 +224,11 @@ const MyRatesPage = ({ customerId }) => {
               {showCheckboxes && <th className="px-4 py-2">Select</th>}
               <th className="px-4 py-2">Country Code</th>
               <th className="px-4 py-2">Country Name</th>
+              <th className="px-4 py-2">Quality Description</th>
               {currentRateType === "CCRate" && <th className="px-4 py-2">Profile</th>}
               <th className="px-4 py-2">Rate</th>
-              <th className="px-4 py-2">Quality Description</th>
-                            <th className="px-4 py-2">Billing Cycle</th>
+              <th className="px-4 py-2">Prefix</th>
+              <th className="px-4 py-2">Billing Cycle</th>
               {currentRateType === "CLIRate" && <th className="px-4 py-2">asr</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">rtp</th>}
               {currentRateType === "CLIRate" && <th className="px-4 py-2">acd</th>}
@@ -247,11 +248,12 @@ const MyRatesPage = ({ customerId }) => {
                 )}
                 <td className="px-4 py-2">{rate.countryCode || 'N/A'}</td>
                 <td className="px-4 py-2">{rate.country || 'N/A'}</td>
+                <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
                 {rate.profile && <td className="px-4 py-2">{rate.profile || 'N/A'}</td>}
                 <td className="px-4 py-2">{rate.rate || 'N/A'}</td>
-                <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
-                {rate.asr && <td className="px-4 py-2">{rate.asr || 'N/A'}</td>}
+                <td className="px-4 py-2">{rate.prefix || 'N/A'}</td>
                 {rate.billingCycle && <td className="px-4 py-2">{rate.billingCycle || 'N/A'}</td>}
+                {rate.asr && <td className="px-4 py-2">{rate.asr || 'N/A'}</td>}
                 {rate.rtp && <td className="px-4 py-2">{rate.rtp || 'N/A'}</td>}
                 {rate.acd && <td className="px-4 py-2">{rate.acd || 'N/A'}</td>}
                 <td className="px-4 py-2">{rate.status || 'N/A'}</td>
