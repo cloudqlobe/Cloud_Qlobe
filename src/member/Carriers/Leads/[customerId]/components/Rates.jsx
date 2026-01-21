@@ -223,8 +223,8 @@ const MyRatesPage = ({ customerId }) => {
             <tr className="bg-[#005F73] text-white">
               {showCheckboxes && <th className="px-4 py-2">Select</th>}
               <th className="px-4 py-2">Country Code</th>
-              <th className="px-4 py-2">Country Name</th>
-              <th className="px-4 py-2">Quality Description</th>
+              <th className="px-4 py-2 text-left">Country Name</th>
+              <th className="px-4 py-2 text-left">Quality Description</th>
               {currentRateType === "CCRate" && <th className="px-4 py-2">Profile</th>}
               <th className="px-4 py-2">Rate</th>
               <th className="px-4 py-2">Prefix</th>
@@ -247,8 +247,8 @@ const MyRatesPage = ({ customerId }) => {
                   </td>
                 )}
                 <td className="px-4 py-2">{rate.countryCode || 'N/A'}</td>
-                <td className="px-4 py-2">{rate.country || 'N/A'}</td>
-                <td className="px-4 py-2">{rate.qualityDescription || 'N/A'}</td>
+                <td className="px-4 py-2 text-left">{rate.country || 'N/A'}</td>
+                <td className="px-4 py-2 text-left">{rate.qualityDescription || 'N/A'}</td>
                 {rate.profile && <td className="px-4 py-2">{rate.profile || 'N/A'}</td>}
                 <td className="px-4 py-2">{rate.rate || 'N/A'}</td>
                 <td className="px-4 py-2">{rate.prefix || 'N/A'}</td>
