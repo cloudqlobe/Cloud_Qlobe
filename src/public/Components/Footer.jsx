@@ -307,7 +307,7 @@ const Footer = () => {
             </div>
 
             <div className="text-gray-300 text-xs sm:text-sm order-last sm:order-none">
-              © {new Date().getFullYear()}{" "}
+              © 2024
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400">
                 Cloudqlobe
               </span>{" "}
