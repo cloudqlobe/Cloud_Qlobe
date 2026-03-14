@@ -34,8 +34,8 @@
 
     const { language, setLanguage } = useContext(LanguageContext);
 
-    usePageTranslator(language);
-    Ratepages(language)
+    // usePageTranslator(language);
+    // Ratepages(language)
 
     const location = useLocation();
     const currentPath = location.pathname;
