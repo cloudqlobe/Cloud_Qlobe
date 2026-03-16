@@ -49,7 +49,7 @@ const Homeanimation = () => {
     { icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />, label: 'Secure Routes' },
   ];
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => setFormData({ ...formData, [e.target?.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,8 +103,8 @@ const Homeanimation = () => {
             <input
               type="text"
               name="name"
-              placeholder={placeholders.name}
-              value={formData.name}
+              placeholder={placeholders?.name}
+              value={formData?.name}
               onChange={handleChange}
               className="w-full px-3 sm:px-4 py-2 mb-3 sm:mb-4 border squared focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
               required
