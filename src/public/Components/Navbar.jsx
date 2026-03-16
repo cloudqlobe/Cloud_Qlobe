@@ -286,7 +286,7 @@
                     { name: "Portuguese", icon: "🇵🇹", value: "pt" },
                   ].map((lang) => (
                     <div
-                      key={lang.name}
+                      key={lang?.name}
                       onClick={() => {
                         setLanguage(lang.value);
                         setLangOpen(false);
@@ -294,7 +294,7 @@
                       className="flex flex-col items-center justify-center border border-gray-200 rounded-md py-2 hover:bg-blue-50 hover:border-blue-300 transition cursor-pointer w-[100px] h-[65px]"
                     >
                       <span className="text-xl">{lang.icon}</span>
-                      <span className="text-[12px] mt-1 text-gray-700 font-medium">{lang.name}</span>
+                      <span className="text-[12px] mt-1 text-gray-700 font-medium">{lang?.name}</span>
                     </div>
                   ))}
                 </div>
