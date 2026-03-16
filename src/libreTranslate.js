@@ -1,6 +1,6 @@
 export async function batchTranslateText(texts,page, targetLang) {
 
-  const API_URL = "http://72.60.97.54:5008/translate";  //https://translator.cloudqlobe.com/translate
+  const API_URL = "https://translator.cloudqlobe.com/translate";  //https://translator.cloudqlobe.com/translate
 
   try {
     const response = await fetch(API_URL, {
