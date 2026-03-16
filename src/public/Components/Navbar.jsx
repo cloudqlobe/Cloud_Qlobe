@@ -32,7 +32,8 @@
     // Mobile services sub-menu inside sidebar
     const [showServices, setShowServices] = useState(false);
 
-    const { language, setLanguage } = useContext(LanguageContext);
+    const { language } = useContext('eng');
+    // const { language, setLanguage } = useContext(LanguageContext);
 
     // usePageTranslator(language);
     // Ratepages(language)
@@ -288,7 +289,7 @@
                     <div
                       key={lang.name}
                       onClick={() => {
-                        setLanguage(lang.value);
+                        // setLanguage(lang.value);
                         setLangOpen(false);
                       }}
                       className="flex flex-col items-center justify-center border border-gray-200 rounded-md py-2 hover:bg-blue-50 hover:border-blue-300 transition cursor-pointer w-[100px] h-[65px]"
@@ -444,7 +445,9 @@
 
           {/* Language Switcher */}
           <div className="mt-6 px-6">
-            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
+            <select value={language} 
+            // onChange={(e) => setLanguage(e.target.value)}
+             className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
               <option value="en">English</option>
               <option value="es">Español</option>
               <option value="fr">Français</option>
