@@ -10,7 +10,7 @@
   import logo1 from "../../assets/Square_Organic_Beauty_Cleanser_Logo__1_-removebg-preview.png";
   import logo from "../../assets/logo1-removebg-preview.png";
   import axiosInstance from "../../utils/axiosinstance";
-  import usePageTranslator from "../../usePageTranslator";
+  // import usePageTranslator from "../../usePageTranslator";
   import { serviceTranslations, navbarTranslations, languageOptions } from "./DummyTranslateData/NavbarServiceTranslationsData";
   import Ratepages from "../Rates/Components/Rateheader";
   import { LanguageContext } from "../../context/LanguageContext";
@@ -34,7 +34,7 @@
 
     const { language, setLanguage } = useContext(LanguageContext);
 
-    usePageTranslator(language);
+    // usePageTranslator(language);
     Ratepages(language)
 
     const location = useLocation();
