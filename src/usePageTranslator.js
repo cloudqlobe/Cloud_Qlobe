@@ -12,7 +12,7 @@ export default function usePageTranslator(language) {
       let nodes = [];
       if (
         node.nodeType === Node.TEXT_NODE &&
-        node.textContent.trim() !== "" &&
+        node?.textContent.trim() !== "" &&
         !node.parentElement?.closest("[data-no-translate]")
       ) {
         nodes.push(node);
@@ -28,7 +28,7 @@ export default function usePageTranslator(language) {
 
     // Store original texts once
     if (originalTextsRef.current.length === 0) {
-      originalTextsRef.current = nodes.map((n) => n.textContent);
+      originalTextsRef.current = nodes.map((n) => n?.textContent);
     }
 
     const translateAll = async () => {
